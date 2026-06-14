@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification Code — Republic of Ariete</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      font-family: 'Inter', Arial, sans-serif;
+      color: #1a1a1a;
+    }
+    .wrapper {
+      max-width: 580px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    }
+
+    /* HEADER */
+    .header {
+      background: #0a0a0a;
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .header-emblem {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      /* invert black paths to white on dark bg */
+      filter: brightness(0) invert(1);
+    }
+    .header-text { flex: 1; }
+    .header-title {
+      font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+    .header-sub {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #777777;
+      margin-top: 4px;
+    }
+
+    /* RED STRIPE */
+    .stripe {
+      height: 4px;
+      background: linear-gradient(90deg, #c8102e 0%, #9b0c22 100%);
+    }
+
+    /* BODY */
+    .body { padding: 40px 40px 32px; }
+
+    .greeting {
+      font-size: 15px;
+      color: #444444;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .greeting strong { color: #0a0a0a; }
+
+    .otp-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999999;
+      margin-bottom: 10px;
+    }
+
+    /* OTP BOX */
+    .otp-box {
+      background: #f7f7f7;
+      border: 1.5px solid #e0e0e0;
+      border-left: 4px solid #c8102e;
+      border-radius: 4px;
+      padding: 22px 28px;
+      margin-bottom: 24px;
+    }
+    .otp-code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      color: #0a0a0a;
+      line-height: 1;
+    }
+    .otp-expiry {
+      font-size: 12px;
+      color: #999999;
+      margin-top: 10px;
+    }
+    .otp-expiry span { color: #c8102e; font-weight: 600; }
+
+    /* NOTICE */
+    .notice {
+      background: #fff8f8;
+      border: 1px solid #f5c0c8;
+      border-radius: 4px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #7a1a24;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .notice strong { font-weight: 700; }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid #eeeeee;
+      margin: 0 0 24px;
+    }
+
+    .closing {
+      font-size: 14px;
+      color: #555555;
+      line-height: 1.8;
+    }
+    .closing .portal-name { font-weight: 700; color: #0a0a0a; }
+
+    /* FOOTER */
+    .footer {
+      background: #f7f7f7;
+      border-top: 1px solid #e8e8e8;
+      padding: 20px 40px;
+      text-align: center;
+    }
+    .footer p { font-size: 11px; color: #aaaaaa; line-height: 1.7; }
+    .footer a { color: #888888; text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .wrapper { margin: 0; border-radius: 0; }
+      .header, .body, .footer { padding-left: 24px; padding-right: 24px; }
+      .otp-code { font-size: 28px; letter-spacing: 0.12em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <div class="header">
+      <img class="header-emblem"
+           src="svgs/icone/republica/2.svg"
+           alt="Emblema Repubblica di Ariete">
+      <div class="header-text">
+        <div class="header-title">Republic of Ariete</div>
+        <div class="header-sub">Citizen Portal — Account Security</div>
+      </div>
+    </div>
+
+    <!-- RED STRIPE -->
+    <div class="stripe"></div>
+
+    <!-- BODY -->
+    <div class="body">
+
+      <p class="greeting">
+        Hello <strong>{{to_name}}</strong>,<br>
+        you requested access to the <strong>{{portal}}</strong> portal.<br>
+        Use the code below to complete your identity verification.
+      </p>
+
+      <p class="otp-label">Your verification code</p>
+
+      <div class="otp-box">
+        <div class="otp-code">{{otp_code}}</div>
+        <div class="otp-expiry">Valid for <span>5 minutes</span> from when this email was received.</div>
+      </div>
+
+      <div class="notice">
+        <strong>Didn't request this code?</strong><br>
+        Ignore this email. Your credentials are safe. If you receive repeated unauthorized requests, please contact portal support.
+      </div>
+
+      <hr class="divider">
+
+      <p class="closing">
+        Kind regards,<br>
+        <span class="portal-name">Ministry of the Interior — Republic of Ariete</span><br>
+        <small style="color:#aaa; font-size:12px;">This is an automated message, please do not reply to this email.</small>
+      </p>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <p>
+        © Republic of Ariete — Official Citizen Portal<br>
+        This email was sent to <strong>{{to_email}}</strong> because it is linked to your account.<br>
+        <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
