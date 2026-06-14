@@ -775,7 +775,7 @@
       <div style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
       <div class="step-dot" id="dot2" style="flex:1;text-align:center;">
         <div id="d2circle" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">2</div>
-        <div id="d2label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Phone</div>
+        <div id="d2label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Email</div>
       </div>
       <div style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
       <div class="step-dot" id="dot3" style="flex:1;text-align:center;">
@@ -797,11 +797,11 @@
       <button onclick="step1Next()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem;cursor:pointer;width:100%;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Continue →</button>
     </div>
 
-    <!-- STEP 2: Phone -->
+    <!-- STEP 2: Email confirm -->
     <div id="step2" style="display:none;background:#0f0f0f;border-top:3px solid #c8102e;padding:2.5rem 2.2rem;">
       <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 2 of 3</div>
-      <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Mobile Phone</h2>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Add your mobile number. This will be used for two-factor authentication and account security alerts.</p>
+      <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Confirm Email</h2>
+      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Confirm the email address linked to your account. This will be used to receive your 2FA verification codes.</p>
       <div style="margin-bottom:1.2rem;">
         <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Email Address</label>
         <div>
@@ -819,13 +819,13 @@
     <div id="step3" style="display:none;background:#0f0f0f;border-top:3px solid #c8102e;padding:2.5rem 2.2rem;">
       <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 3 of 3</div>
       <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Two-Factor Auth</h2>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Protect your account with an extra layer of security. When enabled, each login requires a code sent to your phone.</p>
+      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Protect your account with an extra layer of security. When enabled, each login requires a code sent to your email.</p>
 
       <!-- 2FA toggle -->
       <div style="background:#111;border:1px solid rgba(255,255,255,0.07);padding:1.4rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
         <div>
-          <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);margin-bottom:0.3rem;">SMS Verification</div>
-          <div style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.35);">6-digit code sent to your phone on each login</div>
+          <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);margin-bottom:0.3rem;">Email Verification</div>
+          <div style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.35);">6-digit code sent to your email on each login</div>
         </div>
         <label style="position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0;cursor:pointer;">
           
