@@ -200,10 +200,65 @@
     if (banner) banner.style.display = 'none';
   };
 
-  /* ── 5. Auto-init on DOM ready ── */
+  /* ── 5. Mobile CSS injection ── */
+  (function(){
+    var link = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.href = 'ariete-mobile.css';
+    document.head.appendChild(link);
+  })();
+
+  /* ── 6. Mobile hamburger menu ── */
+  w.arieteMobileNav = function(){
+    var header = document.querySelector('header');
+    var nav    = document.querySelector('header nav');
+    if (!header || !nav) return;
+
+    var btn = document.createElement('button');
+    btn.id = 'arieteHamburger';
+    btn.setAttribute('aria-label', 'Menu');
+    btn.innerHTML = '<span></span><span></span><span></span>';
+    header.appendChild(btn);
+
+    var overlay = document.createElement('div');
+    overlay.id = 'arieteMobileMenu';
+
+    var links = nav.querySelectorAll('a');
+    links.forEach(function(a){
+      var clone = document.createElement('a');
+      clone.href = a.href;
+      clone.textContent = a.textContent.trim();
+      if (a.classList.contains('nav-cta')) clone.className = 'mobile-cta';
+      overlay.appendChild(clone);
+    });
+
+    overlay.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ closeMenu(); });
+    });
+
+    document.body.appendChild(overlay);
+
+    function openMenu(){
+      btn.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu(){
+      btn.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', function(){
+      btn.classList.contains('open') ? closeMenu() : openMenu();
+    });
+  };
+
+  /* ── 7. Auto-init on DOM ready ── */
   document.addEventListener('DOMContentLoaded', function(){
     w.arieteUpdateNav();
     w.arieteCookieBanner();
+    w.arieteMobileNav();
   });
 
 })(window);

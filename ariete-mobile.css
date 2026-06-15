@@ -1,0 +1,217 @@
+/* ═══════════════════════════════════════════
+   ARIETE MOBILE  –  injected by ariete-auth.js
+   Breakpoints: 768px (tablet), 480px (small)
+═══════════════════════════════════════════ */
+
+/* ── HAMBURGER BUTTON ── */
+#arieteHamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: none;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  cursor: pointer;
+  flex-shrink: 0;
+  z-index: 200;
+}
+#arieteHamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #0a0a0a;
+  transition: transform 0.25s, opacity 0.2s;
+}
+#arieteHamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#arieteHamburger.open span:nth-child(2) { opacity: 0; }
+#arieteHamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── MOBILE MENU OVERLAY ── */
+#arieteMobileMenu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0a0a0a;
+  z-index: 150;
+  flex-direction: column;
+  padding: 5rem 2rem 2rem;
+  overflow-y: auto;
+}
+#arieteMobileMenu.open { display: flex; }
+
+#arieteMobileMenu a {
+  display: block;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: color 0.2s;
+}
+#arieteMobileMenu a:hover { color: #c8102e; }
+#arieteMobileMenu a.mobile-cta {
+  color: #c8102e;
+  margin-top: 1.5rem;
+  border-bottom: none;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+}
+
+@media (max-width: 768px) {
+
+  /* ── HEADER ── */
+  header {
+    padding: 0.75rem 1.2rem !important;
+  }
+  nav {
+    display: none !important;
+  }
+  #arieteHamburger {
+    display: flex !important;
+  }
+  .emblem-svg {
+    width: 48px !important;
+  }
+  .brand-text h1 {
+    font-size: 1rem !important;
+  }
+  .brand-text span {
+    display: none !important;
+  }
+
+  /* ── HERO (GOVERN_1.HTM) ── */
+  .hero {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 4rem 1.5rem 3rem !important;
+  }
+  .hero-content {
+    padding: 0 !important;
+  }
+  .hero-emblem {
+    display: none !important;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 3.5rem) !important;
+  }
+  .hero-desc {
+    font-size: 0.9rem !important;
+    max-width: 100% !important;
+  }
+  .hero-actions {
+    flex-direction: column !important;
+  }
+  .btn-primary, .btn-outline {
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  /* Arrow buttons */
+  section.hero > button {
+    display: none !important;
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    font-size: 0.7rem !important;
+  }
+
+  /* ── SECTIONS ── */
+  section, .section {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
+  }
+  .section-subtitle {
+    font-size: 0.85rem !important;
+  }
+
+  /* ── SERVICE CARDS GRID ── */
+  .services-grid,
+  .cards-grid,
+  [style*="grid-template-columns: repeat"] {
+    grid-template-columns: 1fr !important;
+  }
+  .service-card, .card {
+    padding: 1.2rem !important;
+  }
+  .services-header, .news-header, .ministries-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* ── ANNOUNCE / SPLIT LAYOUTS ── */
+  .announce-grid,
+  [style*="grid-template-columns: 1fr 2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── FORM PAGES (citizen-login, register, setup, settings) ── */
+  .form-card, .login-card, .register-card, .setup-card {
+    margin: 1rem !important;
+    padding: 1.5rem !important;
+  }
+
+  /* ── ADMIN PAGE ── */
+  .admin-grid, .admin-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 1.2rem !important;
+  }
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  [style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── MINISTRY / SERVICE DETAIL PAGES ── */
+  .page-hero {
+    padding: 3rem 1.2rem !important;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 8vw, 3rem) !important;
+  }
+  .content-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── TABLES ── */
+  table {
+    font-size: 0.75rem !important;
+  }
+
+  /* ── OVERFLOW SAFETY ── */
+  body { overflow-x: hidden; }
+  img { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(1.7rem, 8vw, 2.5rem) !important;
+  }
+  .section-title {
+    font-size: clamp(1.4rem, 7vw, 2rem) !important;
+  }
+  .brand-text h1 {
+    font-size: 0.85rem !important;
+  }
+  .emblem-svg {
+    width: 38px !important;
+  }
+}
