@@ -152,11 +152,11 @@
         'Admin Panel', 'admin.html', null, false));
     }
     menu.appendChild(menuItem('<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>',
-      'Profilo', '#', function(e){ e.preventDefault(); alert('Profilo — disponibile a breve.'); }, false));
+      'Profile', '#', function(e){ e.preventDefault(); alert('Profile — coming soon.'); }, false));
     menu.appendChild(menuItem('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
-      'Impostazioni', 'settings.html', null, false));
+      'Settings', 'settings.html', null, false));
     menu.appendChild(menuItem('<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
-      'Supporto', '#', function(e){ e.preventDefault(); alert('Supporto — disponibile a breve.'); }, false));
+      'Support', '#', function(e){ e.preventDefault(); alert('Support — coming soon.'); }, false));
     menu.appendChild(menuItem('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
       'Logout', '#', function(e){ e.preventDefault(); session.logout(); }, true));
 
@@ -267,6 +267,27 @@
       var user  = users.find(function(u){ return u.id === s.user; });
       if (user && user.status === 'suspended') {
         window.location.replace('suspended.html');
+        return;
+      }
+      /* Pending approval banner */
+      if (user && user.status === 'pending') {
+        var banner = document.createElement('div');
+        banner.id = 'arietePendingBanner';
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;'
+          + 'background:#7a4f00;border-bottom:2px solid #f5a623;'
+          + 'color:#ffd98c;font-family:sans-serif;font-size:0.78rem;'
+          + 'display:flex;align-items:center;justify-content:center;gap:0.8rem;'
+          + 'padding:0.55rem 1.2rem;text-align:center;';
+        banner.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+          + '<span><strong>Account pending approval</strong> — Access to citizen services is limited until the Civil Registry approves your account.'
+          + ' <a href="settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
+          + '<button onclick="document.getElementById(\'arietePendingBanner\').remove()" '
+          + 'style="background:none;border:none;color:#ffd98c;font-size:1rem;cursor:pointer;padding:0 0.3rem;line-height:1;" '
+          + 'title="Dismiss">×</button>';
+        document.body.insertBefore(banner, document.body.firstChild);
+        /* push page content down so banner doesn't overlap */
+        document.body.style.paddingTop = (document.body.style.paddingTop
+          ? (parseFloat(document.body.style.paddingTop) + 38) : 38) + 'px';
       }
     })();
 

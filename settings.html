@@ -4,7 +4,7 @@
 <script src="ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Republic of Ariete — Account Settings</title>
+  <title>United Republic of Stars — Account Settings</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
@@ -164,17 +164,17 @@
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/settings.html">
-  <meta property="og:site_name"   content="Republic of Ariete">
-  <meta property="og:title"       content="Republic of Ariete — Account Settings">
-  <meta property="og:description" content="Manage your Ariete Citizen Account settings and security.">
+  <meta property="og:site_name"   content="United Republic of Stars">
+  <meta property="og:title"       content="United Republic of Stars — Account Settings">
+  <meta property="og:description" content="Manage your Stars Citizen Account settings and security.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Republic of Ariete — Account Settings">
-  <meta name="twitter:description" content="Manage your Ariete Citizen Account settings and security.">
+  <meta name="twitter:title"       content="United Republic of Stars — Account Settings">
+  <meta name="twitter:description" content="Manage your Stars Citizen Account settings and security.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/preview.png">
 </head>
 <body>
@@ -194,9 +194,9 @@
 
 <header>
   <a href="GOVERN_1.HTM" class="header-brand">
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblema">
+    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem">
     <div class="brand-text">
-      <h1>Republic of Ariete</h1>
+      <h1>United Republic of Stars</h1>
       <span>Official Government Portal · Est. MMXII</span>
     </div>
   </a>
@@ -215,7 +215,7 @@
 
     <div class="page-header">
       <img src="svgs/icone/republica/2.svg" alt="Emblem">
-      <div class="eyebrow">Republic of Ariete — Account Settings</div>
+      <div class="eyebrow">United Republic of Stars — Account Settings</div>
     </div>
 
     <!-- ACCOUNT STATUS CARD -->
@@ -384,16 +384,16 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" alt="Emblema">
-      <p>The Official Portal of the Republic of Ariete. All government information, services and legislation accessible to every citizen.</p>
-      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 Republic of Ariete. All Rights Reserved.</p>
+      <img src="svgs/icone/republica/1.svg" width="78" alt="Emblem">
+      <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
     </div>
     <div class="footer-col"><h5>Government</h5><ul><li><a href="#">Office of the President</a></li><li><a href="#">National Assembly</a></li><li><a href="#">Supreme Court</a></li><li><a href="#">Cabinet of Ministers</a></li></ul></div>
     <div class="footer-col"><h5>Citizen Services</h5><ul><li><a href="#">National ID Portal</a></li><li><a href="#">Tax Authority</a></li><li><a href="#">Civil Registry</a></li><li><a href="#">Health Services</a></li></ul></div>
     <div class="footer-col"><h5>Information</h5><ul><li><a href="#">About the Republic</a></li><li><a href="#">Constitution</a></li><li><a href="#">Laws &amp; Decrees</a></li><li><a href="#">Contact Government</a></li></ul></div>
   </div>
   <div class="footer-bottom">
-    <span>Republic of Ariete · Est. MMXII · Official Government Website</span>
+    <span>United Republic of Stars · Est. MMXII · Official Government Website</span>
     <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
@@ -518,141 +518,133 @@
     _otpCode   = generateOTP();
     _otpExpiry = Date.now() + 5 * 60 * 1000;
 
-    showMsg('emailMsg', 'info', 'Sending verification code to ' + user.email + '...');
-    document.getElementById('sendBtn').disabled = true;
-
-    if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: user.email,
-        to_name: user.name || user.id,
-        otp_code: _otpCode,
-        portal: 'Republic of Ariete — Email Verification'
-      }).then(function() {
-        showMsg('emailMsg', 'success', 'Code sent! Check your inbox.');
-      }, function(err) {
-        console.error('EmailJS error:', JSON.stringify(err));
-        showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
-      });
-    } else {
-      showMsg('emailMsg', 'info', 'DEV MODE — Code: ' + _otpCode);
-    }
-
-    document.getElementById('otpSection').style.display = 'block';
-    startTimer();
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email: user.email,
+      otp_code: _otpCode
+    }).then(function() {
+      document.getElementById('verifySection').style.display = 'none';
+      document.getElementById('otpSection').style.display   = 'block';
+      showMsg('emailMsg', 'info', 'Verification code sent to ' + user.email);
+      startOtpTimer();
+    }).catch(function() {
+      showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
+    });
   }
 
-  function startTimer() {
+  function startOtpTimer() {
     clearInterval(_timerInterval);
     _timerInterval = setInterval(function() {
-      var remaining = Math.max(0, Math.ceil((_otpExpiry - Date.now()) / 1000));
-      var m = Math.floor(remaining / 60);
-      var s = remaining % 60;
+      var left = Math.max(0, Math.floor((_otpExpiry - Date.now()) / 1000));
+      var m = Math.floor(left / 60), s = left % 60;
       document.getElementById('otpTimer').textContent = 'Code expires in ' + m + ':' + (s < 10 ? '0' : '') + s;
-      if (remaining === 0) {
-        clearInterval(_timerInterval);
-        document.getElementById('otpTimer').textContent = 'Code expired. Please request a new one.';
-        document.getElementById('sendBtn').disabled = false;
-      }
+      if (left <= 0) { clearInterval(_timerInterval); _otpCode = null; }
     }, 1000);
   }
 
-  // ── CONFIRM OTP ──
+  // ── CONFIRM VERIFICATION CODE ──
   function confirmCode() {
     var entered = document.getElementById('otpInput').value.trim();
-    if (!_otpCode) { showMsg('emailMsg', 'error', 'Please request a code first.'); return; }
-    if (Date.now() > _otpExpiry) { showMsg('emailMsg', 'error', 'Code expired. Please request a new one.'); return; }
+    if (!_otpCode) { showMsg('emailMsg', 'error', 'Code expired. Please request a new one.'); return; }
+    if (Date.now() > _otpExpiry) { showMsg('emailMsg', 'error', 'Code has expired. Please request a new one.'); _otpCode = null; return; }
     if (entered !== _otpCode) { showMsg('emailMsg', 'error', 'Incorrect code. Please try again.'); return; }
 
-    // Mark verified
+    clearInterval(_timerInterval);
     var s = arieteSession.get();
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var idx = users.findIndex(function(u){ return u.id === s.user; });
-    if (idx !== -1) {
-      users[idx].emailVerified = true;
-      saveUsers(users);
-    }
+    if (idx !== -1) { users[idx].emailVerified = true; saveUsers(users); }
 
-    clearInterval(_timerInterval);
-    document.getElementById('otpSection').style.display = 'none';
-    document.getElementById('verifySection').style.display = 'none';
-    document.getElementById('unverifiedBadge').style.display = 'none';
-    document.getElementById('verifiedBadge').style.display = 'inline-flex';
+    document.getElementById('otpSection').style.display      = 'none';
     document.getElementById('alreadyVerified').style.display = 'block';
-    showMsg('emailMsg', 'success', 'Email verified successfully!');
+    document.getElementById('verifiedBadge').style.display   = 'inline-flex';
+    document.getElementById('unverifiedBadge').style.display = 'none';
+    showMsg('emailMsg', 'success', 'Email verified successfully.');
   }
 
   // ── CHANGE EMAIL ──
   function changeEmail() {
-    var newEmail = document.getElementById('newEmail').value.trim();
-    if (!newEmail || !/\S+@\S+\.\S+/.test(newEmail)) {
+    var newVal = document.getElementById('newEmail').value.trim();
+    if (!newVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newVal)) {
       showMsg('changeEmailMsg', 'error', 'Please enter a valid email address.'); return;
     }
     var s = arieteSession.get();
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var idx = users.findIndex(function(u){ return u.id === s.user; });
-    if (idx === -1) return;
-    users[idx].email = newEmail;
+    if (idx === -1) { showMsg('changeEmailMsg', 'error', 'Session error. Please log in again.'); return; }
+
+    users[idx].email = newVal;
     users[idx].emailVerified = false;
     saveUsers(users);
-    document.getElementById('currentEmail').value = newEmail;
-    document.getElementById('verifiedBadge').style.display = 'none';
-    document.getElementById('alreadyVerified').style.display = 'none';
-    document.getElementById('verifySection').style.display = 'block';
+
+    document.getElementById('currentEmail').value = newVal;
+    document.getElementById('verifiedBadge').style.display   = 'none';
     document.getElementById('unverifiedBadge').style.display = 'inline-flex';
-    showMsg('changeEmailMsg', 'success', 'Email updated. Please verify your new address.');
+    document.getElementById('alreadyVerified').style.display = 'none';
+    document.getElementById('verifySection').style.display   = 'block';
     document.getElementById('newEmail').value = '';
+    showMsg('changeEmailMsg', 'success', 'Email updated. Please verify your new address.');
   }
 
   // ── CHANGE PASSWORD ──
   function changePassword() {
     var cur  = document.getElementById('currentPwd').value;
-    var np   = document.getElementById('newPwd').value;
-    var np2  = document.getElementById('newPwd2').value;
-    if (!cur || !np || !np2) { showMsg('pwdMsg', 'error', 'Please fill in all fields.'); return; }
-    if (np.length < 8) { showMsg('pwdMsg', 'error', 'New password must be at least 8 characters.'); return; }
-    if (np !== np2) { showMsg('pwdMsg', 'error', 'Passwords do not match.'); return; }
+    var nw   = document.getElementById('newPwd').value;
+    var nw2  = document.getElementById('newPwd2').value;
+
+    var user = getUser();
+    if (!user) { showMsg('pwdMsg', 'error', 'Session error. Please log in again.'); return; }
+    if (atob(user.pwd) !== cur) { showMsg('pwdMsg', 'error', 'Current password is incorrect.'); return; }
+    if (nw.length < 8)          { showMsg('pwdMsg', 'error', 'New password must be at least 8 characters.'); return; }
+    if (nw !== nw2)             { showMsg('pwdMsg', 'error', 'Passwords do not match.'); return; }
+
     var s = arieteSession.get();
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var idx = users.findIndex(function(u){ return u.id === s.user; });
     if (idx === -1) return;
-    if (users[idx].password !== cur) { showMsg('pwdMsg', 'error', 'Current password is incorrect.'); return; }
-    users[idx].password = np;
+    users[idx].pwd = btoa(nw);
     saveUsers(users);
+
     document.getElementById('currentPwd').value = '';
-    document.getElementById('newPwd').value = '';
-    document.getElementById('newPwd2').value = '';
+    document.getElementById('newPwd').value      = '';
+    document.getElementById('newPwd2').value     = '';
     showMsg('pwdMsg', 'success', 'Password updated successfully.');
   }
 
-  // ── 2FA TOGGLE ──
+  // ── TOGGLE 2FA ──
   function toggle2FA() {
+    var user = getUser();
+    if (!user) return;
+    if (!user.emailVerified) {
+      showMsg('tfaMsg', 'error', 'You must verify your email before enabling 2FA.');
+      return;
+    }
     var s = arieteSession.get();
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var idx = users.findIndex(function(u){ return u.id === s.user; });
     if (idx === -1) return;
-    var user = users[idx];
-
-    if (!user.emailVerified && !user.twofa) {
-      showMsg('tfaMsg', 'error', 'You must verify your email before enabling 2FA.');
-      return;
-    }
-
-    user.twofa = !user.twofa;
+    users[idx].twofa = !users[idx].twofa;
     saveUsers(users);
 
     var track = document.getElementById('tfaTrack');
     var thumb = document.getElementById('tfaThumb');
-    track.style.background = user.twofa ? '#c8102e' : 'rgba(255,255,255,0.12)';
-    thumb.style.transform = user.twofa ? 'translateX(24px)' : 'translateX(0)';
-    showMsg('tfaMsg', 'success', user.twofa ? '2FA enabled.' : '2FA disabled.');
+    track.style.background = users[idx].twofa ? '#c8102e' : 'rgba(255,255,255,0.12)';
+    thumb.style.transform  = users[idx].twofa ? 'translateX(24px)' : 'translateX(0)';
+    showMsg('tfaMsg', 'success', users[idx].twofa ? '2FA enabled.' : '2FA disabled.');
   }
 
   // ── DELETE ACCOUNT ──
   function confirmDeleteAccount() {
-    if (!confirm('Are you sure you want to permanently delete your account? This cannot be undone.')) return;
+    if (!confirm('Are you sure you want to permanently delete your account?\n\nThis action cannot be undone.')) return;
+    if (!confirm('Final confirmation: your account and all associated data will be deleted immediately.\n\nPress OK to confirm deletion.')) return;
+
     var s = arieteSession.get();
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var updated = users.filter(function(u){ return u.id !== s.user; });
     saveUsers(updated);
-    ariet
+    arieteSession.logout();
+  }
+</script>
+
+</body>
+</html>
