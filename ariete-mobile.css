@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
    ARIETE MOBILE  –  injected by ariete-auth.js
-   Breakpoints: 768px (tablet), 480px (small)
+   Breakpoints: 768px (tablet), 480px (small), 360px (xs)
 ═══════════════════════════════════════════ */
 
 /* ── HAMBURGER BUTTON ── */
@@ -9,14 +9,16 @@
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 36px;
-  height: 36px;
-  padding: 6px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
   background: none;
   border: 1.5px solid rgba(0,0,0,0.15);
   cursor: pointer;
   flex-shrink: 0;
   z-index: 200;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 #arieteHamburger span {
   display: block;
@@ -53,9 +55,10 @@
   text-decoration: none;
   padding: 0.9rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-#arieteMobileMenu a:hover { color: #c8102e; }
+#arieteMobileMenu a:active { color: #c8102e; }
 #arieteMobileMenu a.mobile-cta {
   color: #c8102e;
   margin-top: 1.5rem;
@@ -64,11 +67,32 @@
   letter-spacing: 0.18em;
 }
 
+/* ── PROFILE DROPDOWN — reposition on mobile so it doesn't clip ── */
 @media (max-width: 768px) {
+  #arieteProfileMenu {
+    position: fixed !important;
+    right: 0.8rem !important;
+    top: 62px !important;
+    left: auto !important;
+    min-width: 210px !important;
+    max-width: calc(100vw - 1.6rem) !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   768px — TABLET + PHONE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── TOUCH QUALITY ── */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
 
   /* ── HEADER ── */
   header {
-    padding: 0.75rem 1.2rem !important;
+    padding: 0.7rem 1rem !important;
   }
   nav {
     display: none !important;
@@ -77,21 +101,24 @@
     display: flex !important;
   }
   .emblem-svg {
-    width: 48px !important;
+    width: 44px !important;
   }
   .brand-text h1 {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
   }
   .brand-text span {
     display: none !important;
   }
+
+  /* ── UTILITY BAR ── */
+  .utility-bar { display: none !important; }
 
   /* ── HERO (GOVERN_1.HTM) ── */
   .hero {
     grid-template-columns: 1fr !important;
     height: auto !important;
     min-height: auto !important;
-    padding: 4rem 1.5rem 3rem !important;
+    padding: 3.5rem 1.4rem 3rem !important;
   }
   .hero-content {
     padding: 0 !important;
@@ -100,135 +127,226 @@
     display: none !important;
   }
   .hero-title {
-    font-size: clamp(2rem, 9vw, 3.5rem) !important;
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
   }
   .hero-desc {
-    font-size: 0.9rem !important;
+    font-size: 0.88rem !important;
     max-width: 100% !important;
   }
   .hero-actions {
     flex-direction: column !important;
+    gap: 0.7rem !important;
   }
   .btn-primary, .btn-outline {
     text-align: center !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    padding: 0.9rem 1rem !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
-  /* Arrow buttons */
-  section.hero > button {
-    display: none !important;
+  .hero-emblem-wrap {
+    width: 100% !important;
+    max-width: 260px !important;
   }
 
   /* ── TICKER ── */
   .ticker {
+    height: 36px !important;
     font-size: 0.7rem !important;
   }
 
-  /* ── SECTIONS ── */
-  section, .section {
+  /* ── SECTION COMMONS ── */
+  section {
     padding-left: 1.2rem !important;
     padding-right: 1.2rem !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
   }
   .section-title {
-    font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
+    font-size: clamp(1.5rem, 7vw, 2.4rem) !important;
   }
   .section-subtitle {
     font-size: 0.85rem !important;
   }
-
-  /* ── SERVICE CARDS GRID ── */
-  .services-grid,
-  .cards-grid,
-  [style*="grid-template-columns: repeat"] {
-    grid-template-columns: 1fr !important;
-  }
-  .service-card, .card {
-    padding: 1.2rem !important;
-  }
-  .services-header, .news-header, .ministries-header {
+  .services-header,
+  .news-header,
+  .ministries-header {
     flex-direction: column !important;
     align-items: flex-start !important;
+    gap: 0.8rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
-  /* ── ANNOUNCE / SPLIT LAYOUTS ── */
-  .announce-grid,
-  [style*="grid-template-columns: 1fr 2fr"],
-  [style*="grid-template-columns: 2fr 1fr"],
-  [style*="grid-template-columns: 1fr 1fr"] {
+  /* ── SERVICES GRID ── */
+  .services-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1px !important;
+    background: #0a0a0a !important;
+  }
+  .service-card {
+    padding: 1.4rem 1rem !important;
+  }
+
+  /* ── ANNOUNCE BAND (2-column split) ── */
+  .announce-band {
     grid-template-columns: 1fr !important;
+    padding: 0 !important;
+  }
+  .announce-label-col {
+    padding: 2rem 1.4rem !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 1.5rem !important;
+  }
+  .announce-label-col .big-num {
+    font-size: 3rem !important;
+  }
+  .announce-content {
+    padding: 2rem 1.4rem !important;
   }
 
-  /* ── FORM PAGES (citizen-login, register, setup, settings) ── */
+  /* ── NEWS GRID (featured spans 2 rows on desktop) ── */
+  .news-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+  }
+  .news-card.featured {
+    grid-row: span 1 !important;
+  }
+  .news-img {
+    aspect-ratio: 16 / 7 !important;
+  }
+  .news-body {
+    padding: 1rem 1.2rem !important;
+  }
+
+  /* ── STATS (4-col inline grid) ── */
+  .stats {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 2rem 1.2rem !important;
+    gap: 1px !important;
+  }
+  .stat-num {
+    font-size: 2.4rem !important;
+  }
+  .stat-item {
+    padding: 1.5rem 1rem !important;
+  }
+
+  /* ── MINISTRIES LIST (3-col) ── */
+  .ministries-list {
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+  }
+  .ministry-item {
+    padding: 1.2rem 1.4rem !important;
+  }
+
+  /* ── ENLISTMENT ── */
+  .enlistment {
+    padding: 3rem 1.4rem !important;
+  }
+  .enlistment-top {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .enlistment-branches {
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+  }
+  .enlistment-stats {
+    flex-wrap: wrap !important;
+    gap: 1.2rem !important;
+  }
+  .branch-card {
+    padding: 1.5rem 1.4rem !important;
+  }
+
+  /* ── FORM PAGES ── */
   .form-card, .login-card, .register-card, .setup-card {
     margin: 1rem !important;
-    padding: 1.5rem !important;
+    padding: 1.5rem 1.2rem !important;
   }
 
-  /* ── ADMIN PAGE ── */
+  /* ── OTP INPUTS (2FA — 6 boxes that can overflow small screens) ── */
+  .otp {
+    width: 40px !important;
+    height: 48px !important;
+    font-size: 1.1rem !important;
+  }
+
+  /* ── ADMIN / MOD PANEL ── */
   .admin-grid, .admin-sidebar {
     grid-template-columns: 1fr !important;
   }
 
-  /* ── FOOTER ── */
-  footer {
-    padding: 2rem 1.2rem !important;
-  }
-  [style*="grid-template-columns: repeat(4"] {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  [style*="grid-template-columns: repeat(3"] {
-    grid-template-columns: 1fr !important;
-  }
+  /* ── PAGE-LEVEL WRAPPERS ── */
+  .page-wrap  { padding: 1.5rem 1rem !important; }
+  .page-inner { padding: 0 !important; max-width: 100% !important; }
+  .page-hero  { padding: 3rem 1.4rem !important; }
+  .page-hero h1 { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; }
+  .content-grid { grid-template-columns: 1fr !important; }
 
-  /* ── MINISTRY / SERVICE DETAIL PAGES ── */
-  .page-hero {
-    padding: 3rem 1.2rem !important;
+  /* ── CARDS ── */
+  .card           { padding: 1.2rem 1rem !important; }
+  .suspended-card { padding: 1.5rem 1rem !important; }
+
+  /* ── STATUS & SETTINGS ── */
+  .status-info-grid { grid-template-columns: 1fr !important; }
+
+  /* ── FOOTER ── */
+  footer { padding: 2.5rem 1.2rem !important; }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
   }
-  .page-hero h1 {
-    font-size: clamp(1.8rem, 8vw, 3rem) !important;
-  }
-  .content-grid {
-    grid-template-columns: 1fr !important;
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    font-size: 0.65rem !important;
   }
 
   /* ── TABLES ── */
-  table {
-    font-size: 0.75rem !important;
-  }
+  table    { font-size: 0.72rem !important; }
+  th, td   { padding: 0.5rem 0.6rem !important; }
+  .table-wrap, table { overflow-x: auto; display: block; }
 
   /* ── OVERFLOW SAFETY ── */
   html, body { overflow-x: hidden; max-width: 100%; }
-  img, video, iframe, svg { max-width: 100% !important; }
+  img, video, iframe { max-width: 100% !important; }
   * { min-width: 0; }
-
-  /* fix elementi con width inline fissa */
-  .hero-emblem-wrap { width: 100% !important; max-width: 300px !important; }
-  .footer-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-  .utility-bar { display: none !important; }
   pre, code { overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
 
-  /* fix grid con colonne inline */
-  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"],
+  /* ── INLINE GRID FALLBACKS (catch inline style grids) ── */
+  [style*="grid-template-columns: 1fr 2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
   [style*="grid-template-columns: 3fr 1fr"],
-  [style*="grid-template-columns: 1fr 3fr"] {
+  [style*="grid-template-columns: 1fr 3fr"],
+  [style*="grid-template-columns: 2fr 1fr 1fr"],
+  [style*="grid-template-columns: 1.5fr 1fr 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-  /* status grid in settings */
-  .status-info-grid { grid-template-columns: 1fr !important; }
-  /* page-wrap padding */
-  .page-wrap { padding: 2rem 1rem !important; }
-  .page-inner { padding: 0 !important; max-width: 100% !important; }
-  /* cards */
-  .card { padding: 1.2rem 1rem !important; }
-  /* suspended page */
-  .suspended-card { padding: 1.5rem 1rem !important; }
-  /* admin stats */
-  [style*="display:grid"][style*="repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
 }
 
+/* ═══════════════════════════════════════
+   480px — PHONE
+═══════════════════════════════════════ */
 @media (max-width: 480px) {
+
   .hero-title {
-    font-size: clamp(1.7rem, 8vw, 2.5rem) !important;
+    font-size: clamp(1.9rem, 11vw, 2.8rem) !important;
   }
   .section-title {
     font-size: clamp(1.4rem, 7vw, 2rem) !important;
@@ -238,5 +356,63 @@
   }
   .emblem-svg {
     width: 38px !important;
+  }
+
+  /* Services: single column */
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stats: single column */
+  .stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Footer: single column */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* OTP smaller */
+  .otp {
+    width: 34px !important;
+    height: 42px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Inline repeat grids: force 1-col */
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   360px — SMALL PHONE
+═══════════════════════════════════════ */
+@media (max-width: 360px) {
+
+  header {
+    padding: 0.55rem 0.8rem !important;
+  }
+  .brand-text h1 {
+    font-size: 0.75rem !important;
+  }
+  .emblem-svg {
+    width: 30px !important;
+  }
+  .otp {
+    width: 30px !important;
+    height: 38px !important;
+    font-size: 0.9rem !important;
+    padding: 0 !important;
+  }
+  section {
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+  }
+  footer {
+    padding: 2rem 0.9rem !important;
   }
 }

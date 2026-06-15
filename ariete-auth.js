@@ -133,7 +133,24 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>'
                   + label
                   + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
-    btn.onclick = function(e){ e.preventDefault(); };
+    btn.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      clearTimeout(_closeTimer);
+      var isOpen = menu.style.opacity === '1';
+      if (isOpen) {
+        menu.style.opacity       = '0';
+        menu.style.transform     = 'translateY(-8px)';
+        menu.style.pointerEvents = 'none';
+        setTimeout(function(){ if (menu.style.opacity === '0') menu.style.display = 'none'; }, 260);
+      } else {
+        menu.style.display       = 'block';
+        void menu.offsetWidth;
+        menu.style.opacity       = '1';
+        menu.style.transform     = 'translateY(0)';
+        menu.style.pointerEvents = 'auto';
+      }
+    };
 
     /* dropdown menu */
     var menu = document.createElement('div');
@@ -230,6 +247,17 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
         setTimeout(function(){ menu.style.display = 'none'; }, 260);
       }, 220);
     };
+
+    /* Close on outside click/tap (touch devices) */
+    document.addEventListener('click', function(e){
+      if (!wrapper.contains(e.target) && menu.style.opacity === '1') {
+        clearTimeout(_closeTimer);
+        menu.style.opacity       = '0';
+        menu.style.transform     = 'translateY(-8px)';
+        menu.style.pointerEvents = 'none';
+        setTimeout(function(){ if (menu.style.opacity === '0') menu.style.display = 'none'; }, 260);
+      }
+    });
 
     cta.parentNode.replaceChild(wrapper, cta);
   };
