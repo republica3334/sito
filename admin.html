@@ -922,8 +922,8 @@ function renderPending(){
   list.innerHTML=pending.map(u=>`
     <div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
       <div>
-        <div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name}</div>
-        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id} · ${u.email}</div>
+        <div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</div>
+        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
         <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}</div>
       </div>
       <div style="display:flex;gap:0.5rem;flex-shrink:0;">
@@ -936,17 +936,17 @@ function renderPending(){
 function renderAll(){
   const users=getUsers();
   const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const filtered=q?users.filter(u=>u.name.toLowerCase().includes(q)||u.id.toLowerCase().includes(q)||u.email.toLowerCase().includes(q)):users;
+  const filtered=q?users.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):users;
   const list=document.getElementById('citizenList');
   if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
   list.innerHTML=filtered.map(u=>`
     <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
       <div>
         <div style="display:flex;align-items:center;gap:0.8rem;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name}</span>
+          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
           ${statusBadge(u.status)}
         </div>
-        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id} · ${u.email}</div>
+        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
       </div>
       <div style="display:flex;gap:0.4rem;flex-shrink:0;">
         ${u.status!=='approved'?'<button onclick="approveUser(''+u.id+'')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':''}
