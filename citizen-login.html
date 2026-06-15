@@ -914,31 +914,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="#">Office of the President</a></li>
-        <li><a href="#">National Assembly</a></li>
-        <li><a href="#">Supreme Court</a></li>
-        <li><a href="#">Cabinet of Ministers</a></li>
-        <li><a href="#">Official Gazette</a></li>
+        <li><a href="government.html">Office of the President</a></li>
+        <li><a href="national-assembly.html">National Assembly</a></li>
+        <li><a href="supreme-court.html">Supreme Court</a></li>
+        <li><a href="ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="#">National ID Portal</a></li>
-        <li><a href="#">Tax Authority</a></li>
-        <li><a href="#">Civil Registry</a></li>
-        <li><a href="#">Health Services</a></li>
-        <li><a href="#">Education Portal</a></li>
+        <li><a href="service-digital-id.html">National ID Portal</a></li>
+        <li><a href="service-taxes.html">Tax Authority</a></li>
+        <li><a href="service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="service-health.html">Health Services</a></li>
+        <li><a href="service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="#">About the Republic</a></li>
-        <li><a href="#">Constitution</a></li>
-        <li><a href="#">Laws &amp; Decrees</a></li>
-        <li><a href="#">Open Data</a></li>
-        <li><a href="#">Contact Government</a></li>
+        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="constitution.html">Constitution</a></li>
+        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="open-data.html">Open Data</a></li>
+        <li><a href="contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>
@@ -1173,27 +1173,26 @@ function handleLogin(e) {
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
-  setTimeout(() => {
-    const ADMIN_ID = 'ilcreatore';
-    const ADMIN_PASS = '12345678';
+  // Admin fast-path (no Firestore)
+  const ADMIN_ID = 'ilcreatore';
+  const ADMIN_PASS = '12345678';
+  if (nid === ADMIN_ID && pwd === ADMIN_PASS) {
+    setTimeout(() => { arieteSession.set(ADMIN_ID, 'admin', 0); window.location.href = 'admin.html'; }, 600);
+    return;
+  }
 
-    // Check admin
-    if (nid === ADMIN_ID && pwd === ADMIN_PASS) {
-      arieteSession.set(ADMIN_ID, 'admin', 0);
-      window.location.href = 'admin.html';
-      return;
-    }
+  function failAttempt(msg) {
+    err.innerHTML = msg;
+    err.style.display = 'block';
+    btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
+  }
 
-    // Check registered citizens
-    const users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
-    const user = users.find(u => u.id === nid);
+  // Firestore citizen lookup
+  var dbLookup = window.arieteDB
+    ? window.arieteDB.getUser(nid)
+    : Promise.reject(new Error('DB not ready'));
 
-    function failAttempt(msg) {
-      err.innerHTML = msg;
-      err.style.display = 'block';
-      btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
-    }
-
+  dbLookup.then(function(user) {
     if (!user) { failAttempt('National ID not found. Please register first.'); return; }
     if (atob(user.pwd) !== pwd) { failAttempt('Incorrect credentials. Please try again.'); return; }
     if (user.status === 'suspended') {
@@ -1202,8 +1201,7 @@ function handleLogin(e) {
       btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
       return;
     }
-
-    // Success — check 2FA (only if user has email)
+    // Success — check 2FA
     if (user.twofa && user.email) {
       window._pendingUser = user;
       window._pendingRemember = document.getElementById('rememberMe').checked;
@@ -1212,7 +1210,10 @@ function handleLogin(e) {
     } else {
       finishLogin(user, document.getElementById('rememberMe').checked);
     }
-  }, 1400);
+  }).catch(function(e) {
+    console.error(e);
+    failAttempt('Connection error — please check your internet and try again.');
+  });
 }
 
 function showMsg(m) {

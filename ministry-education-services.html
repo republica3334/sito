@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of Education — Services · United Republic of Stars</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-education-services.html">
   <meta property="og:site_name"   content="United Republic of Stars">
@@ -24,13 +23,12 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
-      --gray-light:#f4f4f4;--gray-mid:#cccccc;--gray-dark:#333333;
       --font-head:'Oswald',sans-serif;--font-sub:'Rajdhani',sans-serif;--font-body:'Inter',sans-serif;
     }
     html{scroll-behavior:smooth;}
     body{background:var(--white);color:var(--black);font-family:var(--font-body);}
-    .utility-bar{background:var(--black);color:var(--gray-mid);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
-    .utility-bar a{color:var(--gray-mid);text-decoration:none;}
+    .utility-bar{background:var(--black);color:rgba(200,200,200,0.6);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
+    .utility-bar a{color:rgba(200,200,200,0.6);text-decoration:none;}
     .utility-links{display:flex;gap:2rem;}
     header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
     .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
@@ -45,6 +43,7 @@
     footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.08);padding:2.5rem 3rem;}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:1.2rem 0 0;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
     .footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none;}
+    .svc-card-hover:hover { background:#161616 !important; }
   </style>
 </head>
 <body>
@@ -80,72 +79,263 @@
   </nav>
 </header>
 
-<!-- HERO BANNER -->
+<!-- HERO -->
 <div style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>
-      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a>
-      &nbsp;/&nbsp;<a href="ministry-education.html" style="color:#c8102e;text-decoration:none;">MOE</a>
-      &nbsp;/&nbsp; Services
+      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a> &nbsp;/&nbsp;
+      <a href="ministry-education.html" style="color:#c8102e;text-decoration:none;">MOE</a> &nbsp;/&nbsp; Services
     </div>
     <h1 style="font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:0.5rem;">Ministry of Education</h1>
     <p style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:1rem;">Knowledge Builds Nations</p>
-    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Access all official services provided by the Ministry of Education. Select a service below to begin your application or request.</p>
+    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Select a service to expand its details — requirements, documents needed, and step-by-step process.</p>
   </div>
 </div>
 
-<!-- SERVICES GRID -->
+<!-- SERVICES LIST -->
 <section style="background:#0a0a0a;padding:4rem;">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Available Services
     </div>
     <h2 style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:2.5rem;">Ministry <span style="color:#c8102e;">Services</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;background:rgba(255,255,255,0.05);">
+    <div style="display:flex;flex-direction:column;gap:2px;">
 
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🎓</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">University Enrolment</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply to state universities and accredited higher education institutions through the national admissions portal.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply Now →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(0)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-0">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🎓</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">University Enrolment</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply to state universities and accredited higher education institutions through the national admissions portal.</p>
+        </div>
+        <div id="svc-chevron-0" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-0" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Secondary school diploma (min. grade C)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Age 17+</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Citizen or permanent resident</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Diploma / A-level results</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Personal statement (500 words)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Two academic references</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Create admissions account</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Select up to 5 programmes</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Upload documents</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive decision (30 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Accept offer and enrol</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 30 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply Now →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">💰</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Scholarships & Grants</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Browse and apply for merit-based and need-based scholarships funded by the Republic.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Browse Scholarships →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(1)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-1">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">💰</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Scholarships & Grants</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Browse and apply for merit-based and need-based scholarships funded by the Republic.</p>
+        </div>
+        <div id="svc-chevron-1" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-1" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Enrolled or accepted at accredited institution</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">GPA 3.0+ for merit scholarships</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income below national median for need-based</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Academic transcripts</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Proof of enrolment</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income declaration (family)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Essay (300 words)</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Browse available scholarships</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application per scholarship</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Committee review</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Award notification</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 4–6 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Browse Scholarships →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">📄</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Academic Records</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Request certified copies of diplomas, transcripts and qualification certificates.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Request Records →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(2)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-2">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📄</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Academic Records</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Request certified copies of diplomas, transcripts and qualification certificates.</p>
+        </div>
+        <div id="svc-chevron-2" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-2" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Former or current student at a state institution</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Student number</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Purpose of request</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit request online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Registry office processes in 5 days</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive certified PDF or physical copy by post</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 3–7 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Request Records →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🏫</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">School Registration</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Register a child for primary or secondary school in your district of residence.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Register →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(3)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-3">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🏫</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">School Registration</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Register a child for primary or secondary school in your district of residence.</p>
+        </div>
+        <div id="svc-chevron-3" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-3" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Child aged 5–17</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Proof of residence in district</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Parent/guardian National ID</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Child's birth certificate</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Proof of address (utility bill)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Vaccination record</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Previous school report (if transferring)</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit online form</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">District office confirms place (7 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive school assignment letter</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 5–10 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Register →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🧑‍🏫</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Teacher Certification</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply for or renew your national teaching qualification and subject certifications.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(4)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-4">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🧑‍🏫</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Teacher Certification</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for or renew your national teaching qualification and subject certifications.</p>
+        </div>
+        <div id="svc-chevron-4" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-4" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Degree in education or subject area</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Teaching practicum (minimum 120 hours)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Background check clearance</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">University degree certificate</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Practicum logbook</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Background check certificate</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Two professional references</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Document review (10 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Pass certification assessment</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive licence number</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 3–6 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🌐</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Foreign Qualification Recognition</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Submit foreign degrees and diplomas for official recognition within the United Republic.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(5)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-5">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🌐</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Foreign Qualification Recognition</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Submit foreign degrees and diplomas for official recognition within the United Republic.</p>
+        </div>
+        <div id="svc-chevron-5" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-5" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Original qualification issued by accredited foreign institution</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Notarised translation into English if not in English</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Original diploma</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Notarised translation</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Transcript</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Institution accreditation proof</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit documents by post or in person</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">MOE review (30 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive equivalency certificate</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 30 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit →</a>
+        </div>
+      </div>
     </div>
     </div>
   </div>
 </section>
 
-<!-- NOTICE BANNER -->
+<!-- NOTICE -->
 <div style="background:#111;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 4rem;">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1rem;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -185,11 +375,10 @@
       <div style="background:#111;border-top:3px solid rgba(255,255,255,0.1);padding:2rem;">
         <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.2rem;">Quick Links</div>
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
-          <a href="ministry-education.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
-          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
-          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
-          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
-          <a href="#" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Official Gazette</a>
+          <a href="ministry-education.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
+          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
+          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
+          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
         </div>
         <div style="margin-top:1.5rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.2);">
           <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Emergency</div>
@@ -209,13 +398,23 @@
         <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">United Republic of Stars · Official Government Ministry</div>
       </div>
     </div>
-    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Education of the United Republic of Stars. All applications are subject to official review.</p>
+    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Education of the United Republic of Stars.</p>
   </div>
   <div class="footer-bottom" style="max-width:1100px;margin:0 auto;">
     <span>United Republic of Stars · Ministry of Education · MOE</span>
     <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
+
+<script>
+function toggleService(idx) {
+  var body = document.getElementById('svc-body-' + idx);
+  var chev = document.getElementById('svc-chevron-' + idx);
+  var isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
 
 </body>
 </html>

@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of Infrastructure — Services · United Republic of Stars</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-infrastructure-services.html">
   <meta property="og:site_name"   content="United Republic of Stars">
@@ -24,13 +23,12 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
-      --gray-light:#f4f4f4;--gray-mid:#cccccc;--gray-dark:#333333;
       --font-head:'Oswald',sans-serif;--font-sub:'Rajdhani',sans-serif;--font-body:'Inter',sans-serif;
     }
     html{scroll-behavior:smooth;}
     body{background:var(--white);color:var(--black);font-family:var(--font-body);}
-    .utility-bar{background:var(--black);color:var(--gray-mid);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
-    .utility-bar a{color:var(--gray-mid);text-decoration:none;}
+    .utility-bar{background:var(--black);color:rgba(200,200,200,0.6);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
+    .utility-bar a{color:rgba(200,200,200,0.6);text-decoration:none;}
     .utility-links{display:flex;gap:2rem;}
     header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
     .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
@@ -45,6 +43,7 @@
     footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.08);padding:2.5rem 3rem;}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:1.2rem 0 0;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
     .footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none;}
+    .svc-card-hover:hover { background:#161616 !important; }
   </style>
 </head>
 <body>
@@ -80,72 +79,263 @@
   </nav>
 </header>
 
-<!-- HERO BANNER -->
+<!-- HERO -->
 <div style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>
-      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a>
-      &nbsp;/&nbsp;<a href="ministry-infrastructure.html" style="color:#c8102e;text-decoration:none;">MOIN</a>
-      &nbsp;/&nbsp; Services
+      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a> &nbsp;/&nbsp;
+      <a href="ministry-infrastructure.html" style="color:#c8102e;text-decoration:none;">MOIN</a> &nbsp;/&nbsp; Services
     </div>
     <h1 style="font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:0.5rem;">Ministry of Infrastructure</h1>
     <p style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:1rem;">Building the Republic — Road by Road</p>
-    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Access all official services provided by the Ministry of Infrastructure. Select a service below to begin your application or request.</p>
+    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Select a service to expand its details — requirements, documents needed, and step-by-step process.</p>
   </div>
 </div>
 
-<!-- SERVICES GRID -->
+<!-- SERVICES LIST -->
 <section style="background:#0a0a0a;padding:4rem;">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Available Services
     </div>
     <h2 style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:2.5rem;">Ministry <span style="color:#c8102e;">Services</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;background:rgba(255,255,255,0.05);">
+    <div style="display:flex;flex-direction:column;gap:2px;">
 
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🏗️</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Building Permit</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply for construction, renovation or demolition permits for residential or commercial properties.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(0)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-0">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🏗️</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Building Permit</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for construction, renovation or demolition permits for residential or commercial properties.</p>
+        </div>
+        <div id="svc-chevron-0" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-0" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property ownership or authorised agent</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Architect-signed plans for structures over 50m²</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Site plans</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Structural drawings</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property deed</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Architect's licence number</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application with plans</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Planning officer review (15 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Site inspection if required</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Permit issued or conditions set</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 15–30 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🛣️</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Road Works Request</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Report road defects, request maintenance or submit a road closure application.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit Request →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(1)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-1">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🛣️</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Road Works Request</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Report road defects, request maintenance or submit a road closure application.</p>
+        </div>
+        <div id="svc-chevron-1" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-1" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Any citizen for defect reports</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Business/authority for closures</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Location details / photos (defect report)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Traffic management plan (closure request)</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Highways team reviews within 5 days</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Work scheduled and reference number issued</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 5–15 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit Request →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🚰</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Utility Connection</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply for water, sewage or drainage connection to new or existing properties.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(2)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-2">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🚰</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Utility Connection</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for water, sewage or drainage connection to new or existing properties.</p>
+        </div>
+        <div id="svc-chevron-2" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-2" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property with valid building permit</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Connection point within 30m of existing mains</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Building permit</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Site plan showing connection point</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property deed</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Utility survey (10 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Connection fee quoted and paid</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Works carried out within 20 days</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 20–30 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">📐</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Planning Permission</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Submit land use and urban planning applications for zoning changes or development projects.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(3)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-3">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📐</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Planning Permission</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Submit land use and urban planning applications for zoning changes or development projects.</p>
+        </div>
+        <div id="svc-chevron-3" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-3" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Landowner or authorised developer</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Environmental impact assessment for >1 hectare</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Land ownership proof</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Development plan</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Environmental assessment (if required)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Community consultation report</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit planning application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Public consultation period (21 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Planning committee review</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Decision notice issued</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 6–12 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🌉</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Public Works Tender</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Browse and submit bids for government infrastructure tenders and public works contracts.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">View Tenders →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(4)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-4">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🌉</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Public Works Tender</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Browse and submit bids for government infrastructure tenders and public works contracts.</p>
+        </div>
+        <div id="svc-chevron-4" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-4" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Registered business in the Republic</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Relevant industry certification / past works record</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Company registration</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Financial statements (last 2 years)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Technical proposal</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Pricing schedule</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Register on procurement portal</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Download tender documents</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit bid before deadline</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Evaluation and award notification</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> Per tender (typically 4–8 weeks)
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">View Tenders →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🏠</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Social Housing Application</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply for public housing assistance under the National Affordable Housing Programme.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(5)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-5">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🏠</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Social Housing Application</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for public housing assistance under the National Affordable Housing Programme.</p>
+        </div>
+        <div id="svc-chevron-5" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-5" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income below housing threshold</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Currently without adequate housing</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Stars citizen or permanent resident</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income declaration</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Current tenancy details or homelessness evidence</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Family size declaration</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Housing needs assessment (10 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Placed on waiting list with priority score</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Offered property when available</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> Varies by demand — average 3–18 months
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
     </div>
     </div>
   </div>
 </section>
 
-<!-- NOTICE BANNER -->
+<!-- NOTICE -->
 <div style="background:#111;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 4rem;">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1rem;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -185,15 +375,14 @@
       <div style="background:#111;border-top:3px solid rgba(255,255,255,0.1);padding:2rem;">
         <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.2rem;">Quick Links</div>
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
-          <a href="ministry-infrastructure.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
-          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
-          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
-          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
-          <a href="#" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Official Gazette</a>
+          <a href="ministry-infrastructure.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
+          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
+          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
+          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
         </div>
         <div style="margin-top:1.5rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.2);">
           <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Emergency</div>
-          <div style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.5);">+1-800-INFRA-911 (Structural Emergency)</div>
+          <div style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.5);">+1-800-INFRA-911</div>
         </div>
       </div>
     </div>
@@ -209,13 +398,23 @@
         <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">United Republic of Stars · Official Government Ministry</div>
       </div>
     </div>
-    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Infrastructure of the United Republic of Stars. All applications are subject to official review.</p>
+    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Infrastructure of the United Republic of Stars.</p>
   </div>
   <div class="footer-bottom" style="max-width:1100px;margin:0 auto;">
     <span>United Republic of Stars · Ministry of Infrastructure · MOIN</span>
     <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
+
+<script>
+function toggleService(idx) {
+  var body = document.getElementById('svc-body-' + idx);
+  var chev = document.getElementById('svc-chevron-' + idx);
+  var isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
 
 </body>
 </html>

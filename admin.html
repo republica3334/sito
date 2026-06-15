@@ -823,31 +823,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="#">Office of the President</a></li>
-        <li><a href="#">National Assembly</a></li>
-        <li><a href="#">Supreme Court</a></li>
-        <li><a href="#">Cabinet of Ministers</a></li>
-        <li><a href="#">Official Gazette</a></li>
+        <li><a href="government.html">Office of the President</a></li>
+        <li><a href="national-assembly.html">National Assembly</a></li>
+        <li><a href="supreme-court.html">Supreme Court</a></li>
+        <li><a href="ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="#">National ID Portal</a></li>
-        <li><a href="#">Tax Authority</a></li>
-        <li><a href="#">Civil Registry</a></li>
-        <li><a href="#">Health Services</a></li>
-        <li><a href="#">Education Portal</a></li>
+        <li><a href="service-digital-id.html">National ID Portal</a></li>
+        <li><a href="service-taxes.html">Tax Authority</a></li>
+        <li><a href="service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="service-health.html">Health Services</a></li>
+        <li><a href="service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="#">About the Republic</a></li>
-        <li><a href="#">Constitution</a></li>
-        <li><a href="#">Laws &amp; Decrees</a></li>
-        <li><a href="#">Open Data</a></li>
-        <li><a href="#">Contact Government</a></li>
+        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="constitution.html">Constitution</a></li>
+        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="open-data.html">Open Data</a></li>
+        <li><a href="contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>
@@ -896,8 +896,9 @@
 
 
 <script>
-function getUsers(){return JSON.parse(localStorage.getItem('ariete_users')||'[]');}
-function saveUsers(u){localStorage.setItem('ariete_users',JSON.stringify(u));}
+/* Users are now stored in Firestore — _users is kept in sync via real-time listener */
+var _users = [];
+function getUsers(){ return _users; }
 function getLog(){return JSON.parse(localStorage.getItem('ariete_log')||'[]');}
 function addLog(msg){
   const log=getLog();
@@ -912,6 +913,11 @@ function statusBadge(s){
   const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
   return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+( colors[s]||'#aaa')+';">'+s+'</span>';
 }
+function roleBadge(r){
+  if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
+  return '';
+}
+function isCreator(id){ return id === 'ilcreatore'; }
 
 function renderStats(){
   const users=getUsers();
@@ -919,8 +925,9 @@ function renderStats(){
   const pending=users.filter(u=>u.status==='pending').length;
   const approved=users.filter(u=>u.status==='approved').length;
   const suspended=users.filter(u=>u.status==='suspended').length;
+  const mods=users.filter(u=>u.role==='moderator').length;
   document.getElementById('statsBar').innerHTML=
-    stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended);
+    stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Moderators',mods);
   document.getElementById('pendingCount').textContent='('+pending+')';
   document.getElementById('totalCount').textContent='('+total+')';
 }
@@ -959,23 +966,35 @@ function renderAll(){
   const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
   const list=document.getElementById('citizenList');
   if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
-  list.innerHTML=filtered.map(u=>`
-    <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+  list.innerHTML=filtered.map(u=>{
+    const creator = isCreator(u.id);
+    const isMod   = u.role === 'moderator';
+    const actions = creator ? `
+      <span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#c8102e;border:1px solid rgba(200,16,46,0.3);padding:0.2rem 0.6rem;">PROTECTED · CREATOR</span>
+    ` : `
+      ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
+      ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
+      ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
+      ${!isMod?`<button onclick="makeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
+      <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
+    `;
+    return `
+    <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
       <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;">
+        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
           <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
           ${statusBadge(u.status)}
+          ${roleBadge(u.role)}
+          ${creator?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">👑 CREATOR</span>':''}
           ${u.approvalRequested&&u.status==='pending'?'<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.4);padding:0.12rem 0.4rem;">⚑ Req.</span>':''}
         </div>
         <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
       </div>
-      <div style="display:flex;gap:0.4rem;flex-shrink:0;">
-        ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
-        ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
-        ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
-        <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
+      <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
+        ${actions}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderLog(){
@@ -986,32 +1005,54 @@ function renderLog(){
 }
 
 function approveUser(id){
-  const users=getUsers();
-  const u=users.find(x=>x.id===id);
-  if(u){u.status='approved';saveUsers(users);addLog('Approved citizen: '+u.name+' ('+id+')');refresh();}
+  const u=_users.find(x=>x.id===id);
+  if(!u) return;
+  arieteDB.updateUser(id,{status:'approved'}).then(()=>addLog('Approved: '+u.name+' ('+id+')')).catch(console.error);
 }
 function rejectUser(id){
   if(!confirm('Reject and delete this registration?')) return;
-  const users=getUsers();
-  const u=users.find(x=>x.id===id);
-  if(u){saveUsers(users.filter(x=>x.id!==id));addLog('Rejected registration: '+u.name+' ('+id+')');refresh();}
+  const u=_users.find(x=>x.id===id);
+  arieteDB.deleteUser(id).then(()=>addLog('Rejected: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+}
+
+function deleteUser(id){
+  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
+  if(!confirm('Permanently delete this citizen account?')) return;
+  const u=_users.find(x=>x.id===id);
+  arieteDB.deleteUser(id).then(()=>addLog('Deleted: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+}
+function makeModUser(id){
+  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
+  const u=_users.find(x=>x.id===id);
+  arieteDB.updateUser(id,{role:'moderator',status:'approved'}).then(()=>addLog('Granted Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+}
+function revokeModUser(id){
+  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
+  const u=_users.find(x=>x.id===id);
+  arieteDB.updateUser(id,{role:'citizen'}).then(()=>addLog('Revoked Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
 }
 function suspendUser(id){
-  const users=getUsers();
-  const u=users.find(x=>x.id===id);
-  if(u){u.status='suspended';saveUsers(users);addLog('Suspended citizen: '+u.name+' ('+id+')');refresh();}
-}
-function deleteUser(id){
-  if(!confirm('Permanently delete this citizen account?')) return;
-  const users=getUsers();
-  const u=users.find(x=>x.id===id);
-  saveUsers(users.filter(x=>x.id!==id));
-  addLog('Deleted citizen account: '+(u?u.name:'?')+' ('+id+')');
-  refresh();
+  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
+  const u=_users.find(x=>x.id===id);
+  arieteDB.updateUser(id,{status:'suspended'}).then(()=>addLog('Suspended: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
 }
 
 function refresh(){renderStats();renderPending();renderAll();}
-refresh();
+
+/* Real-time listener — auto-refreshes whenever Firestore data changes */
+if(window.arieteDB){
+  arieteDB.onUsers(function(users){
+    _users = users;
+    refresh();
+  });
+} else {
+  /* Firebase still loading — retry */
+  setTimeout(function(){
+    if(window.arieteDB){
+      arieteDB.onUsers(function(users){ _users=users; refresh(); });
+    }
+  }, 1200);
+}
 renderLog();
 addLog('Admin session started');
 </script>

@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of Justice — Services · United Republic of Stars</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-justice-services.html">
   <meta property="og:site_name"   content="United Republic of Stars">
@@ -24,13 +23,12 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
-      --gray-light:#f4f4f4;--gray-mid:#cccccc;--gray-dark:#333333;
       --font-head:'Oswald',sans-serif;--font-sub:'Rajdhani',sans-serif;--font-body:'Inter',sans-serif;
     }
     html{scroll-behavior:smooth;}
     body{background:var(--white);color:var(--black);font-family:var(--font-body);}
-    .utility-bar{background:var(--black);color:var(--gray-mid);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
-    .utility-bar a{color:var(--gray-mid);text-decoration:none;}
+    .utility-bar{background:var(--black);color:rgba(200,200,200,0.6);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
+    .utility-bar a{color:rgba(200,200,200,0.6);text-decoration:none;}
     .utility-links{display:flex;gap:2rem;}
     header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
     .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
@@ -45,6 +43,7 @@
     footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.08);padding:2.5rem 3rem;}
     .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:1.2rem 0 0;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
     .footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none;}
+    .svc-card-hover:hover { background:#161616 !important; }
   </style>
 </head>
 <body>
@@ -80,72 +79,263 @@
   </nav>
 </header>
 
-<!-- HERO BANNER -->
+<!-- HERO -->
 <div style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>
-      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a>
-      &nbsp;/&nbsp;<a href="ministry-justice.html" style="color:#c8102e;text-decoration:none;">MOJ</a>
-      &nbsp;/&nbsp; Services
+      <a href="ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a> &nbsp;/&nbsp;
+      <a href="ministry-justice.html" style="color:#c8102e;text-decoration:none;">MOJ</a> &nbsp;/&nbsp; Services
     </div>
     <h1 style="font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:0.5rem;">Ministry of Justice</h1>
     <p style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:1rem;">Equal Justice Under Stars</p>
-    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Access all official services provided by the Ministry of Justice. Select a service below to begin your application or request.</p>
+    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Select a service to expand its details — requirements, documents needed, and step-by-step process.</p>
   </div>
 </div>
 
-<!-- SERVICES GRID -->
+<!-- SERVICES LIST -->
 <section style="background:#0a0a0a;padding:4rem;">
   <div style="max-width:1100px;margin:0 auto;">
     <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;">
       <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Available Services
     </div>
     <h2 style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:2.5rem;">Ministry <span style="color:#c8102e;">Services</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;background:rgba(255,255,255,0.05);">
+    <div style="display:flex;flex-direction:column;gap:2px;">
 
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">⚖️</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Legal Aid Application</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Apply for free or subsidised legal representation if you cannot afford a private solicitor.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(0)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-0">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">⚖️</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Legal Aid Application</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for free or subsidised legal representation if you cannot afford a private solicitor.</p>
+        </div>
+        <div id="svc-chevron-0" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-0" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income below legal aid threshold</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Case must have legal merit</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Civil, criminal or family law matters</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income declaration</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Court summons or legal matter details</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit online application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Means and merits test (10 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Solicitor assigned from approved panel</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Representation begins</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 7–14 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">📜</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Court Filing</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Submit civil court documents, small claims applications, and legal notices online.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">File Documents →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(1)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-1">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📜</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Court Filing</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Submit civil court documents, small claims applications, and legal notices online.</p>
+        </div>
+        <div id="svc-chevron-1" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-1" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Active case reference OR new claim</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Filing fee payable (small claims: SR 50–200)</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Completed claim form</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Supporting evidence</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Defendant details</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Payment receipt</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Create court filing account</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Complete and upload documents</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Pay filing fee</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive case reference number</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> Immediate (filing) / Court date within 60 days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">File Documents →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🔍</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Case Status Lookup</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Track the status of an active civil or criminal case in the national court system.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Look Up Case →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(2)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-2">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🔍</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Case Status Lookup</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Track the status of an active civil or criminal case in the national court system.</p>
+        </div>
+        <div id="svc-chevron-2" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-2" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Must be a party to the case or legal representative</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Case reference number</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID or solicitor's practising certificate</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Log into court portal</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Enter case reference</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">View status, hearing dates and documents</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> Immediate (online lookup)
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Look Up Case →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">📋</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Notary Services</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Book an appointment with a government-certified notary for document authentication.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Book Appointment →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(3)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-3">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📋</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Notary Services</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Book an appointment with a government-certified notary for document authentication.</p>
+        </div>
+        <div id="svc-chevron-3" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-3" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Original documents required at appointment</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Identification required</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Original document for notarisation</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Any supporting context documents</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Book appointment online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Attend notary office with originals</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Documents authenticated and stamped</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Certified copies provided</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> Appointment within 5 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Book Appointment →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🏛️</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Tribunal Appeals</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Submit an appeal to an administrative tribunal against government decisions.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit Appeal →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(4)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-4">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🏛️</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Tribunal Appeals</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Submit an appeal to an administrative tribunal against government decisions.</p>
+        </div>
+        <div id="svc-chevron-4" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-4" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Appeal must be filed within 28 days of the original decision</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Must have first used internal review process</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Copy of original decision</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Internal review outcome</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Grounds of appeal (written)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Supporting evidence</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit appeal form online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Case allocated to tribunal (14 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Hearing scheduled (30–90 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Decision issued in writing</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 30–90 days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Submit Appeal →</a>
+        </div>
+      </div>
     </div>
-    <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;display:flex;flex-direction:column;gap:1rem;">
-      <div style="font-size:2rem;line-height:1;">🤝</div>
-      <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0;">Mediation Services</h3>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;flex:1;margin:0;">Request government-facilitated mediation to resolve civil disputes without going to court.</p>
-      <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.1rem;text-decoration:none;align-self:flex-start;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Request Mediation →</a>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(5)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-5">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🤝</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Mediation Services</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Request government-facilitated mediation to resolve civil disputes without going to court.</p>
+        </div>
+        <div id="svc-chevron-5" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-5" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Both parties must consent to mediation</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Available for civil, neighbour, family and commercial disputes</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Dispute summary from both parties</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Any relevant contracts or evidence</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit mediation request</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Other party notified and invited to consent</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Mediator assigned</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Joint session scheduled</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Settlement agreement drafted if successful</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 2–6 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Request Mediation →</a>
+        </div>
+      </div>
     </div>
     </div>
   </div>
 </section>
 
-<!-- NOTICE BANNER -->
+<!-- NOTICE -->
 <div style="background:#111;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 4rem;">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1rem;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -185,15 +375,14 @@
       <div style="background:#111;border-top:3px solid rgba(255,255,255,0.1);padding:2rem;">
         <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.2rem;">Quick Links</div>
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
-          <a href="ministry-justice.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
-          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
-          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
-          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
-          <a href="#" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Official Gazette</a>
+          <a href="ministry-justice.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
+          <a href="ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
+          <a href="services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
+          <a href="citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
         </div>
         <div style="margin-top:1.5rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.2);">
           <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Emergency</div>
-          <div style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.5);">N/A — contact 112 for emergencies</div>
+          <div style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.5);">N/A — call 112 for emergencies</div>
         </div>
       </div>
     </div>
@@ -209,13 +398,23 @@
         <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">United Republic of Stars · Official Government Ministry</div>
       </div>
     </div>
-    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Justice of the United Republic of Stars. All applications are subject to official review.</p>
+    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Justice of the United Republic of Stars.</p>
   </div>
   <div class="footer-bottom" style="max-width:1100px;margin:0 auto;">
     <span>United Republic of Stars · Ministry of Justice · MOJ</span>
     <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
+
+<script>
+function toggleService(idx) {
+  var body = document.getElementById('svc-body-' + idx);
+  var chev = document.getElementById('svc-chevron-' + idx);
+  var isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
 
 </body>
 </html>
