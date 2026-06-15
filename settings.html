@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="ariete-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Republic of Ariete — Account Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --red: #c8102e; --red-dark: #9b0c22;
+      --gray-light: #f4f4f4; --gray-mid: #cccccc; --gray-dark: #333333;
+      --font-head: 'Oswald', sans-serif; --font-sub: 'Rajdhani', sans-serif; --font-body: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-body); }
+
+    .utility-bar {
+      background: var(--black); color: var(--gray-mid);
+      font-family: var(--font-sub); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 3rem; height: 34px;
+    }
+    .utility-bar a { color: var(--gray-mid); text-decoration: none; }
+    .utility-bar a:hover { color: var(--white); }
+    .utility-links { display: flex; gap: 2rem; }
+
+    header {
+      background: var(--white); border-bottom: 3px solid var(--black);
+      padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-brand { display: flex; align-items: center; gap: 1.2rem; text-decoration: none; color: inherit; }
+    .emblem-svg { width: 78px; height: auto; flex-shrink: 0; display: block; }
+    .brand-text h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; }
+    .brand-text span { font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); display: block; margin-top: 2px; }
+    nav { display: flex; align-items: center; gap: 0.2rem; }
+    nav a { font-family: var(--font-sub); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); text-decoration: none; padding: 0.5rem 0.9rem; transition: color 0.2s, background 0.2s; }
+    nav a:hover { background: var(--black); color: var(--white); }
+    .nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 0.5rem 1.2rem !important; margin-left: 0.5rem; }
+    .nav-cta:hover { background: var(--red-dark) !important; }
+
+    /* PAGE */
+    .page-wrap {
+      min-height: calc(100vh - 120px);
+      background: var(--black);
+      padding: 4rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .page-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),
+                  repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);
+      pointer-events: none;
+    }
+    .page-inner {
+      position: relative; z-index: 1;
+      max-width: 640px; margin: 0 auto;
+    }
+
+    /* HEADER BLOCK */
+    .page-header { text-align: center; margin-bottom: 2.5rem; }
+    .page-header img { width: 72px; height: 72px; filter: invert(1); opacity: 0.8; }
+    .page-header .eyebrow { font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.8rem; }
+
+    /* CARD */
+    .card {
+      background: #0f0f0f; border-top: 3px solid var(--red);
+      padding: 2rem 2.2rem; margin-bottom: 1.2rem;
+    }
+    .card-title {
+      font-family: var(--font-head); font-size: 0.9rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin-bottom: 0.3rem;
+    }
+    .card-sub {
+      font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; line-height: 1.6;
+    }
+    label.field-label {
+      display: block; font-family: var(--font-sub); font-size: 0.58rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem;
+    }
+    .field { margin-bottom: 1rem; }
+    input.txt {
+      width: 100%; background: #1a1a1a; border: 1.5px solid rgba(255,255,255,0.1);
+      color: var(--white); font-family: var(--font-body); font-size: 0.88rem;
+      padding: 0.8rem 1rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;
+    }
+    input.txt:focus { border-color: var(--red); }
+    input.txt:read-only { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--red); color: white; border: none;
+      font-family: var(--font-sub); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.85rem 1.6rem; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); }
+    .btn-primary:disabled { background: #444; cursor: not-allowed; }
+    .btn-ghost {
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);
+      font-family: var(--font-sub); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.85rem 1.4rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: white; color: white; }
+
+    .msg {
+      padding: 0.7rem 1rem; font-family: var(--font-body); font-size: 0.8rem;
+      margin-bottom: 1rem; display: none;
+    }
+    .msg.error { background: rgba(200,16,46,0.12); border-left: 3px solid var(--red); color: var(--red); }
+    .msg.success { background: rgba(0,180,80,0.1); border-left: 3px solid #00b450; color: #00b450; }
+    .msg.info { background: rgba(255,255,255,0.05); border-left: 3px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+
+    .badge-verified {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #00b450; background: rgba(0,180,80,0.1); border: 1px solid rgba(0,180,80,0.3);
+      padding: 0.25rem 0.6rem; margin-left: 0.6rem;
+    }
+    .badge-unverified {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #f5a623; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3);
+      padding: 0.25rem 0.6rem; margin-left: 0.6rem;
+    }
+
+    .otp-row { display: flex; gap: 0.8rem; align-items: flex-end; }
+    .otp-row input.txt { flex: 1; letter-spacing: 0.3em; font-size: 1.1rem; text-align: center; }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.2rem 0; }
+
+    /* danger zone */
+    .card.danger { border-top-color: #555; }
+    .card.danger .card-title { color: rgba(255,255,255,0.6); }
+
+    /* footer */
+    footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 3.5rem 3rem; }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-brand p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
+    .footer-col h5 { font-family: var(--font-sub); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a { font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+    .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="utility-links">
+    <a href="#">Accessibility</a>
+    <a href="#">Language / Lingua</a>
+    <a href="#">Emergency Line: 1-800-ARX-0001</a>
+  </div>
+  <div class="utility-links">
+    <a href="#">Citizen Portal</a>
+    <a href="#">Official Gazette</a>
+    <a href="#">Transparency</a>
+  </div>
+</div>
+
+<header>
+  <a href="GOVERN_1.HTM" class="header-brand">
+    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblema">
+    <div class="brand-text">
+      <h1>Republic of Ariete</h1>
+      <span>Official Government Portal · Est. MMXII</span>
+    </div>
+  </a>
+  <nav>
+    <a href="government.html">Government</a>
+    <a href="services.html">Services</a>
+    <a href="ministries.html">Ministries</a>
+    <a href="#">Laws &amp; Decrees</a>
+    <a href="#">News</a>
+    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <img src="svgs/icone/republica/2.svg" alt="Emblem">
+      <div class="eyebrow">Republic of Ariete — Account Settings</div>
+    </div>
+
+    <!-- EMAIL VERIFICATION CARD -->
+    <div class="card" id="emailCard">
+      <div class="card-title">
+        Email Address
+        <span id="verifiedBadge" class="badge-verified" style="display:none;">✓ Verified</span>
+        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">⚠ Unverified</span>
+      </div>
+      <div class="card-sub">Verify your email to enable two-factor authentication and receive security alerts.</div>
+
+      <!-- Email display -->
+      <div class="field">
+        <label class="field-label">Current Email</label>
+        <input id="currentEmail" class="txt" type="email" readonly>
+      </div>
+
+      <div id="emailMsg" class="msg"></div>
+
+      <!-- Verify button (shown when unverified) -->
+      <div id="verifySection">
+        <button class="btn-primary" onclick="sendVerificationCode()" id="sendBtn">Send Verification Code</button>
+      </div>
+
+      <!-- OTP input (shown after sending) -->
+      <div id="otpSection" style="display:none; margin-top:1.2rem;">
+        <hr class="divider">
+        <div class="card-sub" style="margin-bottom:1rem;">Enter the 6-digit code sent to your email. Valid for 5 minutes.</div>
+        <div class="otp-row">
+          <div style="flex:1;">
+            <label class="field-label">Verification Code</label>
+            <input id="otpInput" class="txt" type="text" maxlength="6" placeholder="000000" oninput="this.value=this.value.replace(/\D/g,'')">
+          </div>
+          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm →</button>
+        </div>
+        <div style="margin-top:0.8rem;">
+          <button class="btn-ghost" onclick="sendVerificationCode()" style="font-size:0.62rem;padding:0.5rem 0.9rem;">Resend Code</button>
+        </div>
+        <div id="otpTimer" style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.6rem;"></div>
+      </div>
+
+      <!-- Already verified message -->
+      <div id="alreadyVerified" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your email address is verified.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE EMAIL CARD -->
+    <div class="card">
+      <div class="card-title">Change Email</div>
+      <div class="card-sub">Update the email address linked to your citizen account.</div>
+      <div class="field">
+        <label class="field-label">New Email Address</label>
+        <input id="newEmail" class="txt" type="email" placeholder="new@email.com">
+      </div>
+      <div id="changeEmailMsg" class="msg"></div>
+      <button class="btn-primary" onclick="changeEmail()">Update Email</button>
+    </div>
+
+    <!-- CHANGE PASSWORD CARD -->
+    <div class="card">
+      <div class="card-title">Change Password</div>
+      <div class="card-sub">Choose a strong password of at least 8 characters.</div>
+      <div class="field">
+        <label class="field-label">Current Password</label>
+        <input id="currentPwd" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div class="field">
+        <label class="field-label">New Password</label>
+        <input id="newPwd" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div class="field">
+        <label class="field-label">Confirm New Password</label>
+        <input id="newPwd2" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div id="pwdMsg" class="msg"></div>
+      <button class="btn-primary" onclick="changePassword()">Update Password</button>
+    </div>
+
+    <!-- 2FA CARD -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+        <div>
+          <div class="card-title" style="margin-bottom:0.3rem;">Two-Factor Authentication</div>
+          <div class="card-sub" style="margin-bottom:0;">Each login will require a 6-digit code sent to your email.</div>
+        </div>
+        <label style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;">
+          <span id="tfaTrack" onclick="toggle2FA()" style="position:absolute;inset:0;border-radius:28px;cursor:pointer;transition:background 0.3s;background:rgba(255,255,255,0.12);">
+            <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);"></span>
+          </span>
+        </label>
+      </div>
+      <div id="tfaMsg" class="msg" style="margin-top:1rem;margin-bottom:0;"></div>
+    </div>
+
+    <!-- DANGER ZONE -->
+    <div class="card danger">
+      <div class="card-title">Danger Zone</div>
+      <div class="card-sub">These actions are irreversible. Proceed with caution.</div>
+      <button class="btn-ghost" onclick="confirmDeleteAccount()" style="border-color:rgba(200,16,46,0.4);color:rgba(200,16,46,0.7);" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(200,16,46,0.4)';this.style.color='rgba(200,16,46,0.7)'">Delete My Account</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="svgs/icone/republica/1.svg" width="78" alt="Emblema">
+      <p>The Official Portal of the Republic of Ariete. All government information, services and legislation accessible to every citizen.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 Republic of Ariete. All Rights Reserved.</p>
+    </div>
+    <div class="footer-col"><h5>Government</h5><ul><li><a href="#">Office of the President</a></li><li><a href="#">National Assembly</a></li><li><a href="#">Supreme Court</a></li><li><a href="#">Cabinet of Ministers</a></li></ul></div>
+    <div class="footer-col"><h5>Citizen Services</h5><ul><li><a href="#">National ID Portal</a></li><li><a href="#">Tax Authority</a></li><li><a href="#">Civil Registry</a></li><li><a href="#">Health Services</a></li></ul></div>
+    <div class="footer-col"><h5>Information</h5><ul><li><a href="#">About the Republic</a></li><li><a href="#">Constitution</a></li><li><a href="#">Laws &amp; Decrees</a></li><li><a href="#">Contact Government</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>Republic of Ariete · Est. MMXII · Official Government Website</span>
+    <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script>
+  arieteSession.requireLogin();
+
+  const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
+  const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+  var _otpCode = null;
+  var _otpExpiry = null;
+  var _timerInterval = null;
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', function() {
+    var s = arieteSession.get();
+    if (!s) return;
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var user = users.find(function(u){ return u.id === s.user; });
+    if (!user) return;
+
+    // Populate email
+    document.getElementById('currentEmail').value = user.email || '';
+
+    // Verified badge
+    if (user.emailVerified) {
+      document.getElementById('verifiedBadge').style.display = 'inline-flex';
+      document.getElementById('verifySection').style.display = 'none';
+      document.getElementById('alreadyVerified').style.display = 'block';
+    } else {
+      document.getElementById('unverifiedBadge').style.display = 'inline-flex';
+    }
+
+    // 2FA toggle
+    if (user.twofa) {
+      document.getElementById('tfaTrack').style.background = '#c8102e';
+      document.getElementById('tfaThumb').style.transform = 'translateX(24px)';
+    }
+  });
+
+  // ── HELPERS ──
+  function getUser() {
+    var s = arieteSession.get();
+    if (!s) return null;
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    return users.find(function(u){ return u.id === s.user; }) || null;
+  }
+  function saveUsers(users) { localStorage.setItem('ariete_users', JSON.stringify(users)); }
+  function showMsg(id, type, text) {
+    var el = document.getElementById(id);
+    el.className = 'msg ' + type;
+    el.textContent = text;
+    el.style.display = 'block';
+  }
+  function hideMsg(id) { document.getElementById(id).style.display = 'none'; }
+  function generateOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
+
+  // ── SEND VERIFICATION CODE ──
+  function sendVerificationCode() {
+    var user = getUser();
+    if (!user || !user.email) {
+      showMsg('emailMsg', 'error', 'No email address found on your account. Please add one first.');
+      return;
+    }
+    _otpCode   = generateOTP();
+    _otpExpiry = Date.now() + 5 * 60 * 1000;
+
+    showMsg('emailMsg', 'info', 'Sending verification code to ' + user.email + '...');
+    document.getElementById('sendBtn').disabled = true;
+
+    if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: user.email,
+        to_name: user.name || user.id,
+        otp_code: _otpCode,
+        portal: 'Republic of Ariete — Email Verification'
+      }).then(function() {
+        showMsg('emailMsg', 'success', 'Code sent! Check your inbox.');
+      }, function() {
+        // DEV fallback
+        showMsg('emailMsg', 'info', 'DEV MODE — Code: ' + _otpCode);
+      });
+    } else {
+      showMsg('emailMsg', 'info', 'DEV MODE — Code: ' + _otpCode);
+    }
+
+    document.getElementById('otpSection').style.display = 'block';
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(_timerInterval);
+    _timerInterval = setInterval(function() {
+      var remaining = Math.max(0, Math.ceil((_otpExpiry - Date.now()) / 1000));
+      var m = Math.floor(remaining / 60);
+      var s = remaining % 60;
+      document.getElementById('otpTimer').textContent = 'Code expires in ' + m + ':' + (s < 10 ? '0' : '') + s;
+      if (remaining === 0) {
+        clearInterval(_timerInterval);
+        document.getElementById('otpTimer').textContent = 'Code expired. Please request a new one.';
+        document.getElementById('sendBtn').disabled = false;
+      }
+    }, 1000);
+  }
+
+  // ── CONFIRM OTP ──
+  function confirmCode() {
+    var entered = document.getElementById('otpInput').value.trim();
+    if (!_otpCode) { showMsg('emailMsg', 'error', 'Please request a code first.'); return; }
+    if (Date.now() > _otpExpiry) { showMsg('emailMsg', 'error', 'Code expired. Please request a new one.'); return; }
+    if (entered !== _otpCode) { showMsg('emailMsg', 'error', 'Incorrect code. Please try again.'); return; }
+
+    // Mark verified
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var idx = users.findIndex(function(u){ return u.id === s.user; });
+    if (idx !== -1) {
+      users[idx].emailVerified = true;
+      saveUsers(users);
+    }
+
+    clearInterval(_timerInterval);
+    document.getElementById('otpSection').style.display = 'none';
+    document.getElementById('verifySection').style.display = 'none';
+    document.getElementById('unverifiedBadge').style.display = 'none';
+    document.getElementById('verifiedBadge').style.display = 'inline-flex';
+    document.getElementById('alreadyVerified').style.display = 'block';
+    showMsg('emailMsg', 'success', 'Email verified successfully!');
+  }
+
+  // ── CHANGE EMAIL ──
+  function changeEmail() {
+    var newEmail = document.getElementById('newEmail').value.trim();
+    if (!newEmail || !/\S+@\S+\.\S+/.test(newEmail)) {
+      showMsg('changeEmailMsg', 'error', 'Please enter a valid email address.'); return;
+    }
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var idx = users.findIndex(function(u){ return u.id === s.user; });
+    if (idx === -1) return;
+    users[idx].email = newEmail;
+    users[idx].emailVerified = false;
+    saveUsers(users);
+    document.getElementById('currentEmail').value = newEmail;
+    document.getElementById('verifiedBadge').style.display = 'none';
+    document.getElementById('alreadyVerified').style.display = 'none';
+    document.getElementById('verifySection').style.display = 'block';
+    document.getElementById('unverifiedBadge').style.display = 'inline-flex';
+    showMsg('changeEmailMsg', 'success', 'Email updated. Please verify your new address.');
+    document.getElementById('newEmail').value = '';
+  }
+
+  // ── CHANGE PASSWORD ──
+  function changePassword() {
+    var cur  = document.getElementById('currentPwd').value;
+    var np   = document.getElementById('newPwd').value;
+    var np2  = document.getElementById('newPwd2').value;
+    if (!cur || !np || !np2) { showMsg('pwdMsg', 'error', 'Please fill in all fields.'); return; }
+    if (np.length < 8) { showMsg('pwdMsg', 'error', 'New password must be at least 8 characters.'); return; }
+    if (np !== np2) { showMsg('pwdMsg', 'error', 'Passwords do not match.'); return; }
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var idx = users.findIndex(function(u){ return u.id === s.user; });
+    if (idx === -1) return;
+    if (users[idx].password !== cur) { showMsg('pwdMsg', 'error', 'Current password is incorrect.'); return; }
+    users[idx].password = np;
+    saveUsers(users);
+    document.getElementById('currentPwd').value = '';
+    document.getElementById('newPwd').value = '';
+    document.getElementById('newPwd2').value = '';
+    showMsg('pwdMsg', 'success', 'Password updated successfully.');
+  }
+
+  // ── 2FA TOGGLE ──
+  function toggle2FA() {
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var idx = users.findIndex(function(u){ return u.id === s.user; });
+    if (idx === -1) return;
+    var user = users[idx];
+
+    if (!user.emailVerified && !user.twofa) {
+      showMsg('tfaMsg', 'error', 'You must verify your email before enabling 2FA.');
+      return;
+    }
+
+    user.twofa = !user.twofa;
+    saveUsers(users);
+
+    var track = document.getElementById('tfaTrack');
+    var thumb = document.getElementById('tfaThumb');
+    track.style.background = user.twofa ? '#c8102e' : 'rgba(255,255,255,0.12)';
+    thumb.style.transform = user.twofa ? 'translateX(24px)' : 'translateX(0)';
+    showMsg('tfaMsg', 'success', user.twofa ? '2FA enabled.' : '2FA disabled.');
+  }
+
+  // ── DELETE ACCOUNT ──
+  function confirmDeleteAccount() {
+    if (!confirm('Are you sure you want to permanently delete your account? This cannot be undone.')) return;
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var updated = users.filter(function(u){ return u.id !== s.user; });
+    saveUsers(updated);
+    arieteSession.logout();
+  }
+</script>
+
+</body>
+</html>
