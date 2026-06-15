@@ -705,6 +705,22 @@
 
     /* ── EAGLE EMBLEM SVG PATHS ── */
   </style>
+
+  <!-- Open Graph / Discord -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/register.html">
+  <meta property="og:site_name"   content="Republic of Ariete">
+  <meta property="og:title"       content="Republic of Ariete — Official Government Portal">
+  <meta property="og:description" content="Register as a citizen of the Republic of Ariete and gain access to all public services.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Republic of Ariete — Official Government Portal">
+  <meta name="twitter:description" content="Register as a citizen of the Republic of Ariete and gain access to all public services.">
+  <meta name="twitter:image"       content="https://republica3334.github.io/sito/preview.png">
 </head>
 <body>
 <!-- UTILITY BAR -->
@@ -953,7 +969,7 @@ function handleRegister(e){
   if(users.find(u=>u.email===email)){ err.textContent='An account with this email already exists.'; err.style.display='block'; return; }
   btn.textContent='Processing...'; btn.disabled=true;
   setTimeout(()=>{
-    const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'approved',setup:false,registered:new Date().toISOString()};
+    const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'pending',setup:false,registered:new Date().toISOString()};
     users.push(nu);
     localStorage.setItem('ariete_users',JSON.stringify(users));
     suc.innerHTML='<strong>Registration successful.</strong> Your National ID: <strong>'+nu.id+'</strong><br>You can now <a href="citizen-login.html" style="color:#50c864;">sign in</a> with your ID and password.';
@@ -1003,4 +1019,4 @@ function logout(){
 })();
 </script>
 </body>
-</html>
+</html> 

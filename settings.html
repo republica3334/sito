@@ -147,6 +147,22 @@
     .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
   </style>
+
+  <!-- Open Graph / Discord -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/settings.html">
+  <meta property="og:site_name"   content="Republic of Ariete">
+  <meta property="og:title"       content="Republic of Ariete — Account Settings">
+  <meta property="og:description" content="Manage your Ariete Citizen Account settings and security.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Republic of Ariete — Account Settings">
+  <meta name="twitter:description" content="Manage your Ariete Citizen Account settings and security.">
+  <meta name="twitter:image"       content="https://republica3334.github.io/sito/preview.png">
 </head>
 <body>
 
@@ -389,9 +405,9 @@
         portal: 'Republic of Ariete — Email Verification'
       }).then(function() {
         showMsg('emailMsg', 'success', 'Code sent! Check your inbox.');
-      }, function() {
-        // DEV fallback
-        showMsg('emailMsg', 'info', 'DEV MODE — Code: ' + _otpCode);
+      }, function(err) {
+        console.error('EmailJS error:', JSON.stringify(err));
+        showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
       });
     } else {
       showMsg('emailMsg', 'info', 'DEV MODE — Code: ' + _otpCode);
@@ -514,9 +530,4 @@
     var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
     var updated = users.filter(function(u){ return u.id !== s.user; });
     saveUsers(updated);
-    arieteSession.logout();
-  }
-</script>
-
-</body>
-</html>
+    ariet

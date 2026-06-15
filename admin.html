@@ -705,6 +705,22 @@
 
     /* ── EAGLE EMBLEM SVG PATHS ── */
   </style>
+
+  <!-- Open Graph / Discord -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/admin.html">
+  <meta property="og:site_name"   content="Republic of Ariete">
+  <meta property="og:title"       content="Admin Panel — Republic of Ariete">
+  <meta property="og:description" content="Republic of Ariete — Administration Panel.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Admin Panel — Republic of Ariete">
+  <meta name="twitter:description" content="Republic of Ariete — Administration Panel.">
+  <meta name="twitter:image"       content="https://republica3334.github.io/sito/preview.png">
 </head>
 <body>
 <!-- UTILITY BAR -->
@@ -949,9 +965,9 @@ function renderAll(){
         <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
       </div>
       <div style="display:flex;gap:0.4rem;flex-shrink:0;">
-        ${u.status!=='approved'?'<button onclick="approveUser(''+u.id+'')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':''}
-        ${u.status!=='suspended'?'<button onclick="suspendUser(''+u.id+'')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':''}
-        ${u.status==='suspended'?'<button onclick="approveUser(''+u.id+'')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':''}
+        ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
+        ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
+        ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
         <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
       </div>
     </div>`).join('');
@@ -1013,9 +1029,4 @@ function logout(){null /* logout handled by arieteSession.logout() */;window.loc
   const cta=document.querySelector('.nav-cta');
   if(cta&&session&&user){
     if(isAdmin()){cta.innerHTML='&#9881; Admin';cta.href='admin.html';cta.onclick=null;}
-    else{cta.textContent=user.name?user.name.split(' ')[0].toUpperCase():user.id.substring(0,8);cta.href='#';cta.onclick=function(e){e.preventDefault();logout();};}
-  }
-})();
-</script>
-</body>
-</html>
+    else{cta.textContent=user.name?user.name.split(' ')[0].toUpperCase():user.id.substring(0,8);cta.href='#';cta.onclick=function(e){e.preventD
