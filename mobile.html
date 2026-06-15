@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Device detection: redirect desktop users to main homepage -->
+<script>
+  if (!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    window.location.replace('GOVERN_1.HTM');
+  }
+</script>
+<script src="ariete-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>United Republic of Stars — Mobile Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0a0a0a;
+      --white:    #ffffff;
+      --red:      #c8102e;
+      --red-dark: #9b0c22;
+      --gray:     #cccccc;
+      --gray-dim: rgba(255,255,255,0.45);
+      --font-head: 'Oswald', sans-serif;
+      --font-sub:  'Rajdhani', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html, body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--black);
+      border-bottom: 2px solid var(--red);
+      padding: 0 1.2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .emblem-svg { width: 36px; height: auto; flex-shrink: 0; }
+    .brand-text h1 {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .brand-text span {
+      font-family: var(--font-sub);
+      font-size: 0.52rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+    }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-sub);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: calc(100svh - 56px);
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 1.4rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Geometric background grid */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+      pointer-events: none;
+    }
+    /* Red glow bottom-right */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      bottom: -60px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(200,16,46,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sub);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.2rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 22px;
+      height: 2px;
+      background: var(--red);
+      display: block;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 14vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title em { font-style: normal; color: var(--red); }
+
+    .hero-desc {
+      position: relative;
+      z-index: 2;
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--gray-dim);
+      margin-bottom: 2rem;
+      max-width: 300px;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 320px;
+    }
+    .btn-primary {
+      display: block;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-sub);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      text-align: center;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-outline {
+      display: block;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-sub);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      text-align: center;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Status badge */
+    .hero-status {
+      position: relative;
+      z-index: 2;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sub);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .hero-status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #00b450;
+      flex-shrink: 0;
+    }
+
+    /* ── QUICK ACCESS ── */
+    .quick-section {
+      background: #111111;
+      padding: 2rem 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .section-eyebrow {
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .section-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--red); }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .service-card {
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-left: 3px solid var(--red);
+      padding: 1rem 0.9rem;
+      text-decoration: none;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-height: 90px;
+      transition: background 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .service-card:active { background: #242424; }
+    .service-card svg { color: var(--red); flex-shrink: 0; }
+    .service-card-title {
+      font-family: var(--font-sub);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .service-card-sub {
+      font-size: 0.68rem;
+      color: var(--gray-dim);
+      line-height: 1.4;
+    }
+
+    /* ── ANNOUNCEMENTS ── */
+    .announce-section {
+      background: var(--black);
+      padding: 2rem 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .announce-item {
+      display: flex;
+      gap: 0.9rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .announce-item:last-child { border-bottom: none; }
+    .announce-date {
+      flex-shrink: 0;
+      width: 42px;
+      text-align: center;
+    }
+    .announce-date .day {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+    }
+    .announce-date .month {
+      font-family: var(--font-sub);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+    .announce-body {}
+    .announce-tag {
+      font-family: var(--font-sub);
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.2rem;
+    }
+    .announce-title {
+      font-family: var(--font-sub);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .announce-desc {
+      font-size: 0.72rem;
+      color: var(--gray-dim);
+      line-height: 1.5;
+    }
+
+    /* ── GOV QUICK LINKS ── */
+    .gov-links-section {
+      background: #0f0f0f;
+      padding: 2rem 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .gov-link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.95rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-decoration: none;
+      color: var(--white);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gov-link-row:last-child { border-bottom: none; }
+    .gov-link-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .gov-link-icon {
+      width: 36px; height: 36px;
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .gov-link-label {
+      font-family: var(--font-sub);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .gov-link-arrow {
+      color: var(--red);
+      font-size: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080808;
+      border-top: 2px solid rgba(255,255,255,0.06);
+      padding: 2rem 1.4rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.6;
+    }
+    .footer-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-links a {
+      font-family: var(--font-sub);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      padding: 0.35rem 0;
+    }
+    .footer-links a:active { color: var(--red); }
+    .footer-bottom {
+      font-family: var(--font-sub);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .footer-desktop-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      text-decoration: none;
+      margin-top: 0.8rem;
+    }
+    .footer-desktop-link:active { color: var(--white); }
+
+    /* ── COOKIE BANNER ── */
+    #cookieBanner {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #0f0f0f;
+      border-top: 2px solid var(--red);
+      z-index: 9999;
+      padding: 1rem 1.4rem;
+    }
+    #cookieBanner p { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 0.8rem; }
+    .cookie-btns { display: flex; gap: 0.6rem; }
+    .cookie-btns button {
+      flex: 1;
+      padding: 0.7rem;
+      font-family: var(--font-sub);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+    }
+    .cookie-btns button.accept {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-brand">
+    <img src="svgs/icone/republica/1.svg" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
+    <div class="brand-text">
+      <h1>Rep. of Stars</h1>
+      <span>Official Portal</span>
+    </div>
+  </div>
+  <a href="auth/citizen-login.html" class="nav-cta">Login</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Official Government Portal</div>
+  <h1 class="hero-title">United<br><em>Republic</em><br>of Stars</h1>
+  <p class="hero-desc">Access citizen services, legislation, government news and official documents.</p>
+  <div class="hero-actions">
+    <a href="auth/register.html" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Become a Citizen
+    </a>
+    <a href="services/services.html" class="btn-outline">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+      Browse Services
+    </a>
+  </div>
+  <div class="hero-status">All government systems operational</div>
+</section>
+
+<!-- QUICK SERVICES -->
+<section class="quick-section">
+  <div class="section-eyebrow">Citizen Services</div>
+  <h2 class="section-title">Quick Access</h2>
+  <div class="services-grid">
+
+    <a href="services/service-digital-id.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M13 11h5m-5 4h3"/>
+      </svg>
+      <div class="service-card-title">National ID</div>
+      <div class="service-card-sub">Apply or renew your digital identity card</div>
+    </a>
+
+    <a href="services/service-taxes.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+      <div class="service-card-title">Tax Authority</div>
+      <div class="service-card-sub">File returns and manage tax records</div>
+    </a>
+
+    <a href="services/service-health.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+      <div class="service-card-title">Health</div>
+      <div class="service-card-sub">Health cards and appointments</div>
+    </a>
+
+    <a href="services/service-civil-registration.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <div class="service-card-title">Civil Registry</div>
+      <div class="service-card-sub">Birth, marriage and death records</div>
+    </a>
+
+    <a href="services/service-education.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2.2 2.7 4 6 4s6-1.8 6-4v-5"/>
+      </svg>
+      <div class="service-card-title">Education</div>
+      <div class="service-card-sub">Scholarships and enrollments</div>
+    </a>
+
+    <a href="services/service-business.html" class="service-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+      </svg>
+      <div class="service-card-title">Business</div>
+      <div class="service-card-sub">Register and license your business</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+<section class="announce-section">
+  <div class="section-eyebrow">News &amp; Announcements</div>
+  <h2 class="section-title">Latest</h2>
+
+  <div class="announce-item">
+    <div class="announce-date">
+      <div class="day">15</div>
+      <div class="month">Jun</div>
+    </div>
+    <div class="announce-body">
+      <div class="announce-tag">Official Decree</div>
+      <div class="announce-title">Digital ID Registration Now Open to All Citizens</div>
+      <div class="announce-desc">The Civil Registry announces that all citizens may now apply for their National Digital ID card online.</div>
+    </div>
+  </div>
+
+  <div class="announce-item">
+    <div class="announce-date">
+      <div class="day">10</div>
+      <div class="month">Jun</div>
+    </div>
+    <div class="announce-body">
+      <div class="announce-tag">National Assembly</div>
+      <div class="announce-title">Constitutional Amendment IV Enters Into Force</div>
+      <div class="announce-desc">The National Assembly ratified Amendment IV expanding digital rights for all registered citizens.</div>
+    </div>
+  </div>
+
+  <div class="announce-item">
+    <div class="announce-date">
+      <div class="day">01</div>
+      <div class="month">Jun</div>
+    </div>
+    <div class="announce-body">
+      <div class="announce-tag">Ministry of Finance</div>
+      <div class="announce-title">Tax Filing Deadline Extended to July 31</div>
+      <div class="announce-desc">Due to system upgrades, the annual income tax filing deadline has been extended by 30 days.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNMENT LINKS -->
+<section class="gov-links-section">
+  <div class="section-eyebrow">Government</div>
+  <h2 class="section-title">Institutions</h2>
+
+  <a href="gov/government.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">Office of the President</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+
+  <a href="gov/national-assembly.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">National Assembly</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+
+  <a href="gov/constitution.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">Constitution</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+
+  <a href="gov/laws-decrees.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">Laws &amp; Decrees</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+
+  <a href="gov/official-gazette.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">Official Gazette</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+
+  <a href="gov/ministries.html" class="gov-link-row">
+    <div class="gov-link-left">
+      <div class="gov-link-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      </div>
+      <span class="gov-link-label">Cabinet of Ministers</span>
+    </div>
+    <span class="gov-link-arrow">›</span>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="svgs/icone/republica/1.svg" width="44" alt="Emblem" onerror="this.style.display='none'">
+    <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
+  </div>
+  <div class="footer-links">
+    <a href="auth/register.html">Register</a>
+    <a href="services/services.html">All Services</a>
+    <a href="gov/constitution.html">Constitution</a>
+    <a href="gov/contact.html">Contact</a>
+    <a href="gov/open-data.html">Open Data</a>
+    <a href="auth/citizen-login.html">Citizen Login</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 United Republic of Stars · All Rights Reserved</span>
+    <span>Official Government Website · Est. MMXII</span>
+    <a href="GOVERN_1.HTM" class="footer-desktop-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+      Switch to Desktop Version
+    </a>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner">
+  <p>This portal uses only essential cookies for secure authentication. <a href="#" style="color:var(--red);">Privacy Policy</a></p>
+  <div class="cookie-btns">
+    <button onclick="setCookiePref('essential')">Essential Only</button>
+    <button class="accept" onclick="setCookiePref('all')">Accept</button>
+  </div>
+</div>
+
+<script>
+  // Nav dropdown: replace the login link with profile widget if logged in
+  document.addEventListener('DOMContentLoaded', function(){
+    arieteUpdateNav();
+    arieteCookieBanner();
+    // No hamburger on mobile.html — layout is already mobile-native
+  });
+</script>
+
+</body>
+</html>

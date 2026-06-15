@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
+<script src="../ariete-auth.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Moderator Panel — United Republic of Stars</title>
@@ -33,19 +33,19 @@
 
 <div class="utility-bar">
   <div class="utility-links"><a href="#">Accessibility</a><a href="#">Emergency: 112</a></div>
-  <div class="utility-links"><a href="services.html">Services</a><a href="citizen-login.html">Citizen Login</a></div>
+  <div class="utility-links"><a href="../services/services.html">Services</a><a href="../auth/citizen-login.html">Citizen Login</a></div>
 </div>
 
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand">
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem">
+  <a href="../GOVERN_1.HTM" class="header-brand">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem">
     <div class="brand-text"><h1>United Republic of Stars</h1><span>Official Government Portal · Est. MMXII</span></div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
@@ -227,27 +227,4 @@ function approveUser(id){
 function rejectUser(id){
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){return x.id===id;});
-  arieteDB.deleteUser(id).then(function(){addLog('Rejected: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
-}
-function suspendUser(id){
-  var s=arieteSession.get();
-  if(s && id===s.user){alert('You cannot suspend your own account.');return;}
-  var u=_users.find(function(x){return x.id===id;});
-  arieteDB.updateUser(id,{status:'suspended'}).then(function(){addLog('Suspended: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
-}
-
-function refresh(){renderStats();renderPending();renderAll();}
-
-(function(){
-  var s=arieteSession.get();
-  addLog('Moderator session started'+(s?' by '+s.user:''));
-  renderLog();
-  function _attachListener(){
-    if(window.arieteDB){ arieteDB.onUsers(function(users){ _users=users; refresh(); }); }
-    else { setTimeout(_attachListener, 400); }
-  }
-  _attachListener();
-})();
-</script>
-</body>
-</html>
+  arieteDB.deleteUser(id).then(function(){addLog('

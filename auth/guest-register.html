@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Access — United Republic of Stars</title>
+<script src="../ariete-auth.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Rajdhani:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0a0a0a;--white:#ffffff;--red:#c8102e;--font-head:'Oswald',sans-serif;--font-sub:'Rajdhani',sans-serif;--font-body:'Inter',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--black);color:var(--white);font-family:var(--font-body);min-height:100vh;display:flex;align-items:center;justify-content:center;}
+  .wrap{text-align:center;padding:2rem;}
+  .spinner{width:48px;height:48px;border:3px solid rgba(200,16,46,0.2);border-top-color:#c8102e;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1.8rem;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .label{font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;}
+  .title{font-family:var(--font-head);font-size:1.4rem;font-weight:600;letter-spacing:0.04em;color:rgba(255,255,255,0.85);}
+  .sub{font-size:0.8rem;color:rgba(255,255,255,0.3);margin-top:0.5rem;}
+</style>
+
+  <!-- Open Graph / Discord -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/guest-register.html">
+  <meta property="og:site_name"   content="United Republic of Stars">
+  <meta property="og:title"       content="Guest Access — United Republic of Stars">
+  <meta property="og:description" content="The official citizen portal of the United Republic of Stars. Access public services, legislation, and government communications.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Guest Access — United Republic of Stars">
+  <meta name="twitter:description" content="The official citizen portal of the United Republic of Stars. Access public services, legislation, and government communications.">
+  <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+</head>
+<body>
+<div class="wrap">
+  <div class="spinner"></div>
+  <div class="label">Guest Access</div>
+  <div class="title">Creating guest session…</div>
+  <div class="sub">You will be redirected automatically</div>
+</div>
+<script>
+(function(){
+  if(arieteSession.get()){
+    window.location.replace('GOVERN_1.HTM');
+    return;
+  }
+  function rnd(chars,n){var o='';for(var i=0;i<n;i++)o+=chars[Math.floor(Math.random()*chars.length)];return o;}
+  var id='GST-'+rnd('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',3)+'-'+rnd('0123456789',6);
+  var guest={id:id,name:'Guest '+id.slice(-6),email:null,pwd:btoa(rnd('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',16)),role:'guest',status:'approved',setup:true,registered:new Date().toISOString()};
+  var users=JSON.parse(localStorage.getItem('ariete_users')||'[]');
+  users.push(guest);
+  localStorage.setItem('ariete_users',JSON.stringify(users));
+  arieteSession.set(guest.id,'guest',0);
+  setTimeout(function(){
+    var dest=localStorage.getItem('ariete_redirect')||'GOVERN_1.HTM';
+    localStorage.removeItem('ariete_redirect');
+    window.location.replace(dest);
+  },900);
+})();
+</script>
+</body>
+</html>

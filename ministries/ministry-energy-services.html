@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="../ariete-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ministry of Energy — Services · United Republic of Stars</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-energy-services.html">
+  <meta property="og:site_name"   content="United Republic of Stars">
+  <meta property="og:title"       content="Ministry of Energy — Services">
+  <meta property="og:description" content="Official services provided by the Ministry of Energy of the United Republic of Stars.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="Ministry of Energy — Services">
+  <meta name="twitter:description" content="Official services provided by the Ministry of Energy of the United Republic of Stars.">
+  <meta name="twitter:image"      content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
+      --font-head:'Oswald',sans-serif;--font-sub:'Rajdhani',sans-serif;--font-body:'Inter',sans-serif;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--white);color:var(--black);font-family:var(--font-body);}
+    .utility-bar{background:var(--black);color:rgba(200,200,200,0.6);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
+    .utility-bar a{color:rgba(200,200,200,0.6);text-decoration:none;}
+    .utility-links{display:flex;gap:2rem;}
+    header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
+    .emblem-svg{width:78px;height:auto;flex-shrink:0;display:block;}
+    .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;}
+    .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:0.2rem;}
+    nav a{font-family:var(--font-sub);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);text-decoration:none;padding:0.5rem 0.9rem;transition:color 0.2s,background 0.2s;}
+    nav a:hover{background:var(--black);color:var(--white);}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem!important;margin-left:0.5rem;}
+    .nav-cta:hover{background:var(--red-dark)!important;}
+    footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.08);padding:2.5rem 3rem;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:1.2rem 0 0;margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+    .footer-bottom a{color:rgba(255,255,255,0.3);text-decoration:none;}
+    .svc-card-hover:hover { background:#161616 !important; }
+  </style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="utility-links">
+    <a href="#">Accessibility</a>
+    <a href="#">Language</a>
+    <a href="#">Emergency Line: 1-800-ARX-0001</a>
+  </div>
+  <div class="utility-links">
+    <a href="#">Citizen Portal</a>
+    <a href="#">Official Gazette</a>
+    <a href="#">Transparency</a>
+  </div>
+</div>
+
+<header>
+  <a href="ministry-energy.html" class="header-brand">
+    <img src="../svgs/icone/ministeri/energia.svg" class="emblem-svg" alt="Ministry of Energy">
+    <div class="brand-text">
+      <h1>Ministry of Energy</h1>
+      <span>United Republic of Stars · MOEN</span>
+    </div>
+  </a>
+  <nav>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
+    <a href="#">Laws &amp; Decrees</a>
+    <a href="#">News</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
+    <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>
+      <a href="../gov/ministries.html" style="color:#c8102e;text-decoration:none;">Ministries</a> &nbsp;/&nbsp;
+      <a href="ministry-energy.html" style="color:#c8102e;text-decoration:none;">MOEN</a> &nbsp;/&nbsp; Services
+    </div>
+    <h1 style="font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:0.5rem;">Ministry of Energy</h1>
+    <p style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:1rem;">Powering the Republic — Sustainably</p>
+    <p style="font-family:var(--font-body);font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:620px;line-height:1.8;">Select a service to expand its details — requirements, documents needed, and step-by-step process.</p>
+  </div>
+</div>
+
+<!-- SERVICES LIST -->
+<section style="background:#0a0a0a;padding:4rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Available Services
+    </div>
+    <h2 style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:2.5rem;">Ministry <span style="color:#c8102e;">Services</span></h2>
+    <div style="display:flex;flex-direction:column;gap:2px;">
+
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(0)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-0">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">⚡</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Energy Subsidy Programme</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for household energy subsidies if your utility costs exceed 10% of monthly income.</p>
+        </div>
+        <div id="svc-chevron-0" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-0" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Household income below Stars median</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Energy bill exceeds 10% of monthly income</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Primary residence only</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Last 3 energy bills</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Income declaration</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Tenancy/ownership proof</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Apply online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Income & utility verification (15 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Subsidy applied directly to account</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 15–20 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(1)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-1">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🔋</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Renewable Energy Permits</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Obtain permits for solar panel installation, wind turbine setup, or private energy generation.</p>
+        </div>
+        <div id="svc-chevron-1" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-1" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property ownership or landlord consent</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Certified installer for grid-tie systems</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property deed or consent letter</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Installation plan / technical drawing</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Installer certification</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit permit application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Technical review (10 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Site inspection</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Permit issued</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 2–4 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Get Permit →</a>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(2)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-2">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🏭</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Industrial Energy Licence</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Apply for industrial energy consumption licences and grid connection for commercial facilities.</p>
+        </div>
+        <div id="svc-chevron-2" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-2" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Registered business in the Republic</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Facility meets safety codes</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Environmental impact assessment for >500kW</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Business registration</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Facility plans</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Environmental assessment (if applicable)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Grid connection request form</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Technical & environmental review</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Grid operator coordination</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Licence issued</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 4–8 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(3)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-3">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📊</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Energy Audit Request</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Request a free government-certified energy audit for your home or business.</p>
+        </div>
+        <div id="svc-chevron-3" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-3" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property owner or authorised tenant</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Property located within Republic territory</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Proof of residence/business at the property</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Last 12 months of energy bills</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Book online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Auditor visits within 14 days</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Receive report with recommendations</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 14–21 days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Book Audit →</a>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(4)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-4">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">🌿</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Green Building Certification</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Certify your building as energy-efficient under the Republic's Green Standards Programme.</p>
+        </div>
+        <div id="svc-chevron-4" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-4" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Building must meet Green Standards Tier 2 minimum</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Completed construction or major renovation</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Building plans</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Energy performance report</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Inspector's sign-off</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Materials list</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Submit application</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Document pre-check</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Physical inspection</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Certificate awarded</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 3–6 weeks
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Apply →</a>
+        </div>
+      </div>
+    </div>
+    <div style="background:#111;border-top:3px solid #c8102e;overflow:hidden;">
+      <!-- HEADER (always visible, clickable) -->
+      <div onclick="toggleService(5)" style="padding:2rem;display:flex;align-items:flex-start;gap:1.2rem;cursor:pointer;user-select:none;" id="svc-header-5">
+        <div style="font-size:2rem;line-height:1;flex-shrink:0;">📋</div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--white);margin:0 0 0.5rem;">Utility Complaint</h3>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">File a formal complaint against an energy provider for service failures or billing disputes.</p>
+        </div>
+        <div id="svc-chevron-5" style="flex-shrink:0;color:#c8102e;font-size:1.2rem;transition:transform 0.3s;margin-top:0.3rem;">▼</div>
+      </div>
+
+      <!-- EXPANDED CONTENT -->
+      <div id="svc-body-5" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:0 2rem 2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
+          <!-- Requirements -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Requirements</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Must have first contacted the provider and received no resolution within 14 days</li></ul>
+          </div>
+          <!-- Documents -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Documents Needed</div>
+            <ul style="list-style:none;padding:0;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Proof of prior complaint to provider</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">Disputed bill / service failure evidence</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.2rem 0;">National ID</li></ul>
+          </div>
+          <!-- Steps -->
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;">Process Steps</div>
+            <ol style="list-style:decimal;padding-left:1.2rem;margin:0;"><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">File complaint online</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Ministry contacts provider (5 days)</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Mediation if needed</li><li style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.7;padding:0.25rem 0;">Resolution notice issued</li></ol>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-family:var(--font-body);font-size:0.75rem;color:rgba(255,255,255,0.35);">
+            <span style="color:#c8102e;font-weight:600;">⏱ Processing time:</span> 10–20 working days
+          </div>
+          <a href="#" style="display:inline-block;background:#c8102e;color:#fff;font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.6rem 1.4rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">File Complaint →</a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTICE -->
+<div style="background:#111;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 4rem;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1rem;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.4);">Some services require a verified citizen account. <a href="../auth/citizen-login.html" style="color:#c8102e;text-decoration:none;">Log in</a> or <a href="../auth/register.html" style="color:#c8102e;text-decoration:none;">register</a> to access all features.</span>
+  </div>
+</div>
+
+<!-- MINISTRY INFO -->
+<section style="background:#0d0d0d;padding:4rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Contact &amp; Information
+    </div>
+    <h2 style="font-family:var(--font-head);font-size:1.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:2.5rem;">Ministry <span style="color:#c8102e;">Information</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:1.2rem;">Contact Details</div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.5;">9 Grid Avenue, Industrial Quarter, United Republic of Stars</span>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.4h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+1-800-MOEN-003" style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.55);text-decoration:none;">+1-800-MOEN-003</a>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:info@moen.unitedstars.gov" style="font-family:var(--font-body);font-size:0.8rem;color:#c8102e;text-decoration:none;">info@moen.unitedstars.gov</a>
+          </div>
+          <div style="display:flex;gap:0.8rem;align-items:center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.55);">Mon–Fri 08:00–17:00</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:#111;border-top:3px solid rgba(255,255,255,0.1);padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1.2rem;">Quick Links</div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <a href="ministry-energy.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Ministry Overview</a>
+          <a href="../gov/ministries.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ All Ministries</a>
+          <a href="../services/services.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Services Portal</a>
+          <a href="../auth/citizen-login.html" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;padding:0.6rem 0;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↗ Citizen Login</a>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.2);">
+          <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Emergency</div>
+          <div style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.5);">+1-800-POWER-911</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1rem;">
+      <img src="../svgs/icone/ministeri/energia.svg" width="48" alt="Ministry of Energy" style="opacity:0.4;filter:invert(1);">
+      <div>
+        <div style="font-family:var(--font-head);font-size:0.9rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Ministry of Energy</div>
+        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">United Republic of Stars · Official Government Ministry</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.25);line-height:1.7;max-width:500px;">Information and services provided by the Ministry of Energy of the United Republic of Stars.</p>
+  </div>
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;">
+    <span>United Republic of Stars · Ministry of Energy · MOEN</span>
+    <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script>
+function toggleService(idx) {
+  var body = document.getElementById('svc-body-' + idx);
+  var chev = document.getElementById('svc-chevron-' + idx);
+  var isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
+
+</body>
+</html>

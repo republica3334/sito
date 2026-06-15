@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
+<script src="../ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel — United Republic of Stars</title>
+  <title>Ministries — United Republic of Stars</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -708,21 +708,22 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/admin.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/ministries.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="Admin Panel — United Republic of Stars">
-  <meta property="og:description" content="United Republic of Stars — Administration Panel.">
+  <meta property="og:title"       content="Ministries — United Republic of Stars">
+  <meta property="og:description" content="All ministries of the United Republic of Stars — defence, justice, health, education, and more.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Admin Panel — United Republic of Stars">
-  <meta name="twitter:description" content="United Republic of Stars — Administration Panel.">
+  <meta name="twitter:title"       content="Ministries — United Republic of Stars">
+  <meta name="twitter:description" content="All ministries of the United Republic of Stars — defence, justice, health, education, and more.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
 <body>
+
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <div class="utility-links">
@@ -739,9 +740,9 @@
 
 <!-- HEADER -->
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Ariete Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -751,70 +752,149 @@
   </a>
   <nav>
     <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="../services/services.html">Services</a>
+    <a href="ministries.html" style="background:var(--black);color:var(--white);">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
-<div style="min-height:calc(100vh - 120px);background:#070707;padding:0;">
 
-  <!-- Admin Guard -->
-  <script>
-  arieteSession.requireAdmin();
-  </script>
-
-  <!-- Top Bar -->
-  <div style="background:#0a0a0a;border-bottom:2px solid #c8102e;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;">Supreme Authority</div>
-      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-top:0.2rem;">Administration Panel</h1>
-    </div>
-    <div style="display:flex;gap:0.8rem;">
-      <button onclick="logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">Logout</button>
-    </div>
-  </div>
-
-  <!-- Stats Bar -->
-  <div id="statsBar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
-
-  <!-- Main Grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.05);margin:2rem 3rem;">
-
-    <!-- Pending Approvals -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Action Required</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Pending Approvals <span id="pendingCount" style="color:#c8102e;"></span></h2>
-      <div id="pendingList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);"></div>
-      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
-    </div>
-
-    <!-- All Citizens -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Registry</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.3);font-size:0.8rem;"></span></h2>
-      <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.08);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;" onfocus="this.style.borderColor='#c8102e'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
-      <div id="citizenList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);max-height:420px;overflow-y:auto;"></div>
-    </div>
-
-  </div>
-
-  <!-- Activity Log -->
-  <div style="margin:0 3rem 3rem;background:#0a0a0a;padding:2rem;">
-    <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Activity Log</h2>
-    <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
-  </div>
-
+<div style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid var(--red);;position:relative;overflow:hidden;">
+  <div style="font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;"><span style="display:block;width:30px;height:2px;background:var(--red);"></span>Executive Branch</div>
+  <h1 style="font-family:var(--font-head);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:1rem;">Government <span style="color:var(--red);">Ministries</span></h1>
+  <p style="font-family:var(--font-body);font-size:0.95rem;color:rgba(255,255,255,0.6);max-width:600px;line-height:1.75;">The Cabinet of the United Republic of Stars is composed of nine ministries under the direction of the President. Each ministry is led by an appointed minister and oversees its respective policy area.</p>
 </div>
+
+<section style="background:#0d0d0d;padding:4rem;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5px;background:rgba(255,255,255,0.06);">
+    
+<div onclick="location.href='../ministries/ministry-interior.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/Interno.svg" width="76" height="76" alt="Ministry of Interior" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOI</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-interior.html" style="color:inherit;text-decoration:none;">Ministry of Interior</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Gen. Carlo Fabbri</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Oversees national security, civil administration, immigration policy, and emergency management. Coordinates all regional prefectures and the National Police Corps.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">National Police Corps</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Immigration &amp; Border Control</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Civil Emergency Management</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Regional Prefectures</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-finance.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/finanza.svg" width="76" height="76" alt="Ministry of Finance" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOF</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-finance.html" style="color:inherit;text-decoration:none;">Ministry of Finance</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Dr. Silvia Conte</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Responsible for the national budget, fiscal policy, public debt management, customs &amp; excise, and economic forecasting. Supervises the National Revenue Authority.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">National Revenue Authority</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Public Budget Office</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Customs &amp; Excise</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">National Treasury</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-foreign-affairs.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/affari esteri.svg" width="76" height="76" alt="Ministry of Foreign Affairs" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MFA</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-foreign-affairs.html" style="color:inherit;text-decoration:none;">Ministry of Foreign Affairs</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Amb. Laura Visentini</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Manages international relations, diplomatic missions, treaty negotiations, and consular services for Stars citizens abroad. Coordinates with all foreign embassies.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Diplomatic Corps</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Consular Services</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">International Treaties</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Foreign Aid &amp; Cooperation</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-justice.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/justice.svg" width="76" height="76" alt="Ministry of Justice" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOJ</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-justice.html" style="color:inherit;text-decoration:none;">Ministry of Justice</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Hon. Federico Rossi</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Administers the court system, penal institutions, civil and criminal legal reform, and the national public prosecutor's office. Upholds the rule of law.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Court Administration</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Penal Institutions</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Legal Aid Office</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Public Prosecutor's Office</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-defense.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/difesa.svg" width="76" height="76" alt="Ministry of Defence" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOD</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-defense.html" style="color:inherit;text-decoration:none;">Ministry of Defence</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Gen. Marco Ardente</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Commands the Armed Forces of the United Republic: Ground Forces, Air Corps, and Naval Command. Oversees military procurement, strategic defence planning, and veterans affairs.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Ground Forces Command</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Air Corps Command</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Naval Command</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Veterans Affairs</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-education.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/Istruzione e merito.svg" width="76" height="76" alt="Ministry of Education" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOE</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-education.html" style="color:inherit;text-decoration:none;">Ministry of Education</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Prof. Anna Ferretti</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Sets national curriculum standards, administers state schools and universities, manages teacher certification, and distributes educational grants and scholarships.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Primary &amp; Secondary Education</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Higher Education</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Scholarship Administration</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Teacher Certification Board</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-health.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/Sanità.svg" width="76" height="76" alt="Ministry of Health" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MOH</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-health.html" style="color:inherit;text-decoration:none;">Ministry of Health</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Dr. Chiara Mancini</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Administers public hospitals, national health insurance, pharmaceutical regulation, disease control, and public health campaigns across the Republic.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">National Health Service</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Pharmaceutical Regulation</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Disease Control Agency</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Public Health Campaigns</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-infrastructure.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/Infrastruttura.svg" width="76" height="76" alt="Ministry of Infrastructure" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MIT</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-infrastructure.html" style="color:inherit;text-decoration:none;">Ministry of Infrastructure</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Eng. Paolo Grimaldi</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Plans and executes national infrastructure projects: roads, railways, ports, public transit networks, and urban development. Manages public works contracts.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Roads &amp; Highways Agency</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Rail Network Authority</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Port &amp; Maritime Services</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Urban Planning Office</li></ul>
+</div>
+
+<div onclick="location.href='../ministries/ministry-energy.html'" style="cursor:pointer;background:#111;border-top:3px solid #c8102e;padding:3rem 2.6rem;display:flex;flex-direction:column;gap:1.4rem;">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div style="background:rgba(200,16,46,0.15);border-radius:50%;width:96px;height:96px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="../svgs/icone/ministeri/energia.svg" width="76" height="76" alt="Ministry of Economy" style="object-fit:contain;filter:invert(1);"></div>
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">MISE</div>
+      <h3 style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);line-height:1.25;"><a href="../ministries/ministry-energy.html" style="color:inherit;text-decoration:none;">Ministry of Economy</a></h3>
+    </div>
+  </div>
+  <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Minister: <span style="color:rgba(255,255,255,0.7);text-transform:none;font-family:var(--font-body);letter-spacing:0;">Dr. Roberto Albanese</span></div>
+  <p style="font-family:var(--font-body);font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.65);">Develops industrial policy, supports SME growth, oversees trade and commerce, manages state-owned enterprises, and promotes foreign direct investment.</p>
+  <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,0.07);"><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Industrial Policy Office</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">SME Development Agency</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">Trade &amp; Commerce Bureau</li><li style="font-family:var(--font-body);font-size:0.88rem;color:rgba(255,255,255,0.6);padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);">State Enterprise Management</li></ul>
+</div>
+  </div>
+</section>
+
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -833,17 +913,17 @@
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
+        <li><a href="../services/service-digital-id.html">National ID Portal</a></li>
+        <li><a href="../services/service-taxes.html">Tax Authority</a></li>
+        <li><a href="../services/service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="../services/service-health.html">Health Services</a></li>
+        <li><a href="../services/service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="../GOVERN_1.HTM">About the Republic</a></li>
         <li><a href="constitution.html">Constitution</a></li>
         <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
         <li><a href="open-data.html">Open Data</a></li>
@@ -891,165 +971,11 @@
   </div>
 </div>
 
-
 </body>
 
 
 <script>
-/* Users are now stored in Firestore — _users is kept in sync via real-time listener */
-var _users = [];
-function getUsers(){ return _users; }
-function getLog(){return JSON.parse(localStorage.getItem('ariete_log')||'[]');}
-function addLog(msg){
-  const log=getLog();
-  log.unshift({msg,time:new Date().toLocaleString()});
-  if(log.length>50) log.pop();
-  localStorage.setItem('ariete_log',JSON.stringify(log));
-  renderLog();
-}
-function logout(){null /* logout handled by arieteSession.logout() */;window.location.href='citizen-login.html';}
-
-function statusBadge(s){
-  const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
-  return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+( colors[s]||'#aaa')+';">'+s+'</span>';
-}
-function roleBadge(r){
-  if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
-  return '';
-}
-function isCreator(id){ return id === 'ilcreatore'; }
-
-function renderStats(){
-  const users=getUsers();
-  const total=users.length;
-  const pending=users.filter(u=>u.status==='pending').length;
-  const approved=users.filter(u=>u.status==='approved').length;
-  const suspended=users.filter(u=>u.status==='suspended').length;
-  const mods=users.filter(u=>u.role==='moderator').length;
-  document.getElementById('statsBar').innerHTML=
-    stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Moderators',mods);
-  document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+total+')';
-}
-function stat(label,val){
-  return '<div style="border-left:2px solid #c8102e;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);">'+label+'</span></div>';
-}
-
-function renderPending(){
-  const users=getUsers();
-  const pending=users.filter(u=>u.status==='pending');
-  const list=document.getElementById('pendingList');
-  const none=document.getElementById('noPending');
-  if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
-  none.style.display='none';
-  list.innerHTML=pending.map(u=>`
-    <div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${u.approvalRequested?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">⚑ Requested</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-        <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}${u.approvalRequested?' &nbsp;·&nbsp; <span style="color:#f5a623;">Request: '+new Date(u.approvalRequested).toLocaleString()+'</span>':''}</div>
-      </div>
-      <div style="display:flex;gap:0.5rem;flex-shrink:0;">
-        <button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>
-        <button onclick="rejectUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>
-      </div>
-    </div>`).join('');
-}
-
-function renderAll(){
-  const users=getUsers();
-  const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const nonPending=users.filter(u=>u.status!=='pending');
-  const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
-  const list=document.getElementById('citizenList');
-  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
-  list.innerHTML=filtered.map(u=>{
-    const creator = isCreator(u.id);
-    const isMod   = u.role === 'moderator';
-    const actions = creator ? `
-      <span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#c8102e;border:1px solid rgba(200,16,46,0.3);padding:0.2rem 0.6rem;">PROTECTED · CREATOR</span>
-    ` : `
-      ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
-      ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
-      ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
-      ${!isMod?`<button onclick="makeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
-      <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
-    `;
-    return `
-    <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${statusBadge(u.status)}
-          ${roleBadge(u.role)}
-          ${creator?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">👑 CREATOR</span>':''}
-          ${u.approvalRequested&&u.status==='pending'?'<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.4);padding:0.12rem 0.4rem;">⚑ Req.</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-      </div>
-      <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
-        ${actions}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function renderLog(){
-  const log=getLog();
-  const el=document.getElementById('activityLog');
-  if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${e.time}</span><span style="color:rgba(255,255,255,0.6);">${e.msg}</span></div>`).join('');
-}
-
-function approveUser(id){
-  const u=_users.find(x=>x.id===id);
-  if(!u) return;
-  arieteDB.updateUser(id,{status:'approved'}).then(()=>addLog('Approved: '+u.name+' ('+id+')')).catch(console.error);
-}
-function rejectUser(id){
-  if(!confirm('Reject and delete this registration?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Rejected: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function deleteUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
-  if(!confirm('Permanently delete this citizen account?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Deleted: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function makeModUser(id){
-  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'moderator',status:'approved'}).then(()=>addLog('Granted Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function revokeModUser(id){
-  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'citizen'}).then(()=>addLog('Revoked Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function suspendUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{status:'suspended'}).then(()=>addLog('Suspended: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function refresh(){renderStats();renderPending();renderAll();}
-
-/* Real-time listener — auto-refreshes whenever Firestore data changes */
-function _attachListener(){
-  if(window.arieteDB){
-    arieteDB.onUsers(function(users){ _users=users; refresh(); });
-  } else {
-    setTimeout(_attachListener, 400);
-  }
-}
-_attachListener();
-renderLog();
-addLog('Admin session started');
+// Show logged-in indicator in nav
 </script>
 </body>
 </html>

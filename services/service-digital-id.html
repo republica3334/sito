@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>United Republic of Stars — Official Government Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="../ariete-auth.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Digital ID & Documents — United Republic of Stars</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -704,329 +705,151 @@
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
 
     /* ── EAGLE EMBLEM SVG PATHS ── */
+  
   </style>
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/register.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/service-digital-id.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="United Republic of Stars — Official Government Portal">
-  <meta property="og:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
+  <meta property="og:title"       content="Digital ID & Documents — United Republic of Stars">
+  <meta property="og:description" content="Apply for your Stars Digital ID — your secure official identity document.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="United Republic of Stars — Official Government Portal">
-  <meta name="twitter:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
+  <meta name="twitter:title"       content="Digital ID & Documents — United Republic of Stars">
+  <meta name="twitter:description" content="Apply for your Stars Digital ID — your secure official identity document.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
 <body>
 <!-- UTILITY BAR -->
 <div class="utility-bar">
-  <div class="utility-links">
-    <a href="#">Accessibility</a>
-    <a href="#">Language / Lingua</a>
-    <a href="#">Emergency Line: 1-800-ARX-0001</a>
-  </div>
-  <div class="utility-links">
-    <a href="#">Citizen Portal</a>
-    <a href="#">Official Gazette</a>
-    <a href="#">Transparency</a>
-  </div>
+  <div class="utility-links"><a href="#">Accessibility</a><a href="#">Language / Lingua</a><a href="#">Emergency Line: 1-800-ARX-0001</a></div>
+  <div class="utility-links"><a href="#">Citizen Portal</a><a href="#">Official Gazette</a><a href="#">Transparency</a></div>
 </div>
-
-<!-- HEADER -->
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
-    <!-- Ariete Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
-
-
-    <div class="brand-text">
-      <h1>United Republic of Stars</h1>
-      <span>Official Government Portal · Est. MMXII</span>
-    </div>
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <div class="brand-text"><h1>United Republic of Stars</h1><span>Official Government Portal · Est. MMXII</span></div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="../gov/government.html">Government</a>
+    <a href="services.html" style="background:var(--black);color:var(--white);">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
-<div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
-  <div style="position:relative;z-index:1;width:100%;max-width:520px;">
-
-    <div style="text-align:center;margin-bottom:2.5rem;">
-      <img src="svgs/icone/republica/2.svg" style="width:90px;height:90px;filter:invert(1);opacity:0.85;" alt="Emblem">
-      <div style="font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
+<div style="background:var(--black);color:var(--white);padding:4rem;border-bottom:3px solid var(--red);">
+  <div style="display:flex;align-items:flex-start;gap:2.5rem;max-width:1100px;">
+    <div style="width:100px;height:100px;background:#111;border:1.5px solid rgba(200,16,46,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <img src="../svgs/icone/generico/id.svg" width="68" height="68" alt="Digital ID &amp; Documents" style="object-fit:contain;filter:invert(1);">
     </div>
-
-    <div style="background:#0f0f0f;border-top:3px solid #c8102e;padding:2.8rem 2.5rem;">
-      <div style="margin-bottom:2rem;">
-        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">Citizen Registration</div>
-        <h1 style="font-family:var(--font-head);font-size:1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);">Create Account</h1>
-        <p style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;">Registration is subject to approval by the Civil Registry Authority.</p>
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:0.8rem;flex-wrap:wrap;">
+        <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:0.5rem;"><span style="display:block;width:24px;height:2px;background:var(--red);"></span>Citizen Services</div>
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;background:rgba(200,16,46,0.15);color:#ff6680;padding:0.25rem 0.8rem;">Available Online</div>
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);">Processing: 5–10 Business Days</div>
       </div>
-
-      <form id="regForm" onsubmit="handleRegister(event)" style="display:flex;flex-direction:column;gap:1.2rem;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-          <div>
-            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">First Name</label>
-            <input id="fname" type="text" placeholder="Alessandro" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-          </div>
-          <div>
-            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Last Name</label>
-            <input id="lname" type="text" placeholder="Rossi" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-          </div>
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Date of Birth</label>
-          <input id="dob" type="date" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Email Address</label>
-          <input id="email" type="email" placeholder="a.rossi@example.com" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Password</label>
-          <input id="reg_pwd" type="password" placeholder="Min. 8 characters" required minlength="8" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Confirm Password</label>
-          <input id="reg_pwd2" type="password" placeholder="Repeat password" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-
-        <!-- Password strength -->
-        <div id="strengthBar" style="display:none;margin-top:-0.6rem;">
-          <div style="display:flex;gap:3px;margin-bottom:0.3rem;">
-            <div id="s1" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s2" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s3" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s4" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-          </div>
-          <span id="strengthLabel" style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);"></span>
-        </div>
-
-        <!-- Terms -->
-        <label style="display:flex;align-items:flex-start;gap:0.7rem;cursor:pointer;padding-top:0.3rem;">
-          <input type="checkbox" id="terms" required style="accent-color:#c8102e;width:14px;height:14px;flex-shrink:0;margin-top:2px;">
-          <span style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;">I confirm this information is accurate and I accept the <a href="#" style="color:#c8102e;text-decoration:none;">Terms of Use</a> and <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a> of the United Republic of Stars.</span>
-        </label>
-
-        <div id="regError" style="display:none;background:rgba(200,16,46,0.12);border-left:3px solid #c8102e;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#c8102e;"></div>
-        <div id="regSuccess" style="display:none;background:rgba(0,180,80,0.1);border-left:3px solid #00b450;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#00b450;"></div>
-
-        <button type="submit" id="regBtn" style="background:#c8102e;color:var(--white);border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:1rem;cursor:pointer;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">
-          Submit Registration →
-        </button>
-      </form>
-    </div>
-
-    <div style="text-align:center;margin-top:1.5rem;">
-      <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.3);">Already registered?</span>
-      <a href="citizen-login.html" style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;text-decoration:none;margin-left:0.5rem;">Sign In →</a>
+      <h1 style="font-family:var(--font-head);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:1rem;">Digital ID &amp; Documents</h1>
+      <p style="font-family:var(--font-body);font-size:0.95rem;color:rgba(255,255,255,0.6);max-width:620px;line-height:1.75;">Apply for, renew, or replace your national identity card, passport, and residency permits entirely online through the secure Ariete Civil Identity Portal.</p>
+      <div style="margin-top:1.5rem;display:flex;align-items:center;gap:0.8rem;">
+        <a href="services.html" style="font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;">← Back to All Services</a>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- ACTIONS GRID -->
+<section style="background:var(--gray-light);padding:3.5rem 4rem;">
+  <div style="font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem;"><span style="width:20px;height:2px;background:var(--red);display:block;"></span>Available Actions</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5px;background:var(--black);">
+<div style="background:var(--white);border-top:3px solid var(--red);padding:2rem;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow=''">
+  <div style="font-size:1.6rem;margin-bottom:0.8rem;">🪪</div>
+  <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">National Identity Card</h3>
+  <p style="font-family:var(--font-body);font-size:0.83rem;line-height:1.7;color:var(--gray-dark);margin-bottom:1.2rem;">Apply for your first NIC or renew an expiring card. Valid for 10 years for adults, 5 for minors.</p>
+  <a href="service-id-national-card.html" style="background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.7rem 1.4rem;cursor:pointer;display:inline-block;text-decoration:none;">Apply Now →</a>
+</div>
+<div style="background:var(--white);border-top:3px solid var(--red);padding:2rem;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow=''">
+  <div style="font-size:1.6rem;margin-bottom:0.8rem;">📘</div>
+  <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Passport Application</h3>
+  <p style="font-family:var(--font-body);font-size:0.83rem;line-height:1.7;color:var(--gray-dark);margin-bottom:1.2rem;">Submit a new passport application or renewal. Standard and express processing available.</p>
+  <a href="service-id-passport.html" style="background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.7rem 1.4rem;cursor:pointer;display:inline-block;text-decoration:none;">Apply Now →</a>
+</div>
+<div style="background:var(--white);border-top:3px solid var(--red);padding:2rem;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow=''">
+  <div style="font-size:1.6rem;margin-bottom:0.8rem;">🏠</div>
+  <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Residency Permit</h3>
+  <p style="font-family:var(--font-body);font-size:0.83rem;line-height:1.7;color:var(--gray-dark);margin-bottom:1.2rem;">Apply for or renew your residency permit. Includes family reunification and work residency categories.</p>
+  <a href="service-id-residency.html" style="background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.7rem 1.4rem;cursor:pointer;display:inline-block;text-decoration:none;">Apply Now →</a>
+</div>
+<div style="background:var(--white);border-top:3px solid var(--red);padding:2rem;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow=''">
+  <div style="font-size:1.6rem;margin-bottom:0.8rem;">📄</div>
+  <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Document Replacement</h3>
+  <p style="font-family:var(--font-body);font-size:0.83rem;line-height:1.7;color:var(--gray-dark);margin-bottom:1.2rem;">Report and replace a lost or stolen national ID, passport, or permit.</p>
+  <a href="service-id-replacement.html" style="background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.7rem 1.4rem;cursor:pointer;display:inline-block;text-decoration:none;">Report Lost →</a>
+</div>
+  </div>
+</section>
+
+<!-- INFO + REQUIREMENTS -->
+<section style="background:var(--white);padding:3.5rem 4rem;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:1100px;">
+    <div><div style="background:var(--gray-light);padding:2rem;border-left:3px solid var(--red);">
+  <h4 style="font-family:var(--font-sub);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">Required Documents</h4>
+  <ul style="list-style:none;margin:0;padding:0;"><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Valid proof of birth (birth certificate or equivalent)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Current passport-size photograph (biometric standard)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Proof of address (utility bill or bank statement, max 3 months old)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Previous document (if renewal)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>National Identification Number (NIN)</li></ul>
+</div><br/><div style="background:var(--gray-light);padding:2rem;border-left:3px solid var(--red);">
+  <h4 style="font-family:var(--font-sub);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">Processing Fees</h4>
+  <ul style="list-style:none;margin:0;padding:0;"><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>National Identity Card — Free (first issue)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>NIC Renewal — ARX 12.00</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Passport (Standard) — ARX 55.00</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Passport (Express, 72h) — ARX 120.00</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Residency Permit — ARX 80.00</li></ul>
+</div></div>
+    <div><div style="background:var(--gray-light);padding:2rem;border-left:3px solid var(--red);">
+  <h4 style="font-family:var(--font-sub);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">Processing Timeline</h4>
+  <ul style="list-style:none;margin:0;padding:0;"><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Online submission review: 1–2 business days</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Document verification: 2–5 business days</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Printing & dispatch: 2–3 business days</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Express passport: 72 hours guaranteed</li></ul>
+</div><br/><div style="background:var(--gray-light);padding:2rem;border-left:3px solid var(--red);">
+  <h4 style="font-family:var(--font-sub);font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;">Contact & Support</h4>
+  <ul style="list-style:none;margin:0;padding:0;"><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Civil Identity Authority — identity@gov.ariete</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Helpline: 1-800-ARX-ID01 (Mon–Fri, 08:00–18:00)</li><li style="font-family:var(--font-body);font-size:0.85rem;color:var(--gray-dark);padding:0.55rem 0;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;gap:0.7rem;"><span style="color:var(--red);font-size:0.9rem;">▸</span>Nearest regional office finder available on the portal</li></ul>
+</div></div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
-
-
+      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
-      <p style="font-size:0.7rem; color: rgba(255,255,255,0.2); letter-spacing:0.08em; text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
     </div>
-    <div class="footer-col">
-      <h5>Government</h5>
-      <ul>
-        <li><a href="government.html">Office of the President</a></li>
-        <li><a href="national-assembly.html">National Assembly</a></li>
-        <li><a href="supreme-court.html">Supreme Court</a></li>
-        <li><a href="ministries.html">Cabinet of Ministers</a></li>
-        <li><a href="official-gazette.html">Official Gazette</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Citizen Services</h5>
-      <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Information</h5>
-      <ul>
-        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
-        <li><a href="constitution.html">Constitution</a></li>
-        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
-        <li><a href="open-data.html">Open Data</a></li>
-        <li><a href="contact.html">Contact Government</a></li>
-      </ul>
-    </div>
+    <div class="footer-col"><h5>Government</h5><ul><li><a href="../gov/government.html">Office of the President</a></li><li><a href="../gov/national-assembly.html">National Assembly</a></li><li><a href="../gov/supreme-court.html">Supreme Court</a></li><li><a href="../gov/ministries.html">Cabinet of Ministers</a></li></ul></div>
+    <div class="footer-col"><h5>Citizen Services</h5><ul><li><a href="service-digital-id.html">Digital ID &amp; Documents</a></li><li><a href="service-taxes.html">Taxes &amp; Revenue</a></li><li><a href="service-health.html">Health Services</a></li><li><a href="service-education.html">Education &amp; Grants</a></li></ul></div>
+    <div class="footer-col"><h5>Information</h5><ul><li><a href="../GOVERN_1.HTM">About the Republic</a></li><li><a href="../gov/constitution.html">Constitution</a></li><li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li><li><a href="../gov/contact.html">Contact Government</a></li></ul></div>
   </div>
   <div class="footer-bottom">
     <span>United Republic of Stars · Est. MMXII · Official Government Website</span>
-    <div style="display:flex; gap:1.5rem;">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Accessibility</a>
-      <a href="#">Terms of Use</a>
-    </div>
+    <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
-
-<script>
-  // Ticker: pausa on hover
-  const track = document.getElementById('ticker');
-  if (track) {
-    track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
-    track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
-  }
-</script>
-
-<script>
-// Show logged-in indicator in nav
-</script>
-
-<!-- COOKIE CONSENT -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid #c8102e;z-index:9999;padding:1.2rem 2.5rem;font-family:var(--font-body);">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
-    <div style="flex:1;min-width:260px;">
-      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;">Cookie Policy — United Republic of Stars</span>
-      </div>
-      <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;margin:0;">This portal uses strictly necessary cookies for session authentication and security purposes. We do not use tracking or advertising cookies. By continuing you accept our <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a>.</p>
-    </div>
-    <div style="display:flex;gap:0.8rem;align-items:center;flex-shrink:0;">
-      <button onclick="setCookiePref('essential')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.5)'">Essential Only</button>
-      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Accept & Continue</button>
+    <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;margin:0;">This portal uses strictly necessary cookies for session authentication and security purposes. <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a>.</p>
+    <div style="display:flex;gap:0.8rem;">
+      <button onclick="setCookiePref('essential')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;">Essential Only</button>
+      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;">Accept &amp; Continue</button>
     </div>
   </div>
 </div>
 
-
 <script>
-document.getElementById('reg_pwd').addEventListener('input', function(){
-  const v = this.value;
-  const bar = document.getElementById('strengthBar');
-  bar.style.display = v ? 'block' : 'none';
-  let score = 0;
-  if (v.length >= 8) score++;
-  if (/[A-Z]/.test(v)) score++;
-  if (/[0-9]/.test(v)) score++;
-  if (/[^A-Za-z0-9]/.test(v)) score++;
-  const colors = ['#c8102e','#e86b00','#f5c000','#00b450'];
-  const labels = ['Weak','Fair','Good','Strong'];
-  [1,2,3,4].forEach(i => {
-    const el = document.getElementById('s'+i);
-    el.style.background = i <= score ? colors[score-1] : 'rgba(255,255,255,0.08)';
-  });
-  const lbl = document.getElementById('strengthLabel');
-  lbl.textContent = score > 0 ? 'Password strength: ' + labels[score-1] : '';
-  lbl.style.color = score > 0 ? colors[score-1] : 'rgba(255,255,255,0.3)';
-});
-</script>
-</body>
-
-
-<script>
-function generateID(){
-  const c='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let id='ARX-';
-  for(let i=0;i<3;i++) id+=c[Math.floor(Math.random()*36)];
-  id+='-';
-  for(let i=0;i<6;i++) id+=Math.floor(Math.random()*10);
-  return id;
-}
-function handleRegister(e){
-  e.preventDefault();
-  const err=document.getElementById('regError');
-  const suc=document.getElementById('regSuccess');
-  const btn=document.getElementById('regBtn');
-  err.style.display='none'; suc.style.display='none';
-  const fname=document.getElementById('fname').value.trim();
-  const lname=document.getElementById('lname').value.trim();
-  const dob=document.getElementById('dob').value;
-  const email=document.getElementById('email').value.trim();
-  const pwd=document.getElementById('reg_pwd').value;
-  const pwd2=document.getElementById('reg_pwd2').value;
-  if(pwd!==pwd2){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
-  btn.textContent='Processing...'; btn.disabled=true;
-  (window.arieteDB ? window.arieteDB.emailExists(email) : Promise.resolve(false))
-  .then(function(exists){
-    if(exists){
-      err.textContent='An account with this email already exists.';
-      err.style.display='block';
-      btn.textContent='Submit Registration →';
-      btn.disabled=false;
-      return;
-    }
-    const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'pending',setup:false,registered:new Date().toISOString()};
-    var savePromise = window.arieteDB ? window.arieteDB.saveUser(nu) : Promise.resolve();
-    savePromise.then(function(){
-      showRegSuccessModal(nu.id);
-      document.getElementById('regForm').style.opacity='0.4';
-      document.getElementById('regForm').style.pointerEvents='none';
-      btn.textContent='Submitted ✓';
-    }).catch(function(){
-      err.textContent='Failed to save. Check your internet connection.';
-      err.style.display='block';
-      btn.textContent='Submit Registration →';
-      btn.disabled=false;
-    });
-  }).catch(function(){
-    err.textContent='Connection error — please try again.';
-    err.style.display='block';
-    btn.textContent='Submit Registration →';
-    btn.disabled=false;
-  });
-}
-
-document.querySelectorAll('input').forEach(el=>{
-  el.addEventListener('focus',()=>el.style.borderColor='#c8102e');
-  el.addEventListener('blur',()=>el.style.borderColor='rgba(255,255,255,0.1)');
-});
-</script>
-
-<!-- Registration Success Modal -->
-<div id="regSuccessModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:1.5rem;">
-  <div style="background:#0d0d0d;border-top:4px solid #c8102e;max-width:480px;width:100%;padding:2.5rem 2.2rem;position:relative;">
-    <div style="width:60px;height:60px;background:rgba(0,180,80,0.1);border:1.5px solid rgba(0,180,80,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Civil Registry Authority</div>
-    <div style="font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:0.8rem;">Registration<br>Successful</div>
-    <p style="font-family:'Inter',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.5rem;">Your citizen account has been created. Save your <strong style="color:rgba(255,255,255,0.8);">National ID</strong> &mdash; you will need it to log in.</p>
-    <div style="background:#1a1a1a;border:1.5px solid rgba(200,16,46,0.4);padding:1rem 1.2rem;margin-bottom:1.5rem;">
-      <div style="font-family:'Rajdhani',sans-serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.4rem;">Your National ID</div>
-      <div id="modalNationalId" style="font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:600;letter-spacing:0.18em;color:#fff;"></div>
-    </div>
-    <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);padding:0.75rem 1rem;margin-bottom:1.5rem;font-family:'Inter',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.6;">
-      Your account is <strong style="color:#f5a623;">pending approval</strong> by the Civil Registry. You can log in, but services will be limited until approval.
-    </div>
-    <a href="citizen-login.html" style="display:block;background:#c8102e;color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem 1.6rem;cursor:pointer;text-decoration:none;text-align:center;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Go to Login &rarr;</a>
-  </div>
-</div>
-
-<script>
-function showRegSuccessModal(id) {
-  document.getElementById('modalNationalId').textContent = id;
-  var modal = document.getElementById('regSuccessModal');
-  modal.style.display = 'flex';
+function requireServiceLogin(){
+  if(!arieteSession.get()){
+    localStorage.setItem('ariete_redirect', window.location.href);
+    window.location.href = 'citizen-login.html';
+  } else {
+    alert('This service is not yet activated. Check back soon.');
+  }
 }
 </script>
 </body>

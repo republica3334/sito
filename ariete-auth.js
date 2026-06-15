@@ -1,7 +1,10 @@
+/* ── Resolve base URL (works from any subfolder) ── */
+var _arieteBase = (document.currentScript ? document.currentScript.src.replace(/[^\/]*$/, '') : '');
+
 /* ── Firebase SDK (injected synchronously) ── */
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"><\/scr'+'ipt>');
-document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
+document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>');
 
 /* ═══════════════════════════════════════════════════
    ARIETE AUTH  –  shared across all pages
@@ -71,7 +74,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
     requireLogin: function(){
       if (!session.get()){
         localStorage.setItem('ariete_redirect', window.location.href);
-        window.location.replace('citizen-login.html');
+        window.location.replace(_arieteBase + 'auth/citizen-login.html');
         return false;
       }
       return true;
@@ -79,7 +82,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
 
     requireAdmin: function(){
       var s = session.get();
-      if (!s || s.user !== ADMIN_ID){ window.location.replace('citizen-login.html'); return false; }
+      if (!s || s.user !== ADMIN_ID){ window.location.replace(_arieteBase + 'auth/citizen-login.html'); return false; }
       return true;
     },
 
@@ -91,14 +94,14 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
     requireMod: function(){
       var s = session.get();
       if (!s || (s.role !== 'moderator' && s.user !== ADMIN_ID)){
-        window.location.replace('citizen-login.html'); return false;
+        window.location.replace(_arieteBase + 'auth/citizen-login.html'); return false;
       }
       return true;
     },
 
     logout: function(){
       session.clear();
-      window.location.href = 'citizen-login.html';
+      window.location.href = _arieteBase + 'auth/citizen-login.html';
     }
   };
   w.arieteSession = session;
@@ -111,7 +114,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
 
     if (!s) {
       cta.textContent = 'Citizen Login';
-      cta.href        = 'citizen-login.html';
+      cta.href        = _arieteBase + 'auth/citizen-login.html';
       cta.onclick     = null;
       return;
     }
@@ -160,24 +163,46 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
 
     /* header row */
     var header = document.createElement('div');
-    header.style.cssText = 'padding:0.7rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);';
-    header.innerHTML = '<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;color:#c8102e;text-transform:uppercase;margin-bottom:2px;">'
-      + (isAdmin ? 'Supreme Administrator' : isMod ? 'Moderator' : 'Citizen')
-      + '</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);font-family:var(--font-body);">' + s.user + '</div>';
+    header.id = '_arieteNavHeader';
+    header.style.cssText = 'padding:0.8rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+    var roleColor = isAdmin ? '#c8102e' : isMod ? '#7e5bff' : 'rgba(255,255,255,0.35)';
+    header.innerHTML =
+      '<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.14em;color:'+roleColor+';text-transform:uppercase;margin-bottom:3px;">'
+      + (isAdmin ? '★ Supreme Administrator' : isMod ? '⬡ Moderator' : '◈ Citizen')
+      + '</div>'
+      + '<div id="_arieteNavName" style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.9);font-family:var(--font-body);margin-bottom:1px;">' + s.user + '</div>'
+      + '<div id="_arieteNavEmail" style="font-size:0.7rem;color:rgba(255,255,255,0.3);font-family:var(--font-body);"></div>'
+      + '<div id="_arieteNavStatus" style="margin-top:5px;"></div>';
     menu.appendChild(header);
+
+    /* Load real profile data from Firestore */
+    if (!isAdmin && window.arieteDB) {
+      window.arieteDB.getUser(s.user).then(function(user){
+        if (!user) return;
+        var nameEl   = document.getElementById('_arieteNavName');
+        var emailEl  = document.getElementById('_arieteNavEmail');
+        var statusEl = document.getElementById('_arieteNavStatus');
+        if (nameEl && user.name)  nameEl.textContent  = user.name;
+        if (emailEl && user.email) emailEl.textContent = user.email;
+        if (statusEl && user.status) {
+          var sc = {approved:'#00b450', pending:'#f5a623', suspended:'#c8102e'};
+          statusEl.innerHTML = '<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:'+(sc[user.status]||'#aaa')+';border:1px solid '+(sc[user.status]||'#aaa')+'30;padding:0.1rem 0.4rem;">'+user.status+'</span>';
+        }
+      }).catch(function(){});
+    }
 
     if (isAdmin){
       menu.appendChild(menuItem('<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
-        'Admin Panel', 'admin.html', null, false));
+        'Admin Panel', _arieteBase + 'portal/admin.html', null, false));
     }
     if (isMod && !isAdmin){
       menu.appendChild(menuItem('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-        'Moderator Panel', 'mod.html', null, false));
+        'Moderator Panel', _arieteBase + 'portal/mod.html', null, false));
     }
     menu.appendChild(menuItem('<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>',
       'Profile', '#', function(e){ e.preventDefault(); alert('Profile — coming soon.'); }, false));
     menu.appendChild(menuItem('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
-      'Settings', 'settings.html', null, false));
+      'Settings', _arieteBase + 'portal/settings.html', null, false));
     menu.appendChild(menuItem('<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
       'Support', '#', function(e){ e.preventDefault(); alert('Support — coming soon.'); }, false));
     menu.appendChild(menuItem('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
@@ -227,7 +252,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
   (function(){
     var link = document.createElement('link');
     link.rel  = 'stylesheet';
-    link.href = 'ariete-mobile.css';
+    link.href = _arieteBase + 'ariete-mobile.css';
     document.head.appendChild(link);
   })();
 
@@ -294,7 +319,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
           session.set(s.user, user.role, 0);
         }
         if (user.status === 'suspended'){
-          window.location.replace('suspended.html');
+          window.location.replace(_arieteBase + 'auth/suspended.html');
           return;
         }
         if (user.status === 'pending'){
@@ -307,7 +332,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
             + 'padding:0.55rem 1.2rem;text-align:center;';
           banner.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
             + '<span><strong>Account pending approval</strong> — Access to citizen services is limited until the Civil Registry approves your account.'
-            + ' <a href="settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
+            + ' <a href="' + _arieteBase + 'portal/settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
             + '<button onclick="document.getElementById(\'arietePendingBanner\').remove()" '
             + 'style="background:none;border:none;color:#ffd98c;font-size:1rem;cursor:pointer;padding:0 0.3rem;line-height:1;" '
             + 'title="Dismiss">×</button>';
@@ -345,7 +370,15 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
     var _seq     = '';
 
     document.addEventListener('keydown', function(e){
+      /* Shortcut: Ctrl+Shift+A always works, regardless of focus */
+      if(e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'A'){
+        e.preventDefault();
+        _showModal();
+        return;
+      }
+      /* Sequence ARIETE — only outside inputs */
       if(['INPUT','TEXTAREA','SELECT'].indexOf((document.activeElement||{}).tagName||'')!==-1) return;
+      if(e.key.length !== 1) return;
       _seq += e.key.toUpperCase();
       if(_seq.length > _TRIGGER.length) _seq = _seq.slice(-_TRIGGER.length);
       if(_seq === _TRIGGER){ _seq = ''; _showModal(); }
@@ -398,7 +431,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
             arieteSession.set(ADMIN_ID, 'admin', 0);
             ov.remove();
             if(document.getElementById('__arStyle__')) document.getElementById('__arStyle__').remove();
-            window.location.href = 'admin.html';
+            window.location.href = _arieteBase + 'portal/admin.html';
           }, 800);
         } else {
           _fails++;
@@ -512,7 +545,7 @@ document.write('<scr'+'ipt src="ariete-firebase.js"><\/scr'+'ipt>');
             +'<div style="margin-top:0.8rem;font-size:0.45rem;letter-spacing:0.35em;color:rgba(255,0,0,0.2);">SESSION TERMINATED</div>';
           setTimeout(function(){
             arieteSession.clear();
-            window.location.href = 'citizen-login.html';
+            window.location.href = _arieteBase + 'auth/citizen-login.html';
           }, 2200);
         }
       }, 1000);

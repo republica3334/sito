@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
+<script src="../ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — United Republic of Stars</title>
@@ -739,9 +739,9 @@
 
 <!-- HEADER -->
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Ariete Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -750,12 +750,12 @@
     </div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
@@ -814,7 +814,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -823,31 +823,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="government.html">Office of the President</a></li>
-        <li><a href="national-assembly.html">National Assembly</a></li>
-        <li><a href="supreme-court.html">Supreme Court</a></li>
-        <li><a href="ministries.html">Cabinet of Ministers</a></li>
-        <li><a href="official-gazette.html">Official Gazette</a></li>
+        <li><a href="../gov/government.html">Office of the President</a></li>
+        <li><a href="../gov/national-assembly.html">National Assembly</a></li>
+        <li><a href="../gov/supreme-court.html">Supreme Court</a></li>
+        <li><a href="../gov/ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="../gov/official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
+        <li><a href="../services/service-digital-id.html">National ID Portal</a></li>
+        <li><a href="../services/service-taxes.html">Tax Authority</a></li>
+        <li><a href="../services/service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="../services/service-health.html">Health Services</a></li>
+        <li><a href="../services/service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
-        <li><a href="constitution.html">Constitution</a></li>
-        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
-        <li><a href="open-data.html">Open Data</a></li>
-        <li><a href="contact.html">Contact Government</a></li>
+        <li><a href="../GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="../gov/constitution.html">Constitution</a></li>
+        <li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="../gov/open-data.html">Open Data</a></li>
+        <li><a href="../gov/contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>
@@ -907,7 +907,7 @@ function addLog(msg){
   localStorage.setItem('ariete_log',JSON.stringify(log));
   renderLog();
 }
-function logout(){null /* logout handled by arieteSession.logout() */;window.location.href='citizen-login.html';}
+function logout(){null /* logout handled by arieteSession.logout() */;window.location.href='../auth/citizen-login.html';}
 
 function statusBadge(s){
   const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -1052,4 +1052,4 @@ renderLog();
 addLog('Admin session started');
 </script>
 </body>
-</html>
+</html>                                                                                               

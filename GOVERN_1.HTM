@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Platform detection: redirect mobile users to mobile homepage -->
+<script>
+  if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    window.location.replace('mobile.html');
+  }
+</script>
 <script src="ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -749,12 +755,12 @@
     </div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="gov/government.html">Government</a>
+    <a href="services/services.html">Services</a>
+    <a href="gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
@@ -793,8 +799,8 @@
         and official government communications.
       </p>
       <div class="hero-actions" id="heroActions">
-        <a href="services.html" class="btn-primary">Access Citizen Services</a>
-        <a href="government.html" class="btn-outline">Learn About the Republic</a>
+        <a href="services/services.html" class="btn-primary">Access Citizen Services</a>
+        <a href="gov/government.html" class="btn-outline">Learn About the Republic</a>
       </div>
     </div>
   </div>
@@ -968,7 +974,7 @@
       <div class="section-label">Citizen Services</div>
       <h2 class="section-title">What Can We Help<br/>You With Today?</h2>
     </div>
-    <a href="services.html" class="btn-primary">View All Services</a>
+    <a href="services/services.html" class="btn-primary">View All Services</a>
   </div>
   <div class="services-grid">
 
@@ -1045,7 +1051,7 @@
       The government commits 14.8 billion in public investment across transport, digital networks, housing,
       and clean energy — the largest infrastructure program in the United Republic's history.
     </p>
-    <a href="ministries.html" class="btn-primary">View All Ministries</a>
+    <a href="gov/ministries.html" class="btn-primary">View All Ministries</a>
   </div>
 </div>
 
@@ -1200,7 +1206,7 @@
           </div>
         </div>
         <p>The United Republic of Stars calls upon its citizens to defend, build, and uphold the values of the nation. Military service offers career, purpose, and the honor of serving the state.</p>
-        <a href="ground-forces.html" class="btn-primary">Begin Your Application</a>
+        <a href="military/ground-forces.html" class="btn-primary">Begin Your Application</a>
       </div>
       <div class="enlistment-stats">
         <div class="enlist-stat">
@@ -1219,7 +1225,7 @@
     </div>
 
     <div class="enlistment-branches">
-      <a href="ground-forces.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
+      <a href="military/ground-forces.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
         <div class="branch-icon">
           <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 3L3 10v8l11 7 11-7v-8L14 3z" stroke="#c8102e" stroke-width="1.5" fill="none"/>
@@ -1230,7 +1236,7 @@
         <p>The backbone of the Republic's defense. Infantry, armor, and engineering units operating across all terrain types.</p>
         <span class="branch-link">View Roles →</span>
       </a>
-      <a href="air-corps.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
+      <a href="military/air-corps.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
         <div class="branch-icon">
           <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 20 Q14 6 24 20" stroke="#c8102e" stroke-width="1.5" fill="none"/>
@@ -1242,7 +1248,7 @@
         <p>Strategic air superiority, reconnaissance, and rapid-response operations defending the Republic's skies.</p>
         <span class="branch-link">View Roles →</span>
       </a>
-      <a href="naval-command.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
+      <a href="military/naval-command.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
         <div class="branch-icon">
           <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 18 Q7 14 14 16 Q21 18 25 14" stroke="#c8102e" stroke-width="1.5" fill="none"/>
@@ -1273,31 +1279,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="government.html">Office of the President</a></li>
-        <li><a href="national-assembly.html">National Assembly</a></li>
-        <li><a href="supreme-court.html">Supreme Court</a></li>
-        <li><a href="ministries.html">Cabinet of Ministers</a></li>
-        <li><a href="official-gazette.html">Official Gazette</a></li>
+        <li><a href="gov/government.html">Office of the President</a></li>
+        <li><a href="gov/national-assembly.html">National Assembly</a></li>
+        <li><a href="gov/supreme-court.html">Supreme Court</a></li>
+        <li><a href="gov/ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="gov/official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
+        <li><a href="services/service-digital-id.html">National ID Portal</a></li>
+        <li><a href="services/service-taxes.html">Tax Authority</a></li>
+        <li><a href="services/service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="services/service-health.html">Health Services</a></li>
+        <li><a href="services/service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
         <li><a href="GOVERN_1.HTM">About the Republic</a></li>
-        <li><a href="constitution.html">Constitution</a></li>
-        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
-        <li><a href="open-data.html">Open Data</a></li>
-        <li><a href="contact.html">Contact Government</a></li>
+        <li><a href="gov/constitution.html">Constitution</a></li>
+        <li><a href="gov/laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="gov/open-data.html">Open Data</a></li>
+        <li><a href="gov/contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>

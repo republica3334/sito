@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
+<script src="../ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel — United Republic of Stars</title>
+  <title>Naval Command — United Republic of Stars</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -708,21 +708,23 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/admin.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/naval-command.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="Admin Panel — United Republic of Stars">
-  <meta property="og:description" content="United Republic of Stars — Administration Panel.">
+  <meta property="og:title"       content="Naval Command — United Republic of Stars">
+  <meta property="og:description" content="The Naval Command of the United Republic of Stars — maritime defence and operations.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Admin Panel — United Republic of Stars">
-  <meta name="twitter:description" content="United Republic of Stars — Administration Panel.">
+  <meta name="twitter:title"       content="Naval Command — United Republic of Stars">
+  <meta name="twitter:description" content="The Naval Command of the United Republic of Stars — maritime defence and operations.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
 <body>
+
+
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <div class="utility-links">
@@ -739,9 +741,9 @@
 
 <!-- HEADER -->
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Ariete Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -750,71 +752,149 @@
     </div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
-<div style="min-height:calc(100vh - 120px);background:#070707;padding:0;">
 
-  <!-- Admin Guard -->
-  <script>
-  arieteSession.requireAdmin();
-  </script>
-
-  <!-- Top Bar -->
-  <div style="background:#0a0a0a;border-bottom:2px solid #c8102e;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
+<div style="background:var(--black);color:var(--white);padding:5rem 4rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center;">
     <div>
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;">Supreme Authority</div>
-      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-top:0.2rem;">Administration Panel</h1>
+      <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;"><span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Armed Forces of the United Republic · Naval Command</div>
+      <h1 style="font-family:var(--font-head);font-size:clamp(2.5rem,5vw,4.2rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.0;margin-bottom:0.8rem;">Naval<br>Command</h1>
+      <p style="font-family:var(--font-sub);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:#c8102e;margin-bottom:1.6rem;">Mare Nostrum — Fides et Fortitudo</p>
+      <p style="font-family:var(--font-body);font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:540px;line-height:1.8;margin-bottom:2.5rem;">The Naval Command of the United Republic of Stars secures maritime borders, protects strategic sea lanes, and projects national power through a modern coastal and deep-water fleet operating across the surrounding seas.</p>
+      <div style="display:flex;gap:2.5rem;">
+      <div style="border-left:2px solid #c8102e;padding-left:1.2rem;">
+        <strong style="display:block;font-family:var(--font-head);font-size:1.9rem;font-weight:700;color:var(--white);letter-spacing:0.04em;">4,200</strong>
+        <span style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Active Personnel</span>
+      </div>
+      <div style="border-left:2px solid #c8102e;padding-left:1.2rem;">
+        <strong style="display:block;font-family:var(--font-head);font-size:1.9rem;font-weight:700;color:var(--white);letter-spacing:0.04em;">31</strong>
+        <span style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Vessels in Service</span>
+      </div>
+      <div style="border-left:2px solid #c8102e;padding-left:1.2rem;">
+        <strong style="display:block;font-family:var(--font-head);font-size:1.9rem;font-weight:700;color:var(--white);letter-spacing:0.04em;">3</strong>
+        <span style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Naval Bases</span>
+      </div></div>
     </div>
-    <div style="display:flex;gap:0.8rem;">
-      <button onclick="logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">Logout</button>
-    </div>
+    <div style="opacity:0.18;flex-shrink:0;"><svg width="200" height="200" viewBox="0 0 200 200" fill="none"><path d="M30 120 Q70 100 100 110 Q130 120 170 100" stroke="white" stroke-width="3" fill="none"/><path d="M30 145 Q70 125 100 135 Q130 145 170 125" stroke="white" stroke-width="1.5" opacity="0.4" fill="none"/><rect x="75" y="60" width="50" height="50" rx="4" stroke="white" stroke-width="2" fill="none"/><line x1="100" y1="30" x2="100" y2="60" stroke="white" stroke-width="2"/></svg></div>
   </div>
-
-  <!-- Stats Bar -->
-  <div id="statsBar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
-
-  <!-- Main Grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.05);margin:2rem 3rem;">
-
-    <!-- Pending Approvals -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Action Required</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Pending Approvals <span id="pendingCount" style="color:#c8102e;"></span></h2>
-      <div id="pendingList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);"></div>
-      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
-    </div>
-
-    <!-- All Citizens -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Registry</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.3);font-size:0.8rem;"></span></h2>
-      <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.08);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;" onfocus="this.style.borderColor='#c8102e'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
-      <div id="citizenList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);max-height:420px;overflow-y:auto;"></div>
-    </div>
-
-  </div>
-
-  <!-- Activity Log -->
-  <div style="margin:0 3rem 3rem;background:#0a0a0a;padding:2rem;">
-    <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Activity Log</h2>
-    <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
-  </div>
-
 </div>
+<section style="background:#0d0d0d;padding:4rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;"><span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Open Roles</div>
+    <h2 style="font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.4rem);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:2.5rem;">Available Positions</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5px;background:rgba(255,255,255,0.07);">
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-OFF-01</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Naval Officer</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Lead shipboard operations, navigation, and crew management aboard frigates, patrol vessels, and support ships of the fleet.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 19–30</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">University degree</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Officer Selection Board</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">36-month Naval Academy programme</li></ul>
+      </div>
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-NAV-02</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Navigator / Helmsman</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Operate navigation systems, plot courses, and manage bridge watch duties across coastal and deep-water operations.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 18–32</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Maths and geography aptitude</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Maritime awareness assessment</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">12-month navigation training</li></ul>
+      </div>
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-DIV-03</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Combat Diver</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Conduct underwater demolition, hull inspection, mine clearance, and covert maritime insertion operations.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 18–28</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Exceptional physical fitness (Category A+)</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Swimming qualification (advanced)</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">18-month specialist training</li></ul>
+      </div>
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-MNT-04</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Marine Engineer</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Maintain propulsion systems, electrical systems, and mechanical equipment aboard naval vessels to ensure operational readiness.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 18–35</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Engineering qualification</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Technical aptitude test</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">18-month specialist training</li></ul>
+      </div>
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-INT-05</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Maritime Intelligence</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Gather and analyse signals, vessel tracking data, and hydrographic intelligence to support fleet operations and patrol planning.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 20–35</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">University degree (STEM/languages)</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Security clearance eligible</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">12-month specialist training</li></ul>
+      </div>
+      <div style="background:#111;border-top:3px solid #c8102e;padding:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">NC-MED-06</div>
+        <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.8rem;">Naval Medic</h3>
+        <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.2rem;">Provide medical care aboard vessels and in amphibious operations, including emergency surgery support and evacuation coordination.</p>
+        <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.4rem;">Requirements</div>
+        <ul style="list-style:none;padding:0;margin:0;"><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Age 19–34</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Medical/nursing qualification</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">Physical fitness test (Category A)</li><li style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-family:var(--font-body);padding:0.25rem 0;">12-month specialist training</li></ul>
+      </div></div>
+  </div>
+</section>
+<section style="background:var(--black);padding:4rem;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+    <div>
+      <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;"><span style="width:28px;height:2px;background:#c8102e;display:block;"></span>Enlistment Process</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.4rem);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);margin-bottom:0.4rem;">How to <span style="color:#c8102e;">Enlist</span></h2>
+      <p style="font-family:var(--font-body);font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:2rem;">The enlistment process is designed to be straightforward. Follow the steps outlined to begin your application.</p>
+      <a href="#" style="display:inline-block;background:#c8102e;color:var(--white);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;padding:1rem 2.2rem;text-decoration:none;">Apply Now →</a>
+    </div>
+    <div style="background:rgba(255,255,255,0.04);display:flex;flex-direction:column;">
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">01</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Online Application</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Submit your application via the Citizen Portal selecting Naval Command and your desired role.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">02</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Physical & Medical Assessment</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Undergo physical fitness testing and a maritime medical examination at a Naval Medical Centre.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">03</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Aptitude Testing</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Complete role-specific assessments: navigation, engineering, or intelligence aptitude depending on your chosen role.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">04</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Security & Background Check</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Background screening and, for intelligence roles, enhanced security vetting. Takes 4–10 weeks.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">05</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Enlistment Offer</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Receive a formal offer with rank, role, and starting date. Sign your service commitment document.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:2rem;background:#111;border-top:2px solid rgba(255,255,255,0.06);">
+        <div style="font-family:var(--font-head);font-size:2.5rem;font-weight:700;color:#c8102e;opacity:0.5;line-height:1;flex-shrink:0;width:2.5rem;">06</div>
+        <div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--white);margin-bottom:0.5rem;">Basic Naval Training</h4>
+          <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin:0;">Report to the Naval Training Institute for 8 weeks of foundational sea service instruction before specialist training.</p>
+        </div>
+      </div></div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -823,31 +903,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="government.html">Office of the President</a></li>
-        <li><a href="national-assembly.html">National Assembly</a></li>
-        <li><a href="supreme-court.html">Supreme Court</a></li>
-        <li><a href="ministries.html">Cabinet of Ministers</a></li>
-        <li><a href="official-gazette.html">Official Gazette</a></li>
+        <li><a href="../gov/government.html">Office of the President</a></li>
+        <li><a href="../gov/national-assembly.html">National Assembly</a></li>
+        <li><a href="../gov/supreme-court.html">Supreme Court</a></li>
+        <li><a href="../gov/ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="../gov/official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
+        <li><a href="../services/service-digital-id.html">National ID Portal</a></li>
+        <li><a href="../services/service-taxes.html">Tax Authority</a></li>
+        <li><a href="../services/service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="../services/service-health.html">Health Services</a></li>
+        <li><a href="../services/service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
-        <li><a href="constitution.html">Constitution</a></li>
-        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
-        <li><a href="open-data.html">Open Data</a></li>
-        <li><a href="contact.html">Contact Government</a></li>
+        <li><a href="../GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="../gov/constitution.html">Constitution</a></li>
+        <li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="../gov/open-data.html">Open Data</a></li>
+        <li><a href="../gov/contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>
@@ -896,160 +976,7 @@
 
 
 <script>
-/* Users are now stored in Firestore — _users is kept in sync via real-time listener */
-var _users = [];
-function getUsers(){ return _users; }
-function getLog(){return JSON.parse(localStorage.getItem('ariete_log')||'[]');}
-function addLog(msg){
-  const log=getLog();
-  log.unshift({msg,time:new Date().toLocaleString()});
-  if(log.length>50) log.pop();
-  localStorage.setItem('ariete_log',JSON.stringify(log));
-  renderLog();
-}
-function logout(){null /* logout handled by arieteSession.logout() */;window.location.href='citizen-login.html';}
-
-function statusBadge(s){
-  const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
-  return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+( colors[s]||'#aaa')+';">'+s+'</span>';
-}
-function roleBadge(r){
-  if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
-  return '';
-}
-function isCreator(id){ return id === 'ilcreatore'; }
-
-function renderStats(){
-  const users=getUsers();
-  const total=users.length;
-  const pending=users.filter(u=>u.status==='pending').length;
-  const approved=users.filter(u=>u.status==='approved').length;
-  const suspended=users.filter(u=>u.status==='suspended').length;
-  const mods=users.filter(u=>u.role==='moderator').length;
-  document.getElementById('statsBar').innerHTML=
-    stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Moderators',mods);
-  document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+total+')';
-}
-function stat(label,val){
-  return '<div style="border-left:2px solid #c8102e;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);">'+label+'</span></div>';
-}
-
-function renderPending(){
-  const users=getUsers();
-  const pending=users.filter(u=>u.status==='pending');
-  const list=document.getElementById('pendingList');
-  const none=document.getElementById('noPending');
-  if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
-  none.style.display='none';
-  list.innerHTML=pending.map(u=>`
-    <div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${u.approvalRequested?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">⚑ Requested</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-        <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}${u.approvalRequested?' &nbsp;·&nbsp; <span style="color:#f5a623;">Request: '+new Date(u.approvalRequested).toLocaleString()+'</span>':''}</div>
-      </div>
-      <div style="display:flex;gap:0.5rem;flex-shrink:0;">
-        <button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>
-        <button onclick="rejectUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>
-      </div>
-    </div>`).join('');
-}
-
-function renderAll(){
-  const users=getUsers();
-  const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const nonPending=users.filter(u=>u.status!=='pending');
-  const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
-  const list=document.getElementById('citizenList');
-  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
-  list.innerHTML=filtered.map(u=>{
-    const creator = isCreator(u.id);
-    const isMod   = u.role === 'moderator';
-    const actions = creator ? `
-      <span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#c8102e;border:1px solid rgba(200,16,46,0.3);padding:0.2rem 0.6rem;">PROTECTED · CREATOR</span>
-    ` : `
-      ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
-      ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
-      ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
-      ${!isMod?`<button onclick="makeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
-      <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
-    `;
-    return `
-    <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${statusBadge(u.status)}
-          ${roleBadge(u.role)}
-          ${creator?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">👑 CREATOR</span>':''}
-          ${u.approvalRequested&&u.status==='pending'?'<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.4);padding:0.12rem 0.4rem;">⚑ Req.</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-      </div>
-      <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
-        ${actions}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function renderLog(){
-  const log=getLog();
-  const el=document.getElementById('activityLog');
-  if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${e.time}</span><span style="color:rgba(255,255,255,0.6);">${e.msg}</span></div>`).join('');
-}
-
-function approveUser(id){
-  const u=_users.find(x=>x.id===id);
-  if(!u) return;
-  arieteDB.updateUser(id,{status:'approved'}).then(()=>addLog('Approved: '+u.name+' ('+id+')')).catch(console.error);
-}
-function rejectUser(id){
-  if(!confirm('Reject and delete this registration?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Rejected: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function deleteUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
-  if(!confirm('Permanently delete this citizen account?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Deleted: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function makeModUser(id){
-  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'moderator',status:'approved'}).then(()=>addLog('Granted Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function revokeModUser(id){
-  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'citizen'}).then(()=>addLog('Revoked Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function suspendUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{status:'suspended'}).then(()=>addLog('Suspended: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function refresh(){renderStats();renderPending();renderAll();}
-
-/* Real-time listener — auto-refreshes whenever Firestore data changes */
-function _attachListener(){
-  if(window.arieteDB){
-    arieteDB.onUsers(function(users){ _users=users; refresh(); });
-  } else {
-    setTimeout(_attachListener, 400);
-  }
-}
-_attachListener();
-renderLog();
-addLog('Admin session started');
+// Show logged-in indicator in nav
 </script>
 </body>
 </html>

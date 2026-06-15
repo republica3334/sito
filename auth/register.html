@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="ariete-auth.js"></script>
+<script src="../ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel — United Republic of Stars</title>
+  <title>United Republic of Stars — Official Government Portal</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -708,18 +708,18 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/admin.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/register.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="Admin Panel — United Republic of Stars">
-  <meta property="og:description" content="United Republic of Stars — Administration Panel.">
+  <meta property="og:title"       content="United Republic of Stars — Official Government Portal">
+  <meta property="og:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Admin Panel — United Republic of Stars">
-  <meta name="twitter:description" content="United Republic of Stars — Administration Panel.">
+  <meta name="twitter:title"       content="United Republic of Stars — Official Government Portal">
+  <meta name="twitter:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
 <body>
@@ -739,9 +739,9 @@
 
 <!-- HEADER -->
 <header>
-  <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Ariete Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -750,71 +750,98 @@
     </div>
   </a>
   <nav>
-    <a href="government.html">Government</a>
-    <a href="services.html">Services</a>
-    <a href="ministries.html">Ministries</a>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
     <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
-<div style="min-height:calc(100vh - 120px);background:#070707;padding:0;">
+<div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;width:100%;max-width:520px;">
 
-  <!-- Admin Guard -->
-  <script>
-  arieteSession.requireAdmin();
-  </script>
-
-  <!-- Top Bar -->
-  <div style="background:#0a0a0a;border-bottom:2px solid #c8102e;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
-    <div>
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8102e;">Supreme Authority</div>
-      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-top:0.2rem;">Administration Panel</h1>
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <img src="../svgs/icone/republica/2.svg" style="width:90px;height:90px;filter:invert(1);opacity:0.85;" alt="Emblem">
+      <div style="font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
     </div>
-    <div style="display:flex;gap:0.8rem;">
-      <button onclick="logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">Logout</button>
+
+    <div style="background:#0f0f0f;border-top:3px solid #c8102e;padding:2.8rem 2.5rem;">
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">Citizen Registration</div>
+        <h1 style="font-family:var(--font-head);font-size:1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);">Create Account</h1>
+        <p style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;">Registration is subject to approval by the Civil Registry Authority.</p>
+      </div>
+
+      <form id="regForm" onsubmit="handleRegister(event)" style="display:flex;flex-direction:column;gap:1.2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">First Name</label>
+            <input id="fname" type="text" placeholder="Alessandro" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Last Name</label>
+            <input id="lname" type="text" placeholder="Rossi" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Date of Birth</label>
+          <input id="dob" type="date" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Email Address</label>
+          <input id="email" type="email" placeholder="a.rossi@example.com" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+        </div>
+
+        <div>
+          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Password</label>
+          <input id="reg_pwd" type="password" placeholder="Min. 8 characters" required minlength="8" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Confirm Password</label>
+          <input id="reg_pwd2" type="password" placeholder="Repeat password" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+        </div>
+
+        <!-- Password strength -->
+        <div id="strengthBar" style="display:none;margin-top:-0.6rem;">
+          <div style="display:flex;gap:3px;margin-bottom:0.3rem;">
+            <div id="s1" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
+            <div id="s2" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
+            <div id="s3" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
+            <div id="s4" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
+          </div>
+          <span id="strengthLabel" style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);"></span>
+        </div>
+
+        <!-- Terms -->
+        <label style="display:flex;align-items:flex-start;gap:0.7rem;cursor:pointer;padding-top:0.3rem;">
+          <input type="checkbox" id="terms" required style="accent-color:#c8102e;width:14px;height:14px;flex-shrink:0;margin-top:2px;">
+          <span style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;">I confirm this information is accurate and I accept the <a href="#" style="color:#c8102e;text-decoration:none;">Terms of Use</a> and <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a> of the United Republic of Stars.</span>
+        </label>
+
+        <div id="regError" style="display:none;background:rgba(200,16,46,0.12);border-left:3px solid #c8102e;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#c8102e;"></div>
+        <div id="regSuccess" style="display:none;background:rgba(0,180,80,0.1);border-left:3px solid #00b450;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#00b450;"></div>
+
+        <button type="submit" id="regBtn" style="background:#c8102e;color:var(--white);border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:1rem;cursor:pointer;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">
+          Submit Registration →
+        </button>
+      </form>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.3);">Already registered?</span>
+      <a href="citizen-login.html" style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;text-decoration:none;margin-left:0.5rem;">Sign In →</a>
     </div>
   </div>
-
-  <!-- Stats Bar -->
-  <div id="statsBar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
-
-  <!-- Main Grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.05);margin:2rem 3rem;">
-
-    <!-- Pending Approvals -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Action Required</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Pending Approvals <span id="pendingCount" style="color:#c8102e;"></span></h2>
-      <div id="pendingList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);"></div>
-      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
-    </div>
-
-    <!-- All Citizens -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Registry</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.3);font-size:0.8rem;"></span></h2>
-      <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.08);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;" onfocus="this.style.borderColor='#c8102e'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
-      <div id="citizenList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.04);max-height:420px;overflow-y:auto;"></div>
-    </div>
-
-  </div>
-
-  <!-- Activity Log -->
-  <div style="margin:0 3rem 3rem;background:#0a0a0a;padding:2rem;">
-    <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Activity Log</h2>
-    <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
-  </div>
-
 </div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -823,31 +850,31 @@
     <div class="footer-col">
       <h5>Government</h5>
       <ul>
-        <li><a href="government.html">Office of the President</a></li>
-        <li><a href="national-assembly.html">National Assembly</a></li>
-        <li><a href="supreme-court.html">Supreme Court</a></li>
-        <li><a href="ministries.html">Cabinet of Ministers</a></li>
-        <li><a href="official-gazette.html">Official Gazette</a></li>
+        <li><a href="../gov/government.html">Office of the President</a></li>
+        <li><a href="../gov/national-assembly.html">National Assembly</a></li>
+        <li><a href="../gov/supreme-court.html">Supreme Court</a></li>
+        <li><a href="../gov/ministries.html">Cabinet of Ministers</a></li>
+        <li><a href="../gov/official-gazette.html">Official Gazette</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Citizen Services</h5>
       <ul>
-        <li><a href="service-digital-id.html">National ID Portal</a></li>
-        <li><a href="service-taxes.html">Tax Authority</a></li>
-        <li><a href="service-civil-registration.html">Civil Registry</a></li>
-        <li><a href="service-health.html">Health Services</a></li>
-        <li><a href="service-education.html">Education Portal</a></li>
+        <li><a href="../services/service-digital-id.html">National ID Portal</a></li>
+        <li><a href="../services/service-taxes.html">Tax Authority</a></li>
+        <li><a href="../services/service-civil-registration.html">Civil Registry</a></li>
+        <li><a href="../services/service-health.html">Health Services</a></li>
+        <li><a href="../services/service-education.html">Education Portal</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Information</h5>
       <ul>
-        <li><a href="GOVERN_1.HTM">About the Republic</a></li>
-        <li><a href="constitution.html">Constitution</a></li>
-        <li><a href="laws-decrees.html">Laws &amp; Decrees</a></li>
-        <li><a href="open-data.html">Open Data</a></li>
-        <li><a href="contact.html">Contact Government</a></li>
+        <li><a href="../GOVERN_1.HTM">About the Republic</a></li>
+        <li><a href="../gov/constitution.html">Constitution</a></li>
+        <li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li>
+        <li><a href="../gov/open-data.html">Open Data</a></li>
+        <li><a href="../gov/contact.html">Contact Government</a></li>
       </ul>
     </div>
   </div>
@@ -892,164 +919,116 @@
 </div>
 
 
+<script>
+document.getElementById('reg_pwd').addEventListener('input', function(){
+  const v = this.value;
+  const bar = document.getElementById('strengthBar');
+  bar.style.display = v ? 'block' : 'none';
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (/[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+  const colors = ['#c8102e','#e86b00','#f5c000','#00b450'];
+  const labels = ['Weak','Fair','Good','Strong'];
+  [1,2,3,4].forEach(i => {
+    const el = document.getElementById('s'+i);
+    el.style.background = i <= score ? colors[score-1] : 'rgba(255,255,255,0.08)';
+  });
+  const lbl = document.getElementById('strengthLabel');
+  lbl.textContent = score > 0 ? 'Password strength: ' + labels[score-1] : '';
+  lbl.style.color = score > 0 ? colors[score-1] : 'rgba(255,255,255,0.3)';
+});
+</script>
 </body>
 
 
 <script>
-/* Users are now stored in Firestore — _users is kept in sync via real-time listener */
-var _users = [];
-function getUsers(){ return _users; }
-function getLog(){return JSON.parse(localStorage.getItem('ariete_log')||'[]');}
-function addLog(msg){
-  const log=getLog();
-  log.unshift({msg,time:new Date().toLocaleString()});
-  if(log.length>50) log.pop();
-  localStorage.setItem('ariete_log',JSON.stringify(log));
-  renderLog();
+function generateID(){
+  const c='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id='ARX-';
+  for(let i=0;i<3;i++) id+=c[Math.floor(Math.random()*36)];
+  id+='-';
+  for(let i=0;i<6;i++) id+=Math.floor(Math.random()*10);
+  return id;
 }
-function logout(){null /* logout handled by arieteSession.logout() */;window.location.href='citizen-login.html';}
-
-function statusBadge(s){
-  const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
-  return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+( colors[s]||'#aaa')+';">'+s+'</span>';
-}
-function roleBadge(r){
-  if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
-  return '';
-}
-function isCreator(id){ return id === 'ilcreatore'; }
-
-function renderStats(){
-  const users=getUsers();
-  const total=users.length;
-  const pending=users.filter(u=>u.status==='pending').length;
-  const approved=users.filter(u=>u.status==='approved').length;
-  const suspended=users.filter(u=>u.status==='suspended').length;
-  const mods=users.filter(u=>u.role==='moderator').length;
-  document.getElementById('statsBar').innerHTML=
-    stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Moderators',mods);
-  document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+total+')';
-}
-function stat(label,val){
-  return '<div style="border-left:2px solid #c8102e;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);">'+label+'</span></div>';
-}
-
-function renderPending(){
-  const users=getUsers();
-  const pending=users.filter(u=>u.status==='pending');
-  const list=document.getElementById('pendingList');
-  const none=document.getElementById('noPending');
-  if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
-  none.style.display='none';
-  list.innerHTML=pending.map(u=>`
-    <div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${u.approvalRequested?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">⚑ Requested</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-        <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}${u.approvalRequested?' &nbsp;·&nbsp; <span style="color:#f5a623;">Request: '+new Date(u.approvalRequested).toLocaleString()+'</span>':''}</div>
-      </div>
-      <div style="display:flex;gap:0.5rem;flex-shrink:0;">
-        <button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>
-        <button onclick="rejectUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>
-      </div>
-    </div>`).join('');
+function handleRegister(e){
+  e.preventDefault();
+  const err=document.getElementById('regError');
+  const suc=document.getElementById('regSuccess');
+  const btn=document.getElementById('regBtn');
+  err.style.display='none'; suc.style.display='none';
+  const fname=document.getElementById('fname').value.trim();
+  const lname=document.getElementById('lname').value.trim();
+  const dob=document.getElementById('dob').value;
+  const email=document.getElementById('email').value.trim();
+  const pwd=document.getElementById('reg_pwd').value;
+  const pwd2=document.getElementById('reg_pwd2').value;
+  if(pwd!==pwd2){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
+  btn.textContent='Processing...'; btn.disabled=true;
+  (window.arieteDB ? window.arieteDB.emailExists(email) : Promise.resolve(false))
+  .then(function(exists){
+    if(exists){
+      err.textContent='An account with this email already exists.';
+      err.style.display='block';
+      btn.textContent='Submit Registration →';
+      btn.disabled=false;
+      return;
+    }
+    const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'pending',setup:false,registered:new Date().toISOString()};
+    var savePromise = window.arieteDB ? window.arieteDB.saveUser(nu) : Promise.resolve();
+    savePromise.then(function(){
+      showRegSuccessModal(nu.id);
+      document.getElementById('regForm').style.opacity='0.4';
+      document.getElementById('regForm').style.pointerEvents='none';
+      btn.textContent='Submitted ✓';
+    }).catch(function(){
+      err.textContent='Failed to save. Check your internet connection.';
+      err.style.display='block';
+      btn.textContent='Submit Registration →';
+      btn.disabled=false;
+    });
+  }).catch(function(){
+    err.textContent='Connection error — please try again.';
+    err.style.display='block';
+    btn.textContent='Submit Registration →';
+    btn.disabled=false;
+  });
 }
 
-function renderAll(){
-  const users=getUsers();
-  const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const nonPending=users.filter(u=>u.status!=='pending');
-  const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
-  const list=document.getElementById('citizenList');
-  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
-  list.innerHTML=filtered.map(u=>{
-    const creator = isCreator(u.id);
-    const isMod   = u.role === 'moderator';
-    const actions = creator ? `
-      <span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#c8102e;border:1px solid rgba(200,16,46,0.3);padding:0.2rem 0.6rem;">PROTECTED · CREATOR</span>
-    ` : `
-      ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
-      ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
-      ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
-      ${!isMod?`<button onclick="makeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
-      <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
-    `;
-    return `
-    <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
-      <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
-          ${statusBadge(u.status)}
-          ${roleBadge(u.role)}
-          ${creator?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">👑 CREATOR</span>':''}
-          ${u.approvalRequested&&u.status==='pending'?'<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.4);padding:0.12rem 0.4rem;">⚑ Req.</span>':''}
-        </div>
-        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
-      </div>
-      <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
-        ${actions}
-      </div>
-    </div>`;
-  }).join('');
-}
+document.querySelectorAll('input').forEach(el=>{
+  el.addEventListener('focus',()=>el.style.borderColor='#c8102e');
+  el.addEventListener('blur',()=>el.style.borderColor='rgba(255,255,255,0.1)');
+});
+</script>
 
-function renderLog(){
-  const log=getLog();
-  const el=document.getElementById('activityLog');
-  if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${e.time}</span><span style="color:rgba(255,255,255,0.6);">${e.msg}</span></div>`).join('');
-}
+<!-- Registration Success Modal -->
+<div id="regSuccessModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="background:#0d0d0d;border-top:4px solid #c8102e;max-width:480px;width:100%;padding:2.5rem 2.2rem;position:relative;">
+    <div style="width:60px;height:60px;background:rgba(0,180,80,0.1);border:1.5px solid rgba(0,180,80,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Civil Registry Authority</div>
+    <div style="font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:0.8rem;">Registration<br>Successful</div>
+    <p style="font-family:'Inter',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.5rem;">Your citizen account has been created. Save your <strong style="color:rgba(255,255,255,0.8);">National ID</strong> &mdash; you will need it to log in.</p>
+    <div style="background:#1a1a1a;border:1.5px solid rgba(200,16,46,0.4);padding:1rem 1.2rem;margin-bottom:1.5rem;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.4rem;">Your National ID</div>
+      <div id="modalNationalId" style="font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:600;letter-spacing:0.18em;color:#fff;"></div>
+    </div>
+    <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);padding:0.75rem 1rem;margin-bottom:1.5rem;font-family:'Inter',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.6;">
+      Your account is <strong style="color:#f5a623;">pending approval</strong> by the Civil Registry. You can log in, but services will be limited until approval.
+    </div>
+    <a href="citizen-login.html" style="display:block;background:#c8102e;color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem 1.6rem;cursor:pointer;text-decoration:none;text-align:center;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Go to Login &rarr;</a>
+  </div>
+</div>
 
-function approveUser(id){
-  const u=_users.find(x=>x.id===id);
-  if(!u) return;
-  arieteDB.updateUser(id,{status:'approved'}).then(()=>addLog('Approved: '+u.name+' ('+id+')')).catch(console.error);
+<script>
+function showRegSuccessModal(id) {
+  document.getElementById('modalNationalId').textContent = id;
+  var modal = document.getElementById('regSuccessModal');
+  modal.style.display = 'flex';
 }
-function rejectUser(id){
-  if(!confirm('Reject and delete this registration?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Rejected: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function deleteUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
-  if(!confirm('Permanently delete this citizen account?')) return;
-  const u=_users.find(x=>x.id===id);
-  arieteDB.deleteUser(id).then(()=>addLog('Deleted: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function makeModUser(id){
-  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'moderator',status:'approved'}).then(()=>addLog('Granted Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function revokeModUser(id){
-  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{role:'citizen'}).then(()=>addLog('Revoked Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-function suspendUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
-  const u=_users.find(x=>x.id===id);
-  arieteDB.updateUser(id,{status:'suspended'}).then(()=>addLog('Suspended: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
-}
-
-function refresh(){renderStats();renderPending();renderAll();}
-
-/* Real-time listener — auto-refreshes whenever Firestore data changes */
-function _attachListener(){
-  if(window.arieteDB){
-    arieteDB.onUsers(function(users){ _users=users; refresh(); });
-  } else {
-    setTimeout(_attachListener, 400);
-  }
-}
-_attachListener();
-renderLog();
-addLog('Admin session started');
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
