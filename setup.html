@@ -773,20 +773,15 @@
         <div style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Email</div>
       </div>
       <div style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
-      <div class="step-dot" id="dot2" style="flex:1;text-align:center;">
-        <div id="d2circle" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">2</div>
-        <div id="d2label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);">Email</div>
-      </div>
-      <div style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
       <div class="step-dot" id="dot3" style="flex:1;text-align:center;">
-        <div id="d3circle" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">3</div>
+        <div id="d3circle" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">2</div>
         <div id="d3label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);">2FA</div>
       </div>
     </div>
 
     <!-- STEP 1: Email verify -->
     <div id="step1" style="background:#0f0f0f;border-top:3px solid #c8102e;padding:2.5rem 2.2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 1 of 3</div>
+      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 1 of 2</div>
       <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Confirm Email</h2>
       <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Verify the email address associated with your citizen account. This will be used for account recovery.</p>
       <div style="margin-bottom:1.2rem;">
@@ -797,27 +792,9 @@
       <button onclick="step1Next()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem;cursor:pointer;width:100%;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Continue →</button>
     </div>
 
-    <!-- STEP 2: Email confirm -->
-    <div id="step2" style="display:none;background:#0f0f0f;border-top:3px solid #c8102e;padding:2.5rem 2.2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 2 of 3</div>
-      <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Confirm Email</h2>
-      <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Confirm the email address linked to your account. This will be used to receive your 2FA verification codes.</p>
-      <div style="margin-bottom:1.2rem;">
-        <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Email Address</label>
-        <div>
-          <input id="setupEmail" type="email" placeholder="tua@email.com" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='#c8102e'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-        </div>
-      </div>
-      <div id="step2Err" style="display:none;background:rgba(200,16,46,0.12);border-left:3px solid #c8102e;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#c8102e;margin-bottom:1rem;"></div>
-      <div style="display:flex;gap:0.8rem;">
-        <button onclick="goStep(1)" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 1.5rem;cursor:pointer;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">← Back</button>
-        <button onclick="step2Next()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem;cursor:pointer;flex:1;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Continue →</button>
-      </div>
-    </div>
-
     <!-- STEP 3: 2FA -->
     <div id="step3" style="display:none;background:#0f0f0f;border-top:3px solid #c8102e;padding:2.5rem 2.2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 3 of 3</div>
+      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.3rem;">Step 2 of 2</div>
       <h2 style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);margin-bottom:0.5rem;">Two-Factor Auth</h2>
       <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Protect your account with an extra layer of security. When enabled, each login requires a code sent to your email.</p>
 
@@ -843,7 +820,7 @@
       <div id="step3Err" style="display:none;background:rgba(200,16,46,0.12);border-left:3px solid #c8102e;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#c8102e;margin-bottom:1rem;"></div>
 
       <div style="display:flex;gap:0.8rem;">
-        <button onclick="goStep(2)" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 1.5rem;cursor:pointer;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">← Back</button>
+        <button onclick="goStep(1)" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 1.5rem;cursor:pointer;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">← Back</button>
         <button onclick="finishSetup()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem;cursor:pointer;flex:1;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Complete Setup →</button>
       </div>
     </div>
@@ -993,17 +970,7 @@ function step1Next() {
   }
   err.style.display = 'none';
   _setupData.email = email;
-  goStep(2);
-}
-
-function step2Next() {
-  const email = document.getElementById('setupEmail').value.trim();
-  const err   = document.getElementById('step2Err');
-  if(!email || !email.includes('@')) { err.textContent = 'Please enter a valid email address.'; err.style.display='block'; return; }
-  err.style.display = 'none';
-  _setupData.email = email;
-  _setupData.twofa = true;
-  goStep(2);
+  goStep(3);
 }
 
 function toggleTrackFn() {
