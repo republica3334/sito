@@ -993,7 +993,7 @@
   }
   // If already logged in, redirect away
   if (arieteSession.get()) {
-    var dest = localStorage.getItem('ariete_redirect') || 'GOVERN_1.HTM';
+    var dest = localStorage.getItem('ariete_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('ariete_redirect');
     window.location.replace(dest);
     return;
@@ -1109,7 +1109,7 @@ function finishLogin(user, remember) {
     window.location.href = 'setup.html';
     return;
   }
-  var redirect = localStorage.getItem('ariete_redirect') || 'GOVERN_1.HTM';
+  var redirect = localStorage.getItem('ariete_redirect') || '../GOVERN_1.HTM';
   localStorage.removeItem('ariete_redirect');
   window.location.href = redirect;
 }
@@ -1136,7 +1136,7 @@ function cancelTFA() {
 // Admin 2FA bypass (admin doesn't have 2FA in this demo)
 function finishAdminLogin() {
   arieteSession.set('ilcreatore', 'admin', 0);
-  window.location.href = 'admin.html';
+  window.location.href = '../portal/admin.html';
 }
 </script>
 </body>
@@ -1177,7 +1177,7 @@ function handleLogin(e) {
   const ADMIN_ID = 'ilcreatore';
   const ADMIN_PASS = '12345678';
   if (nid === ADMIN_ID && pwd === ADMIN_PASS) {
-    setTimeout(() => { arieteSession.set(ADMIN_ID, 'admin', 0); window.location.href = 'admin.html'; }, 600);
+    setTimeout(() => { arieteSession.set(ADMIN_ID, 'admin', 0); window.location.href = '../portal/admin.html'; }, 600);
     return;
   }
 
