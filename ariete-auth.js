@@ -256,6 +256,20 @@
 
   /* ── 7. Auto-init on DOM ready ── */
   document.addEventListener('DOMContentLoaded', function(){
+    /* Suspended account guard — redirect any logged-in suspended user */
+    (function(){
+      var EXEMPT = ['suspended.html','citizen-login.html','guest-register.html','register.html','index.html'];
+      var page   = window.location.pathname.split('/').pop() || 'index.html';
+      if (EXEMPT.indexOf(page) !== -1) return;
+      var s = session.get();
+      if (!s) return;
+      var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+      var user  = users.find(function(u){ return u.id === s.user; });
+      if (user && user.status === 'suspended') {
+        window.location.replace('suspended.html');
+      }
+    })();
+
     w.arieteUpdateNav();
     w.arieteCookieBanner();
     w.arieteMobileNav();
