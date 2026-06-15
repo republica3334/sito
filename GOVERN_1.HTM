@@ -150,7 +150,7 @@
     }
 
     .hero-content {
-      padding: 5rem 3rem 6rem 4rem;
+      padding: 8rem 3rem 6rem 4rem;
       position: relative;
       z-index: 2;
     }
@@ -802,7 +802,7 @@
 
   <div class="hero-emblem" style="position:relative;z-index:2;">
     <div class="hero-emblem-wrap">
-      <img src="svgs/icone/republica/1.svg" class="hero-emblem-svg" id="heroEmblem" alt="Emblema della Repubblica di Ariete" style="opacity:1;">
+      <img src="svgs/icone/republica/1.svg" class="hero-emblem-svg" id="heroEmblem" alt="Emblema della Repubblica di Ariete" style="opacity:1;transform:scale(0.85);">
     </div>
   </div>
 </section>
@@ -818,6 +818,7 @@
       btn2: {label:'Learn About the Republic', href:'government.html'},
       emblem: 'svgs/icone/republica/1.svg',
       embleminvert: false,
+      emblemScale: 0.85,
       bg: 'radial-gradient(ellipse at 70% 50%, #1a0a0a 0%, #0a0a0a 60%)'
     },
     {
@@ -828,6 +829,7 @@
       btn2: {label:'View All Branches', href:'ground-forces.html'},
       emblem: 'svgs/icone/ministeri/difesa.svg',
       embleminvert: true,
+      emblemScale: 1.1,
       bg: 'radial-gradient(ellipse at 70% 50%, #0d1035 0%, #080810 60%)'
     },
     {
@@ -909,6 +911,7 @@
         '<a href="'+s.btn2.href+'" class="btn-outline">'+s.btn2.label+'</a>';
       emblem.src = s.emblem;
       emblem.style.filter = s.embleminvert ? 'invert(1)' : '';
+      emblem.style.transform = s.emblemScale ? 'scale('+s.emblemScale+')' : 'scale(1)';
       bg.style.background = s.bg;
       buildDots();
       // Step 3: fade back in
