@@ -966,20 +966,36 @@ function handleRegister(e){
   const pwd2=document.getElementById('reg_pwd2').value;
   if(pwd!==pwd2){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
   btn.textContent='Processing...'; btn.disabled=true;
-  // Check email uniqueness in Firestore
   (window.arieteDB ? window.arieteDB.emailExists(email) : Promise.resolve(false))
   .then(function(exists){
-    if(exists){ err.textContent='An account with this email already exists.'; err.style.display='block'; btn.textContent='Create Account →'; btn.disabled=false; return; }
+    if(exists){
+      err.textContent='An account with this email already exists.';
+      err.style.display='block';
+      btn.textContent='Submit Registration →';
+      btn.disabled=false;
+      return;
+    }
     const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'pending',setup:false,registered:new Date().toISOString()};
-    // Save to Firestore
     var savePromise = window.arieteDB ? window.arieteDB.saveUser(nu) : Promise.resolve();
     savePromise.then(function(){
       showRegSuccessModal(nu.id);
       document.getElementById('regForm').style.opacity='0.4';
-    document.getElementById('regForm').style.pointerEvents='none';
-    btn.textContent='Submitted ✓';
-  },1200);
+      document.getElementById('regForm').style.pointerEvents='none';
+      btn.textContent='Submitted ✓';
+    }).catch(function(){
+      err.textContent='Failed to save. Check your internet connection.';
+      err.style.display='block';
+      btn.textContent='Submit Registration →';
+      btn.disabled=false;
+    });
+  }).catch(function(){
+    err.textContent='Connection error — please try again.';
+    err.style.display='block';
+    btn.textContent='Submit Registration →';
+    btn.disabled=false;
+  });
 }
+
 document.querySelectorAll('input').forEach(el=>{
   el.addEventListener('focus',()=>el.style.borderColor='#c8102e');
   el.addEventListener('blur',()=>el.style.borderColor='rgba(255,255,255,0.1)');
