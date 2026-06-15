@@ -197,8 +197,33 @@
   }
 
   /* ── OVERFLOW SAFETY ── */
-  body { overflow-x: hidden; }
-  img { max-width: 100%; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  img, video, iframe, svg { max-width: 100% !important; }
+  * { min-width: 0; }
+
+  /* fix elementi con width inline fissa */
+  .hero-emblem-wrap { width: 100% !important; max-width: 300px !important; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+  .utility-bar { display: none !important; }
+  pre, code { overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+
+  /* fix grid con colonne inline */
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"],
+  [style*="grid-template-columns: 3fr 1fr"],
+  [style*="grid-template-columns: 1fr 3fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* status grid in settings */
+  .status-info-grid { grid-template-columns: 1fr !important; }
+  /* page-wrap padding */
+  .page-wrap { padding: 2rem 1rem !important; }
+  .page-inner { padding: 0 !important; max-width: 100% !important; }
+  /* cards */
+  .card { padding: 1.2rem 1rem !important; }
+  /* suspended page */
+  .suspended-card { padding: 1.5rem 1rem !important; }
+  /* admin stats */
+  [style*="display:grid"][style*="repeat(4"] { grid-template-columns: 1fr 1fr !important; }
 }
 
 @media (max-width: 480px) {
