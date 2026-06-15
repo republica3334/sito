@@ -112,6 +112,19 @@
     .msg.success { background: rgba(0,180,80,0.1); border-left: 3px solid #00b450; color: #00b450; }
     .msg.info { background: rgba(255,255,255,0.05); border-left: 3px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
 
+    /* Account status badges */
+    .badge-status {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: var(--font-sub); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.28rem 0.65rem; margin-left: 0.6rem;
+    }
+    .badge-status.approved  { color: #00b450; background: rgba(0,180,80,0.1);   border: 1px solid rgba(0,180,80,0.3); }
+    .badge-status.pending   { color: #f5a623; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3); }
+    .badge-status.suspended { color: #c8102e; background: rgba(200,16,46,0.1);  border: 1px solid rgba(200,16,46,0.3); }
+
+    .status-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    @media (max-width: 500px) { .status-info-grid { grid-template-columns: 1fr; } }
+
     .badge-verified {
       display: inline-flex; align-items: center; gap: 0.4rem;
       font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
@@ -203,6 +216,63 @@
     <div class="page-header">
       <img src="svgs/icone/republica/2.svg" alt="Emblem">
       <div class="eyebrow">Republic of Ariete — Account Settings</div>
+    </div>
+
+    <!-- ACCOUNT STATUS CARD -->
+    <div class="card" id="statusCard">
+      <div class="card-title">
+        Account Status
+        <span id="accountStatusBadge" class="badge-status"></span>
+      </div>
+      <div class="card-sub">Your account must be approved by the Civil Registry Authority to access citizen services.</div>
+
+      <div class="status-info-grid">
+        <div>
+          <label class="field-label">National ID</label>
+          <input id="displayId" class="txt" type="text" readonly>
+        </div>
+        <div>
+          <label class="field-label">Registered</label>
+          <input id="displayRegistered" class="txt" type="text" readonly>
+        </div>
+      </div>
+
+      <div id="statusMsg" class="msg"></div>
+
+      <!-- Pending: not yet requested -->
+      <div id="requestApprovalSection" style="display:none;">
+        <div style="padding:1rem;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);margin-bottom:1rem;">
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.55);">Your account is awaiting approval. Send a formal request to the Civil Registry to expedite the review.</span>
+        </div>
+        <button class="btn-primary" onclick="requestApproval()" id="requestBtn">Send Approval Request</button>
+      </div>
+
+      <!-- Pending: request already sent -->
+      <div id="requestSentSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div>
+            <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;">Request Submitted</div>
+            <div style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:0.2rem;" id="requestTimestamp"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved -->
+      <div id="approvedSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been approved by the Civil Registry Authority.</span>
+        </div>
+      </div>
+
+      <!-- Suspended -->
+      <div id="suspendedSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.25);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been suspended. Contact the Civil Registry Authority for assistance.</span>
+        </div>
+      </div>
     </div>
 
     <!-- EMAIL VERIFICATION CARD -->
@@ -350,6 +420,9 @@
     // Populate email
     document.getElementById('currentEmail').value = user.email || '';
 
+    // Account status card
+    renderStatusCard(user);
+
     // Verified badge
     if (user.emailVerified) {
       document.getElementById('verifiedBadge').style.display = 'inline-flex';
@@ -365,6 +438,58 @@
       document.getElementById('tfaThumb').style.transform = 'translateX(24px)';
     }
   });
+
+  // ── ACCOUNT STATUS ──
+  function renderStatusCard(user) {
+    document.getElementById('displayId').value = user.id || '—';
+    document.getElementById('displayRegistered').value = user.registered
+      ? new Date(user.registered).toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'})
+      : '—';
+
+    var badge   = document.getElementById('accountStatusBadge');
+    var status  = user.status || 'pending';
+
+    var labels  = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+    badge.textContent  = labels[status] || status;
+    badge.className    = 'badge-status ' + status;
+
+    // Hide all sections first
+    ['requestApprovalSection','requestSentSection','approvedSection','suspendedSection'].forEach(function(id){
+      document.getElementById(id).style.display = 'none';
+    });
+
+    if (status === 'approved') {
+      document.getElementById('approvedSection').style.display = 'block';
+    } else if (status === 'suspended') {
+      document.getElementById('suspendedSection').style.display = 'block';
+    } else {
+      // pending
+      if (user.approvalRequested) {
+        document.getElementById('requestSentSection').style.display = 'block';
+        document.getElementById('requestTimestamp').textContent =
+          'Submitted on ' + new Date(user.approvalRequested).toLocaleString('en-GB');
+      } else {
+        document.getElementById('requestApprovalSection').style.display = 'block';
+      }
+    }
+  }
+
+  function requestApproval() {
+    var s = arieteSession.get();
+    var users = JSON.parse(localStorage.getItem('ariete_users') || '[]');
+    var idx = users.findIndex(function(u){ return u.id === s.user; });
+    if (idx === -1) return;
+
+    users[idx].approvalRequested = new Date().toISOString();
+    saveUsers(users);
+
+    // Update UI immediately
+    document.getElementById('requestApprovalSection').style.display = 'none';
+    document.getElementById('requestSentSection').style.display = 'block';
+    document.getElementById('requestTimestamp').textContent =
+      'Submitted on ' + new Date(users[idx].approvalRequested).toLocaleString('en-GB');
+    showMsg('statusMsg', 'success', 'Approval request sent to the Civil Registry Authority.');
+  }
 
   // ── HELPERS ──
   function getUser() {
