@@ -66,6 +66,13 @@
   --bg-surface-2:  #1a1a1a;
   --bg-invert:     #ffffff;
 
+  /* Remap page-local legacy variables so inline styles auto-update */
+  --white:      #111111;
+  --gray:       #111111;
+  --gray-light: #1a1a1a;
+  --gray-mid:   rgba(255,255,255,0.45);
+  --gray-dark:  rgba(255,255,255,0.75);
+
   /* Header */
   --bg-header:       #0a0a0a;
   --border-header:   2px solid #c8102e;
@@ -265,3 +272,47 @@
 [data-theme="dark"] .emblem-svg {
   filter: invert(1) !important;
 }
+
+/* ── FORM ELEMENTS (service subpages: health, id, etc.) ── */
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: rgba(255,255,255,0.35) !important;
+}
+[data-theme="dark"] label { color: var(--text-secondary) !important; }
+
+/* ── SERVICE SUBPAGE LAYOUT SECTIONS ── */
+[data-theme="dark"] .page-wrap,
+[data-theme="dark"] .svc-detail,
+[data-theme="dark"] .svc-actions,
+[data-theme="dark"] .svc-info-grid,
+[data-theme="dark"] .form-section,
+[data-theme="dark"] .sidebar-section { background: var(--bg-page) !important; }
+
+[data-theme="dark"] .svc-info-box,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .sidebar-card,
+[data-theme="dark"] .svc-action-card,
+[data-theme="dark"] .info-box,
+[data-theme="dark"] .req-box,
+[data-theme="dark"] .step-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* ── GOVERNMENT PAGE: BRANCHES & CABINET ── */
+[data-theme="dark"] .branch-card,
+[data-theme="dark"] .minister-card,
+[data-theme="dark"] .cabinet-item {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .branch-card:hover,
+[data-theme="dark"] .minister-card:hover { background: var(--bg-surface-2) !important; }
