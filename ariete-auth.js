@@ -295,7 +295,7 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     var icon = document.createElement('link');
     icon.rel  = 'icon';
     icon.type = 'image/svg+xml';
-    icon.href = _arieteBase + 'svgs/icone/republica/2.svg';
+    icon.href = _arieteBase + 'svgs/icone/republica/favicon.svg';
     document.head.appendChild(icon);
   })();
 
@@ -304,8 +304,11 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     var LS_KEY = 'ariete_theme';
     var html   = document.documentElement;
 
-    function getSystemTheme() {
-      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    /* Pages in these folders are light by default; everything else is dark */
+    function getPageDefaultTheme() {
+      var path = window.location.pathname;
+      if (/\/(services|gov)\//.test(path)) return 'light';
+      return 'dark';
     }
 
     function applyTheme(t) {
@@ -313,9 +316,9 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
       localStorage.setItem(LS_KEY, t);
     }
 
-    /* Set initial theme: stored preference → system preference */
+    /* Set initial theme: stored user preference → page-native default */
     var stored = localStorage.getItem(LS_KEY);
-    applyTheme(stored || getSystemTheme());
+    applyTheme(stored || getPageDefaultTheme());
 
     /* Public API */
     w.arieteToggleTheme = function() {
@@ -334,16 +337,14 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
 
     w._arieteThemeIcon = _themeIcon;
 
-    /* Inject toggle button after DOM ready */
+    /* Inject floating toggle button into body */
     document.addEventListener('DOMContentLoaded', function() {
-      var header = document.querySelector('header');
-      if (!header) return;
       var btn = document.createElement('button');
       btn.id = 'arieteThemeToggle';
       btn.setAttribute('aria-label', 'Toggle theme');
       btn.innerHTML = _themeIcon();
       btn.addEventListener('click', w.arieteToggleTheme);
-      header.appendChild(btn);
+      document.body.appendChild(btn);
     });
   })();
 
