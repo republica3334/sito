@@ -180,8 +180,11 @@
     margin-bottom: 1.5rem !important;
   }
 
-  /* ── SERVICES GRID → HORIZONTAL CAROUSEL ── */
-  .services-grid {
+  /* ── HORIZONTAL CAROUSELS ── */
+  .services-grid,
+  .news-grid,
+  .ministries-list,
+  .enlistment-branches {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
@@ -192,7 +195,12 @@
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
   }
-  .services-grid::-webkit-scrollbar { display: none; }
+  .services-grid::-webkit-scrollbar,
+  .news-grid::-webkit-scrollbar,
+  .ministries-list::-webkit-scrollbar,
+  .enlistment-branches::-webkit-scrollbar { display: none; }
+
+  /* ── SERVICES GRID → HORIZONTAL CAROUSEL ── */
   .service-card {
     flex-shrink: 0 !important;
     width: calc(50vw - 1.5rem) !important;
@@ -232,28 +240,13 @@
   }
 
   /* ── NEWS GRID → HORIZONTAL CAROUSEL ── */
-  .news-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 0.75rem !important;
-    background: transparent !important;
-    padding-bottom: 0.75rem !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  .news-grid::-webkit-scrollbar { display: none; }
   .news-card {
     flex-shrink: 0 !important;
     width: 80vw !important;
     min-width: 260px !important;
     scroll-snap-align: start !important;
   }
-  .news-card.featured {
-    grid-row: span 1 !important;
-    width: 85vw !important;
-  }
+  .news-card.featured { width: 85vw !important; }
   .news-img {
     aspect-ratio: 16 / 7 !important;
   }
@@ -275,18 +268,6 @@
   }
 
   /* ── MINISTRIES LIST → HORIZONTAL CAROUSEL ── */
-  .ministries-list {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 0.75rem !important;
-    background: transparent !important;
-    padding-bottom: 0.75rem !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  .ministries-list::-webkit-scrollbar { display: none; }
   .ministry-item {
     flex-shrink: 0 !important;
     width: 75vw !important;
@@ -304,18 +285,6 @@
     gap: 2rem !important;
     margin-bottom: 2rem !important;
   }
-  .enlistment-branches {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 0.75rem !important;
-    background: transparent !important;
-    padding-bottom: 0.75rem !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-  .enlistment-branches::-webkit-scrollbar { display: none; }
   .branch-card {
     flex-shrink: 0 !important;
     width: 60vw !important;

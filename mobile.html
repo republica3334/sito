@@ -193,10 +193,7 @@
       width: 100%;
       max-width: 320px;
     }
-    .btn-primary {
-      display: block;
-      background: var(--red);
-      color: var(--white);
+    .btn {
       font-family: var(--font-sub);
       font-size: 0.85rem;
       font-weight: 700;
@@ -211,24 +208,14 @@
       justify-content: center;
       gap: 0.5rem;
     }
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+    }
     .btn-outline {
-      display: block;
       background: transparent;
       color: var(--m-text-muted);
-      font-family: var(--font-sub);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 1rem 1.5rem;
-      text-decoration: none;
-      text-align: center;
       border: 1.5px solid var(--m-border-card);
-      min-height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
     }
 
     /* Status badge */
@@ -389,7 +376,6 @@
       text-transform: uppercase;
       color: var(--m-text-muted);
     }
-    .announce-body {}
     .announce-tag {
       font-family: var(--font-sub);
       font-size: 0.52rem;
@@ -566,11 +552,11 @@
   <h1 class="hero-title">United<br><em>Republic</em><br>of Stars</h1>
   <p class="hero-desc">Access citizen services, legislation, government news and official documents.</p>
   <div class="hero-actions">
-    <a href="auth/register.html" class="btn-primary">
+    <a href="auth/register.html" class="btn btn-primary">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       Become a Citizen
     </a>
-    <a href="services/services.html" class="btn-outline">
+    <a href="services/services.html" class="btn btn-outline">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
       Browse Services
     </a>
