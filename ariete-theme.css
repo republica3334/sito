@@ -316,3 +316,27 @@
 }
 [data-theme="dark"] .branch-card:hover,
 [data-theme="dark"] .minister-card:hover { background: var(--bg-surface-2) !important; }
+
+/* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
+/* Demo warning / info boxes with hardcoded light-pink bg */
+[data-theme="dark"] [style*="#fff8f8"],
+[data-theme="dark"] [style*="#fff3f3"],
+[data-theme="dark"] [style*="#fafafa"] {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] [style*="#f5c6c6"] {
+  border-color: rgba(200,16,46,0.35) !important;
+}
+/* Time badges on service pages */
+[data-theme="dark"] .time-badge {
+  background: rgba(200,16,46,0.1) !important;
+  border-color: rgba(200,16,46,0.3) !important;
+  color: var(--red) !important;
+}
+/* Input borders hardcoded to #ddd */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  border-color: rgba(255,255,255,0.12) !important;
+}
