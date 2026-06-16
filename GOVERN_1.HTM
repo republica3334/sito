@@ -510,15 +510,15 @@
     }
     .branch-card:hover { background: #1a1a1a; }
     .branch-icon {
-      width: 52px;
-      height: 52px;
+      width: 72px;
+      height: 72px;
       border: 1.5px solid var(--red);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 1.4rem;
     }
-    .branch-icon svg { width: 28px; height: 28px; }
+    .branch-icon img { width: 48px; height: 48px; filter: invert(1); opacity: 0.85; }
     .branch-card h3 {
       font-family: var(--font-head);
       font-size: 1.1rem;
@@ -1206,38 +1206,27 @@
 
     <div class="enlistment-branches">
       <a href="military/ground-forces.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon">
-          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 3L3 10v8l11 7 11-7v-8L14 3z" stroke="#c8102e" stroke-width="1.5" fill="none"/>
-            <path d="M14 3v18M3 10l11 7 11-7" stroke="#c8102e" stroke-width="1" opacity="0.5"/>
-          </svg>
-        </div>
+        <div class="branch-icon"><img src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
         <h3>Ground Forces</h3>
         <p>The backbone of the Republic's defense. Infantry, armor, and engineering units operating across all terrain types.</p>
         <span class="branch-link">View Roles →</span>
       </a>
       <a href="military/air-corps.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon">
-          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 20 Q14 6 24 20" stroke="#c8102e" stroke-width="1.5" fill="none"/>
-            <path d="M8 20 Q14 10 20 20" stroke="#c8102e" stroke-width="1" opacity="0.5" fill="none"/>
-            <circle cx="14" cy="20" r="2" fill="#c8102e"/>
-          </svg>
-        </div>
+        <div class="branch-icon"><img src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
         <h3>Air Corps</h3>
         <p>Strategic air superiority, reconnaissance, and rapid-response operations defending the Republic's skies.</p>
         <span class="branch-link">View Roles →</span>
       </a>
       <a href="military/naval-command.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon">
-          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 18 Q7 14 14 16 Q21 18 25 14" stroke="#c8102e" stroke-width="1.5" fill="none"/>
-            <path d="M3 22 Q7 18 14 20 Q21 22 25 18" stroke="#c8102e" stroke-width="1" opacity="0.5" fill="none"/>
-            <rect x="10" y="8" width="8" height="8" rx="1" stroke="#c8102e" stroke-width="1.2" fill="none"/>
-          </svg>
-        </div>
+        <div class="branch-icon"><img src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
         <h3>Naval Command</h3>
         <p>Protecting maritime borders and projecting power through the United Republic's coastal and deep-water fleet.</p>
+        <span class="branch-link">View Roles →</span>
+      </a>
+      <a href="military/space-force.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
+        <div class="branch-icon"><img src="svgs/icone/army/space.svg" alt="Space Force"></div>
+        <h3>Space Force</h3>
+        <p>Orbital sovereignty and satellite operations defending the Republic beyond the atmosphere.</p>
         <span class="branch-link">View Roles →</span>
       </a>
     </div>
