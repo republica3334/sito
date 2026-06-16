@@ -284,6 +284,14 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     document.head.appendChild(link);
   })();
 
+  (function(){
+    var icon = document.createElement('link');
+    icon.rel  = 'icon';
+    icon.type = 'image/svg+xml';
+    icon.href = _arieteBase + 'svgs/icone/republica/2.svg';
+    document.head.appendChild(icon);
+  })();
+
   /* ── 6. Mobile hamburger menu ── */
   w.arieteMobileNav = function(){
     var header = document.querySelector('header');
