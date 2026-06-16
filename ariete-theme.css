@@ -252,3 +252,8 @@
   color: var(--text-secondary) !important;
   border-top: 1px solid var(--border-color) !important;
 }
+
+/* Emblem SVG: always dark paths; invert on dark theme */
+[data-theme="dark"] .emblem-svg {
+  filter: invert(1);
+}
