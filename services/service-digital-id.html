@@ -846,7 +846,7 @@
 function requireServiceLogin(){
   if(!arieteSession.get()){
     localStorage.setItem('ariete_redirect', window.location.href);
-    window.location.href = 'citizen-login.html';
+    window.location.href = '../auth/citizen-login.html';
   } else {
     alert('This service is not yet activated. Check back soon.');
   }

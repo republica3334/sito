@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var m=/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+       ||(window.matchMedia&&window.matchMedia('(max-width:768px)').matches);
+  if(m) window.location.replace('citizen-login-mobile.html');
+})();
+</script>
 <script src="../ariete-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
