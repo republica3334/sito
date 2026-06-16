@@ -334,16 +334,14 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
 
     w._arieteThemeIcon = _themeIcon;
 
-    /* Inject toggle button after DOM ready */
+    /* Inject floating toggle button into body */
     document.addEventListener('DOMContentLoaded', function() {
-      var header = document.querySelector('header');
-      if (!header) return;
       var btn = document.createElement('button');
       btn.id = 'arieteThemeToggle';
       btn.setAttribute('aria-label', 'Toggle theme');
       btn.innerHTML = _themeIcon();
       btn.addEventListener('click', w.arieteToggleTheme);
-      header.appendChild(btn);
+      document.body.appendChild(btn);
     });
   })();
 

@@ -107,19 +107,24 @@
   --orange:          #f5a623;
 }
 
-/* ── THEME TOGGLE BUTTON ── */
+/* ── THEME TOGGLE BUTTON (fixed, always visible) ── */
 #arieteThemeToggle {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  z-index: 9000;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  background: none;
+  width: 42px;
+  height: 42px;
+  background: var(--bg-surface);
   border: 1.5px solid var(--border-strong);
   color: var(--text-primary);
   cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s, color 0.2s;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
 #arieteThemeToggle:hover {
@@ -128,8 +133,8 @@
   color: #ffffff;
 }
 #arieteThemeToggle svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   pointer-events: none;
 }
 
@@ -253,7 +258,10 @@
   border-top: 1px solid var(--border-color) !important;
 }
 
-/* Emblem SVG: always dark paths; invert on dark theme */
+/* Emblem SVG: dark paths on light bg, white on dark bg */
+[data-theme="light"] .emblem-svg {
+  filter: none !important;
+}
 [data-theme="dark"] .emblem-svg {
-  filter: invert(1);
+  filter: invert(1) !important;
 }
