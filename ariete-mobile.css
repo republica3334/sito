@@ -301,7 +301,7 @@
 
   /* ── SERVICES INDEX (services.html) ── */
   .svc-section {
-    padding: 1.4rem 1.2rem !important;
+    padding: 1.2rem 0.6rem !important;
     border-bottom-width: 1px !important;
   }
   .svc-cat-header {
@@ -322,6 +322,7 @@
     height: 34px !important;
   }
   .svc-cat-title { font-size: 1.05rem !important; }
+  .svc-cat-desc { display: none !important; }
   .svc-cat-link {
     margin-left: 0 !important;
     width: 100% !important;
