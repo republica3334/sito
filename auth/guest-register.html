@@ -45,7 +45,7 @@
 <script>
 (function(){
   if(arieteSession.get()){
-    window.location.replace('GOVERN_1.HTM');
+    window.location.replace('../GOVERN_1.HTM');
     return;
   }
   function rnd(chars,n){var o='';for(var i=0;i<n;i++)o+=chars[Math.floor(Math.random()*chars.length)];return o;}
@@ -56,7 +56,7 @@
   localStorage.setItem('ariete_users',JSON.stringify(users));
   arieteSession.set(guest.id,'guest',0);
   setTimeout(function(){
-    var dest=localStorage.getItem('ariete_redirect')||'GOVERN_1.HTM';
+    var dest=localStorage.getItem('ariete_redirect')||'../GOVERN_1.HTM';
     localStorage.removeItem('ariete_redirect');
     window.location.replace(dest);
   },900);

@@ -764,10 +764,10 @@
 (function(){
   if(!arieteCookie.get('ariete_session')){ window.location.replace('citizen-login.html'); return; }
   const uid = arieteCookie.get('ariete_user');
-  if(uid==='ilcreatore'){ window.location.replace('admin.html'); return; }
+  if(uid==='ilcreatore'){ window.location.replace('../portal/admin.html'); return; }
   const users = JSON.parse(localStorage.getItem('ariete_users')||'[]');
   const user = users.find(u=>u.id===uid);
-  if(user && user.setup===true){ window.location.replace(localStorage.getItem('ariete_redirect')||'GOVERN_1.HTM'); }
+  if(user && user.setup===true){ window.location.replace(localStorage.getItem('ariete_redirect')||'../GOVERN_1.HTM'); }
 })();
 </script>
 
@@ -1013,7 +1013,7 @@ function finishSetup() {
   document.getElementById('step3').style.display = 'none';
   document.getElementById('stepDone').style.display = 'block';
   setTimeout(() => {
-    const redirect = localStorage.getItem('ariete_redirect') || 'GOVERN_1.HTM';
+    const redirect = localStorage.getItem('ariete_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('ariete_redirect');
     window.location.href = redirect;
   }, 2200);
@@ -1032,7 +1032,7 @@ function skipSetup() {
   document.getElementById('step3').style.display = 'none';
   document.getElementById('stepDone').style.display = 'block';
   setTimeout(() => {
-    const redirect = localStorage.getItem('ariete_redirect') || 'GOVERN_1.HTM';
+    const redirect = localStorage.getItem('ariete_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('ariete_redirect');
     window.location.href = redirect;
   }, 2200);
