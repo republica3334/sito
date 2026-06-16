@@ -189,6 +189,18 @@
   .service-card {
     padding: 1.4rem 1rem !important;
   }
+  .service-icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  .service-icon img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .service-card h3 {
+    font-size: 0.82rem !important;
+  }
 
   /* ── ANNOUNCE BAND (2-column split) ── */
   .announce-band {
@@ -385,6 +397,91 @@
   [style*="grid-template-columns: repeat(4"],
   [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   LANDSCAPE PHONE (max-height 500px)
+   Tight vertical space — compress everything
+═══════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  /* Hero: much shorter */
+  .hero {
+    padding: 1.5rem 1.4rem !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+    line-height: 1.1 !important;
+  }
+  .hero-desc { display: none !important; }
+  .hero-actions { gap: 0.5rem !important; }
+  .btn-primary, .btn-outline {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.7rem !important;
+    min-height: 40px !important;
+  }
+
+  /* Sections: tighter padding */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .section-title {
+    font-size: clamp(1.2rem, 5vw, 1.8rem) !important;
+  }
+
+  /* Services: 3 columns, smaller icons */
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .service-icon, .service-icon img {
+    width: 26px !important;
+    height: 26px !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .service-card {
+    padding: 1rem 0.8rem !important;
+  }
+  .service-card h3 {
+    font-size: 0.72rem !important;
+  }
+  .service-card p { display: none !important; }
+
+  /* Branch cards: 2 columns */
+  .enlistment-branches {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .branch-card { padding: 1rem 1rem !important; }
+  .branch-icon {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 0.7rem !important;
+  }
+  .branch-icon img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .branch-card p { display: none !important; }
+
+  /* Stats: 4 columns */
+  .stats {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .stat-num { font-size: 1.8rem !important; }
+  .stat-item { padding: 1rem 0.8rem !important; }
+
+  /* Footer: 2 columns */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Inline repeat grids */
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 
