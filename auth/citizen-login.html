@@ -1143,7 +1143,7 @@ function cancelTFA() {
 // Admin 2FA bypass (admin doesn't have 2FA in this demo)
 function finishAdminLogin() {
   arieteSession.set('ilcreatore', 'admin', 0);
-  window.location.href = '../portal/admin.html';
+  window.location.href = 'secret-code.html';
 }
 </script>
 </body>
@@ -1184,7 +1184,7 @@ function handleLogin(e) {
   const ADMIN_ID = 'ilcreatore';
   const ADMIN_PASS = '12345678';
   if (nid === ADMIN_ID && pwd === ADMIN_PASS) {
-    setTimeout(() => { arieteSession.set(ADMIN_ID, 'admin', 0); window.location.href = '../portal/admin.html'; }, 600);
+    setTimeout(() => { arieteSession.set(ADMIN_ID, 'admin', 0); window.location.href = 'secret-code.html'; }, 600);
     return;
   }
 
