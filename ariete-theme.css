@@ -317,6 +317,24 @@
 [data-theme="dark"] .branch-card:hover,
 [data-theme="dark"] .minister-card:hover { background: var(--bg-surface-2) !important; }
 
+/* ── SERVICE CATEGORY ICONS (services.html — img tags loading dark SVGs) ── */
+[data-theme="dark"] .svc-cat-icon img,
+[data-theme="dark"] .service-icon img {
+  filter: invert(1);
+}
+
+/* ── GOVERNMENT BRANCH CARDS (inline style="background:var(--white)") ── */
+/* Fallback: target inline styles directly in case variable remapping loses cascade */
+[data-theme="dark"] [style*="background:var(--white)"] {
+  background: #111111 !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] [style*="background:var(--gray-light)"],
+[data-theme="dark"] [style*="background:var(--gray)"] {
+  background: #1a1a1a !important;
+  color: var(--text-primary) !important;
+}
+
 /* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
 /* Demo warning / info boxes with hardcoded light-pink bg */
 [data-theme="dark"] [style*="#fff8f8"],
