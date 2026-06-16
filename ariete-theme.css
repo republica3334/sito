@@ -1,0 +1,254 @@
+/* ═══════════════════════════════════════════════════════
+   ARIETE THEME SYSTEM
+   Semantic CSS variables — injected by ariete-auth.js
+   Toggle: [data-theme="light"] / [data-theme="dark"] on <html>
+═══════════════════════════════════════════════════════ */
+
+/* ── LIGHT THEME (default for service/gov pages) ── */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg-page:       #ffffff;
+  --bg-surface:    #f4f4f4;
+  --bg-surface-2:  #eaeaea;
+  --bg-invert:     #0a0a0a;
+
+  /* Header */
+  --bg-header:       #ffffff;
+  --border-header:   3px solid #0a0a0a;
+  --bg-utility:      #0a0a0a;
+  --text-utility:    #cccccc;
+
+  /* Text */
+  --text-primary:    #0a0a0a;
+  --text-secondary:  #333333;
+  --text-muted:      #666666;
+  --text-invert:     #ffffff;
+  --text-link:       #0a0a0a;
+
+  /* Accent (same in both) */
+  --red:             #c8102e;
+  --red-dark:        #9b0c22;
+  --red-soft:        rgba(200,16,46,0.08);
+  --red-border:      rgba(200,16,46,0.35);
+
+  /* Borders & dividers */
+  --border-color:    #e0e0e0;
+  --border-color-2:  #e8e8e8;
+  --border-strong:   #0a0a0a;
+  --divider:         #d0d0d0;
+
+  /* Cards & surfaces */
+  --card-bg:         #ffffff;
+  --card-hover:      #f8f8f8;
+  --card-border:     1.5px solid #e0e0e0;
+
+  /* Nav */
+  --nav-bg:          #ffffff;
+  --nav-text:        #0a0a0a;
+  --nav-hover-bg:    #0a0a0a;
+  --nav-hover-text:  #ffffff;
+
+  /* Status */
+  --green:           #00b450;
+  --orange:          #f5a623;
+}
+
+/* ── DARK THEME (reference: mobile.html) ── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-page:       #0a0a0a;
+  --bg-surface:    #111111;
+  --bg-surface-2:  #1a1a1a;
+  --bg-invert:     #ffffff;
+
+  /* Header */
+  --bg-header:       #0a0a0a;
+  --border-header:   2px solid #c8102e;
+  --bg-utility:      #000000;
+  --text-utility:    rgba(255,255,255,0.45);
+
+  /* Text */
+  --text-primary:    #ffffff;
+  --text-secondary:  rgba(255,255,255,0.75);
+  --text-muted:      rgba(255,255,255,0.45);
+  --text-invert:     #0a0a0a;
+  --text-link:       #ffffff;
+
+  /* Accent (same) */
+  --red:             #c8102e;
+  --red-dark:        #9b0c22;
+  --red-soft:        rgba(200,16,46,0.12);
+  --red-border:      rgba(200,16,46,0.4);
+
+  /* Borders & dividers */
+  --border-color:    rgba(255,255,255,0.07);
+  --border-color-2:  rgba(255,255,255,0.12);
+  --border-strong:   rgba(255,255,255,0.2);
+  --divider:         rgba(255,255,255,0.08);
+
+  /* Cards & surfaces */
+  --card-bg:         #111111;
+  --card-hover:      #1a1a1a;
+  --card-border:     1.5px solid rgba(255,255,255,0.07);
+
+  /* Nav */
+  --nav-bg:          #0a0a0a;
+  --nav-text:        rgba(255,255,255,0.8);
+  --nav-hover-bg:    #c8102e;
+  --nav-hover-text:  #ffffff;
+
+  /* Status */
+  --green:           #00b450;
+  --orange:          #f5a623;
+}
+
+/* ── THEME TOGGLE BUTTON ── */
+#arieteThemeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: none;
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+#arieteThemeToggle:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #ffffff;
+}
+#arieteThemeToggle svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT-PAGE DARK MODE OVERRIDES
+   Applied to light-theme pages (services, gov, ministries)
+   when user switches to dark mode
+═══════════════════════════════════════════════════════ */
+
+/* Body & page background */
+[data-theme="dark"] body {
+  background: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ── SERVICE CARDS (services.html, service-*.html) ── */
+[data-theme="dark"] .services,
+[data-theme="dark"] .ministries,
+[data-theme="dark"] .svc-section,
+[data-theme="dark"] .news {
+  background: var(--bg-surface) !important;
+}
+[data-theme="dark"] .services-grid,
+[data-theme="dark"] .news-grid,
+[data-theme="dark"] .ministries-list,
+[data-theme="dark"] .svc-sub-grid {
+  background: var(--divider) !important;
+}
+[data-theme="dark"] .service-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .service-card:hover {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .svc-sub-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-left-color: transparent;
+}
+[data-theme="dark"] .svc-sub-card:hover {
+  background: var(--bg-surface-2) !important;
+  border-left-color: var(--red) !important;
+}
+[data-theme="dark"] .news-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .news-img { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .news-img.alt { background: var(--bg-surface) !important; }
+[data-theme="dark"] .news-card p,
+[data-theme="dark"] .news-meta { color: var(--text-muted) !important; }
+
+/* Ministry items */
+[data-theme="dark"] .ministry-item {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .ministry-item:hover { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .ministry-item p   { color: var(--text-muted) !important; }
+
+/* Service category (svc-cat) */
+[data-theme="dark"] .svc-cat-desc  { color: var(--text-muted) !important; }
+[data-theme="dark"] .svc-sub-card p { color: var(--text-secondary) !important; }
+[data-theme="dark"] .svc-cat-link  { color: var(--red) !important; }
+
+/* Stats */
+[data-theme="dark"] .stat-item  { background: var(--bg-surface) !important; }
+
+/* Section text */
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] .section-title { color: var(--text-primary) !important; }
+
+/* ── GOVERNMENT / MINISTRY PAGES ── */
+[data-theme="dark"] .page-hero  { background: var(--bg-surface) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] .page-hero h1,
+[data-theme="dark"] .page-hero h2 { color: var(--text-primary) !important; }
+[data-theme="dark"] .content-section { background: var(--bg-page) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] .card          { background: var(--card-bg) !important; color: var(--text-primary) !important; border-color: var(--border-color) !important; }
+[data-theme="dark"] .card:hover    { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .table-wrap, [data-theme="dark"] table { background: var(--card-bg) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] th { background: var(--bg-surface) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] td { border-color: var(--border-color) !important; color: var(--text-secondary) !important; }
+
+/* ── GLOBAL SEMANTIC OVERRIDES (applied when theme system active) ── */
+[data-theme] body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+[data-theme] .utility-bar {
+  background: var(--bg-utility) !important;
+  color: var(--text-utility) !important;
+}
+[data-theme] .utility-bar a {
+  color: var(--text-utility) !important;
+}
+[data-theme] .utility-bar a:hover {
+  color: #ffffff !important;
+}
+[data-theme] header {
+  background: var(--bg-header) !important;
+  border-bottom: var(--border-header) !important;
+}
+[data-theme] .brand-text h1 {
+  color: var(--text-primary) !important;
+}
+[data-theme] .brand-text span {
+  color: var(--red) !important;
+}
+[data-theme] nav a {
+  color: var(--nav-text) !important;
+}
+[data-theme] nav a:hover {
+  background: var(--nav-hover-bg) !important;
+  color: var(--nav-hover-text) !important;
+}
+[data-theme] footer {
+  background: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+  border-top: 1px solid var(--border-color) !important;
+}

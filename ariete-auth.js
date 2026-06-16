@@ -276,11 +276,18 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     if (banner) banner.style.display = 'none';
   };
 
-  /* ── 5. Mobile CSS injection ── */
+  /* ── 5. CSS injection (mobile + theme) ── */
   (function(){
     var link = document.createElement('link');
     link.rel  = 'stylesheet';
     link.href = _arieteBase + 'ariete-mobile.css';
+    document.head.appendChild(link);
+  })();
+
+  (function(){
+    var link = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.href = _arieteBase + 'ariete-theme.css';
     document.head.appendChild(link);
   })();
 
@@ -290,6 +297,132 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
     icon.type = 'image/svg+xml';
     icon.href = _arieteBase + 'svgs/icone/republica/2.svg';
     document.head.appendChild(icon);
+  })();
+
+  /* ── 5b. Theme system ── */
+  (function(){
+    var LS_KEY = 'ariete_theme';
+    var html   = document.documentElement;
+
+    function getSystemTheme() {
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+
+    function applyTheme(t) {
+      html.setAttribute('data-theme', t);
+      localStorage.setItem(LS_KEY, t);
+    }
+
+    /* Set initial theme: stored preference → system preference */
+    var stored = localStorage.getItem(LS_KEY);
+    applyTheme(stored || getSystemTheme());
+
+    /* Public API */
+    w.arieteToggleTheme = function() {
+      applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      /* Re-render toggle icon */
+      var btn = document.getElementById('arieteThemeToggle');
+      if (btn) btn.innerHTML = _themeIcon();
+    };
+
+    function _themeIcon() {
+      var isDark = html.getAttribute('data-theme') === 'dark';
+      return isDark
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    }
+
+    w._arieteThemeIcon = _themeIcon;
+
+    /* Inject toggle button after DOM ready */
+    document.addEventListener('DOMContentLoaded', function() {
+      var header = document.querySelector('header');
+      if (!header) return;
+      var btn = document.createElement('button');
+      btn.id = 'arieteThemeToggle';
+      btn.setAttribute('aria-label', 'Toggle theme');
+      btn.innerHTML = _themeIcon();
+      btn.addEventListener('click', w.arieteToggleTheme);
+      header.appendChild(btn);
+    });
+  })();
+
+  /* ── 5c. Debug mode (placeholder — admin/mod only) ── */
+  (function(){
+    var DEBUG_SHORTCUT_KEY = 'D'; /* Ctrl+Shift+D */
+    var PANEL_ID = 'arieteDebugPanel';
+
+    function _isPrivileged() {
+      var s = session.get();
+      return s && (s.role === 'admin' || s.role === 'mod' || s.user === 'ilcreatore');
+    }
+
+    function _buildPanel() {
+      if (document.getElementById(PANEL_ID)) return;
+      if (!_isPrivileged()) return;
+
+      var s = session.get();
+      var panel = document.createElement('div');
+      panel.id = PANEL_ID;
+      panel.style.cssText = [
+        'position:fixed;bottom:1rem;right:1rem;z-index:2147483000',
+        'background:#0a0a0a;border:1.5px solid #c8102e',
+        'color:#fff;font-family:monospace;font-size:0.7rem',
+        'width:280px;max-height:60vh;overflow-y:auto',
+        'box-shadow:0 4px 24px rgba(200,16,46,0.25)',
+        'transition:opacity 0.2s'
+      ].join(';');
+
+      panel.innerHTML =
+        '<div style="background:#c8102e;padding:0.45rem 0.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;">'
+        + '<span style="font-size:0.65rem;letter-spacing:0.18em;font-weight:700;">⬡ DEBUG MODE</span>'
+        + '<span style="font-size:0.55rem;opacity:0.7;color:#ffd;padding:2px 6px;background:rgba(0,0,0,0.3);border-radius:2px;">PLACEHOLDER</span>'
+        + '<button onclick="document.getElementById(\'' + PANEL_ID + '\').remove()" '
+        +   'style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.9rem;line-height:1;padding:0 0.2rem;">×</button>'
+        + '</div>'
+        + '<div style="padding:0.7rem 0.8rem;display:flex;flex-direction:column;gap:0.6rem;">'
+
+        + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
+        + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">SESSION</div>'
+        + '<div>user: <span style="color:#7cf">' + (s ? s.user : '—') + '</span></div>'
+        + '<div>role: <span style="color:#' + (s && s.role === 'admin' ? 'f87' : s && s.role === 'mod' ? 'fa7' : 'aaa') + '">' + (s ? s.role : '—') + '</span></div>'
+        + '</div>'
+
+        + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
+        + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">PAGE</div>'
+        + '<div style="word-break:break-all;opacity:0.75;">' + window.location.pathname + '</div>'
+        + '<div style="margin-top:0.2rem;">theme: <span style="color:#7cf">' + (document.documentElement.getAttribute('data-theme') || 'none') + '</span></div>'
+        + '</div>'
+
+        + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
+        + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">PLACEHOLDERS</div>'
+        + '<div style="opacity:0.5;">Performance metrics — coming soon</div>'
+        + '<div style="opacity:0.5;">Firebase latency — coming soon</div>'
+        + '<div style="opacity:0.5;">Error log — coming soon</div>'
+        + '<div style="opacity:0.5;">Feature flags — coming soon</div>'
+        + '</div>'
+
+        + '<div style="opacity:0.35;font-size:0.58rem;text-align:center;">Ctrl+Shift+D to toggle</div>'
+        + '</div>';
+
+      document.body.appendChild(panel);
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === DEBUG_SHORTCUT_KEY) {
+        e.preventDefault();
+        var existing = document.getElementById(PANEL_ID);
+        if (existing) { existing.remove(); return; }
+        _buildPanel();
+      }
+    });
+
+    /* Also expose public toggle */
+    w.arieteDebugToggle = function() {
+      var existing = document.getElementById(PANEL_ID);
+      if (existing) { existing.remove(); return; }
+      _buildPanel();
+    };
   })();
 
   /* ── 6. Mobile hamburger menu ── */
