@@ -267,6 +267,11 @@
 [data-theme] nav a {
   color: var(--nav-text) !important;
 }
+/* Active nav link (inline background:var(--black)) — keep white text */
+[data-theme] nav a[style*="background:var(--black)"] {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+}
 [data-theme] nav a:hover {
   background: var(--nav-hover-bg) !important;
   color: var(--nav-hover-text) !important;
@@ -300,6 +305,21 @@
 }
 [data-theme="dark"] .emblem-svg {
   filter: invert(1) !important;
+}
+
+/* ── SIDEBAR "NEED HELP?" CARD — light mode override ── */
+/* In dark mode the card is black by design; in light mode it should be white */
+[data-theme="light"] .sidebar-card {
+  background: #ffffff !important;
+  border-top-color: var(--red) !important;
+}
+[data-theme="light"] .sidebar-card .sidebar-label {
+  color: var(--red) !important;
+}
+/* Override inline rgba(255,255,255,...) text colors inside sidebar-card */
+[data-theme="light"] .sidebar-card [style*="rgba(255,255,255"],
+[data-theme="light"] .sidebar-card p {
+  color: #555555 !important;
 }
 
 /* ── FORM ELEMENTS (service subpages: health, id, etc.) ── */
