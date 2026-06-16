@@ -256,10 +256,16 @@
     }
 
     .services-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
       gap: 0.75rem;
+      margin: 0 -1.4rem;
+      padding: 0 1.4rem 0.75rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .services-grid::-webkit-scrollbar { display: none; }
     .service-card {
       background: #1a1a1a;
       border: 1px solid rgba(255,255,255,0.07);
@@ -270,7 +276,10 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      min-height: 90px;
+      flex-shrink: 0;
+      width: calc(50vw - 2rem);
+      min-width: 140px;
+      scroll-snap-align: start;
       transition: background 0.18s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -305,14 +314,31 @@
       border-top: 1px solid rgba(255,255,255,0.06);
     }
 
+    .announce-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 0.75rem;
+      margin: 0 -1.4rem;
+      padding: 0 1.4rem 0.75rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .announce-scroll::-webkit-scrollbar { display: none; }
+
     .announce-item {
       display: flex;
       gap: 0.9rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 1rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--red);
+      background: #111;
+      flex-shrink: 0;
+      width: 80vw;
+      min-width: 260px;
+      scroll-snap-align: start;
       -webkit-tap-highlight-color: transparent;
     }
-    .announce-item:last-child { border-bottom: none; }
     .announce-date {
       flex-shrink: 0;
       width: 42px;
@@ -493,7 +519,7 @@
 <!-- HEADER -->
 <header>
   <div class="header-brand">
-    <img src="svgs/icone/republica/1.svg" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
+    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>Rep. of Stars</h1>
       <span>Official Portal</span>
@@ -570,39 +596,41 @@
   <div class="section-eyebrow">News &amp; Announcements</div>
   <h2 class="section-title">Latest</h2>
 
-  <div class="announce-item">
-    <div class="announce-date">
-      <div class="day">15</div>
-      <div class="month">Jun</div>
+  <div class="announce-scroll">
+    <div class="announce-item">
+      <div class="announce-date">
+        <div class="day">15</div>
+        <div class="month">Jun</div>
+      </div>
+      <div class="announce-body">
+        <div class="announce-tag">Official Decree</div>
+        <div class="announce-title">Digital ID Registration Now Open to All Citizens</div>
+        <div class="announce-desc">The Civil Registry announces that all citizens may now apply for their National Digital ID card online.</div>
+      </div>
     </div>
-    <div class="announce-body">
-      <div class="announce-tag">Official Decree</div>
-      <div class="announce-title">Digital ID Registration Now Open to All Citizens</div>
-      <div class="announce-desc">The Civil Registry announces that all citizens may now apply for their National Digital ID card online.</div>
-    </div>
-  </div>
 
-  <div class="announce-item">
-    <div class="announce-date">
-      <div class="day">10</div>
-      <div class="month">Jun</div>
+    <div class="announce-item">
+      <div class="announce-date">
+        <div class="day">10</div>
+        <div class="month">Jun</div>
+      </div>
+      <div class="announce-body">
+        <div class="announce-tag">National Assembly</div>
+        <div class="announce-title">Constitutional Amendment IV Enters Into Force</div>
+        <div class="announce-desc">The National Assembly ratified Amendment IV expanding digital rights for all registered citizens.</div>
+      </div>
     </div>
-    <div class="announce-body">
-      <div class="announce-tag">National Assembly</div>
-      <div class="announce-title">Constitutional Amendment IV Enters Into Force</div>
-      <div class="announce-desc">The National Assembly ratified Amendment IV expanding digital rights for all registered citizens.</div>
-    </div>
-  </div>
 
-  <div class="announce-item">
-    <div class="announce-date">
-      <div class="day">01</div>
-      <div class="month">Jun</div>
-    </div>
-    <div class="announce-body">
-      <div class="announce-tag">Ministry of Finance</div>
-      <div class="announce-title">Tax Filing Deadline Extended to July 31</div>
-      <div class="announce-desc">Due to system upgrades, the annual income tax filing deadline has been extended by 30 days.</div>
+    <div class="announce-item">
+      <div class="announce-date">
+        <div class="day">01</div>
+        <div class="month">Jun</div>
+      </div>
+      <div class="announce-body">
+        <div class="announce-tag">Ministry of Finance</div>
+        <div class="announce-title">Tax Filing Deadline Extended to July 31</div>
+        <div class="announce-desc">Due to system upgrades, the annual income tax filing deadline has been extended by 30 days.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -688,7 +716,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
-    <img src="svgs/icone/republica/1.svg" width="44" alt="Emblem" onerror="this.style.display='none'">
+    <img src="svgs/icone/republica/2.svg" width="44" alt="Emblem" onerror="this.style.display='none'">
     <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
   </div>
   <div class="footer-links">
