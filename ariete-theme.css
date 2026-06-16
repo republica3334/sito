@@ -58,17 +58,17 @@
 
 /* ── PAGE-LOCAL VARIABLE REMAPPING ── */
 /* Uses :root[data-theme] (specificity 0,2,0) to beat the page's own
-   :root block (0,1,0) which is parsed after our injected stylesheet */
+   :root block (0,1,0) which is parsed after our injected stylesheet.
+   NOTE: --white is NOT remapped here — it is used for text color on
+   dark hero sections (color:var(--white)) and must stay #ffffff.
+   Background overrides for var(--white) are handled by attribute selectors below. */
 :root[data-theme="dark"] {
-  --white:      #111111;
   --gray:       #111111;
   --gray-light: #1a1a1a;
   --gray-mid:   rgba(255,255,255,0.45);
   --gray-dark:  rgba(255,255,255,0.75);
-  --black-text: #ffffff;
 }
 :root[data-theme="light"] {
-  --white:      #ffffff;
   --gray:       #f4f4f4;
   --gray-light: #f4f4f4;
   --gray-mid:   #cccccc;
@@ -335,16 +335,30 @@
   filter: invert(1);
 }
 
-/* ── GOVERNMENT BRANCH CARDS (inline style="background:var(--white)") ── */
-/* Fallback: target inline styles directly in case variable remapping loses cascade */
+/* ── INLINE BACKGROUND OVERRIDES (attribute selectors) ── */
+/* Target elements with light background inline styles directly.
+   --white is NOT remapped globally (it breaks text colors on dark heroes),
+   so we override backgrounds here instead. */
 [data-theme="dark"] [style*="background:var(--white)"] {
   background: #111111 !important;
-  color: var(--text-primary) !important;
 }
 [data-theme="dark"] [style*="background:var(--gray-light)"],
 [data-theme="dark"] [style*="background:var(--gray)"] {
   background: #1a1a1a !important;
+}
+/* Text color on those remapped backgrounds */
+[data-theme="dark"] [style*="background:var(--white)"],
+[data-theme="dark"] [style*="background:var(--gray-light)"],
+[data-theme="dark"] [style*="background:var(--gray)"] {
   color: var(--text-primary) !important;
+}
+
+/* ── ICON SQUARE BACKGROUND REMOVAL ── */
+/* Black icon squares (48x48, 40x40) disappear into dark bg — remove them */
+[data-theme="dark"] [style*="width:48px"][style*="height:48px"][style*="background:var(--black)"],
+[data-theme="dark"] [style*="width:40px"][style*="height:40px"][style*="background:var(--black)"] {
+  background: transparent !important;
+  border: 1.5px solid rgba(255,255,255,0.12) !important;
 }
 
 /* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
