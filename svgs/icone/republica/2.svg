@@ -2,7 +2,6 @@
 <svg width="1980" height="1980" version="1.0" viewBox="0 0 1485 1485" xmlns="http://www.w3.org/2000/svg" zoomAndPan="magnify">
  <style>
   path { fill: #0a0a0a; }
-  @media (prefers-color-scheme: dark) { path { fill: #ffffff; } }
  </style>
  <defs>
   <clipPath id="9bd65b839a">
