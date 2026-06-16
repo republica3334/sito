@@ -385,22 +385,103 @@
   * { min-width: 0; }
   pre, code { overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
 
-  /* ── INLINE GRID FALLBACKS (catch inline style grids) ── */
+  /* ── INLINE PADDING: squash generous desktop padding ── */
+  [style*="padding:4rem"],
+  [style*="padding:4rem "],
+  [style*="padding: 4rem"] {
+    padding: 1.5rem 1.2rem !important;
+  }
+  [style*="padding:3.5rem 4rem"],
+  [style*="padding: 3.5rem 4rem"] {
+    padding: 1.4rem 1.2rem !important;
+  }
+  [style*="padding:2.5rem 2rem"],
+  [style*="padding: 2.5rem 2rem"] {
+    padding: 1.2rem 1rem !important;
+  }
+
+  /* ── INLINE FLEX: reduce oversized gaps ── */
+  [style*="gap:2.5rem"],
+  [style*="gap: 2.5rem"] {
+    gap: 1rem !important;
+  }
+  /* Category hero: icon + text row → stack vertically on mobile */
+  [style*="display:flex"][style*="align-items:flex-start"][style*="max-width:1100px"],
+  [style*="display:flex"][style*="align-items:flex-start"][style*="max-width:900px"] {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* ── INLINE GRIDS → HORIZONTAL CAROUSELS ── */
+
+  /* 3-col or 4-col repeat grids (e.g. government branches) */
+  [style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns: repeat(3,1fr)"],
+  [style*="grid-template-columns: repeat(4,1fr)"],
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  [style*="grid-template-columns:repeat(3,1fr)"] > *,
+  [style*="grid-template-columns:repeat(4,1fr)"] > *,
+  [style*="grid-template-columns: repeat(3,1fr)"] > *,
+  [style*="grid-template-columns: repeat(4,1fr)"] > *,
+  [style*="grid-template-columns: repeat(3, 1fr)"] > *,
+  [style*="grid-template-columns: repeat(4, 1fr)"] > * {
+    flex-shrink: 0 !important;
+    width: 85vw !important;
+    min-width: 280px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* auto-fit grids with minmax (e.g. service action cards) */
+  [style*="grid-template-columns:repeat(auto-fit,minmax(240px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(220px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(280px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(240px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(220px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  [style*="grid-template-columns:repeat(auto-fit,minmax(240px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(220px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(280px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(240px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(220px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] > * {
+    flex-shrink: 0 !important;
+    width: 85vw !important;
+    min-width: 280px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* 2-col and other fixed inline grids → single column */
   [style*="grid-template-columns: 1fr 2fr"],
   [style*="grid-template-columns: 2fr 1fr"],
   [style*="grid-template-columns: 3fr 1fr"],
   [style*="grid-template-columns: 1fr 3fr"],
   [style*="grid-template-columns: 2fr 1fr 1fr"],
-  [style*="grid-template-columns: 1.5fr 1fr 1fr 1fr"] {
-    grid-template-columns: 1fr !important;
-  }
-  [style*="grid-template-columns: 1fr 1fr"] {
-    grid-template-columns: 1fr !important;
-  }
-  [style*="grid-template-columns: repeat(3"],
-  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns: 1.5fr 1fr 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
   [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: 1fr !important;
   }
 }
 

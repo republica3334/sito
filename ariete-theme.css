@@ -135,8 +135,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   background: var(--bg-surface);
   border: 1.5px solid var(--border-strong);
   color: var(--text-primary);
@@ -145,6 +145,7 @@
   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 #arieteThemeToggle:hover {
   background: var(--red);

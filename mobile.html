@@ -25,9 +25,34 @@
       --font-head: 'Oswald', sans-serif;
       --font-sub:  'Rajdhani', sans-serif;
       --font-body: 'Inter', sans-serif;
+
+      /* Theme tokens — dark by default */
+      --m-page-bg:   #0a0a0a;
+      --m-surface:   #111111;
+      --m-card-bg:   #1a1a1a;
+      --m-card-alt:  #111111;
+      --m-text:      #ffffff;
+      --m-text-muted: rgba(255,255,255,0.45);
+      --m-border:    rgba(255,255,255,0.06);
+      --m-border-card: rgba(255,255,255,0.08);
     }
 
-    html, body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+    /* ── LIGHT MODE TOKEN OVERRIDES ── */
+    [data-theme="light"] {
+      --m-page-bg:   #f0f0f0;
+      --m-surface:   #ffffff;
+      --m-card-bg:   #f8f8f8;
+      --m-card-alt:  #ffffff;
+      --m-text:      #0a0a0a;
+      --m-text-muted: rgba(0,0,0,0.5);
+      --m-border:    rgba(0,0,0,0.08);
+      --m-border-card: rgba(0,0,0,0.12);
+    }
+
+    html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
+
+    /* Emblem always white — header and footer backgrounds are always dark */
+    .emblem-svg { filter: invert(1) !important; }
 
     /* ── HEADER ── */
     header {
@@ -83,7 +108,7 @@
     .hero {
       position: relative;
       min-height: calc(100svh - 56px);
-      background: var(--black);
+      background: var(--m-page-bg);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -98,8 +123,8 @@
       position: absolute;
       inset: 0;
       background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
-        repeating-linear-gradient(0deg,  rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+        repeating-linear-gradient(90deg, rgba(128,128,128,0.07) 0, rgba(128,128,128,0.07) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(0deg,  rgba(128,128,128,0.07) 0, rgba(128,128,128,0.07) 1px, transparent 1px, transparent 64px);
       pointer-events: none;
     }
     /* Red glow bottom-right */
@@ -154,7 +179,7 @@
       font-size: 0.9rem;
       font-weight: 300;
       line-height: 1.7;
-      color: var(--gray-dim);
+      color: var(--m-text-muted);
       margin-bottom: 2rem;
       max-width: 300px;
     }
@@ -189,7 +214,7 @@
     .btn-outline {
       display: block;
       background: transparent;
-      color: rgba(255,255,255,0.7);
+      color: var(--m-text-muted);
       font-family: var(--font-sub);
       font-size: 0.85rem;
       font-weight: 700;
@@ -198,7 +223,7 @@
       padding: 1rem 1.5rem;
       text-decoration: none;
       text-align: center;
-      border: 1.5px solid rgba(255,255,255,0.2);
+      border: 1.5px solid var(--m-border-card);
       min-height: 52px;
       display: flex;
       align-items: center;
@@ -218,7 +243,7 @@
       font-size: 0.58rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      color: var(--m-text-muted);
     }
     .hero-status::before {
       content: '';
@@ -230,9 +255,9 @@
 
     /* ── QUICK ACCESS ── */
     .quick-section {
-      background: #111111;
+      background: var(--m-surface);
       padding: 2rem 1.4rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--m-border);
     }
     .section-eyebrow {
       font-family: var(--font-sub);
@@ -253,6 +278,7 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 1.4rem;
+      color: var(--m-text);
     }
 
     .services-grid {
@@ -267,28 +293,32 @@
     }
     .services-grid::-webkit-scrollbar { display: none; }
     .service-card {
-      background: #1a1a1a;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-left: 3px solid var(--red);
-      padding: 1rem 0.9rem;
+      background: var(--m-card-bg);
+      border: 1px solid var(--m-border-card);
+      border-top: 3px solid var(--red);
+      padding: 1.2rem 1rem;
       text-decoration: none;
-      color: var(--white);
+      color: var(--m-text);
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       flex-shrink: 0;
       width: calc(50vw - 2rem);
-      min-width: 140px;
+      min-width: 148px;
       scroll-snap-align: start;
-      transition: background 0.18s;
+      transition: background 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .service-card:active { background: #242424; }
+    .service-card:active { background: var(--m-card-alt); }
     .service-card-icon {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
       filter: invert(1) sepia(1) saturate(5) hue-rotate(310deg) brightness(1.1);
+      margin-bottom: 0.3rem;
+    }
+    [data-theme="light"] .service-card-icon {
+      filter: none !important;
     }
     .service-card-title {
       font-family: var(--font-sub);
@@ -297,10 +327,11 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       line-height: 1.2;
+      color: var(--m-text);
     }
     .service-card-sub {
       font-size: 0.68rem;
-      color: var(--gray-dim);
+      color: var(--m-text-muted);
       line-height: 1.4;
       white-space: nowrap;
       overflow: hidden;
@@ -309,9 +340,9 @@
 
     /* ── ANNOUNCEMENTS ── */
     .announce-section {
-      background: var(--black);
+      background: var(--m-page-bg);
       padding: 2rem 1.4rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--m-border);
     }
 
     .announce-scroll {
@@ -330,9 +361,9 @@
       display: flex;
       gap: 0.9rem;
       padding: 1rem;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid var(--m-border-card);
       border-top: 2px solid var(--red);
-      background: #111;
+      background: var(--m-surface);
       flex-shrink: 0;
       width: 80vw;
       min-width: 260px;
@@ -356,7 +387,7 @@
       font-size: 0.55rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--gray-dim);
+      color: var(--m-text-muted);
     }
     .announce-body {}
     .announce-tag {
@@ -372,29 +403,29 @@
       font-size: 0.9rem;
       font-weight: 600;
       line-height: 1.3;
-      color: var(--white);
+      color: var(--m-text);
       margin-bottom: 0.2rem;
     }
     .announce-desc {
       font-size: 0.72rem;
-      color: var(--gray-dim);
+      color: var(--m-text-muted);
       line-height: 1.5;
     }
 
     /* ── GOV QUICK LINKS ── */
     .gov-links-section {
-      background: #0f0f0f;
+      background: var(--m-surface);
       padding: 2rem 1.4rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--m-border);
     }
     .gov-link-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0.95rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid var(--m-border);
       text-decoration: none;
-      color: var(--white);
+      color: var(--m-text);
       -webkit-tap-highlight-color: transparent;
     }
     .gov-link-row:last-child { border-bottom: none; }
@@ -405,8 +436,8 @@
     }
     .gov-link-icon {
       width: 36px; height: 36px;
-      background: #1a1a1a;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--m-card-bg);
+      border: 1px solid var(--m-border-card);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -418,6 +449,7 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      color: var(--m-text);
     }
     .gov-link-arrow {
       color: var(--red);
@@ -716,7 +748,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
-    <img src="svgs/icone/republica/2.svg" width="44" alt="Emblem" onerror="this.style.display='none'">
+    <img src="svgs/icone/republica/2.svg" width="44" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
     <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
   </div>
   <div class="footer-links">
