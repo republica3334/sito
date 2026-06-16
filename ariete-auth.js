@@ -334,7 +334,7 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
   document.addEventListener('DOMContentLoaded', function(){
     /* Suspended / pending check — async Firestore */
     (function(){
-      var EXEMPT = ['suspended.html','citizen-login.html','guest-register.html','register.html','index.html'];
+      var EXEMPT = ['suspended.html','citizen-login.html','guest-register.html','register.html','index.html','secret-code.html'];
       var page   = window.location.pathname.split('/').pop() || 'index.html';
       if (EXEMPT.indexOf(page) !== -1) return;
       var s = session.get();
