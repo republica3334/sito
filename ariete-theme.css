@@ -277,6 +277,22 @@
   border-top: 1px solid var(--border-color) !important;
 }
 
+/* ── HAMBURGER BARS (dark on light pages, white on dark pages) ── */
+[data-theme="dark"] #arieteHamburger span {
+  background: #ffffff !important;
+}
+[data-theme="light"] #arieteHamburger span {
+  background: #0a0a0a !important;
+}
+
+/* ── INLINE color:var(--black) TEXT → white in dark mode ── */
+[data-theme="dark"] [style*="color:var(--black)"] {
+  color: rgba(255,255,255,0.9) !important;
+}
+[data-theme="dark"] [style*="color: var(--black)"] {
+  color: rgba(255,255,255,0.9) !important;
+}
+
 /* Emblem SVG: dark paths on light bg, white on dark bg */
 [data-theme="light"] .emblem-svg {
   filter: none !important;
