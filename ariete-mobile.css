@@ -299,6 +299,54 @@
     padding: 1.5rem 1.4rem !important;
   }
 
+  /* ── SERVICES INDEX (services.html) ── */
+  .svc-section {
+    padding: 1.4rem 1.2rem !important;
+    border-bottom-width: 1px !important;
+  }
+  .svc-cat-header {
+    flex-wrap: wrap !important;
+    gap: 0.75rem 1rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .svc-cat-header > div {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .svc-cat-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .svc-cat-icon img {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .svc-cat-title { font-size: 1.05rem !important; }
+  .svc-cat-link {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 0.5rem 0 !important;
+  }
+  /* svc-sub-grid → horizontal carousel */
+  .svc-sub-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .svc-sub-grid::-webkit-scrollbar { display: none; }
+  .svc-sub-card {
+    flex-shrink: 0 !important;
+    width: 80vw !important;
+    min-width: 240px !important;
+    scroll-snap-align: start !important;
+  }
+
   /* ── FORM PAGES ── */
   .form-card, .login-card, .register-card, .setup-card {
     margin: 1rem !important;
