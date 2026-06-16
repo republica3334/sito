@@ -224,7 +224,7 @@
         Account Status
         <span id="accountStatusBadge" class="badge-status"></span>
       </div>
-      <div class="card-sub">Your account must be approved by the Civil Registry Authority to access citizen services.</div>
+      <div class="card-sub">Current status of this citizen account in the Civil Registry system.</div>
 
       <div class="status-info-grid">
         <div>
@@ -239,39 +239,41 @@
 
       <div id="statusMsg" class="msg"></div>
 
-      <!-- Pending: not yet requested -->
-      <div id="requestApprovalSection" style="display:none;">
-        <div style="padding:1rem;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);margin-bottom:1rem;">
-          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.55);">Your account is awaiting approval. Send a formal request to the Civil Registry to expedite the review.</span>
-        </div>
-        <button class="btn-primary" onclick="requestApproval()" id="requestBtn">Send Approval Request</button>
-      </div>
-
-      <!-- Pending: request already sent -->
-      <div id="requestSentSection" style="display:none;">
+      <!-- Citizen read-only views (pending / approved / suspended) -->
+      <div id="citizenPendingSection" style="display:none;">
         <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <div>
-            <div style="font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;">Request Submitted</div>
-            <div style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:0.2rem;" id="requestTimestamp"></div>
-          </div>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.55);">Your account is awaiting approval by the Civil Registry Authority. No action required on your part.</span>
         </div>
       </div>
-
-      <!-- Approved -->
-      <div id="approvedSection" style="display:none;">
+      <div id="citizenApprovedSection" style="display:none;">
         <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.2);">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been approved by the Civil Registry Authority.</span>
         </div>
       </div>
-
-      <!-- Suspended -->
-      <div id="suspendedSection" style="display:none;">
+      <div id="citizenSuspendedSection" style="display:none;">
         <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.25);">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been suspended. Contact the Civil Registry Authority for assistance.</span>
         </div>
+      </div>
+
+      <!-- ADMIN / MOD ONLY: status editor -->
+      <div id="adminStatusSection" style="display:none;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:1.2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Admin — Change Account Status
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
+          <select id="adminStatusSelect" style="background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--font-sub);font-size:0.82rem;padding:0.7rem 1rem;outline:none;cursor:pointer;flex:1;min-width:160px;">
+            <option value="pending">⏳ Pending</option>
+            <option value="approved">✓ Approved</option>
+            <option value="suspended">✗ Suspended</option>
+          </select>
+          <button onclick="adminSetStatus()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.4rem;cursor:pointer;white-space:nowrap;">Apply Status</button>
+        </div>
+        <div id="adminStatusMsg" class="msg" style="margin-top:0.8rem;"></div>
       </div>
     </div>
 
@@ -444,44 +446,48 @@
       ? new Date(user.registered).toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'})
       : '—';
 
-    var badge   = document.getElementById('accountStatusBadge');
-    var status  = user.status || 'pending';
+    var badge  = document.getElementById('accountStatusBadge');
+    var status = user.status || 'pending';
+    var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+    badge.textContent = labels[status] || status;
+    badge.className   = 'badge-status ' + status;
 
-    var labels  = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
-    badge.textContent  = labels[status] || status;
-    badge.className    = 'badge-status ' + status;
+    var s = arieteSession.get();
+    var isPrivileged = s && (s.role === 'admin' || s.role === 'mod');
 
     // Hide all sections first
-    ['requestApprovalSection','requestSentSection','approvedSection','suspendedSection'].forEach(function(id){
+    ['citizenPendingSection','citizenApprovedSection','citizenSuspendedSection','adminStatusSection'].forEach(function(id){
       document.getElementById(id).style.display = 'none';
     });
 
-    if (status === 'approved') {
-      document.getElementById('approvedSection').style.display = 'block';
-    } else if (status === 'suspended') {
-      document.getElementById('suspendedSection').style.display = 'block';
+    if (isPrivileged) {
+      var sel = document.getElementById('adminStatusSelect');
+      sel.value = status;
+      document.getElementById('adminStatusSection').style.display = 'block';
     } else {
-      // pending
-      if (user.approvalRequested) {
-        document.getElementById('requestSentSection').style.display = 'block';
-        document.getElementById('requestTimestamp').textContent =
-          'Submitted on ' + new Date(user.approvalRequested).toLocaleString('en-GB');
+      if (status === 'approved') {
+        document.getElementById('citizenApprovedSection').style.display = 'block';
+      } else if (status === 'suspended') {
+        document.getElementById('citizenSuspendedSection').style.display = 'block';
       } else {
-        document.getElementById('requestApprovalSection').style.display = 'block';
+        document.getElementById('citizenPendingSection').style.display = 'block';
       }
     }
   }
 
-  function requestApproval() {
+  function adminSetStatus() {
     var s = arieteSession.get();
-    if (!s) return;
-    var ts = new Date().toISOString();
-    arieteDB.updateUser(s.user, {approvalRequested: ts}).then(function(){
-      document.getElementById('requestApprovalSection').style.display = 'none';
-      document.getElementById('requestSentSection').style.display = 'block';
-      document.getElementById('requestTimestamp').textContent = 'Submitted on ' + new Date(ts).toLocaleString('en-GB');
-      showMsg('statusMsg', 'success', 'Approval request sent to the Civil Registry Authority.');
-    }).catch(function(){ showMsg('statusMsg','error','Connection error. Please try again.'); });
+    if (!s || (s.role !== 'admin' && s.role !== 'mod')) return;
+    var newStatus = document.getElementById('adminStatusSelect').value;
+    arieteDB.updateUser(s.user, { status: newStatus }).then(function() {
+      var badge  = document.getElementById('accountStatusBadge');
+      var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+      badge.textContent = labels[newStatus] || newStatus;
+      badge.className   = 'badge-status ' + newStatus;
+      showMsg('adminStatusMsg', 'success', 'Status updated to: ' + newStatus);
+    }).catch(function() {
+      showMsg('adminStatusMsg', 'error', 'Error updating status. Please try again.');
+    });
   }
 
   // ── HELPERS ──
