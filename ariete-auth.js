@@ -230,33 +230,26 @@ document.write('<scr'+'ipt src="'+_arieteBase+'ariete-firebase.js"><\/scr'+'ipt>
 
     /* hover with open/close delay */
     var _closeTimer = null;
+    function _closeMenu() {
+      clearTimeout(_closeTimer);
+      menu.style.opacity       = '0';
+      menu.style.transform     = 'translateY(-8px)';
+      menu.style.pointerEvents = 'none';
+      setTimeout(function(){ if (menu.style.opacity === '0') menu.style.display = 'none'; }, 260);
+    }
     wrapper.onmouseenter = function(){
       clearTimeout(_closeTimer);
       menu.style.display       = 'block';
-      /* force reflow so transition fires */
       void menu.offsetWidth;
       menu.style.opacity       = '1';
       menu.style.transform     = 'translateY(0)';
       menu.style.pointerEvents = 'auto';
     };
-    wrapper.onmouseleave = function(){
-      _closeTimer = setTimeout(function(){
-        menu.style.opacity       = '0';
-        menu.style.transform     = 'translateY(-8px)';
-        menu.style.pointerEvents = 'none';
-        setTimeout(function(){ menu.style.display = 'none'; }, 260);
-      }, 220);
-    };
+    wrapper.onmouseleave = function(){ _closeTimer = setTimeout(_closeMenu, 220); };
 
     /* Close on outside click/tap (touch devices) */
     document.addEventListener('click', function(e){
-      if (!wrapper.contains(e.target) && menu.style.opacity === '1') {
-        clearTimeout(_closeTimer);
-        menu.style.opacity       = '0';
-        menu.style.transform     = 'translateY(-8px)';
-        menu.style.pointerEvents = 'none';
-        setTimeout(function(){ if (menu.style.opacity === '0') menu.style.display = 'none'; }, 260);
-      }
+      if (!wrapper.contains(e.target) && menu.style.opacity === '1') _closeMenu();
     });
 
     cta.parentNode.replaceChild(wrapper, cta);

@@ -135,8 +135,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   background: var(--bg-surface);
   border: 1.5px solid var(--border-strong);
   color: var(--text-primary);
@@ -145,6 +145,7 @@
   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 #arieteThemeToggle:hover {
   background: var(--red);
@@ -162,12 +163,6 @@
    Applied to light-theme pages (services, gov, ministries)
    when user switches to dark mode
 ═══════════════════════════════════════════════════════ */
-
-/* Body & page background */
-[data-theme="dark"] body {
-  background: var(--bg-page) !important;
-  color: var(--text-primary) !important;
-}
 
 /* ── SERVICE CARDS (services.html, service-*.html) ── */
 [data-theme="dark"] .services,
@@ -328,7 +323,7 @@
 [data-theme="dark"] textarea {
   background: #1a1a1a !important;
   color: #ffffff !important;
-  border-color: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.12) !important;
 }
 [data-theme="dark"] input::placeholder,
 [data-theme="dark"] textarea::placeholder {
@@ -415,9 +410,4 @@
   border-color: rgba(200,16,46,0.3) !important;
   color: var(--red) !important;
 }
-/* Input borders hardcoded to #ddd */
-[data-theme="dark"] input,
-[data-theme="dark"] select,
-[data-theme="dark"] textarea {
-  border-color: rgba(255,255,255,0.12) !important;
-}
+
