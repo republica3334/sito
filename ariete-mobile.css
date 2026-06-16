@@ -314,12 +314,12 @@
     min-width: 0 !important;
   }
   .svc-cat-icon {
-    width: 40px !important;
-    height: 40px !important;
+    width: 56px !important;
+    height: 56px !important;
   }
   .svc-cat-icon img {
-    width: 34px !important;
-    height: 34px !important;
+    width: 48px !important;
+    height: 48px !important;
   }
   .svc-cat-title { font-size: 1.05rem !important; }
   .svc-cat-desc { display: none !important; }
@@ -328,24 +328,16 @@
     width: 100% !important;
     padding: 0.5rem 0 !important;
   }
-  /* svc-sub-grid → horizontal carousel */
+  /* svc-sub-grid → vertical stack, full width */
   .svc-sub-grid {
     display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 0.75rem !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
     background: transparent !important;
-    padding-bottom: 0.75rem !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
   }
-  .svc-sub-grid::-webkit-scrollbar { display: none; }
   .svc-sub-card {
-    flex-shrink: 0 !important;
-    width: 80vw !important;
-    min-width: 240px !important;
-    scroll-snap-align: start !important;
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
   /* ── FORM PAGES ── */
