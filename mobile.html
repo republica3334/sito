@@ -275,7 +275,12 @@
       -webkit-tap-highlight-color: transparent;
     }
     .service-card:active { background: #242424; }
-    .service-card svg { color: var(--red); flex-shrink: 0; }
+    .service-card-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(310deg) brightness(1.1);
+    }
     .service-card-title {
       font-family: var(--font-sub);
       font-size: 0.82rem;
@@ -288,6 +293,9 @@
       font-size: 0.68rem;
       color: var(--gray-dim);
       line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* ── ANNOUNCEMENTS ── */
@@ -519,49 +527,37 @@
   <div class="services-grid">
 
     <a href="services/service-digital-id.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M13 11h5m-5 4h3"/>
-      </svg>
+      <img src="svgs/icone/generico/id.svg" class="service-card-icon" alt="ID">
       <div class="service-card-title">National ID</div>
       <div class="service-card-sub">Apply or renew your digital identity card</div>
     </a>
 
     <a href="services/service-taxes.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-      </svg>
+      <img src="svgs/icone/generico/tax.svg" class="service-card-icon" alt="Tax">
       <div class="service-card-title">Tax Authority</div>
       <div class="service-card-sub">File returns and manage tax records</div>
     </a>
 
     <a href="services/service-health.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-      </svg>
+      <img src="svgs/icone/generico/health.svg" class="service-card-icon" alt="Health">
       <div class="service-card-title">Health</div>
       <div class="service-card-sub">Health cards and appointments</div>
     </a>
 
     <a href="services/service-civil-registration.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
-      </svg>
+      <img src="svgs/icone/generico/civil reg.svg" class="service-card-icon" alt="Civil Registry">
       <div class="service-card-title">Civil Registry</div>
       <div class="service-card-sub">Birth, marriage and death records</div>
     </a>
 
     <a href="services/service-education.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2.2 2.7 4 6 4s6-1.8 6-4v-5"/>
-      </svg>
+      <img src="svgs/icone/generico/education.svg" class="service-card-icon" alt="Education">
       <div class="service-card-title">Education</div>
       <div class="service-card-sub">Scholarships and enrollments</div>
     </a>
 
     <a href="services/service-business.html" class="service-card">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-      </svg>
+      <img src="svgs/icone/generico/business.svg" class="service-card-icon" alt="Business">
       <div class="service-card-title">Business</div>
       <div class="service-card-sub">Register and license your business</div>
     </a>
