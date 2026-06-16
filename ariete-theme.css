@@ -56,6 +56,25 @@
   --orange:          #f5a623;
 }
 
+/* ── PAGE-LOCAL VARIABLE REMAPPING ── */
+/* Uses :root[data-theme] (specificity 0,2,0) to beat the page's own
+   :root block (0,1,0) which is parsed after our injected stylesheet */
+:root[data-theme="dark"] {
+  --white:      #111111;
+  --gray:       #111111;
+  --gray-light: #1a1a1a;
+  --gray-mid:   rgba(255,255,255,0.45);
+  --gray-dark:  rgba(255,255,255,0.75);
+  --black-text: #ffffff;
+}
+:root[data-theme="light"] {
+  --white:      #ffffff;
+  --gray:       #f4f4f4;
+  --gray-light: #f4f4f4;
+  --gray-mid:   #cccccc;
+  --gray-dark:  #333333;
+}
+
 /* ── DARK THEME (reference: mobile.html) ── */
 [data-theme="dark"] {
   color-scheme: dark;
@@ -65,13 +84,6 @@
   --bg-surface:    #111111;
   --bg-surface-2:  #1a1a1a;
   --bg-invert:     #ffffff;
-
-  /* Remap page-local legacy variables so inline styles auto-update */
-  --white:      #111111;
-  --gray:       #111111;
-  --gray-light: #1a1a1a;
-  --gray-mid:   rgba(255,255,255,0.45);
-  --gray-dark:  rgba(255,255,255,0.75);
 
   /* Header */
   --bg-header:       #0a0a0a;
