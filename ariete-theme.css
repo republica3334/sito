@@ -164,12 +164,6 @@
    when user switches to dark mode
 ═══════════════════════════════════════════════════════ */
 
-/* Body & page background */
-[data-theme="dark"] body {
-  background: var(--bg-page) !important;
-  color: var(--text-primary) !important;
-}
-
 /* ── SERVICE CARDS (services.html, service-*.html) ── */
 [data-theme="dark"] .services,
 [data-theme="dark"] .ministries,
@@ -329,7 +323,7 @@
 [data-theme="dark"] textarea {
   background: #1a1a1a !important;
   color: #ffffff !important;
-  border-color: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255,255,255,0.12) !important;
 }
 [data-theme="dark"] input::placeholder,
 [data-theme="dark"] textarea::placeholder {
@@ -416,9 +410,4 @@
   border-color: rgba(200,16,46,0.3) !important;
   color: var(--red) !important;
 }
-/* Input borders hardcoded to #ddd */
-[data-theme="dark"] input,
-[data-theme="dark"] select,
-[data-theme="dark"] textarea {
-  border-color: rgba(255,255,255,0.12) !important;
-}
+
