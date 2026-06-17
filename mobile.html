@@ -60,6 +60,25 @@
     [data-theme="light"] .brand-text span { color: #c8102e !important; }
     [data-theme="light"] .nav-cta { background: #c8102e !important; color: #ffffff !important; }
 
+    /* Announce section — explicit so it responds to light mode */
+    [data-theme="light"] .announce-section { background: #f0f0f0 !important; }
+    [data-theme="light"] .announce-item {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.12) !important;
+    }
+    [data-theme="light"] .announce-title { color: #0a0a0a !important; }
+    [data-theme="light"] .announce-desc,
+    [data-theme="light"] .announce-date .month { color: rgba(0,0,0,0.5) !important; }
+
+    /* Quick services section */
+    [data-theme="light"] .quick-section { background: #ffffff !important; }
+    [data-theme="light"] .service-card {
+      background: #f8f8f8 !important;
+      border-color: rgba(0,0,0,0.12) !important;
+    }
+    [data-theme="light"] .service-card-title { color: #0a0a0a !important; }
+    [data-theme="light"] .service-card-sub { color: rgba(0,0,0,0.5) !important; }
+
     /* Gov links — explicit so they always respond to light mode */
     [data-theme="light"] .gov-links-section { background: #ffffff !important; }
     [data-theme="light"] .gov-link-row {
@@ -72,6 +91,7 @@
     }
     [data-theme="light"] .gov-link-label { color: #0a0a0a !important; }
     [data-theme="light"] .section-title { color: #0a0a0a !important; }
+    [data-theme="light"] .section-eyebrow { color: #c8102e !important; }
 
     html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
 

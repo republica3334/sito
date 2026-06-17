@@ -398,16 +398,25 @@
   /* ── INLINE PADDING: squash generous desktop padding ── */
   [style*="padding:4rem"],
   [style*="padding:4rem "],
-  [style*="padding: 4rem"] {
+  [style*="padding: 4rem"],
+  [style*="padding:5rem"],
+  [style*="padding:5rem "],
+  [style*="padding: 5rem"] {
     padding: 1.5rem 1.2rem !important;
   }
   [style*="padding:3.5rem 4rem"],
   [style*="padding: 3.5rem 4rem"] {
     padding: 1.4rem 1.2rem !important;
   }
+  [style*="padding:3rem 2.6rem"],
+  [style*="padding: 3rem 2.6rem"],
   [style*="padding:2.5rem 2rem"],
   [style*="padding: 2.5rem 2rem"] {
     padding: 1.2rem 1rem !important;
+  }
+  [style*="padding:1.8rem 2rem"],
+  [style*="padding: 1.8rem 2rem"] {
+    padding: 1rem !important;
   }
 
   /* ── INLINE FLEX: reduce oversized gaps ── */
@@ -453,13 +462,17 @@
     scroll-snap-align: start !important;
   }
 
-  /* auto-fit grids with minmax (e.g. service action cards) */
+  /* auto-fit grids with minmax (e.g. service action cards, ministry cards) */
   [style*="grid-template-columns:repeat(auto-fit,minmax(240px"],
   [style*="grid-template-columns:repeat(auto-fit,minmax(220px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(260px"],
   [style*="grid-template-columns:repeat(auto-fit,minmax(280px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(320px"],
   [style*="grid-template-columns: repeat(auto-fit, minmax(240px"],
   [style*="grid-template-columns: repeat(auto-fit, minmax(220px"],
-  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] {
+  [style*="grid-template-columns: repeat(auto-fit, minmax(260px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(320px"] {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
@@ -472,10 +485,14 @@
   }
   [style*="grid-template-columns:repeat(auto-fit,minmax(240px"] > *,
   [style*="grid-template-columns:repeat(auto-fit,minmax(220px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(260px"] > *,
   [style*="grid-template-columns:repeat(auto-fit,minmax(280px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(320px"] > *,
   [style*="grid-template-columns: repeat(auto-fit, minmax(240px"] > *,
   [style*="grid-template-columns: repeat(auto-fit, minmax(220px"] > *,
-  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] > * {
+  [style*="grid-template-columns: repeat(auto-fit, minmax(260px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(320px"] > * {
     flex-shrink: 0 !important;
     width: 85vw !important;
     min-width: 280px !important;
@@ -490,8 +507,21 @@
   [style*="grid-template-columns: 2fr 1fr 1fr"],
   [style*="grid-template-columns: 1.5fr 1fr 1fr 1fr"],
   [style*="grid-template-columns: 1fr 1fr"],
-  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"],
+  /* no-space variants (e.g. ministry and service detail pages) */
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:1fr 2fr"],
+  [style*="grid-template-columns:2fr 1fr"],
+  [style*="grid-template-columns:3fr 1fr"],
+  [style*="grid-template-columns:1fr 3fr"] {
     grid-template-columns: 1fr !important;
+  }
+
+  /* Minister card icon circle: shrink 96px → 56px on mobile */
+  [style*="width:96px"][style*="height:96px"] {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 0 !important;
   }
 }
 
