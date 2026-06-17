@@ -60,6 +60,25 @@
     [data-theme="light"] .brand-text span { color: #c8102e !important; }
     [data-theme="light"] .nav-cta { background: #c8102e !important; color: #ffffff !important; }
 
+    /* Announce section — explicit so it responds to light mode */
+    [data-theme="light"] .announce-section { background: #f0f0f0 !important; }
+    [data-theme="light"] .announce-item {
+      background: #ffffff !important;
+      border-color: rgba(0,0,0,0.12) !important;
+    }
+    [data-theme="light"] .announce-title { color: #0a0a0a !important; }
+    [data-theme="light"] .announce-desc,
+    [data-theme="light"] .announce-date .month { color: rgba(0,0,0,0.5) !important; }
+
+    /* Quick services section */
+    [data-theme="light"] .quick-section { background: #ffffff !important; }
+    [data-theme="light"] .service-card {
+      background: #f8f8f8 !important;
+      border-color: rgba(0,0,0,0.12) !important;
+    }
+    [data-theme="light"] .service-card-title { color: #0a0a0a !important; }
+    [data-theme="light"] .service-card-sub { color: rgba(0,0,0,0.5) !important; }
+
     /* Gov links — explicit so they always respond to light mode */
     [data-theme="light"] .gov-links-section { background: #ffffff !important; }
     [data-theme="light"] .gov-link-row {
@@ -72,6 +91,7 @@
     }
     [data-theme="light"] .gov-link-label { color: #0a0a0a !important; }
     [data-theme="light"] .section-title { color: #0a0a0a !important; }
+    [data-theme="light"] .section-eyebrow { color: #c8102e !important; }
 
     html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
 
@@ -466,6 +486,177 @@
       font-size: 1rem;
     }
 
+    /* ── ENLISTMENT ── */
+    .enlist-section {
+      background: #0a0a0a;
+      border-top: 2px solid var(--red);
+      padding: 2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .enlist-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px,
+        transparent 1px, transparent 64px
+      );
+      pointer-events: none;
+    }
+    .enlist-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+    .enlist-eyebrow {
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .enlist-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--red); }
+    .enlist-title {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1.05;
+    }
+    .enlist-title em { font-style: normal; color: var(--red); }
+    .enlist-emblem {
+      width: 64px; height: 64px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .enlist-desc {
+      position: relative;
+      z-index: 1;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.4rem;
+    }
+    .enlist-stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 1.4rem;
+      margin-bottom: 1.6rem;
+    }
+    .enlist-stat {
+      border-left: 2px solid var(--red);
+      padding-left: 0.75rem;
+    }
+    .enlist-stat strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .enlist-stat span {
+      font-family: var(--font-sub);
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .branch-scroll {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1.5px;
+      margin: 0 -1.4rem;
+      padding: 0 1.4rem 0.75rem;
+      scrollbar-width: none;
+      background: rgba(255,255,255,0.07);
+    }
+    .branch-scroll::-webkit-scrollbar { display: none; }
+    .m-branch-card {
+      background: #0f0f0f;
+      padding: 1.4rem 1.2rem;
+      flex-shrink: 0;
+      width: 70vw;
+      min-width: 200px;
+      scroll-snap-align: start;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .m-branch-card:active { background: #1a1a1a; }
+    .m-branch-icon {
+      width: 52px; height: 52px;
+      border: 1.5px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+    .m-branch-icon img { width: 32px; height: 32px; filter: invert(1); opacity: 0.85; }
+    .m-branch-card h3 {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+    .m-branch-card p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.55;
+      margin-bottom: 0.9rem;
+    }
+    .m-branch-link {
+      font-family: var(--font-sub);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .enlist-cta {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.6rem;
+    }
+    .enlist-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--red);
+      color: #ffffff;
+      font-family: var(--font-sub);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      min-height: 52px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     /* ── FOOTER ── */
     footer {
       background: #080808;
@@ -753,6 +944,64 @@
     </div>
     <span class="gov-link-arrow">›</span>
   </a>
+</section>
+
+<!-- ENLISTMENT -->
+<section class="enlist-section">
+  <div class="enlist-header">
+    <div>
+      <div class="enlist-eyebrow">Armed Forces of the United Republic</div>
+      <h2 class="enlist-title">Serve the<br><em>Republic</em></h2>
+    </div>
+    <img src="svgs/icone/ministeri/difesa.svg" class="enlist-emblem" alt="Ministry of Defence" onerror="this.style.display='none'">
+  </div>
+  <p class="enlist-desc">The Republic calls upon its citizens to defend, build, and uphold the values of the nation. Military service offers career, purpose, and the honor of serving the state.</p>
+  <div class="enlist-stats">
+    <div class="enlist-stat">
+      <strong>38,000+</strong>
+      <span>Active Personnel</span>
+    </div>
+    <div class="enlist-stat">
+      <strong>12</strong>
+      <span>Branches</span>
+    </div>
+    <div class="enlist-stat">
+      <strong>96%</strong>
+      <span>Retention Rate</span>
+    </div>
+  </div>
+  <div class="branch-scroll">
+    <a href="military/ground-forces.html" class="m-branch-card">
+      <div class="m-branch-icon"><img src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
+      <h3>Ground Forces</h3>
+      <p>Infantry, armor, and engineering units operating across all terrain types.</p>
+      <span class="m-branch-link">View Roles →</span>
+    </a>
+    <a href="military/air-corps.html" class="m-branch-card">
+      <div class="m-branch-icon"><img src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
+      <h3>Air Corps</h3>
+      <p>Strategic air superiority and rapid-response operations defending the skies.</p>
+      <span class="m-branch-link">View Roles →</span>
+    </a>
+    <a href="military/naval-command.html" class="m-branch-card">
+      <div class="m-branch-icon"><img src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
+      <h3>Naval Command</h3>
+      <p>Protecting maritime borders through the Republic's coastal and deep-water fleet.</p>
+      <span class="m-branch-link">View Roles →</span>
+    </a>
+    <a href="military/space-force.html" class="m-branch-card">
+      <div class="m-branch-icon"><img src="svgs/icone/army/space.svg" alt="Space Force"></div>
+      <h3>Space Force</h3>
+      <p>Orbital sovereignty and satellite operations beyond the atmosphere.</p>
+      <span class="m-branch-link">View Roles →</span>
+    </a>
+  </div>
+  <div class="enlist-cta">
+    <a href="military/ground-forces.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Begin Your Application
+    </a>
+  </div>
 </section>
 
 <!-- FOOTER -->

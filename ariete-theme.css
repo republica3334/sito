@@ -411,3 +411,64 @@
   color: var(--red) !important;
 }
 
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE: DARK HARDCODED BACKGROUNDS
+   Ministry/military pages use inline hex values (#0a0a0a, #111, #0d0d0d)
+   for section backgrounds. These don't respond to the variable system,
+   so we override them here when the user switches to light mode.
+   Note: var(--black) backgrounds (heroes, CTAs) are intentionally excluded —
+   those stay dark as a design choice.
+═══════════════════════════════════════════════════════ */
+[data-theme="light"] [style*="background:#0a0a0a"],
+[data-theme="light"] [style*="background: #0a0a0a"] {
+  background: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] [style*="background:#0d0d0d"],
+[data-theme="light"] [style*="background: #0d0d0d"] {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] [style*="background:#111;"],
+[data-theme="light"] [style*="background:#111 "],
+[data-theme="light"] [style*="background:#111111"] {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+}
+/* Protect red/brand backgrounds — always keep white text */
+[data-theme="light"] [style*="background:#c8102e"],
+[data-theme="light"] [style*="background:var(--red)"],
+[data-theme="light"] [style*="background:#9b0c22"] {
+  color: #ffffff !important;
+}
+
+/* Text colours inside flipped dark sections → dark on light bg */
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111;"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111 "] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111111"] [style*="color:rgba(255,255,255"] {
+  color: var(--text-muted) !important;
+}
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111;"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111 "] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111111"] [style*="color:var(--white)"] {
+  color: var(--text-primary) !important;
+}
+
+/* Divider lines and subtle borders → dark on light bg */
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111;"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111 "] [style*="border-bottom:1px solid rgba(255,255,255"] {
+  border-bottom-color: var(--border-color) !important;
+}
+/* Card-gap dividers: rgba(255,255,255,...) grid backgrounds → dark */
+[data-theme="light"] [style*="background:rgba(255,255,255,0.06)"],
+[data-theme="light"] [style*="background:rgba(255,255,255,0.07)"],
+[data-theme="light"] [style*="background:rgba(255,255,255,0.08)"] {
+  background: var(--border-color) !important;
+}
+
