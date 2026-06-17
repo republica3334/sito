@@ -49,6 +49,30 @@
       --m-border-card: rgba(0,0,0,0.12);
     }
 
+    /* ── LIGHT MODE EXPLICIT OVERRIDES
+       ariete-theme.css injects [data-theme] header with !important (specificity 0,1,1).
+       We beat it with same specificity but later cascade position. ── */
+    [data-theme="light"] header {
+      background: #0a0a0a !important;
+      border-bottom: 2px solid #c8102e !important;
+    }
+    [data-theme="light"] .brand-text h1 { color: #ffffff !important; }
+    [data-theme="light"] .brand-text span { color: #c8102e !important; }
+    [data-theme="light"] .nav-cta { background: #c8102e !important; color: #ffffff !important; }
+
+    /* Gov links — explicit so they always respond to light mode */
+    [data-theme="light"] .gov-links-section { background: #ffffff !important; }
+    [data-theme="light"] .gov-link-row {
+      color: #0a0a0a !important;
+      border-bottom-color: rgba(0,0,0,0.08) !important;
+    }
+    [data-theme="light"] .gov-link-icon {
+      background: #f8f8f8 !important;
+      border-color: rgba(0,0,0,0.12) !important;
+    }
+    [data-theme="light"] .gov-link-label { color: #0a0a0a !important; }
+    [data-theme="light"] .section-title { color: #0a0a0a !important; }
+
     html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
 
     /* Emblem always white — header and footer backgrounds are always dark */
