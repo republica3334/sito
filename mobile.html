@@ -93,10 +93,24 @@
     [data-theme="light"] .section-title { color: #0a0a0a !important; }
     [data-theme="light"] .section-eyebrow { color: #c8102e !important; }
 
+    /* Hero explicit light mode */
+    [data-theme="light"] .hero { background: #f0f0f0 !important; }
+    [data-theme="light"] .hero-title { color: #0a0a0a !important; }
+    [data-theme="light"] .hero-desc { color: rgba(0,0,0,0.55) !important; }
+    [data-theme="light"] .hero-eyebrow { color: var(--red) !important; }
+    [data-theme="light"] .hero-status { color: rgba(0,0,0,0.45) !important; }
+    [data-theme="light"] .btn-outline {
+      color: rgba(0,0,0,0.55) !important;
+      border-color: rgba(0,0,0,0.15) !important;
+    }
+
     html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
 
-    /* Emblem always white — header and footer backgrounds are always dark */
-    .emblem-svg { filter: invert(1) !important; }
+    /* Emblem always white — mobile header stays dark regardless of theme.
+       [data-theme] selector (0,2,0) beats ariete-theme.css's [data-theme="light"] .emblem-svg (0,2,0)
+       because mobile.html <style> block comes later in the cascade. */
+    .emblem-svg,
+    [data-theme] .emblem-svg { filter: invert(1) !important; }
 
     /* ── HEADER ── */
     header {
@@ -484,6 +498,51 @@
     .gov-link-arrow {
       color: var(--red);
       font-size: 1rem;
+    }
+
+    /* ── VIDEO ── */
+    .video-section {
+      background: #0a0a0a;
+      padding: 2rem 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      z-index: 1;
+    }
+    .video-eyebrow {
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .video-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--red); }
+    .video-title {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 1.2rem;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #000;
+      border: 1.5px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     /* ── ENLISTMENT ── */
@@ -944,6 +1003,21 @@
     </div>
     <span class="gov-link-arrow">›</span>
   </a>
+</section>
+
+<!-- VIDEO: SEE WHAT IT TAKES -->
+<section class="video-section">
+  <div class="video-eyebrow">Armed Forces of the United Republic</div>
+  <h2 class="video-title">See What It Takes</h2>
+  <div class="video-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/JOWRembdPS8"
+      title="United Republic of Stars — Armed Forces"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
 </section>
 
 <!-- ENLISTMENT -->
