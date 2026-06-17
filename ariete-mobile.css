@@ -520,8 +520,20 @@
   [style*="grid-template-columns:1fr 320px"],
   [style*="grid-template-columns: 1fr 320px"],
   [style*="grid-template-columns:1fr 340px"],
-  [style*="grid-template-columns: 1fr 340px"] {
+  [style*="grid-template-columns: 1fr 340px"],
+  /* military page hero: text + emblem image */
+  [style*="grid-template-columns:1fr auto"],
+  [style*="grid-template-columns: 1fr auto"] {
     grid-template-columns: 1fr !important;
+  }
+
+  /* large gap: military hero / enlistment sections */
+  [style*="gap:4rem"],
+  [style*="gap: 4rem"] { gap: 1.5rem !important; }
+
+  /* hide oversized decorative hero images on mobile */
+  img[width="340"], img[width="360"] {
+    display: none !important;
   }
 
   /* Minister card icon circle: shrink 96px → 56px on mobile */
