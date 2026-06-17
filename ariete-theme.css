@@ -393,6 +393,32 @@
   border: 1.5px solid rgba(255,255,255,0.12) !important;
 }
 
+/* ── MINISTRY HEADER LOGOS ── */
+/* Ministry pages use <img> without .emblem-svg class — invert in dark mode */
+[data-theme="dark"] header img:not(.emblem-svg) {
+  filter: invert(1) !important;
+}
+
+/* ── MINISTRY CIRCLE ICONS — light mode ── */
+/* Red circle (rgba(200,16,46,0.15)) + filter:invert(1) SVG → white on light pink = invisible.
+   In light mode, keep SVG dark (no invert) so it shows against the light card background. */
+[data-theme="light"] [style*="background:rgba(200,16,46,0.15)"] img[style*="invert"] {
+  filter: none !important;
+}
+
+/* ── ENLISTMENT — always dark (military section, never goes light) ── */
+[data-theme="light"] .enlistment {
+  background: #0a0a0a !important;
+}
+[data-theme="light"] .enlistment .section-label,
+[data-theme="light"] .enlistment .section-label::before { color: rgba(255,255,255,0.45) !important; }
+[data-theme="light"] .enlistment .section-title { color: #ffffff !important; }
+[data-theme="light"] .enlistment p { color: rgba(255,255,255,0.6) !important; }
+[data-theme="light"] .branch-card { background: #0f0f0f !important; color: #ffffff !important; }
+[data-theme="light"] .branch-card:hover { background: #1a1a1a !important; }
+[data-theme="light"] .branch-card h3 { color: #ffffff !important; }
+[data-theme="light"] .branch-card p { color: rgba(255,255,255,0.5) !important; }
+
 /* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
 /* Demo warning / info boxes with hardcoded light-pink bg */
 [data-theme="dark"] [style*="#fff8f8"],
@@ -470,5 +496,51 @@
 [data-theme="light"] [style*="background:rgba(255,255,255,0.07)"],
 [data-theme="light"] [style*="background:rgba(255,255,255,0.08)"] {
   background: var(--border-color) !important;
+}
+
+/* ── MINISTRY HEADER LOGOS ──
+   Ministry pages have no .emblem-svg class on their header <img>, so the
+   standard emblem invert rule doesn't fire. Force invert for any header
+   image that isn't an emblem-svg in dark mode (dark header → logos visible). */
+[data-theme="dark"] header img:not(.emblem-svg) {
+  filter: invert(1) !important;
+}
+
+/* ── MINISTRY CIRCLE ICONS — light mode ──
+   Cards use background:#111 (flipped to light by rule above) + red circle
+   rgba(200,16,46,0.15) + filter:invert(1) SVG icon. In light mode the card
+   goes light but the SVG stays white = invisible. Remove invert so icon is
+   its natural dark colour on the now-light card. */
+[data-theme="light"] [style*="background:rgba(200,16,46,0.15)"] img {
+  filter: none !important;
+}
+
+/* ── ENLISTMENT / MILITARY — always dark ──
+   Desktop homepage .enlistment and mobile .enlist-section are intentionally
+   dark (military aesthetic). Never flip them to light mode. */
+[data-theme="light"] .enlistment {
+  background: #0a0a0a !important;
+}
+[data-theme="light"] .enlistment .section-label {
+  color: rgba(255,255,255,0.45) !important;
+}
+[data-theme="light"] .enlistment .section-title {
+  color: #ffffff !important;
+}
+[data-theme="light"] .enlistment p {
+  color: rgba(255,255,255,0.6) !important;
+}
+[data-theme="light"] .branch-card {
+  background: #0f0f0f !important;
+  color: #ffffff !important;
+}
+[data-theme="light"] .branch-card:hover {
+  background: #1a1a1a !important;
+}
+[data-theme="light"] .branch-card h3 {
+  color: #ffffff !important;
+}
+[data-theme="light"] .branch-card p {
+  color: rgba(255,255,255,0.5) !important;
 }
 
