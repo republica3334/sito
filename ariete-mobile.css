@@ -408,6 +408,8 @@
   [style*="padding: 3.5rem 4rem"] {
     padding: 1.4rem 1.2rem !important;
   }
+  [style*="padding:3rem 4rem"],
+  [style*="padding: 3rem 4rem"],
   [style*="padding:3rem 2.6rem"],
   [style*="padding: 3rem 2.6rem"],
   [style*="padding:2.5rem 2rem"],
@@ -513,7 +515,12 @@
   [style*="grid-template-columns:1fr 2fr"],
   [style*="grid-template-columns:2fr 1fr"],
   [style*="grid-template-columns:3fr 1fr"],
-  [style*="grid-template-columns:1fr 3fr"] {
+  [style*="grid-template-columns:1fr 3fr"],
+  /* service filing pages: form + sidebar */
+  [style*="grid-template-columns:1fr 320px"],
+  [style*="grid-template-columns: 1fr 320px"],
+  [style*="grid-template-columns:1fr 340px"],
+  [style*="grid-template-columns: 1fr 340px"] {
     grid-template-columns: 1fr !important;
   }
 
