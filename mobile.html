@@ -151,10 +151,11 @@
       gap: 0.7rem;
     }
     .emblem-svg { width: 36px; height: auto; flex-shrink: 0; }
-    /* Mobile header is always dark — emblem must always be inverted (white).
-       header .emblem-svg beats [data-theme="light"] .emblem-svg from the
-       injected theme CSS because this <style> block is later in cascade. */
-    header .emblem-svg { filter: invert(1) !important; }
+    /* Mobile header is always dark — header emblem must always be white.
+       [data-theme] header .emblem-svg = specificity (0,2,1) which beats
+       theme CSS's [data-theme="light"] .emblem-svg (0,2,0) on specificity,
+       so !important cascade order doesn't matter. Footer emblem unaffected. */
+    [data-theme] header .emblem-svg { filter: invert(1) !important; }
     .brand-text h1 {
       font-family: var(--font-head);
       font-size: 0.95rem;
