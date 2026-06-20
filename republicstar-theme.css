@@ -561,6 +561,32 @@ nav a,
 }
 
 
+/* ── SVC-HERO: theme-adaptive hero (gov / ministry / services pages) ──
+   The .svc-hero class is added to hero divs on gov/ministry pages.
+   Dark by default (inline style keeps it); override to light below. */
+[data-theme="light"] .svc-hero {
+  background: var(--gray-light) !important;
+  color: var(--black) !important;
+}
+/* Muted rgba(255,255,255,...) text → dark text on light bg */
+[data-theme="light"] .svc-hero [style*="color:rgba(255,255,255"] {
+  color: var(--text-muted) !important;
+}
+/* color:var(--white) elements (titles, stats) → dark */
+[data-theme="light"] .svc-hero [style*="color:var(--white)"] {
+  color: var(--text-primary) !important;
+}
+/* Repeating grid overlay (white lines → dark lines) */
+[data-theme="light"] .svc-hero [style*="rgba(255,255,255,0.01"] {
+  background: repeating-linear-gradient(90deg,rgba(0,0,0,0.04) 0,rgba(0,0,0,0.04) 1px,transparent 1px,transparent 80px) !important;
+}
+/* Outline CTA buttons inside hero */
+[data-theme="light"] .svc-hero a[style*="border:1px solid rgba(255,255,255"],
+[data-theme="light"] .svc-hero a[style*="border: 1px solid rgba(255,255,255"] {
+  border-color: rgba(0,0,0,0.2) !important;
+  color: var(--text-secondary) !important;
+}
+
 /* ── GLOBAL FOOTER ── */
 footer {
   background: #0a0a0a;
