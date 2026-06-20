@@ -1,4 +1,4 @@
-﻿/* ── Resolve base URL (works from any subfolder) ── */
+/* ── Resolve base URL (works from any subfolder) ── */
 var _republicstarBase = (document.currentScript ? document.currentScript.src.replace(/[^\/]*$/, '') : '');
 
 /* ── Firebase SDK (injected synchronously) ── */
