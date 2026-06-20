@@ -522,8 +522,58 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     w.republicstarUpdateNav();
     w.republicstarCookieBanner();
     w.republicstarMobileNav();
+    w.republicstarInjectFooter();
   });
 
+  /* ── 7b. Full footer injection ──
+     Pages with minimal footers (service sub-pages, ministry sub-pages) get
+     the same full grid footer as the homepage. Pages that already have a
+     .footer-grid are left untouched. mobile.html is explicitly excluded. */
+  w.republicstarInjectFooter = function() {
+    var page = window.location.pathname.split('/').pop() || '';
+    if (page === 'mobile.html') return;
+    var footer = document.querySelector('footer');
+    if (!footer) return;
+    if (footer.querySelector('.footer-grid')) return;
+    var b = _republicstarBase;
+    footer.innerHTML =
+      '<div class="footer-grid">'
+      + '<div class="footer-brand">'
+      +   '<img src="' + b + 'svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">'
+      +   '<p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>'
+      +   '<p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">&copy; 2026 United Republic of Stars. All Rights Reserved.</p>'
+      + '</div>'
+      + '<div class="footer-col"><h5>Government</h5><ul>'
+      +   '<li><a href="' + b + 'gov/government.html">Office of the President</a></li>'
+      +   '<li><a href="' + b + 'gov/national-assembly.html">National Assembly</a></li>'
+      +   '<li><a href="' + b + 'gov/supreme-court.html">Supreme Court</a></li>'
+      +   '<li><a href="' + b + 'gov/ministries.html">Cabinet of Ministers</a></li>'
+      +   '<li><a href="' + b + 'gov/official-gazette.html">Official Gazette</a></li>'
+      + '</ul></div>'
+      + '<div class="footer-col"><h5>Citizen Services</h5><ul>'
+      +   '<li><a href="' + b + 'services/service-digital-id.html">National ID Portal</a></li>'
+      +   '<li><a href="' + b + 'services/service-taxes.html">Tax Authority</a></li>'
+      +   '<li><a href="' + b + 'services/service-civil-registration.html">Civil Registry</a></li>'
+      +   '<li><a href="' + b + 'services/service-health.html">Health Services</a></li>'
+      +   '<li><a href="' + b + 'services/service-education.html">Education Portal</a></li>'
+      + '</ul></div>'
+      + '<div class="footer-col"><h5>Information</h5><ul>'
+      +   '<li><a href="' + b + 'GOVERN_1.HTM">About the Republic</a></li>'
+      +   '<li><a href="' + b + 'gov/constitution.html">Constitution</a></li>'
+      +   '<li><a href="' + b + 'gov/laws-decrees.html">Laws &amp; Decrees</a></li>'
+      +   '<li><a href="' + b + 'gov/open-data.html">Open Data</a></li>'
+      +   '<li><a href="' + b + 'gov/contact.html">Contact Government</a></li>'
+      + '</ul></div>'
+      + '</div>'
+      + '<div class="footer-bottom">'
+      +   '<span>United Republic of Stars &nbsp;&middot;&nbsp; Est. MMXII &nbsp;&middot;&nbsp; Official Government Website</span>'
+      +   '<div style="display:flex;gap:1.5rem;">'
+      +     '<a href="#">Privacy Policy</a>'
+      +     '<a href="#">Accessibility</a>'
+      +     '<a href="#">Terms of Use</a>'
+      +   '</div>'
+      + '</div>';
+  };
 
   /* ── 8. Secret Override Code ── */
   /* Trigger: type REPUBLICSTAR (not inside an input) → secret modal appears.
