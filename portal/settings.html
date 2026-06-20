@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>United Republic of Stars — Account Settings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -163,7 +166,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/settings.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/portal/settings.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="United Republic of Stars — Account Settings">
   <meta property="og:description" content="Manage your Stars Citizen Account settings and security.">
@@ -194,7 +197,7 @@
 
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand">
-    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem">
     <div class="brand-text">
       <h1>United Republic of Stars</h1>
       <span>Official Government Portal · Est. MMXII</span>
@@ -209,12 +212,12 @@
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
+<main>
 <div class="page-wrap">
   <div class="page-inner">
 
     <div class="page-header">
-      <img src="../svgs/icone/republica/2.svg" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
       <div class="eyebrow">United Republic of Stars — Account Settings</div>
     </div>
 
@@ -383,10 +386,11 @@
   </div>
 </div>
 
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" alt="United Republic of Stars — Official Emblem">
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
       <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
     </div>

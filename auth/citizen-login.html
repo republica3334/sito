@@ -8,11 +8,15 @@
   if(m) window.location.replace('citizen-login-mobile.html');
 })();
 </script>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="Citizen Login — access your United Republic of Stars government portal account.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>United Republic of Stars — Official Government Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -715,7 +719,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/citizen-login.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/auth/citizen-login.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="United Republic of Stars — Official Government Portal">
   <meta property="og:description" content="Sign in to your Stars Citizen Account to access official government services.">
@@ -749,7 +753,7 @@
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Republicstar Eagle Emblem (inline SVG) -->
-    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -766,7 +770,7 @@
     <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
+<main>
 <!-- LOGIN PORTAL -->
 <div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
   <!-- Grid background -->
@@ -776,7 +780,7 @@
 
     <!-- Emblem -->
     <div style="text-align:center;margin-bottom:2.5rem;">
-      <img src="../svgs/icone/republica/2.svg" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/2.svg" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="United Republic of Stars — Official Emblem">
       <div style="font-family:var(--font-head);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
     </div>
 
@@ -909,10 +913,11 @@
 </div>
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -1031,7 +1036,8 @@ function startTFA(user) {
   if (emailEl) emailEl.textContent = masked;
 
   // ── EmailJS send ──────────────────────────────────────────
-  // Configure these 3 values in your EmailJS dashboard (free at emailjs.com)
+  // TODO SECURITY: these keys are public-facing. Move OTP sending to a
+  // server-side function (Firebase Function / Vercel edge) to avoid key exposure.
   const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
   const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
   const EMAILJS_TEMPLATE_ID = 'template_r8jdk1q';
@@ -1201,6 +1207,8 @@ function handleLogin(e) {
 
   dbLookup.then(function(user) {
     if (!user) { failAttempt('National ID not found. Please register first.'); return; }
+    // TODO SECURITY: passwords are stored as base64 (not hashed). Migrate to
+    // server-side bcrypt/PBKDF2 via a Firebase Function before production use.
     if (atob(user.pwd) !== pwd) { failAttempt('Incorrect credentials. Please try again.'); return; }
     if (user.status === 'suspended') {
       err.textContent = 'This account has been suspended. Contact the Ministry of the Interior for assistance.';
