@@ -1,0 +1,708 @@
+﻿﻿/* ═══════════════════════════════════════════
+   REPUBLICSTAR MOBILE  –  injected by republicstar-auth.js
+   Breakpoints: 768px (tablet), 480px (small), 360px (xs)
+═══════════════════════════════════════════ */
+
+/* ── HAMBURGER BUTTON ── */
+#republicstarHamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: none;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  cursor: pointer;
+  flex-shrink: 0;
+  z-index: 200;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#republicstarHamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #0a0a0a;
+  transition: transform 0.25s, opacity 0.2s;
+}
+#republicstarHamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#republicstarHamburger.open span:nth-child(2) { opacity: 0; }
+#republicstarHamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── MOBILE MENU OVERLAY ── */
+#republicstarMobileMenu {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0a0a0a;
+  z-index: 150;
+  flex-direction: column;
+  padding: 5rem 2rem 2rem;
+  overflow-y: auto;
+}
+#republicstarMobileMenu.open { display: flex; }
+
+#republicstarMobileMenu a {
+  display: block;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#republicstarMobileMenu a:active { color: #c8102e; }
+#republicstarMobileMenu a.mobile-cta {
+  color: #c8102e;
+  margin-top: 1.5rem;
+  border-bottom: none;
+  font-size: 1rem;
+  letter-spacing: 0.10em;
+}
+
+/* ── PROFILE DROPDOWN — reposition on mobile so it doesn't clip ── */
+@media (max-width: 768px) {
+  #republicstarProfileMenu {
+    position: fixed !important;
+    right: 0.8rem !important;
+    top: 62px !important;
+    left: auto !important;
+    min-width: 210px !important;
+    max-width: calc(100vw - 1.6rem) !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   768px — TABLET + PHONE
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── TOUCH QUALITY ── */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 0.7rem 1rem !important;
+  }
+  nav {
+    display: none !important;
+  }
+  #republicstarHamburger {
+    display: flex !important;
+  }
+  .emblem-svg {
+    width: 44px !important;
+  }
+  .brand-text h1 {
+    font-size: 0.95rem !important;
+  }
+  .brand-text span {
+    display: none !important;
+  }
+
+  /* ── UTILITY BAR ── */
+  .utility-bar { display: none !important; }
+
+  /* ── HERO (GOVERN_1.HTM) ── */
+  .hero {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 3.5rem 1.4rem 3rem !important;
+  }
+  .hero-content {
+    padding: 0 !important;
+  }
+  .hero-emblem {
+    display: none !important;
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+  }
+  .hero-desc {
+    font-size: 0.88rem !important;
+    max-width: 100% !important;
+  }
+  .hero-actions {
+    flex-direction: column !important;
+    gap: 0.7rem !important;
+  }
+  .btn-primary, .btn-outline {
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.9rem 1rem !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .hero-emblem-wrap {
+    width: 100% !important;
+    max-width: 260px !important;
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    height: 36px !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* ── SECTION COMMONS ── */
+  section {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 7vw, 2.4rem) !important;
+  }
+  .section-subtitle {
+    font-size: 0.85rem !important;
+  }
+  .services-header,
+  .news-header,
+  .ministries-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.8rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* ── HORIZONTAL CAROUSELS ── */
+  .services-grid,
+  .news-grid,
+  .ministries-list,
+  .enlistment-branches {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .services-grid::-webkit-scrollbar,
+  .news-grid::-webkit-scrollbar,
+  .ministries-list::-webkit-scrollbar,
+  .enlistment-branches::-webkit-scrollbar { display: none; }
+
+  /* ── SERVICES GRID → HORIZONTAL CAROUSEL ── */
+  .service-card {
+    flex-shrink: 0 !important;
+    width: calc(50vw - 1.5rem) !important;
+    min-width: 148px !important;
+    scroll-snap-align: start !important;
+    padding: 1.2rem 1rem !important;
+  }
+  .service-icon {
+    width: 32px !important;
+    height: 32px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  .service-icon img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .service-card h3 {
+    font-size: 0.82rem !important;
+  }
+
+  /* ── ANNOUNCE BAND (2-column split) ── */
+  .announce-band {
+    grid-template-columns: 1fr !important;
+    padding: 0 !important;
+  }
+  .announce-label-col {
+    padding: 2rem 1.4rem !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 1.5rem !important;
+  }
+  .announce-label-col .big-num {
+    font-size: 3rem !important;
+  }
+  .announce-content {
+    padding: 2rem 1.4rem !important;
+  }
+
+  /* ── NEWS GRID → HORIZONTAL CAROUSEL ── */
+  .news-card {
+    flex-shrink: 0 !important;
+    width: 80vw !important;
+    min-width: 260px !important;
+    scroll-snap-align: start !important;
+  }
+  .news-card.featured { width: 85vw !important; }
+  .news-img {
+    aspect-ratio: 16 / 7 !important;
+  }
+  .news-body {
+    padding: 1rem 1.2rem !important;
+  }
+
+  /* ── STATS (4-col inline grid) ── */
+  .stats {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 2rem 1.2rem !important;
+    gap: 1px !important;
+  }
+  .stat-num {
+    font-size: 2.4rem !important;
+  }
+  .stat-item {
+    padding: 1.5rem 1rem !important;
+  }
+
+  /* ── MINISTRIES LIST → HORIZONTAL CAROUSEL ── */
+  .ministry-item {
+    flex-shrink: 0 !important;
+    width: 75vw !important;
+    min-width: 220px !important;
+    scroll-snap-align: start !important;
+    padding: 1.2rem 1.4rem !important;
+  }
+
+  /* ── ENLISTMENT ── */
+  .enlistment {
+    padding: 3rem 1.4rem !important;
+  }
+  .enlistment-top {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .branch-card {
+    flex-shrink: 0 !important;
+    width: 60vw !important;
+    min-width: 180px !important;
+    scroll-snap-align: start !important;
+  }
+  .enlistment-stats {
+    flex-wrap: wrap !important;
+    gap: 1.2rem !important;
+  }
+  .branch-card {
+    padding: 1.5rem 1.4rem !important;
+  }
+
+  /* ── SERVICES INDEX (services.html) ── */
+  .svc-section {
+    padding: 1.2rem 0.6rem !important;
+    border-bottom-width: 1px !important;
+  }
+  .svc-cat-header {
+    flex-wrap: wrap !important;
+    gap: 0.75rem 1rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .svc-cat-header > div {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .svc-cat-icon {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  .svc-cat-icon img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .svc-cat-title { font-size: 1.05rem !important; }
+  .svc-cat-desc { display: none !important; }
+  .svc-cat-link {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 0.5rem 0 !important;
+  }
+  /* svc-sub-grid → vertical stack, full width */
+  .svc-sub-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    background: transparent !important;
+  }
+  .svc-sub-card {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* ── FORM PAGES ── */
+  .form-card, .login-card, .register-card, .setup-card {
+    margin: 1rem !important;
+    padding: 1.5rem 1.2rem !important;
+  }
+
+  /* ── OTP INPUTS (2FA — 6 boxes that can overflow small screens) ── */
+  .otp {
+    width: 40px !important;
+    height: 48px !important;
+    font-size: 1.1rem !important;
+  }
+
+  /* ── ADMIN / MOD PANEL ── */
+  .admin-grid, .admin-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── PAGE-LEVEL WRAPPERS ── */
+  .page-wrap  { padding: 1.5rem 1rem !important; }
+  .page-inner { padding: 0 !important; max-width: 100% !important; }
+  .page-hero  { padding: 3rem 1.4rem !important; }
+  .page-hero h1 { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; }
+  .content-grid { grid-template-columns: 1fr !important; }
+
+  /* ── CARDS ── */
+  .card           { padding: 1.2rem 1rem !important; }
+  .suspended-card { padding: 1.5rem 1rem !important; }
+
+  /* ── STATUS & SETTINGS ── */
+  .status-info-grid { grid-template-columns: 1fr !important; }
+
+  /* ── FOOTER ── */
+  footer { padding: 2.5rem 1.2rem !important; }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    font-size: 0.65rem !important;
+  }
+
+  /* ── TABLES ── */
+  table    { font-size: 0.72rem !important; }
+  th, td   { padding: 0.5rem 0.6rem !important; }
+  .table-wrap, table { overflow-x: auto; display: block; }
+
+  /* ── OVERFLOW SAFETY ── */
+  html, body { overflow-x: hidden; max-width: 100%; }
+  img, video, iframe { max-width: 100% !important; }
+  * { min-width: 0; }
+  pre, code { overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+
+  /* ── INLINE PADDING: squash generous desktop padding ── */
+  [style*="padding:4rem"],
+  [style*="padding:4rem "],
+  [style*="padding: 4rem"],
+  [style*="padding:5rem"],
+  [style*="padding:5rem "],
+  [style*="padding: 5rem"] {
+    padding: 1.5rem 1.2rem !important;
+  }
+  [style*="padding:3.5rem 4rem"],
+  [style*="padding: 3.5rem 4rem"] {
+    padding: 1.4rem 1.2rem !important;
+  }
+  [style*="padding:3rem 4rem"],
+  [style*="padding: 3rem 4rem"],
+  [style*="padding:3rem 2.6rem"],
+  [style*="padding: 3rem 2.6rem"],
+  [style*="padding:2.5rem 2rem"],
+  [style*="padding: 2.5rem 2rem"] {
+    padding: 1.2rem 1rem !important;
+  }
+  [style*="padding:1.8rem 2rem"],
+  [style*="padding: 1.8rem 2rem"] {
+    padding: 1rem !important;
+  }
+
+  /* ── INLINE FLEX: reduce oversized gaps ── */
+  [style*="gap:2.5rem"],
+  [style*="gap: 2.5rem"] {
+    gap: 1rem !important;
+  }
+  /* Category hero: icon + text row → stack vertically on mobile */
+  [style*="display:flex"][style*="align-items:flex-start"][style*="max-width:1100px"],
+  [style*="display:flex"][style*="align-items:flex-start"][style*="max-width:900px"] {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  /* ── INLINE GRIDS → HORIZONTAL CAROUSELS ── */
+
+  /* 3-col or 4-col repeat grids (e.g. government branches) */
+  [style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="grid-template-columns:repeat(4,1fr)"],
+  [style*="grid-template-columns: repeat(3,1fr)"],
+  [style*="grid-template-columns: repeat(4,1fr)"],
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  [style*="grid-template-columns:repeat(3,1fr)"] > *,
+  [style*="grid-template-columns:repeat(4,1fr)"] > *,
+  [style*="grid-template-columns: repeat(3,1fr)"] > *,
+  [style*="grid-template-columns: repeat(4,1fr)"] > *,
+  [style*="grid-template-columns: repeat(3, 1fr)"] > *,
+  [style*="grid-template-columns: repeat(4, 1fr)"] > * {
+    flex-shrink: 0 !important;
+    width: 85vw !important;
+    min-width: 280px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* auto-fit grids with minmax (e.g. service action cards, ministry cards) */
+  [style*="grid-template-columns:repeat(auto-fit,minmax(240px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(220px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(260px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(280px"],
+  [style*="grid-template-columns:repeat(auto-fit,minmax(320px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(240px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(220px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(260px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"],
+  [style*="grid-template-columns: repeat(auto-fit, minmax(320px"] {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0.75rem !important;
+    background: transparent !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  [style*="grid-template-columns:repeat(auto-fit,minmax(240px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(220px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(260px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(280px"] > *,
+  [style*="grid-template-columns:repeat(auto-fit,minmax(320px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(240px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(220px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(260px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(280px"] > *,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(320px"] > * {
+    flex-shrink: 0 !important;
+    width: 85vw !important;
+    min-width: 280px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* 2-col and other fixed inline grids → single column */
+  [style*="grid-template-columns: 1fr 2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="grid-template-columns: 3fr 1fr"],
+  [style*="grid-template-columns: 1fr 3fr"],
+  [style*="grid-template-columns: 2fr 1fr 1fr"],
+  [style*="grid-template-columns: 1.5fr 1fr 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"],
+  /* no-space variants (e.g. ministry and service detail pages) */
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:1fr 2fr"],
+  [style*="grid-template-columns:2fr 1fr"],
+  [style*="grid-template-columns:3fr 1fr"],
+  [style*="grid-template-columns:1fr 3fr"],
+  /* service filing pages: form + sidebar */
+  [style*="grid-template-columns:1fr 320px"],
+  [style*="grid-template-columns: 1fr 320px"],
+  [style*="grid-template-columns:1fr 340px"],
+  [style*="grid-template-columns: 1fr 340px"],
+  /* military page hero: text + emblem image */
+  [style*="grid-template-columns:1fr auto"],
+  [style*="grid-template-columns: 1fr auto"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* large gap: military hero / enlistment sections */
+  [style*="gap:4rem"],
+  [style*="gap: 4rem"] { gap: 1.5rem !important; }
+
+  /* hide oversized decorative hero images on mobile */
+  img[width="340"], img[width="360"] {
+    display: none !important;
+  }
+
+  /* Minister card icon circle: shrink 96px → 56px on mobile */
+  [style*="width:96px"][style*="height:96px"] {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 0 !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   480px — PHONE
+═══════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  .hero-title {
+    font-size: clamp(1.9rem, 11vw, 2.8rem) !important;
+  }
+  .section-title {
+    font-size: clamp(1.4rem, 7vw, 2rem) !important;
+  }
+  .brand-text h1 {
+    font-size: 0.85rem !important;
+  }
+  .emblem-svg {
+    width: 38px !important;
+  }
+
+  /* Services: narrower cards in carousel */
+  .service-card {
+    width: calc(55vw - 1rem) !important;
+    min-width: 140px !important;
+  }
+
+  /* Stats: single column */
+  .stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Footer: single column */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* OTP smaller */
+  .otp {
+    width: 34px !important;
+    height: 42px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Inline repeat grids: force 1-col */
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   LANDSCAPE PHONE (max-height 500px)
+   Tight vertical space — compress everything
+═══════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  /* Hero: much shorter */
+  .hero {
+    padding: 1.5rem 1.4rem !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+    line-height: 1.1 !important;
+  }
+  .hero-desc { display: none !important; }
+  .hero-actions { gap: 0.5rem !important; }
+  .btn-primary, .btn-outline {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.7rem !important;
+    min-height: 40px !important;
+  }
+
+  /* Sections: tighter padding */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .section-title {
+    font-size: clamp(1.2rem, 5vw, 1.8rem) !important;
+  }
+
+  /* Services: narrower carousel cards in landscape */
+  .service-icon, .service-icon img {
+    width: 26px !important;
+    height: 26px !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .service-card {
+    width: calc(35vw - 1rem) !important;
+    min-width: 130px !important;
+    padding: 1rem 0.8rem !important;
+  }
+  .service-card h3 {
+    font-size: 0.72rem !important;
+  }
+  .service-card p { display: none !important; }
+
+  /* Branch cards: carousel stays, narrower */
+  .branch-card {
+    width: 45vw !important;
+    min-width: 150px !important;
+    padding: 1rem 1rem !important;
+  }
+  .branch-icon {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 0.7rem !important;
+  }
+  .branch-icon img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .branch-card p { display: none !important; }
+
+  /* Stats: 4 columns */
+  .stats {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .stat-num { font-size: 1.8rem !important; }
+  .stat-item { padding: 1rem 0.8rem !important; }
+
+  /* Footer: 2 columns */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Inline repeat grids */
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   360px — SMALL PHONE
+═══════════════════════════════════════ */
+@media (max-width: 360px) {
+
+  header {
+    padding: 0.55rem 0.8rem !important;
+  }
+  .brand-text h1 {
+    font-size: 0.75rem !important;
+  }
+  .emblem-svg {
+    width: 30px !important;
+  }
+  .otp {
+    width: 30px !important;
+    height: 38px !important;
+    font-size: 0.9rem !important;
+    padding: 0 !important;
+  }
+  section {
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+  }
+  footer {
+    padding: 2rem 0.9rem !important;
+  }
+}

@@ -1,0 +1,631 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="../republicstar-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>United Republic of Stars — Account Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --red: #c8102e; --red-dark: #9b0c22;
+      --gray-light: #f4f4f4; --gray-mid: #cccccc; --gray-dark: #333333;
+      --font-head: 'Oswald', sans-serif; --font-sub: 'Rajdhani', sans-serif; --font-body: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-body); }
+
+    .utility-bar {
+      background: var(--black); color: var(--gray-mid);
+      font-family: var(--font-sub); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 3rem; height: 34px;
+    }
+    .utility-bar a { color: var(--gray-mid); text-decoration: none; }
+    .utility-bar a:hover { color: var(--white); }
+    .utility-links { display: flex; gap: 2rem; }
+
+    header {
+      background: var(--white); border-bottom: 3px solid var(--black);
+      padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-brand { display: flex; align-items: center; gap: 1.2rem; text-decoration: none; color: inherit; }
+    .emblem-svg { width: 78px; height: auto; flex-shrink: 0; display: block; }
+    .brand-text h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; }
+    .brand-text span { font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--red); display: block; margin-top: 2px; }
+    nav { display: flex; align-items: center; gap: 0.2rem; }
+    nav a { font-family: var(--font-sub); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); text-decoration: none; padding: 0.5rem 0.9rem; transition: color 0.2s, background 0.2s; }
+    nav a:hover { background: var(--black); color: var(--white); }
+    .nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 0.5rem 1.2rem !important; margin-left: 0.5rem; }
+    .nav-cta:hover { background: var(--red-dark) !important; }
+
+    /* PAGE */
+    .page-wrap {
+      min-height: calc(100vh - 120px);
+      background: var(--black);
+      padding: 4rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .page-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),
+                  repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);
+      pointer-events: none;
+    }
+    .page-inner {
+      position: relative; z-index: 1;
+      max-width: 640px; margin: 0 auto;
+    }
+
+    /* HEADER BLOCK */
+    .page-header { text-align: center; margin-bottom: 2.5rem; }
+    .page-header img { width: 72px; height: 72px; filter: invert(1); opacity: 0.8; }
+    .page-header .eyebrow { font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.8rem; }
+
+    /* CARD */
+    .card {
+      background: #0f0f0f; border-top: 3px solid var(--red);
+      padding: 2rem 2.2rem; margin-bottom: 1.2rem;
+    }
+    .card-title {
+      font-family: var(--font-head); font-size: 0.9rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin-bottom: 0.3rem;
+    }
+    .card-sub {
+      font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; line-height: 1.6;
+    }
+    label.field-label {
+      display: block; font-family: var(--font-sub); font-size: 0.58rem; letter-spacing: 0.10em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem;
+    }
+    .field { margin-bottom: 1rem; }
+    input.txt {
+      width: 100%; background: #1a1a1a; border: 1.5px solid rgba(255,255,255,0.1);
+      color: var(--white); font-family: var(--font-body); font-size: 0.88rem;
+      padding: 0.8rem 1rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;
+    }
+    input.txt:focus { border-color: var(--red); }
+    input.txt:read-only { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--red); color: white; border: none;
+      font-family: var(--font-sub); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.85rem 1.6rem; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); }
+    .btn-primary:disabled { background: #444; cursor: not-allowed; }
+    .btn-ghost {
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);
+      font-family: var(--font-sub); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.85rem 1.4rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: white; color: white; }
+
+    .msg {
+      padding: 0.7rem 1rem; font-family: var(--font-body); font-size: 0.8rem;
+      margin-bottom: 1rem; display: none;
+    }
+    .msg.error { background: rgba(200,16,46,0.12); border-left: 3px solid var(--red); color: var(--red); }
+    .msg.success { background: rgba(0,180,80,0.1); border-left: 3px solid #00b450; color: #00b450; }
+    .msg.info { background: rgba(255,255,255,0.05); border-left: 3px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+
+    /* Account status badges */
+    .badge-status {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: var(--font-sub); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.28rem 0.65rem; margin-left: 0.6rem;
+    }
+    .badge-status.approved  { color: #00b450; background: rgba(0,180,80,0.1);   border: 1px solid rgba(0,180,80,0.3); }
+    .badge-status.pending   { color: #f5a623; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3); }
+    .badge-status.suspended { color: #c8102e; background: rgba(200,16,46,0.1);  border: 1px solid rgba(200,16,46,0.3); }
+
+    .status-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    @media (max-width: 500px) { .status-info-grid { grid-template-columns: 1fr; } }
+
+    .badge-verified {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #00b450; background: rgba(0,180,80,0.1); border: 1px solid rgba(0,180,80,0.3);
+      padding: 0.25rem 0.6rem; margin-left: 0.6rem;
+    }
+    .badge-unverified {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #f5a623; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3);
+      padding: 0.25rem 0.6rem; margin-left: 0.6rem;
+    }
+
+    .otp-row { display: flex; gap: 0.8rem; align-items: flex-end; }
+    .otp-row input.txt { flex: 1; letter-spacing: 0.3em; font-size: 1.1rem; text-align: center; }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.2rem 0; }
+
+    /* danger zone */
+    .card.danger { border-top-color: #555; }
+    .card.danger .card-title { color: rgba(255,255,255,0.6); }
+
+    /* footer */
+    footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 3.5rem 3rem; }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-brand p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
+    .footer-col h5 { font-family: var(--font-sub); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a { font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+    .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
+  </style>
+
+  <!-- Open Graph / Discord -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/settings.html">
+  <meta property="og:site_name"   content="United Republic of Stars">
+  <meta property="og:title"       content="United Republic of Stars — Account Settings">
+  <meta property="og:description" content="Manage your Stars Citizen Account settings and security.">
+  <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="theme-color"        content="#c8102e">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="United Republic of Stars — Account Settings">
+  <meta name="twitter:description" content="Manage your Stars Citizen Account settings and security.">
+  <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="utility-links">
+    <a href="#">Accessibility</a>
+    <a href="#">Language / Lingua</a>
+    <a href="#">Emergency Line: 1-800-ARX-0001</a>
+  </div>
+  <div class="utility-links">
+    <a href="#">Citizen Portal</a>
+    <a href="#">Official Gazette</a>
+    <a href="#">Transparency</a>
+  </div>
+</div>
+
+<header>
+  <a href="../GOVERN_1.HTM" class="header-brand">
+    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem">
+    <div class="brand-text">
+      <h1>United Republic of Stars</h1>
+      <span>Official Government Portal · Est. MMXII</span>
+    </div>
+  </a>
+  <nav>
+    <a href="../gov/government.html">Government</a>
+    <a href="../services/services.html">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
+    <a href="#">Laws &amp; Decrees</a>
+    <a href="#">News</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
+  </nav>
+</header>
+
+<div class="page-wrap">
+  <div class="page-inner">
+
+    <div class="page-header">
+      <img src="../svgs/icone/republica/2.svg" alt="Emblem">
+      <div class="eyebrow">United Republic of Stars — Account Settings</div>
+    </div>
+
+    <!-- ACCOUNT STATUS CARD -->
+    <div class="card" id="statusCard">
+      <div class="card-title">
+        Account Status
+        <span id="accountStatusBadge" class="badge-status"></span>
+      </div>
+      <div class="card-sub">Current status of this citizen account in the Civil Registry system.</div>
+
+      <div class="status-info-grid">
+        <div>
+          <label class="field-label">National ID</label>
+          <input id="displayId" class="txt" type="text" readonly>
+        </div>
+        <div>
+          <label class="field-label">Registered</label>
+          <input id="displayRegistered" class="txt" type="text" readonly>
+        </div>
+      </div>
+
+      <div id="statusMsg" class="msg"></div>
+
+      <!-- Citizen read-only views (pending / approved / suspended) -->
+      <div id="citizenPendingSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.55);">Your account is awaiting approval by the Civil Registry Authority. No action required on your part.</span>
+        </div>
+      </div>
+      <div id="citizenApprovedSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been approved by the Civil Registry Authority.</span>
+        </div>
+      </div>
+      <div id="citizenSuspendedSection" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(200,16,46,0.08);border:1px solid rgba(200,16,46,0.25);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your account has been suspended. Contact the Civil Registry Authority for assistance.</span>
+        </div>
+      </div>
+
+      <!-- ADMIN / MOD ONLY: status editor -->
+      <div id="adminStatusSection" style="display:none;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:1.2rem;">
+        <div style="font-family:var(--font-sub);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Admin — Change Account Status
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
+          <select id="adminStatusSelect" style="background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--font-sub);font-size:0.82rem;padding:0.7rem 1rem;outline:none;cursor:pointer;flex:1;min-width:160px;">
+            <option value="pending">⏳ Pending</option>
+            <option value="approved">✓ Approved</option>
+            <option value="suspended">✗ Suspended</option>
+          </select>
+          <button onclick="adminSetStatus()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.4rem;cursor:pointer;white-space:nowrap;">Apply Status</button>
+        </div>
+        <div id="adminStatusMsg" class="msg" style="margin-top:0.8rem;"></div>
+      </div>
+    </div>
+
+    <!-- EMAIL VERIFICATION CARD -->
+    <div class="card" id="emailCard">
+      <div class="card-title">
+        Email Address
+        <span id="verifiedBadge" class="badge-verified" style="display:none;">✓ Verified</span>
+        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">⚠ Unverified</span>
+      </div>
+      <div class="card-sub">Verify your email to enable two-factor authentication and receive security alerts.</div>
+
+      <!-- Email display -->
+      <div class="field">
+        <label class="field-label">Current Email</label>
+        <input id="currentEmail" class="txt" type="email" readonly>
+      </div>
+
+      <div id="emailMsg" class="msg"></div>
+
+      <!-- Verify button (shown when unverified) -->
+      <div id="verifySection">
+        <button class="btn-primary" onclick="sendVerificationCode()" id="sendBtn">Send Verification Code</button>
+      </div>
+
+      <!-- OTP input (shown after sending) -->
+      <div id="otpSection" style="display:none; margin-top:1.2rem;">
+        <hr class="divider">
+        <div class="card-sub" style="margin-bottom:1rem;">Enter the 6-digit code sent to your email. Valid for 5 minutes.</div>
+        <div class="otp-row">
+          <div style="flex:1;">
+            <label class="field-label">Verification Code</label>
+            <input id="otpInput" class="txt" type="text" maxlength="6" placeholder="000000" oninput="this.value=this.value.replace(/\D/g,'')">
+          </div>
+          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm →</button>
+        </div>
+        <div style="margin-top:0.8rem;">
+          <button class="btn-ghost" onclick="sendVerificationCode()" style="font-size:0.62rem;padding:0.5rem 0.9rem;">Resend Code</button>
+        </div>
+        <div id="otpTimer" style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.6rem;"></div>
+      </div>
+
+      <!-- Already verified message -->
+      <div id="alreadyVerified" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.2);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.6);">Your email address is verified.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE EMAIL CARD -->
+    <div class="card">
+      <div class="card-title">Change Email</div>
+      <div class="card-sub">Update the email address linked to your citizen account.</div>
+      <div class="field">
+        <label class="field-label">New Email Address</label>
+        <input id="newEmail" class="txt" type="email" placeholder="new@email.com">
+      </div>
+      <div id="changeEmailMsg" class="msg"></div>
+      <button class="btn-primary" onclick="changeEmail()">Update Email</button>
+    </div>
+
+    <!-- CHANGE PASSWORD CARD -->
+    <div class="card">
+      <div class="card-title">Change Password</div>
+      <div class="card-sub">Choose a strong password of at least 8 characters.</div>
+      <div class="field">
+        <label class="field-label">Current Password</label>
+        <input id="currentPwd" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div class="field">
+        <label class="field-label">New Password</label>
+        <input id="newPwd" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div class="field">
+        <label class="field-label">Confirm New Password</label>
+        <input id="newPwd2" class="txt" type="password" placeholder="••••••••">
+      </div>
+      <div id="pwdMsg" class="msg"></div>
+      <button class="btn-primary" onclick="changePassword()">Update Password</button>
+    </div>
+
+    <!-- 2FA CARD -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+        <div>
+          <div class="card-title" style="margin-bottom:0.3rem;">Two-Factor Authentication</div>
+          <div class="card-sub" style="margin-bottom:0;">Each login will require a 6-digit code sent to your email.</div>
+        </div>
+        <label style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;">
+          <span id="tfaTrack" onclick="toggle2FA()" style="position:absolute;inset:0;border-radius:28px;cursor:pointer;transition:background 0.3s;background:rgba(255,255,255,0.12);">
+            <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);"></span>
+          </span>
+        </label>
+      </div>
+      <div id="tfaMsg" class="msg" style="margin-top:1rem;margin-bottom:0;"></div>
+    </div>
+
+    <!-- DANGER ZONE -->
+    <div class="card danger">
+      <div class="card-title">Danger Zone</div>
+      <div class="card-sub">These actions are irreversible. Proceed with caution.</div>
+      <button class="btn-ghost" onclick="confirmDeleteAccount()" style="border-color:rgba(200,16,46,0.4);color:rgba(200,16,46,0.7);" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(200,16,46,0.4)';this.style.color='rgba(200,16,46,0.7)'">Delete My Account</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="../svgs/icone/republica/1.svg" width="78" alt="Emblem">
+      <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
+    </div>
+    <div class="footer-col"><h5>Government</h5><ul><li><a href="../gov/government.html">Office of the President</a></li><li><a href="../gov/national-assembly.html">National Assembly</a></li><li><a href="../gov/supreme-court.html">Supreme Court</a></li><li><a href="../gov/ministries.html">Cabinet of Ministers</a></li></ul></div>
+    <div class="footer-col"><h5>Citizen Services</h5><ul><li><a href="../services/service-digital-id.html">National ID Portal</a></li><li><a href="../services/service-taxes.html">Tax Authority</a></li><li><a href="../services/service-civil-registration.html">Civil Registry</a></li><li><a href="../services/service-health.html">Health Services</a></li></ul></div>
+    <div class="footer-col"><h5>Information</h5><ul><li><a href="../GOVERN_1.HTM">About the Republic</a></li><li><a href="../gov/constitution.html">Constitution</a></li><li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li><li><a href="../gov/contact.html">Contact Government</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>United Republic of Stars · Est. MMXII · Official Government Website</span>
+    <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script>
+  republicstarSession.requireLogin();
+
+  const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
+  const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
+  const EMAILJS_TEMPLATE_ID = 'template_r8jdk1q';
+
+  var _otpCode = null;
+  var _otpExpiry = null;
+  var _timerInterval = null;
+
+  // ── INIT ──
+  function _initSettings(user){
+    if(!user) return;
+    document.getElementById('currentEmail').value = user.email || '';
+    renderStatusCard(user);
+    if (user.emailVerified) {
+      document.getElementById('verifiedBadge').style.display = 'inline-flex';
+      document.getElementById('verifySection').style.display = 'none';
+      document.getElementById('alreadyVerified').style.display = 'block';
+    } else {
+      document.getElementById('unverifiedBadge').style.display = 'inline-flex';
+    }
+    if (user.twofa) {
+      document.getElementById('tfaTrack').style.background = '#c8102e';
+      document.getElementById('tfaThumb').style.transform = 'translateX(24px)';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var s = republicstarSession.get();
+    if (!s) return;
+    function _load(){
+      if(window.republicstarDB){
+        republicstarDB.getUser(s.user).then(_initSettings).catch(function(){});
+      } else { setTimeout(_load, 400); }
+    }
+    _load();
+  });
+
+  // ── ACCOUNT STATUS ──
+  function renderStatusCard(user) {
+    document.getElementById('displayId').value = user.id || '—';
+    document.getElementById('displayRegistered').value = user.registered
+      ? new Date(user.registered).toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'})
+      : '—';
+
+    var badge  = document.getElementById('accountStatusBadge');
+    var status = user.status || 'pending';
+    var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+    badge.textContent = labels[status] || status;
+    badge.className   = 'badge-status ' + status;
+
+    var s = republicstarSession.get();
+    var isPrivileged = s && (s.role === 'admin' || s.role === 'mod');
+
+    // Hide all sections first
+    ['citizenPendingSection','citizenApprovedSection','citizenSuspendedSection','adminStatusSection'].forEach(function(id){
+      document.getElementById(id).style.display = 'none';
+    });
+
+    if (isPrivileged) {
+      var sel = document.getElementById('adminStatusSelect');
+      sel.value = status;
+      document.getElementById('adminStatusSection').style.display = 'block';
+    } else {
+      if (status === 'approved') {
+        document.getElementById('citizenApprovedSection').style.display = 'block';
+      } else if (status === 'suspended') {
+        document.getElementById('citizenSuspendedSection').style.display = 'block';
+      } else {
+        document.getElementById('citizenPendingSection').style.display = 'block';
+      }
+    }
+  }
+
+  function adminSetStatus() {
+    var s = republicstarSession.get();
+    if (!s || (s.role !== 'admin' && s.role !== 'mod')) return;
+    var newStatus = document.getElementById('adminStatusSelect').value;
+    republicstarDB.updateUser(s.user, { status: newStatus }).then(function() {
+      var badge  = document.getElementById('accountStatusBadge');
+      var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+      badge.textContent = labels[newStatus] || newStatus;
+      badge.className   = 'badge-status ' + newStatus;
+      showMsg('adminStatusMsg', 'success', 'Status updated to: ' + newStatus);
+    }).catch(function() {
+      showMsg('adminStatusMsg', 'error', 'Error updating status. Please try again.');
+    });
+  }
+
+  // ── HELPERS ──
+  function getUser(cb){
+    var s = republicstarSession.get();
+    if(!s){ cb(null); return; }
+    (window.republicstarDB ? republicstarDB.getUser(s.user) : Promise.resolve(null)).then(cb).catch(function(){ cb(null); });
+  }
+  function saveUsers(users) { /* legacy no-op — now using Firestore */ }
+  function showMsg(id, type, text) {
+    var el = document.getElementById(id);
+    el.className = 'msg ' + type;
+    el.textContent = text;
+    el.style.display = 'block';
+  }
+  function hideMsg(id) { document.getElementById(id).style.display = 'none'; }
+  function generateOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
+
+  // ── SEND VERIFICATION CODE ──
+  function sendVerificationCode() {
+    var user = getUser();
+    if (!user || !user.email) {
+      showMsg('emailMsg', 'error', 'No email address found on your account. Please add one first.');
+      return;
+    }
+    _otpCode   = generateOTP();
+    _otpExpiry = Date.now() + 5 * 60 * 1000;
+
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email: user.email,
+      otp_code: _otpCode
+    }).then(function() {
+      document.getElementById('verifySection').style.display = 'none';
+      document.getElementById('otpSection').style.display   = 'block';
+      showMsg('emailMsg', 'info', 'Verification code sent to ' + user.email);
+      startOtpTimer();
+    }).catch(function() {
+      showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
+    });
+  }
+
+  function startOtpTimer() {
+    clearInterval(_timerInterval);
+    _timerInterval = setInterval(function() {
+      var left = Math.max(0, Math.floor((_otpExpiry - Date.now()) / 1000));
+      var m = Math.floor(left / 60), s = left % 60;
+      document.getElementById('otpTimer').textContent = 'Code expires in ' + m + ':' + (s < 10 ? '0' : '') + s;
+      if (left <= 0) { clearInterval(_timerInterval); _otpCode = null; }
+    }, 1000);
+  }
+
+  // ── CONFIRM VERIFICATION CODE ──
+  function confirmCode() {
+    var entered = document.getElementById('otpInput').value.trim();
+    if (!_otpCode) { showMsg('emailMsg', 'error', 'Code expired. Please request a new one.'); return; }
+    if (Date.now() > _otpExpiry) { showMsg('emailMsg', 'error', 'Code has expired.'); _otpCode = null; return; }
+    if (entered !== _otpCode) { showMsg('emailMsg', 'error', 'Incorrect code. Please try again.'); return; }
+    clearInterval(_timerInterval);
+    var s = republicstarSession.get();
+    republicstarDB.updateUser(s.user, {emailVerified: true}).then(function(){
+      document.getElementById('otpSection').style.display      = 'none';
+      document.getElementById('alreadyVerified').style.display = 'block';
+      document.getElementById('verifiedBadge').style.display   = 'inline-flex';
+      document.getElementById('unverifiedBadge').style.display = 'none';
+      showMsg('emailMsg', 'success', 'Email verified successfully.');
+    }).catch(function(){ showMsg('emailMsg','error','Save error. Please try again.'); });
+  }
+
+  // ── CHANGE EMAIL ──
+  function changeEmail() {
+    var newVal = document.getElementById('newEmail').value.trim();
+    if (!newVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newVal)) {
+      showMsg('changeEmailMsg', 'error', 'Please enter a valid email address.'); return;
+    }
+    var s = republicstarSession.get();
+    if (!s) { showMsg('changeEmailMsg','error','Session error.'); return; }
+    republicstarDB.updateUser(s.user, {email: newVal, emailVerified: false}).then(function(){
+      document.getElementById('currentEmail').value = newVal;
+      document.getElementById('verifiedBadge').style.display   = 'none';
+      document.getElementById('unverifiedBadge').style.display = 'inline-flex';
+      document.getElementById('alreadyVerified').style.display = 'none';
+      document.getElementById('verifySection').style.display   = 'block';
+      document.getElementById('newEmail').value = '';
+      showMsg('changeEmailMsg', 'success', 'Email updated. Please verify your new address.');
+    }).catch(function(){ showMsg('changeEmailMsg','error','Save error. Please try again.'); });
+  }
+
+  // ── CHANGE PASSWORD ──
+  function changePassword() {
+    var cur = document.getElementById('currentPwd').value;
+    var nw  = document.getElementById('newPwd').value;
+    var nw2 = document.getElementById('newPwd2').value;
+    if (nw.length < 8) { showMsg('pwdMsg','error','New password must be at least 8 characters.'); return; }
+    if (nw !== nw2)    { showMsg('pwdMsg','error','Passwords do not match.'); return; }
+    var s = republicstarSession.get();
+    if (!s) { showMsg('pwdMsg','error','Session error.'); return; }
+    republicstarDB.getUser(s.user).then(function(user){
+      if (!user) { showMsg('pwdMsg','error','Session error. Please log in again.'); return; }
+      if (atob(user.pwd) !== cur) { showMsg('pwdMsg','error','Current password is incorrect.'); return; }
+      republicstarDB.updateUser(s.user, {pwd: btoa(nw)}).then(function(){
+        document.getElementById('currentPwd').value = '';
+        document.getElementById('newPwd').value      = '';
+        document.getElementById('newPwd2').value     = '';
+        showMsg('pwdMsg','success','Password updated successfully.');
+      }).catch(function(){ showMsg('pwdMsg','error','Save error. Please try again.'); });
+    }).catch(function(){ showMsg('pwdMsg','error','Connection error. Please try again.'); });
+  }
+
+  // ── TOGGLE 2FA ──
+  function toggle2FA() {
+    var s = republicstarSession.get();
+    if (!s) return;
+    republicstarDB.getUser(s.user).then(function(user){
+      if (!user) return;
+      if (!user.emailVerified) { showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
+      var newVal = !user.twofa;
+      republicstarDB.updateUser(s.user, {twofa: newVal}).then(function(){
+        var track = document.getElementById('tfaTrack');
+        var thumb = document.getElementById('tfaThumb');
+        track.style.background = newVal ? '#c8102e' : 'rgba(255,255,255,0.12)';
+        thumb.style.transform  = newVal ? 'translateX(24px)' : 'translateX(0)';
+        showMsg('tfaMsg','success', newVal ? '2FA enabled.' : '2FA disabled.');
+      }).catch(function(){ showMsg('tfaMsg','error','Save error.'); });
+    }).catch(function(){});
+  }
+
+  // ── DELETE ACCOUNT ──
+  function confirmDeleteAccount() {
+    if (!confirm('Are you sure you want to permanently delete your account?\n\nThis action cannot be undone.')) return;
+    if (!confirm('Final confirmation: your account and all associated data will be deleted.\n\nPress OK to confirm.')) return;
+    var s = republicstarSession.get();
+    if (!s) return;
+    republicstarDB.deleteUser(s.user).then(function(){ republicstarSession.logout(); })
+      .catch(function(){ alert('Error deleting account. Please try again.'); });
+  }
+</script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                   
