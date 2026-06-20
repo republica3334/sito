@@ -1035,29 +1035,23 @@ function startTFA(user) {
   const masked  = user.email ? user.email.replace(/(.{2})(.+)(@.+)/, (_, a, b, c) => a + '***' + c) : '***';
   if (emailEl) emailEl.textContent = masked;
 
-  // ── EmailJS send ──────────────────────────────────────────
-  // TODO SECURITY: these keys are public-facing. Move OTP sending to a
-  // server-side function (Firebase Function / Vercel edge) to avoid key exposure.
-  const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
-  const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
-  const EMAILJS_TEMPLATE_ID = 'template_r8jdk1q';
-
-  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && user.email) {
-    // Real send via EmailJS
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_email:  user.email,
-      to_name:   user.name || user.id,
-      otp_code:  _tfaCode,
-      portal:    'United Republic of Stars'
-    }).catch(function(err){ console.warn('EmailJS error:', err); });
+  // ── EmailJS send — credentials loaded from Firestore, not source ─────────
+  if (user.email) {
+    republicstarDB.getEmailConfig().then(function(cfg) {
+      emailjs.init(cfg.publicKey);
+      emailjs.send(cfg.serviceId, cfg.templateId, {
+        to_email:  user.email,
+        to_name:   user.name || user.id,
+        otp_code:  _tfaCode,
+        portal:    'United Republic of Stars'
+      }).catch(function(err){ console.warn('EmailJS error:', err); });
+    }).catch(function() {
+      const dev = document.getElementById('tfaDevCode');
+      if (dev) { dev.textContent = 'DEV MODE — Code: ' + _tfaCode; dev.style.display = 'block'; }
+    });
   } else {
-    // Dev fallback — show code on screen
     const dev = document.getElementById('tfaDevCode');
-    if (dev) {
-      dev.textContent = 'DEV MODE — Code: ' + _tfaCode;
-      dev.style.display = 'block';
-    }
+    if (dev) { dev.textContent = 'DEV MODE — Code: ' + _tfaCode; dev.style.display = 'block'; }
   }
 
   startTFATimer();

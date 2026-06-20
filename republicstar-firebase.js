@@ -62,6 +62,15 @@ var REPUBLICSTAR_FB_CONFIG = {
       emailExists: function(email){
         return db.collection('users').where('email','==',email).get()
           .then(function(snap){ return !snap.empty; });
+      },
+
+      /* Fetch EmailJS credentials stored in Firestore (never in source) */
+      getEmailConfig: function(){
+        return db.collection('config').doc('emailjs').get()
+          .then(function(doc){
+            if (!doc.exists) throw new Error('EmailJS config missing in Firestore');
+            return doc.data();
+          });
       }
     };
 
