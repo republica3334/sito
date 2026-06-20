@@ -1,4 +1,7 @@
-﻿/* ═══════════════════════════════════════════════════════
+﻿/* ── GLOBAL FONT IMPORT (covers all pages via injection) ── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+
+/* ═══════════════════════════════════════════════════════
    REPUBLICSTAR THEME SYSTEM
    Semantic CSS variables — injected by republicstar-auth.js
    Toggle: [data-theme="light"] / [data-theme="dark"] on <html>
@@ -124,6 +127,45 @@
   /* Status */
   --green:           #00b450;
   --orange:          #f5a623;
+}
+
+/* ── GLOBAL TYPOGRAPHY ──
+   Font variables available to all pages via republicstar-auth.js injection.
+   Pages that define their own --font-* will get equal specificity but their
+   <style> block appears later → they win (and they all set the same families). */
+:root {
+  --font-head: 'Oswald', sans-serif;
+  --font-sub:  'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+.btn,
+[class*="btn-"],
+[class*="-cta"],
+[class*="-btn"],
+nav a,
+.nav a,
+.label,
+.eyebrow,
+.section-eyebrow,
+.section-label,
+.tag,
+.badge,
+.time-badge,
+.sidebar-label,
+.step-num {
+  font-family: 'Rajdhani', sans-serif;
 }
 
 /* ── THEME TOGGLE BUTTON (fixed, always visible) ── */
@@ -392,32 +434,6 @@
   background: transparent !important;
   border: 1.5px solid rgba(255,255,255,0.12) !important;
 }
-
-/* ── MINISTRY HEADER LOGOS ── */
-/* Ministry pages use <img> without .emblem-svg class — invert in dark mode */
-[data-theme="dark"] header img:not(.emblem-svg) {
-  filter: invert(1) !important;
-}
-
-/* ── MINISTRY CIRCLE ICONS — light mode ── */
-/* Red circle (rgba(200,16,46,0.15)) + filter:invert(1) SVG → white on light pink = invisible.
-   In light mode, keep SVG dark (no invert) so it shows against the light card background. */
-[data-theme="light"] [style*="background:rgba(200,16,46,0.15)"] img[style*="invert"] {
-  filter: none !important;
-}
-
-/* ── ENLISTMENT — always dark (military section, never goes light) ── */
-[data-theme="light"] .enlistment {
-  background: #0a0a0a !important;
-}
-[data-theme="light"] .enlistment .section-label,
-[data-theme="light"] .enlistment .section-label::before { color: rgba(255,255,255,0.45) !important; }
-[data-theme="light"] .enlistment .section-title { color: #ffffff !important; }
-[data-theme="light"] .enlistment p { color: rgba(255,255,255,0.6) !important; }
-[data-theme="light"] .branch-card { background: #0f0f0f !important; color: #ffffff !important; }
-[data-theme="light"] .branch-card:hover { background: #1a1a1a !important; }
-[data-theme="light"] .branch-card h3 { color: #ffffff !important; }
-[data-theme="light"] .branch-card p { color: rgba(255,255,255,0.5) !important; }
 
 /* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
 /* Demo warning / info boxes with hardcoded light-pink bg */
