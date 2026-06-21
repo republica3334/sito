@@ -1,14 +1,10 @@
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
-const { defineSecret }       = require('firebase-functions/params');
 const admin                  = require('firebase-admin');
 const crypto                 = require('crypto');
 const nodemailer             = require('nodemailer');
 
 admin.initializeApp();
 const db = admin.firestore();
-
-const GMAIL_USER = defineSecret('GMAIL_USER');
-const GMAIL_PASS = defineSecret('GMAIL_APP_PASSWORD');
 
 /* ── helpers ──────────────────────────────────────────────────────────── */
 
@@ -84,7 +80,7 @@ function buildOtpEmail(toName, otpCode, toEmail) {
 
 /* ── sendOtp ──────────────────────────────────────────────────────────── */
 
-exports.sendOtp = onCall({ secrets: [GMAIL_USER, GMAIL_PASS] }, async (request) => {
+exports.sendOtp = onCall(async (request) => {
   const userId = (request.data.userId || '').toString().trim();
   if (!userId) throw new HttpsError('invalid-argument', 'userId required');
 
@@ -117,11 +113,11 @@ exports.sendOtp = onCall({ secrets: [GMAIL_USER, GMAIL_PASS] }, async (request) 
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    auth: { user: GMAIL_USER.value(), pass: GMAIL_PASS.value() }
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
   });
 
   await transporter.sendMail({
-    from:    `"United Republic of Stars" <${GMAIL_USER.value()}>`,
+    from:    `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
     to:      user.email,
     subject: 'Your verification code — United Republic of Stars',
     html:    buildOtpEmail(user.name || user.id, code, user.email)
