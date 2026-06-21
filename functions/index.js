@@ -29,7 +29,8 @@ async function sendEmail(toEmail, toName, otpCode) {
   });
   if (!res.ok) {
     const text = await res.text().catch(() => res.statusText);
-    throw new Error(`EmailJS ${res.status}: ${text}`);
+    console.error(`EmailJS error ${res.status}:`, text);
+    throw new HttpsError('internal', `EmailJS ${res.status}: ${text}`);
   }
 }
 
