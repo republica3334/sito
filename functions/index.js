@@ -1,6 +1,7 @@
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const admin                  = require('firebase-admin');
 const crypto                 = require('crypto');
+const emailjs                = require('@emailjs/nodejs');
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -12,25 +13,17 @@ function sha256(str) {
 }
 
 async function sendEmail(toEmail, toName, otpCode) {
-  const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      service_id:  process.env.EMAILJS_SERVICE_ID,
-      template_id: process.env.EMAILJS_TEMPLATE_ID,
-      user_id:     process.env.EMAILJS_PUBLIC_KEY,
-      accessToken: process.env.EMAILJS_PRIVATE_KEY,
-      template_params: {
-        to_name:  toName,
-        otp_code: otpCode,
-        to_email: toEmail
-      }
-    })
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => res.statusText);
-    console.error(`EmailJS error ${res.status}:`, text);
-    throw new HttpsError('internal', `EmailJS ${res.status}: ${text}`);
+  try {
+    await emailjs.send(
+      process.env.EMAILJS_SERVICE_ID,
+      process.env.EMAILJS_TEMPLATE_ID,
+      { to_name: toName, otp_code: otpCode, to_email: toEmail },
+      { publicKey: process.env.EMAILJS_PUBLIC_KEY, privateKey: process.env.EMAILJS_PRIVATE_KEY }
+    );
+  } catch (err) {
+    const msg = (err && err.text) ? err.text : String(err);
+    console.error('EmailJS error:', msg);
+    throw new HttpsError('internal', 'Failed to send email: ' + msg);
   }
 }
 
