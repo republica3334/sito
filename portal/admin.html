@@ -918,7 +918,7 @@ function addLog(msg){
   localStorage.setItem('republicstar_log',JSON.stringify(log));
   renderLog();
 }
-function logout(){null /* logout handled by republicstarSession.logout() */;window.location.href='../auth/citizen-login.html';}
+function logout(){ republicstarSession.logout(); }
 
 function statusBadge(s){
   const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};

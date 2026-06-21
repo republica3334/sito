@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -407,13 +406,8 @@
 <script>
   republicstarSession.requireLogin();
 
-  const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
-  const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
-  const EMAILJS_TEMPLATE_ID = 'template_r8jdk1q';
-
-  var _otpCode = null;
-  var _otpExpiry = null;
   var _timerInterval = null;
+  var _otpExpiry = null;
 
   // ── INIT ──
   function _initSettings(user){
@@ -457,7 +451,7 @@
     badge.className   = 'badge-status ' + status;
 
     var s = republicstarSession.get();
-    var isPrivileged = s && (s.role === 'admin' || s.role === 'mod');
+    var isPrivileged = s && (s.role === 'admin' || s.role === 'moderator');
 
     // Hide all sections first
     ['citizenPendingSection','citizenApprovedSection','citizenSuspendedSection','adminStatusSection'].forEach(function(id){
@@ -481,7 +475,7 @@
 
   function adminSetStatus() {
     var s = republicstarSession.get();
-    if (!s || (s.role !== 'admin' && s.role !== 'mod')) return;
+    if (!s || (s.role !== 'admin' && s.role !== 'moderator')) return;
     var newStatus = document.getElementById('adminStatusSelect').value;
     republicstarDB.updateUser(s.user, { status: newStatus }).then(function() {
       var badge  = document.getElementById('accountStatusBadge');
@@ -495,12 +489,6 @@
   }
 
   // ── HELPERS ──
-  function getUser(cb){
-    var s = republicstarSession.get();
-    if(!s){ cb(null); return; }
-    (window.republicstarDB ? republicstarDB.getUser(s.user) : Promise.resolve(null)).then(cb).catch(function(){ cb(null); });
-  }
-  function saveUsers(users) { /* legacy no-op — now using Firestore */ }
   function showMsg(id, type, text) {
     var el = document.getElementById(id);
     el.className = 'msg ' + type;
@@ -508,30 +496,27 @@
     el.style.display = 'block';
   }
   function hideMsg(id) { document.getElementById(id).style.display = 'none'; }
-  function generateOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
 
   // ── SEND VERIFICATION CODE ──
   function sendVerificationCode() {
-    var user = getUser();
-    if (!user || !user.email) {
-      showMsg('emailMsg', 'error', 'No email address found on your account. Please add one first.');
-      return;
-    }
-    _otpCode   = generateOTP();
-    _otpExpiry = Date.now() + 5 * 60 * 1000;
-
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_email: user.email,
-      otp_code: _otpCode
-    }).then(function() {
-      document.getElementById('verifySection').style.display = 'none';
-      document.getElementById('otpSection').style.display   = 'block';
-      showMsg('emailMsg', 'info', 'Verification code sent to ' + user.email);
-      startOtpTimer();
-    }).catch(function() {
-      showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
-    });
+    var s = republicstarSession.get();
+    if (!s) { showMsg('emailMsg', 'error', 'Session error.'); return; }
+    var btn = document.getElementById('sendBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+    firebase.functions().httpsCallable('sendEmailVerif')({ userId: s.user })
+      .then(function() {
+        _otpExpiry = Date.now() + 5 * 60 * 1000;
+        document.getElementById('verifySection').style.display = 'none';
+        document.getElementById('otpSection').style.display   = 'block';
+        showMsg('emailMsg', 'info', 'Verification code sent to your email.');
+        startOtpTimer();
+      })
+      .catch(function(err) {
+        var msg = 'Failed to send code. Please try again.';
+        if (err && err.code === 'resource-exhausted') msg = 'Please wait 60 seconds before requesting a new code.';
+        showMsg('emailMsg', 'error', msg);
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Verification Code'; }
+      });
   }
 
   function startOtpTimer() {
@@ -540,25 +525,42 @@
       var left = Math.max(0, Math.floor((_otpExpiry - Date.now()) / 1000));
       var m = Math.floor(left / 60), s = left % 60;
       document.getElementById('otpTimer').textContent = 'Code expires in ' + m + ':' + (s < 10 ? '0' : '') + s;
-      if (left <= 0) { clearInterval(_timerInterval); _otpCode = null; }
+      if (left <= 0) { clearInterval(_timerInterval); }
     }, 1000);
   }
 
   // ── CONFIRM VERIFICATION CODE ──
   function confirmCode() {
     var entered = document.getElementById('otpInput').value.trim();
-    if (!_otpCode) { showMsg('emailMsg', 'error', 'Code expired. Please request a new one.'); return; }
-    if (Date.now() > _otpExpiry) { showMsg('emailMsg', 'error', 'Code has expired.'); _otpCode = null; return; }
-    if (entered !== _otpCode) { showMsg('emailMsg', 'error', 'Incorrect code. Please try again.'); return; }
-    clearInterval(_timerInterval);
+    if (!entered) { showMsg('emailMsg', 'error', 'Please enter the code.'); return; }
     var s = republicstarSession.get();
-    republicstarDB.updateUser(s.user, {emailVerified: true}).then(function(){
-      document.getElementById('otpSection').style.display      = 'none';
-      document.getElementById('alreadyVerified').style.display = 'block';
-      document.getElementById('verifiedBadge').style.display   = 'inline-flex';
-      document.getElementById('unverifiedBadge').style.display = 'none';
-      showMsg('emailMsg', 'success', 'Email verified successfully.');
-    }).catch(function(){ showMsg('emailMsg','error','Save error. Please try again.'); });
+    if (!s) { showMsg('emailMsg', 'error', 'Session error.'); return; }
+    var btn = document.querySelector('#otpSection button[onclick="confirmCode()"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Verifying...'; }
+    firebase.functions().httpsCallable('verifyEmailVerif')({ userId: s.user, code: entered })
+      .then(function(result) {
+        if (result.data.valid) {
+          clearInterval(_timerInterval);
+          republicstarDB.updateUser(s.user, { emailVerified: true }).then(function() {
+            document.getElementById('otpSection').style.display      = 'none';
+            document.getElementById('alreadyVerified').style.display = 'block';
+            document.getElementById('verifiedBadge').style.display   = 'inline-flex';
+            document.getElementById('unverifiedBadge').style.display = 'none';
+            showMsg('emailMsg', 'success', 'Email verified successfully.');
+          }).catch(function(){ showMsg('emailMsg', 'error', 'Save error. Please try again.'); });
+        } else {
+          var reason = result.data.reason;
+          var msg = reason === 'expired' ? 'Code has expired. Please request a new one.'
+                  : reason === 'too_many_attempts' ? 'Too many incorrect attempts. Please request a new code.'
+                  : 'Incorrect code. Please try again.';
+          showMsg('emailMsg', 'error', msg);
+          if (btn) { btn.disabled = false; btn.textContent = 'Verify Code'; }
+        }
+      })
+      .catch(function() {
+        showMsg('emailMsg', 'error', 'Verification failed. Please try again.');
+        if (btn) { btn.disabled = false; btn.textContent = 'Verify Code'; }
+      });
   }
 
   // ── CHANGE EMAIL ──
