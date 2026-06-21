@@ -611,7 +611,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       }
       /* Sequence REPUBLICSTAR — only outside inputs */
       if(['INPUT','TEXTAREA','SELECT'].indexOf((document.activeElement||{}).tagName||'')!==-1) return;
-      if(e.key.length !== 1) return;
+      if(!e.key || e.key.length !== 1) return;
       _seq += e.key.toUpperCase();
       if(_seq.length > _TRIGGER.length) _seq = _seq.slice(-_TRIGGER.length);
       if(_seq === _TRIGGER){ _seq = ''; _showModal(); }
