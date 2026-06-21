@@ -31,11 +31,7 @@ jobs:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
       - name: Write environment file
-        run: |
-          printf "GMAIL_USER=%s\nGMAIL_APP_PASSWORD=%s\n" \
-            "${{ secrets.GMAIL_USER }}" \
-            "${{ secrets.GMAIL_APP_PASSWORD }}" \
-            > functions/.env
+        run: printf "RESEND_API_KEY=%s\n" "${{ secrets.RESEND_API_KEY }}" > functions/.env
 
       - name: Deploy functions
         run: firebase deploy --only functions --project database-star-787e0 --force
