@@ -126,6 +126,74 @@ exports.sendOtp = onCall(async (request) => {
   return { sent: true };
 });
 
+/* ── sendEmailVerif ───────────────────────────────────────────────────── */
+
+exports.sendEmailVerif = onCall(async (request) => {
+  const userId = (request.data.userId || '').toString().trim();
+  if (!userId) throw new HttpsError('invalid-argument', 'userId required');
+
+  const userDoc = await db.collection('users').doc(userId).get();
+  if (!userDoc.exists) throw new HttpsError('not-found', 'User not found');
+
+  const user = userDoc.data();
+  if (!user.email) throw new HttpsError('failed-precondition', 'No email on this account');
+
+  const existing = await db.collection('email_verif_sessions').doc(userId).get();
+  if (existing.exists) {
+    const sentAt = existing.data().sentAt || 0;
+    if (Date.now() - sentAt < 60000) {
+      throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+    }
+  }
+
+  const code   = String(crypto.randomInt(100000, 1000000));
+  const expiry = Date.now() + 5 * 60 * 1000;
+
+  await db.collection('email_verif_sessions').doc(userId).set({
+    hash: sha256(code), expiry, sentAt: Date.now(), attempts: 0
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
+  });
+
+  await transporter.sendMail({
+    from:    `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
+    to:      user.email,
+    subject: 'Verify your email — United Republic of Stars',
+    html:    buildOtpEmail(user.name || user.id, code, user.email)
+  });
+
+  return { sent: true };
+});
+
+/* ── verifyEmailVerif ─────────────────────────────────────────────────── */
+
+exports.verifyEmailVerif = onCall(async (request) => {
+  const userId = (request.data.userId || '').toString().trim();
+  const code   = (request.data.code   || '').toString().trim();
+
+  if (!userId || !code) throw new HttpsError('invalid-argument', 'userId and code required');
+
+  const ref = db.collection('email_verif_sessions').doc(userId);
+  const doc = await ref.get();
+
+  if (!doc.exists) return { valid: false, reason: 'expired' };
+
+  const session = doc.data();
+  if (Date.now() > session.expiry) { await ref.delete(); return { valid: false, reason: 'expired' }; }
+
+  const attempts = (session.attempts || 0) + 1;
+
+  if (sha256(code) === session.hash) { await ref.delete(); return { valid: true }; }
+
+  if (attempts >= 5) { await ref.delete(); return { valid: false, reason: 'too_many_attempts' }; }
+
+  await ref.update({ attempts });
+  return { valid: false, reason: 'invalid' };
+});
+
 /* ── verifyOtp ────────────────────────────────────────────────────────── */
 
 exports.verifyOtp = onCall(async (request) => {
