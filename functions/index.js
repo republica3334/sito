@@ -2,9 +2,13 @@ const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const admin                  = require('firebase-admin');
 const crypto                 = require('crypto');
 const nodemailer             = require('nodemailer');
+const fs                     = require('fs');
+const path                   = require('path');
 
 admin.initializeApp();
 const db = admin.firestore();
+
+const EMBLEM_PNG = fs.readFileSync(path.join(__dirname, 'emblem-white.png'));
 
 /* ── helpers ──────────────────────────────────────────────────────────── */
 
@@ -27,7 +31,7 @@ function buildOtpEmail(toName, otpCode, toEmail) {
     <td style="background:#0a0a0a;padding:24px 36px;border-bottom:4px solid #c8102e;">
       <table cellpadding="0" cellspacing="0"><tr>
         <td style="padding-right:16px;vertical-align:middle;">
-          <img src="https://republica3334.github.io/sito/emblem-white.png"
+          <img src="cid:emblem"
                width="48" height="48" alt="Stars" style="display:block;border:0;">
         </td>
         <td style="vertical-align:middle;">
@@ -117,10 +121,12 @@ exports.sendOtp = onCall({ invoker: 'public' }, async (request) => {
   });
 
   await transporter.sendMail({
-    from:    `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
-    to:      user.email,
-    subject: 'Your verification code — United Republic of Stars',
-    html:    buildOtpEmail(user.name || user.id, code, user.email)
+    from:        `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
+    to:          user.email,
+    subject:     'Your verification code — United Republic of Stars',
+    html:        buildOtpEmail(user.name || user.id, code, user.email),
+    attachments: [{ filename: 'emblem-white.png', content: EMBLEM_PNG, cid: 'emblem' }],
+    headers:     { 'X-Entity-Ref-ID': `otp-${userId}-${Date.now()}` }
   });
 
   return { sent: true };
@@ -159,10 +165,12 @@ exports.sendEmailVerif = onCall({ invoker: 'public' }, async (request) => {
   });
 
   await transporter.sendMail({
-    from:    `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
-    to:      user.email,
-    subject: 'Verify your email — United Republic of Stars',
-    html:    buildOtpEmail(user.name || user.id, code, user.email)
+    from:        `"United Republic of Stars" <${process.env.GMAIL_USER}>`,
+    to:          user.email,
+    subject:     'Verify your email — United Republic of Stars',
+    html:        buildOtpEmail(user.name || user.id, code, user.email),
+    attachments: [{ filename: 'emblem-white.png', content: EMBLEM_PNG, cid: 'emblem' }],
+    headers:     { 'X-Entity-Ref-ID': `verif-${userId}-${Date.now()}` }
   });
 
   return { sent: true };
