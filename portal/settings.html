@@ -512,25 +512,26 @@
 
   // ── SEND VERIFICATION CODE ──
   function sendVerificationCode() {
-    var user = getUser();
-    if (!user || !user.email) {
-      showMsg('emailMsg', 'error', 'No email address found on your account. Please add one first.');
-      return;
-    }
-    _otpCode   = generateOTP();
-    _otpExpiry = Date.now() + 5 * 60 * 1000;
+    getUser(function(user) {
+      if (!user || !user.email) {
+        showMsg('emailMsg', 'error', 'No email address found on your account. Please add one first.');
+        return;
+      }
+      _otpCode   = generateOTP();
+      _otpExpiry = Date.now() + 5 * 60 * 1000;
 
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_email: user.email,
-      otp_code: _otpCode
-    }).then(function() {
-      document.getElementById('verifySection').style.display = 'none';
-      document.getElementById('otpSection').style.display   = 'block';
-      showMsg('emailMsg', 'info', 'Verification code sent to ' + user.email);
-      startOtpTimer();
-    }).catch(function() {
-      showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: user.email,
+        otp_code: _otpCode
+      }).then(function() {
+        document.getElementById('verifySection').style.display = 'none';
+        document.getElementById('otpSection').style.display   = 'block';
+        showMsg('emailMsg', 'info', 'Verification code sent to ' + user.email);
+        startOtpTimer();
+      }).catch(function() {
+        showMsg('emailMsg', 'error', 'Failed to send code. Please try again.');
+      });
     });
   }
 
@@ -632,4 +633,3 @@
 
 </body>
 </html>
-                                                                                                                                                                                                                                                   
