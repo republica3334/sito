@@ -30,12 +30,10 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Set Gmail config
+      - name: Store Gmail secrets in Secret Manager
         run: |
-          firebase functions:config:set \
-            gmail.user="${{ secrets.GMAIL_USER }}" \
-            gmail.app_password="${{ secrets.GMAIL_APP_PASSWORD }}" \
-            --project database-star-787e0
+          printf "%s" "${{ secrets.GMAIL_USER }}" | firebase functions:secrets:set GMAIL_USER --project database-star-787e0 --force
+          printf "%s" "${{ secrets.GMAIL_APP_PASSWORD }}" | firebase functions:secrets:set GMAIL_APP_PASSWORD --project database-star-787e0 --force
 
       - name: Deploy functions
         run: firebase deploy --only functions --project database-star-787e0

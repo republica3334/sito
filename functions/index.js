@@ -1,10 +1,14 @@
-const functions = require('firebase-functions');
-const admin     = require('firebase-admin');
-const crypto    = require('crypto');
-const nodemailer = require('nodemailer');
+const { onCall, HttpsError } = require('firebase-functions/v2/https');
+const { defineSecret }       = require('firebase-functions/params');
+const admin                  = require('firebase-admin');
+const crypto                 = require('crypto');
+const nodemailer             = require('nodemailer');
 
 admin.initializeApp();
 const db = admin.firestore();
+
+const GMAIL_USER = defineSecret('GMAIL_USER');
+const GMAIL_PASS = defineSecret('GMAIL_APP_PASSWORD');
 
 /* ── helpers ──────────────────────────────────────────────────────────── */
 
@@ -78,29 +82,18 @@ function buildOtpEmail(toName, otpCode, toEmail) {
 </body></html>`;
 }
 
-function getTransporter() {
-  const cfg = functions.config();
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: cfg.gmail.user,
-      pass: cfg.gmail.app_password
-    }
-  });
-}
-
 /* ── sendOtp ──────────────────────────────────────────────────────────── */
 
-exports.sendOtp = functions.https.onCall(async (data, context) => {
-  const userId = (data.userId || '').toString().trim();
-  if (!userId) throw new functions.https.HttpsError('invalid-argument', 'userId required');
+exports.sendOtp = onCall({ secrets: [GMAIL_USER, GMAIL_PASS] }, async (request) => {
+  const userId = (request.data.userId || '').toString().trim();
+  if (!userId) throw new HttpsError('invalid-argument', 'userId required');
 
   const userDoc = await db.collection('users').doc(userId).get();
-  if (!userDoc.exists) throw new functions.https.HttpsError('not-found', 'User not found');
+  if (!userDoc.exists) throw new HttpsError('not-found', 'User not found');
 
   const user = userDoc.data();
   if (!user.twofa || !user.email) {
-    throw new functions.https.HttpsError('failed-precondition', '2FA not enabled for this user');
+    throw new HttpsError('failed-precondition', '2FA not enabled for this user');
   }
 
   // Rate-limit: block if a valid OTP was sent in the last 60 seconds
@@ -108,7 +101,7 @@ exports.sendOtp = functions.https.onCall(async (data, context) => {
   if (existing.exists) {
     const sentAt = existing.data().sentAt || 0;
     if (Date.now() - sentAt < 60000) {
-      throw new functions.https.HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+      throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
     }
   }
 
@@ -122,12 +115,16 @@ exports.sendOtp = functions.https.onCall(async (data, context) => {
     attempts: 0
   });
 
-  const toName = user.name || user.id;
-  await getTransporter().sendMail({
-    from:    `"United Republic of Stars" <${functions.config().gmail.user}>`,
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user: GMAIL_USER.value(), pass: GMAIL_PASS.value() }
+  });
+
+  await transporter.sendMail({
+    from:    `"United Republic of Stars" <${GMAIL_USER.value()}>`,
     to:      user.email,
     subject: 'Your verification code — United Republic of Stars',
-    html:    buildOtpEmail(toName, code, user.email)
+    html:    buildOtpEmail(user.name || user.id, code, user.email)
   });
 
   return { sent: true };
@@ -135,12 +132,12 @@ exports.sendOtp = functions.https.onCall(async (data, context) => {
 
 /* ── verifyOtp ────────────────────────────────────────────────────────── */
 
-exports.verifyOtp = functions.https.onCall(async (data, context) => {
-  const userId = (data.userId || '').toString().trim();
-  const code   = (data.code   || '').toString().trim();
+exports.verifyOtp = onCall(async (request) => {
+  const userId = (request.data.userId || '').toString().trim();
+  const code   = (request.data.code   || '').toString().trim();
 
   if (!userId || !code) {
-    throw new functions.https.HttpsError('invalid-argument', 'userId and code required');
+    throw new HttpsError('invalid-argument', 'userId and code required');
   }
 
   const ref = db.collection('otp_sessions').doc(userId);
