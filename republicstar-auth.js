@@ -36,7 +36,6 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
   /* ── 2. Session API ── */
   var ADMIN_ID   = 'ilcreatore';
-  var ADMIN_PASS = '12345678';
 
   var session = {
     get: function(){
@@ -364,7 +363,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     function _isPrivileged() {
       var s = session.get();
-      return s && (s.role === 'admin' || s.role === 'mod' || s.user === 'ilcreatore');
+      return s && (s.role === 'admin' || s.role === 'moderator' || s.user === 'ilcreatore');
     }
 
     function _buildPanel() {
@@ -395,7 +394,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
         + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
         + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">SESSION</div>'
         + '<div>user: <span style="color:#7cf">' + (s ? s.user : '—') + '</span></div>'
-        + '<div>role: <span style="color:#' + (s && s.role === 'admin' ? 'f87' : s && s.role === 'mod' ? 'fa7' : 'aaa') + '">' + (s ? s.role : '—') + '</span></div>'
+        + '<div>role: <span style="color:#' + (s && s.role === 'admin' ? 'f87' : s && s.role === 'moderator' ? 'fa7' : 'aaa') + '">' + (s ? s.role : '—') + '</span></div>'
         + '</div>'
 
         + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
@@ -487,7 +486,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   document.addEventListener('DOMContentLoaded', function(){
     /* Suspended / pending check — async Firestore */
     (function(){
-      var EXEMPT = ['suspended.html','citizen-login.html','guest-register.html','register.html','index.html','secret-code.html'];
+      var EXEMPT = ['suspended.html','citizen-login.html','guest-register.html','register.html','index.html','secret-code.html','setup.html'];
       var page   = window.location.pathname.split('/').pop() || 'index.html';
       if (EXEMPT.indexOf(page) !== -1) return;
       var s = session.get();
@@ -517,9 +516,9 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
             + '<button id="_rsPendingDismiss" '
             + 'style="background:none;border:none;color:#ffd98c;font-size:1rem;cursor:pointer;padding:0 0.3rem;line-height:1;" '
             + 'aria-label="Dismiss">×</button>';
+          document.body.insertBefore(banner, document.body.firstChild);
           var dismiss = document.getElementById('_rsPendingDismiss');
           if (dismiss) dismiss.addEventListener('click', function(){ banner.remove(); });
-          document.body.insertBefore(banner, document.body.firstChild);
           document.body.style.paddingTop = (document.body.style.paddingTop
             ? (parseFloat(document.body.style.paddingTop) + 38) : 38) + 'px';
         }

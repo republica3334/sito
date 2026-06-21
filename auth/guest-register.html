@@ -54,15 +54,16 @@
   function rnd(chars,n){var o='';for(var i=0;i<n;i++)o+=chars[Math.floor(Math.random()*chars.length)];return o;}
   var id='GST-'+rnd('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',3)+'-'+rnd('0123456789',6);
   var guest={id:id,name:'Guest '+id.slice(-6),email:null,pwd:btoa(rnd('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',16)),role:'guest',status:'approved',setup:true,registered:new Date().toISOString()};
-  var users=JSON.parse(localStorage.getItem('republicstar_users')||'[]');
-  users.push(guest);
-  localStorage.setItem('republicstar_users',JSON.stringify(users));
   republicstarSession.set(guest.id,'guest',0);
-  setTimeout(function(){
-    var dest=localStorage.getItem('republicstar_redirect')||'../GOVERN_1.HTM';
-    localStorage.removeItem('republicstar_redirect');
-    window.location.replace(dest);
-  },900);
+  function saveAndRedirect() {
+    if (!window.republicstarDB) { setTimeout(saveAndRedirect, 400); return; }
+    republicstarDB.saveUser(guest).catch(function(){}).finally(function(){
+      var dest=localStorage.getItem('republicstar_redirect')||'../GOVERN_1.HTM';
+      localStorage.removeItem('republicstar_redirect');
+      window.location.replace(dest);
+    });
+  }
+  saveAndRedirect();
 })();
 </script>
 </body>

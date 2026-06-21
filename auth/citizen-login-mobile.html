@@ -498,6 +498,7 @@ function verifyOTP() {
 function finishLogin(user, remember) {
   var days = (document.getElementById('rememberMe') && document.getElementById('rememberMe').checked) ? 30 : 0;
   republicstarSession.set(user.id, user.role || 'citizen', days);
+  if (user.role === 'admin') { window.location.href = 'secret-code.html'; return; }
   if (!user.setup) { window.location.href = 'setup.html'; return; }
   var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
   localStorage.removeItem('republicstar_redirect');
@@ -523,10 +524,6 @@ function cancelTFA() {
   document.getElementById('tfaError').style.display = 'none';
 }
 
-function finishAdminLogin() {
-  republicstarSession.set('ilcreatore', 'admin', 0);
-  window.location.href = 'secret-code.html';
-}
 </script>
 
 <script>
@@ -559,14 +556,8 @@ function handleLogin(e) {
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
-  // Admin fast-path
-  if (nid === 'ilcreatore' && pwd === '12345678') {
-    setTimeout(function(){ finishAdminLogin(); }, 600);
-    return;
-  }
-
   function failAttempt(msg) {
-    err.innerHTML = msg;
+    err.textContent = msg;
     err.style.display = 'block';
     btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
   }

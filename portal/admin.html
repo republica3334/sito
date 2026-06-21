@@ -918,7 +918,9 @@ function addLog(msg){
   localStorage.setItem('republicstar_log',JSON.stringify(log));
   renderLog();
 }
-function logout(){null /* logout handled by republicstarSession.logout() */;window.location.href='../auth/citizen-login.html';}
+function logout(){ republicstarSession.logout(); }
+
+function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 
 function statusBadge(s){
   const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -957,10 +959,10 @@ function renderPending(){
     <div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
       <div>
         <div style="display:flex;align-items:center;gap:0.6rem;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
+          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${esc(u.name)||'—'}</span>
           ${u.approvalRequested?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">⚑ Requested</span>':''}
         </div>
-        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
+        <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">${esc(u.id)||'—'} · ${esc(u.email)||'—'}</div>
         <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}${u.approvalRequested?' &nbsp;·&nbsp; <span style="color:#f5a623;">Request: '+new Date(u.approvalRequested).toLocaleString()+'</span>':''}</div>
       </div>
       <div style="display:flex;gap:0.5rem;flex-shrink:0;">
@@ -993,13 +995,13 @@ function renderAll(){
     <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
       <div>
         <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${u.name||'—'}</span>
+          <span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">${esc(u.name)||'—'}</span>
           ${statusBadge(u.status)}
           ${roleBadge(u.role)}
           ${creator?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">👑 CREATOR</span>':''}
           ${u.approvalRequested&&u.status==='pending'?'<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.4);padding:0.12rem 0.4rem;">⚑ Req.</span>':''}
         </div>
-        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${u.id||'—'} · ${u.email||'—'}</div>
+        <div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">${esc(u.id)||'—'} · ${esc(u.email)||'—'}</div>
       </div>
       <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">
         ${actions}

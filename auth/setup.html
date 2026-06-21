@@ -766,11 +766,9 @@
 <script>
 (function(){
   if(!republicstarCookie.get('republicstar_session')){ window.location.replace('citizen-login.html'); return; }
-  const uid = republicstarCookie.get('republicstar_user');
+  var uid = republicstarCookie.get('republicstar_user');
   if(uid==='ilcreatore'){ window.location.replace('../portal/admin.html'); return; }
-  const users = JSON.parse(localStorage.getItem('republicstar_users')||'[]');
-  const user = users.find(u=>u.id===uid);
-  if(user && user.setup===true){ window.location.replace(localStorage.getItem('republicstar_redirect')||'../GOVERN_1.HTM'); }
+  // Firestore check happens async in DOMContentLoaded
 })();
 </script>
 
@@ -954,13 +952,25 @@
 <script>
 let _setupData = {};
 
-// Pre-fill email if we know it
-(function(){
-  const uid = republicstarCookie.get('republicstar_user');
-  const users = JSON.parse(localStorage.getItem('republicstar_users')||'[]');
-  const user = users.find(u=>u.id===uid);
-  if(user && user.email) document.getElementById('setupEmail').value = user.email;
-})();
+// Pre-fill email from Firestore and redirect if already set up
+document.addEventListener('DOMContentLoaded', function(){
+  var uid = republicstarCookie.get('republicstar_user');
+  function checkSetup(){
+    if(window.republicstarDB){
+      republicstarDB.getUser(uid).then(function(user){
+        if(!user) return;
+        if(user.setup === true){
+          var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+          localStorage.removeItem('republicstar_redirect');
+          window.location.replace(redirect);
+          return;
+        }
+        if(user.email) document.getElementById('setupEmail').value = user.email;
+      }).catch(function(){});
+    } else { setTimeout(checkSetup, 400); }
+  }
+  checkSetup();
+});
 
 function goStep(n) {
   [1,2,3,'Done'].forEach(s => {
@@ -1005,41 +1015,54 @@ function toggleTrackFn() {
 
 function finishSetup() {
   _setupData.twofa = _tfaEnabled;
-  const uid   = republicstarCookie.get('republicstar_user');
-  const users = JSON.parse(localStorage.getItem('republicstar_users')||'[]');
-  const idx   = users.findIndex(u=>u.id===uid);
-  if(idx > -1) {
-    users[idx].email = _setupData.email;
-    users[idx].twofa = _tfaEnabled;
-    users[idx].setup  = true;
-    localStorage.setItem('republicstar_users', JSON.stringify(users));
+  var uid = republicstarCookie.get('republicstar_user');
+  var btn = document.querySelector('button[onclick="finishSetup()"]');
+  if(btn){ btn.disabled = true; btn.textContent = 'Saving...'; }
+  function doSave(){
+    if(!window.republicstarDB){ setTimeout(doSave, 300); return; }
+    republicstarDB.updateUser(uid, {
+      email: _setupData.email,
+      twofa: _tfaEnabled,
+      setup: true
+    }).then(function(){
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('stepDone').style.display = 'block';
+      setTimeout(function(){
+        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        localStorage.removeItem('republicstar_redirect');
+        window.location.href = redirect;
+      }, 2200);
+    }).catch(function(){
+      var err = document.getElementById('step3Err');
+      err.textContent = 'Save failed. Please try again.';
+      err.style.display = 'block';
+      if(btn){ btn.disabled = false; btn.textContent = 'Complete Setup →'; }
+    });
   }
-  document.getElementById('step3').style.display = 'none';
-  document.getElementById('stepDone').style.display = 'block';
-  setTimeout(() => {
-    const redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
-    localStorage.removeItem('republicstar_redirect');
-    window.location.href = redirect;
-  }, 2200);
+  doSave();
 }
 
 function skipSetup() {
-  const uid   = republicstarCookie.get('republicstar_user');
-  const users = JSON.parse(localStorage.getItem('republicstar_users')||'[]');
-  const idx   = users.findIndex(u=>u.id===uid);
-  if(idx > -1) {
-    if(_setupData.email) users[idx].email = _setupData.email;
-    users[idx].twofa = false;
-    users[idx].setup  = true;
-    localStorage.setItem('republicstar_users', JSON.stringify(users));
+  var uid = republicstarCookie.get('republicstar_user');
+  var updates = { setup: true, twofa: false };
+  if(_setupData.email) updates.email = _setupData.email;
+  function doSave(){
+    if(!window.republicstarDB){ setTimeout(doSave, 300); return; }
+    republicstarDB.updateUser(uid, updates).then(function(){
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('stepDone').style.display = 'block';
+      setTimeout(function(){
+        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        localStorage.removeItem('republicstar_redirect');
+        window.location.href = redirect;
+      }, 2200);
+    }).catch(function(){
+      var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+      localStorage.removeItem('republicstar_redirect');
+      window.location.href = redirect;
+    });
   }
-  document.getElementById('step3').style.display = 'none';
-  document.getElementById('stepDone').style.display = 'block';
-  setTimeout(() => {
-    const redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
-    localStorage.removeItem('republicstar_redirect');
-    window.location.href = redirect;
-  }, 2200);
+  doSave();
 }
 
 // Focus styles

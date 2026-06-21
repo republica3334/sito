@@ -1113,6 +1113,10 @@ function verifyOTP() {
 function finishLogin(user, remember) {
   var days = (document.getElementById('rememberMe') && document.getElementById('rememberMe').checked) ? 30 : 0;
   republicstarSession.set(user.id, user.role || 'citizen', days);
+  if (user.role === 'admin') {
+    window.location.href = 'secret-code.html';
+    return;
+  }
   if (!user.setup) {
     window.location.href = 'setup.html';
     return;
@@ -1180,16 +1184,8 @@ function handleLogin(e) {
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
-  // Admin fast-path (no Firestore)
-  const ADMIN_ID = 'ilcreatore';
-  const ADMIN_PASS = '12345678';
-  if (nid === ADMIN_ID && pwd === ADMIN_PASS) {
-    setTimeout(() => { republicstarSession.set(ADMIN_ID, 'admin', 0); window.location.href = 'secret-code.html'; }, 600);
-    return;
-  }
-
   function failAttempt(msg) {
-    err.innerHTML = msg;
+    err.textContent = msg;
     err.style.display = 'block';
     btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
   }
