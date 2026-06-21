@@ -38,4 +38,4 @@ jobs:
             > functions/.env
 
       - name: Deploy functions
-        run: firebase deploy --only functions --project database-star-787e0
+        run: firebase deploy --only functions --project database-star-787e0 --force
