@@ -8,11 +8,15 @@
   if(m) window.location.replace('citizen-login-mobile.html');
 })();
 </script>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="Citizen Login — access your United Republic of Stars government portal account.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>United Republic of Stars — Official Government Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -715,7 +719,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/citizen-login.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/auth/citizen-login.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="United Republic of Stars — Official Government Portal">
   <meta property="og:description" content="Sign in to your Stars Citizen Account to access official government services.">
@@ -749,7 +753,7 @@
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Republicstar Eagle Emblem (inline SVG) -->
-    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -766,7 +770,7 @@
     <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
+<main>
 <!-- LOGIN PORTAL -->
 <div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
   <!-- Grid background -->
@@ -776,7 +780,7 @@
 
     <!-- Emblem -->
     <div style="text-align:center;margin-bottom:2.5rem;">
-      <img src="../svgs/icone/republica/2.svg" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/2.svg" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="United Republic of Stars — Official Emblem">
       <div style="font-family:var(--font-head);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
     </div>
 
@@ -909,10 +913,11 @@
 </div>
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -1008,17 +1013,10 @@
 </script>
 
 <script>
-let _tfaCode = '';
 let _tfaExpiry = 0;
 let _tfaTimerInterval = null;
 
-function generateOTP() {
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
-
 function startTFA(user) {
-  _tfaCode   = generateOTP();
   _tfaExpiry = Date.now() + 5 * 60 * 1000;
 
   document.getElementById('loginForm').style.display = 'none';
@@ -1030,29 +1028,13 @@ function startTFA(user) {
   const masked  = user.email ? user.email.replace(/(.{2})(.+)(@.+)/, (_, a, b, c) => a + '***' + c) : '***';
   if (emailEl) emailEl.textContent = masked;
 
-  // ── EmailJS send ──────────────────────────────────────────
-  // Configure these 3 values in your EmailJS dashboard (free at emailjs.com)
-  const EMAILJS_PUBLIC_KEY  = '7cTDfdeZ9XHJJPKrx';
-  const EMAILJS_SERVICE_ID  = 'service_jqmd4ai';
-  const EMAILJS_TEMPLATE_ID = 'template_r8jdk1q';
-
-  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && user.email) {
-    // Real send via EmailJS
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      to_email:  user.email,
-      to_name:   user.name || user.id,
-      otp_code:  _tfaCode,
-      portal:    'United Republic of Stars'
-    }).catch(function(err){ console.warn('EmailJS error:', err); });
-  } else {
-    // Dev fallback — show code on screen
-    const dev = document.getElementById('tfaDevCode');
-    if (dev) {
-      dev.textContent = 'DEV MODE — Code: ' + _tfaCode;
-      dev.style.display = 'block';
-    }
-  }
+  // OTP generated and emailed server-side via Firebase Cloud Function
+  firebase.functions().httpsCallable('sendOtp')({ userId: user.id })
+    .catch(function(err) {
+      console.warn('sendOtp error:', err);
+      const dev = document.getElementById('tfaDevCode');
+      if (dev) { dev.textContent = 'Error sending code. Contact support.'; dev.style.display = 'block'; }
+    });
 
   startTFATimer();
 }
@@ -1069,7 +1051,6 @@ function startTFATimer() {
       clearInterval(_tfaTimerInterval);
       document.getElementById('tfaError').textContent = 'Verification code expired. Please request a new one.';
       document.getElementById('tfaError').style.display = 'block';
-      _tfaCode = '';
     }
   }, 1000);
 }
@@ -1094,19 +1075,38 @@ function verifyOTP() {
   const entered = [...document.querySelectorAll('.otp')].map(i => i.value).join('');
   const err = document.getElementById('tfaError');
   if (entered.length < 6) { err.textContent = 'Please enter all 6 digits.'; err.style.display = 'block'; return; }
-  if (Date.now() > _tfaExpiry || !_tfaCode) { err.textContent = 'Code expired. Please request a new one.'; err.style.display = 'block'; return; }
-  if (entered !== _tfaCode) {
-    err.textContent = 'Incorrect code. Please check the SMS and try again.';
-    err.style.display = 'block';
-    document.querySelectorAll('.otp').forEach(i => { i.value=''; i.style.borderColor='#c8102e'; });
-    document.querySelector('.otp').focus();
-    return;
-  }
-  clearInterval(_tfaTimerInterval);
+  if (Date.now() > _tfaExpiry) { err.textContent = 'Code expired. Please request a new one.'; err.style.display = 'block'; return; }
+
   const btn = document.getElementById('tfaVerifyBtn');
-  btn.textContent = 'Verified ✓ Signing in...';
+  btn.textContent = 'Verifying…';
   btn.disabled = true;
-  setTimeout(() => finishLogin(window._pendingUser, window._pendingRemember), 800);
+
+  firebase.functions().httpsCallable('verifyOtp')({ userId: window._pendingUser.id, code: entered })
+    .then(function(result) {
+      if (result.data.valid) {
+        clearInterval(_tfaTimerInterval);
+        btn.textContent = 'Verified ✓ Signing in...';
+        setTimeout(() => finishLogin(window._pendingUser, window._pendingRemember), 800);
+      } else {
+        const reason = result.data.reason;
+        err.textContent = reason === 'expired'
+          ? 'Code expired. Request a new one.'
+          : reason === 'too_many_attempts'
+          ? 'Too many attempts. Request a new code.'
+          : 'Incorrect code. Please check your email and try again.';
+        err.style.display = 'block';
+        document.querySelectorAll('.otp').forEach(i => { i.value=''; i.style.borderColor='#c8102e'; });
+        document.querySelector('.otp').focus();
+        btn.textContent = 'Verify Code →';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() {
+      err.textContent = 'Verification failed. Please try again.';
+      err.style.display = 'block';
+      btn.textContent = 'Verify Code →';
+      btn.disabled = false;
+    });
 }
 
 function finishLogin(user, remember) {
@@ -1133,7 +1133,6 @@ function resendOTP() {
 
 function cancelTFA() {
   clearInterval(_tfaTimerInterval);
-  _tfaCode = '';
   window._pendingUser = null;
   document.getElementById('tfaPanel').style.display = 'none';
   document.getElementById('loginForm').style.display = 'flex';
@@ -1201,6 +1200,8 @@ function handleLogin(e) {
 
   dbLookup.then(function(user) {
     if (!user) { failAttempt('National ID not found. Please register first.'); return; }
+    // TODO SECURITY: passwords are stored as base64 (not hashed). Migrate to
+    // server-side bcrypt/PBKDF2 via a Firebase Function before production use.
     if (atob(user.pwd) !== pwd) { failAttempt('Incorrect credentials. Please try again.'); return; }
     if (user.status === 'suspended') {
       err.textContent = 'This account has been suspended. Contact the Ministry of the Interior for assistance.';
@@ -1237,4 +1238,4 @@ function showMsg(m) {
 // Show logged-in indicator in nav
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                    
+</html>

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of Infrastructure — Services · United Republic of Stars</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-infrastructure-services.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/ministries/ministry-infrastructure-services.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="Ministry of Infrastructure — Services">
   <meta property="og:description" content="Official services provided by the Ministry of Infrastructure of the United Republic of Stars.">
@@ -63,7 +66,7 @@
 
 <header>
   <a href="ministry-infrastructure.html" class="header-brand">
-    <img src="../svgs/icone/ministeri/Infrastruttura.svg" class="emblem-svg" alt="Ministry of Infrastructure">
+    <img loading="lazy" src="../svgs/icone/ministeri/Infrastruttura.svg" class="emblem-svg" alt="Ministry of Infrastructure">
     <div class="brand-text">
       <h1>Ministry of Infrastructure</h1>
       <span>United Republic of Stars · MOIN</span>
@@ -78,7 +81,7 @@
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
+<main>
 <!-- HERO -->
 <div class="svc-hero" style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
@@ -389,10 +392,11 @@
   </div>
 </section>
 
+</main>
 <footer>
   <div style="max-width:1100px;margin:0 auto;">
     <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1rem;">
-      <img src="../svgs/icone/ministeri/Infrastruttura.svg" width="48" alt="Ministry of Infrastructure" style="opacity:0.4;filter:invert(1);">
+      <img loading="lazy" src="../svgs/icone/ministeri/Infrastruttura.svg" width="48" alt="Ministry of Infrastructure" style="opacity:0.4;filter:invert(1);">
       <div>
         <div style="font-family:var(--font-head);font-size:0.9rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);">Ministry of Infrastructure</div>
         <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">United Republic of Stars · Official Government Ministry</div>

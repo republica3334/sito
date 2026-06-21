@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ministry of Health — United Republic of Stars</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -708,7 +711,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/ministry-health.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/ministries/ministry-health.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="Ministry of Health — United Republic of Stars">
   <meta property="og:description" content="Ministry of Health — universal healthcare for every citizen of the United Republic.">
@@ -723,11 +726,6 @@
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
 <body>
-<script>
-(function(){
-
-})();
-</script>
 
 
 <!-- UTILITY BAR -->
@@ -748,7 +746,7 @@
 <header>
   <a href="../gov/ministries.html" class="header-brand" style="text-decoration:none;color:inherit;">
     <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <img src="../svgs/icone/ministeri/Sanità.svg" width="78" height="78" alt="Ministry of Health" style="object-fit:contain;">
+      <img loading="lazy" src="../svgs/icone/ministeri/Sanità.svg" width="78" height="78" alt="Ministry of Health" style="object-fit:contain;">
     </div>
     <div class="brand-text">
       <h1>Ministry of Health</h1>
@@ -764,8 +762,7 @@
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
-
+<main>
 <div class="svc-hero" style="background:var(--black);color:var(--white);padding:5rem 4rem;border-bottom:3px solid #c8102e;position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.01) 0,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
   <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
@@ -881,10 +878,11 @@
 
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
@@ -949,7 +947,7 @@
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
     <div style="flex:1;min-width:260px;">
       <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;">
-        <img src="../svgs/icone/ministeri/Sanità.svg" width="80" height="80" alt="Ministry of Health" style="object-fit:contain;filter:invert(1);opacity:0.15;">
+        <img loading="lazy" src="../svgs/icone/ministeri/Sanità.svg" width="80" height="80" alt="Ministry of Health" style="object-fit:contain;filter:invert(1);opacity:0.15;">
         <span style="font-family:var(--font-sub);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8102e;">Cookie Policy — United Republic of Stars</span>
       </div>
       <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;margin:0;">This portal uses strictly necessary cookies for session authentication and security purposes. We do not use tracking or advertising cookies. By continuing you accept our <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a>.</p>

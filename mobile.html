@@ -7,11 +7,19 @@
     window.location.replace('GOVERN_1.HTM');
   }
 </script>
-<script src="republicstar-auth.js"></script>
+<script src="republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="The Official Mobile Portal of the United Republic of Stars — government services at your fingertips.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>United Republic of Stars — Mobile Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,7 +29,7 @@
       --red:      #c8102e;
       --red-dark: #9b0c22;
       --gray:     #cccccc;
-      --gray-dim: rgba(255,255,255,0.45);
+      --gray-dim: rgba(255,255,255,0.6);
       --font-head: 'Oswald', sans-serif;
       --font-sub:  'Rajdhani', sans-serif;
       --font-body: 'Inter', sans-serif;
@@ -32,7 +40,7 @@
       --m-card-bg:   #1a1a1a;
       --m-card-alt:  #111111;
       --m-text:      #ffffff;
-      --m-text-muted: rgba(255,255,255,0.45);
+      --m-text-muted: rgba(255,255,255,0.6);
       --m-border:    rgba(255,255,255,0.06);
       --m-border-card: rgba(255,255,255,0.08);
     }
@@ -836,7 +844,7 @@
 <!-- HEADER -->
 <header>
   <div class="header-brand">
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>Rep. of Stars</h1>
       <span>Official Portal</span>
@@ -844,7 +852,7 @@
   </div>
   <a href="auth/citizen-login.html" class="nav-cta">Login</a>
 </header>
-
+<main>
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">Official Government Portal</div>
@@ -870,37 +878,37 @@
   <div class="services-grid">
 
     <a href="services/service-digital-id.html" class="service-card">
-      <img src="svgs/icone/generico/id.svg" class="service-card-icon" alt="ID">
+      <img loading="lazy" src="svgs/icone/generico/id.svg" class="service-card-icon" alt="ID">
       <div class="service-card-title">National ID</div>
       <div class="service-card-sub">Apply or renew your digital identity card</div>
     </a>
 
     <a href="services/service-taxes.html" class="service-card">
-      <img src="svgs/icone/generico/tax.svg" class="service-card-icon" alt="Tax">
+      <img loading="lazy" src="svgs/icone/generico/tax.svg" class="service-card-icon" alt="Tax">
       <div class="service-card-title">Tax Authority</div>
       <div class="service-card-sub">File returns and manage tax records</div>
     </a>
 
     <a href="services/service-health.html" class="service-card">
-      <img src="svgs/icone/generico/health.svg" class="service-card-icon" alt="Health">
+      <img loading="lazy" src="svgs/icone/generico/health.svg" class="service-card-icon" alt="Health">
       <div class="service-card-title">Health</div>
       <div class="service-card-sub">Health cards and appointments</div>
     </a>
 
     <a href="services/service-civil-registration.html" class="service-card">
-      <img src="svgs/icone/generico/civil reg.svg" class="service-card-icon" alt="Civil Registry">
+      <img loading="lazy" src="svgs/icone/generico/civil reg.svg" class="service-card-icon" alt="Civil Registry">
       <div class="service-card-title">Civil Registry</div>
       <div class="service-card-sub">Birth, marriage and death records</div>
     </a>
 
     <a href="services/service-education.html" class="service-card">
-      <img src="svgs/icone/generico/education.svg" class="service-card-icon" alt="Education">
+      <img loading="lazy" src="svgs/icone/generico/education.svg" class="service-card-icon" alt="Education">
       <div class="service-card-title">Education</div>
       <div class="service-card-sub">Scholarships and enrollments</div>
     </a>
 
     <a href="services/service-business.html" class="service-card">
-      <img src="svgs/icone/generico/business.svg" class="service-card-icon" alt="Business">
+      <img loading="lazy" src="svgs/icone/generico/business.svg" class="service-card-icon" alt="Business">
       <div class="service-card-title">Business</div>
       <div class="service-card-sub">Register and license your business</div>
     </a>
@@ -1052,7 +1060,7 @@
       <div class="enlist-eyebrow">Armed Forces of the United Republic</div>
       <h2 class="enlist-title">Serve the<br><em>Republic</em></h2>
     </div>
-    <img src="svgs/icone/ministeri/difesa.svg" class="enlist-emblem" alt="Ministry of Defence" onerror="this.style.display='none'">
+    <img loading="lazy" src="svgs/icone/ministeri/difesa.svg" class="enlist-emblem" alt="Ministry of Defence" onerror="this.style.display='none'">
   </div>
   <p class="enlist-desc">The Republic calls upon its citizens to defend, build, and uphold the values of the nation. Military service offers career, purpose, and the honor of serving the state.</p>
   <div class="enlist-stats">
@@ -1071,25 +1079,25 @@
   </div>
   <div class="branch-scroll">
     <a href="military/ground-forces.html" class="m-branch-card">
-      <div class="m-branch-icon"><img src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
+      <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
       <h3>Ground Forces</h3>
       <p>Infantry, armor, and engineering units operating across all terrain types.</p>
       <span class="m-branch-link">View Roles →</span>
     </a>
     <a href="military/air-corps.html" class="m-branch-card">
-      <div class="m-branch-icon"><img src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
+      <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
       <h3>Air Corps</h3>
       <p>Strategic air superiority and rapid-response operations defending the skies.</p>
       <span class="m-branch-link">View Roles →</span>
     </a>
     <a href="military/naval-command.html" class="m-branch-card">
-      <div class="m-branch-icon"><img src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
+      <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
       <h3>Naval Command</h3>
       <p>Protecting maritime borders through the Republic's coastal and deep-water fleet.</p>
       <span class="m-branch-link">View Roles →</span>
     </a>
     <a href="military/space-force.html" class="m-branch-card">
-      <div class="m-branch-icon"><img src="svgs/icone/army/space.svg" alt="Space Force"></div>
+      <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/space.svg" alt="Space Force"></div>
       <h3>Space Force</h3>
       <p>Orbital sovereignty and satellite operations beyond the atmosphere.</p>
       <span class="m-branch-link">View Roles →</span>
@@ -1104,9 +1112,10 @@
 </section>
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-brand">
-    <img src="svgs/icone/republica/2.svg" width="44" class="emblem-svg" alt="Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="svgs/icone/republica/2.svg" width="44" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
     <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
   </div>
   <div class="footer-links">

@@ -4,6 +4,7 @@ var _republicstarBase = (document.currentScript ? document.currentScript.src.rep
 /* ── Firebase SDK (injected synchronously) ── */
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"><\/scr'+'ipt>');
+document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-functions-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><\/scr'+'ipt>');
 
 /* ═══════════════════════════════════════════════════
@@ -18,7 +19,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     set: function(name, value, days, sessionOnly){
       var entry = {v: value};
       if (!sessionOnly && days) entry.e = Date.now() + days * 864e5;
-      try { localStorage.setItem(PFX+name, JSON.stringify(entry)); } catch(e){}
+      try { localStorage.setItem(PFX+name, JSON.stringify(entry)); } catch(e){ console.warn('[republicstar] storage.set:', e); }
     },
     get: function(name){
       try {
@@ -27,9 +28,9 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
         var entry = JSON.parse(raw);
         if (entry.e && Date.now() > entry.e) { localStorage.removeItem(PFX+name); return null; }
         return entry.v;
-      } catch(e){ return null; }
+      } catch(e){ console.warn('[republicstar] storage.get:', e); return null; }
     },
-    del: function(name){ try { localStorage.removeItem(PFX+name); } catch(e){} }
+    del: function(name){ try { localStorage.removeItem(PFX+name); } catch(e){ console.warn('[republicstar] storage.del:', e); } }
   };
   w.republicstarCookie = ck;
 
@@ -38,9 +39,6 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   var ADMIN_PASS = '12345678';
 
   var session = {
-    ADMIN_ID:   ADMIN_ID,
-    ADMIN_PASS: ADMIN_PASS,
-
     get: function(){
       var s = ck.get('republicstar_session');
       var u = ck.get('republicstar_user');
@@ -203,7 +201,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
         if (emailEl && user.email) emailEl.textContent = user.email;
         if (statusEl && user.status) {
           var sc = {approved:'#00b450', pending:'#f5a623', suspended:'#c8102e'};
-          statusEl.innerHTML = '<span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:'+(sc[user.status]||'#aaa')+';border:1px solid '+(sc[user.status]||'#aaa')+'30;padding:0.1rem 0.4rem;">'+user.status+'</span>';
+          var col = sc[user.status] || '#aaa';
+          var span = document.createElement('span');
+          span.style.cssText = 'font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:'+col+';border:1px solid '+col+'30;padding:0.1rem 0.4rem;';
+          span.textContent = user.status;
+          statusEl.appendChild(span);
         }
       }).catch(function(){});
     }
@@ -247,10 +249,20 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     };
     wrapper.onmouseleave = function(){ _closeTimer = setTimeout(_closeMenu, 220); };
 
-    /* Close on outside click/tap (touch devices) */
-    document.addEventListener('click', function(e){
-      if (!wrapper.contains(e.target) && menu.style.opacity === '1') _closeMenu();
-    });
+    /* Close on outside click/tap — attached once per page, not per nav update */
+    if (!w._republicstarDocClickAttached) {
+      w._republicstarDocClickAttached = true;
+      document.addEventListener('click', function(e){
+        var m = document.getElementById('republicstarProfileMenu');
+        var p = m && m.parentNode;
+        if (m && p && !p.contains(e.target) && m.style.opacity === '1') {
+          m.style.opacity       = '0';
+          m.style.transform     = 'translateY(-8px)';
+          m.style.pointerEvents = 'none';
+          setTimeout(function(){ if (m.style.opacity === '0') m.style.display = 'none'; }, 260);
+        }
+      });
+    }
 
     cta.parentNode.replaceChild(wrapper, cta);
   };
@@ -375,8 +387,8 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
         '<div style="background:#c8102e;padding:0.45rem 0.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;">'
         + '<span style="font-size:0.65rem;letter-spacing:0.18em;font-weight:700;">⬡ DEBUG MODE</span>'
         + '<span style="font-size:0.55rem;opacity:0.7;color:#ffd;padding:2px 6px;background:rgba(0,0,0,0.3);border-radius:2px;">PLACEHOLDER</span>'
-        + '<button onclick="document.getElementById(\'' + PANEL_ID + '\').remove()" '
-        +   'style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.9rem;line-height:1;padding:0 0.2rem;">×</button>'
+        + '<button id="__debugClose__" '
+        +   'style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.9rem;line-height:1;padding:0 0.2rem;" aria-label="Close debug panel">×</button>'
         + '</div>'
         + '<div style="padding:0.7rem 0.8rem;display:flex;flex-direction:column;gap:0.6rem;">'
 
@@ -404,6 +416,8 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
         + '</div>';
 
       document.body.appendChild(panel);
+      var closeBtn = document.getElementById('__debugClose__');
+      if (closeBtn) closeBtn.addEventListener('click', function(){ panel.remove(); });
     }
 
     document.addEventListener('keydown', function(e) {
@@ -500,9 +514,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
           banner.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
             + '<span><strong>Account pending approval</strong> — Access to citizen services is limited until the Civil Registry approves your account.'
             + ' <a href="' + _republicstarBase + 'portal/settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
-            + '<button onclick="document.getElementById(\'republicstarPendingBanner\').remove()" '
+            + '<button id="_rsPendingDismiss" '
             + 'style="background:none;border:none;color:#ffd98c;font-size:1rem;cursor:pointer;padding:0 0.3rem;line-height:1;" '
-            + 'title="Dismiss">×</button>';
+            + 'aria-label="Dismiss">×</button>';
+          var dismiss = document.getElementById('_rsPendingDismiss');
+          if (dismiss) dismiss.addEventListener('click', function(){ banner.remove(); });
           document.body.insertBefore(banner, document.body.firstChild);
           document.body.style.paddingTop = (document.body.style.paddingTop
             ? (parseFloat(document.body.style.paddingTop) + 38) : 38) + 'px';
@@ -539,7 +555,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     footer.innerHTML =
       '<div class="footer-grid">'
       + '<div class="footer-brand">'
-      +   '<img src="' + b + 'svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">'
+      +   '<img src="' + b + 'svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">'
       +   '<p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>'
       +   '<p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">&copy; 2026 United Republic of Stars. All Rights Reserved.</p>'
       + '</div>'

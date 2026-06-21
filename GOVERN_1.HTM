@@ -7,11 +7,15 @@
     window.location.replace('mobile.html');
   }
 </script>
-<script src="republicstar-auth.js"></script>
+<script src="republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="The Official Portal of the United Republic of Stars — government news, citizen services, laws and the armed forces.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>United Republic of Stars — Official Government Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -747,7 +751,7 @@
 <header>
   <a href="GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Republicstar Eagle Emblem (inline SVG) -->
-    <img src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblema della Repubblica di Republicstar">
+    <img loading="lazy" src="svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblema della Repubblica di Republicstar">
 
 
     <div class="brand-text">
@@ -764,7 +768,7 @@
     <a href="auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
+<main>
 <!-- HERO -->
 <style>
 #heroSlideContent { transition: opacity 0.45s ease, transform 0.45s ease; }
@@ -808,7 +812,7 @@
 
   <div class="hero-emblem" style="position:relative;z-index:2;">
     <div class="hero-emblem-wrap">
-      <img src="svgs/icone/republica/1.svg" class="hero-emblem-svg" id="heroEmblem" alt="Emblema della Repubblica di Republicstar" style="opacity:1;transform:scale(0.85);">
+      <img loading="lazy" src="svgs/icone/republica/1.svg" class="hero-emblem-svg" id="heroEmblem" alt="Emblema della Repubblica di Republicstar" style="opacity:1;transform:scale(0.85);">
     </div>
   </div>
 </section>
@@ -980,35 +984,35 @@
   <div class="services-grid">
 
     <a class="service-card" href="services/service-digital-id.html" style="cursor:pointer;text-decoration:none;display:block;">
-      <div class="service-icon"><img src="svgs/icone/generico/id.svg" width="48" height="48" alt="Digital ID &amp; Documents" style="object-fit:contain;"></div>
+      <div class="service-icon"><img loading="lazy" src="svgs/icone/generico/id.svg" width="48" height="48" alt="Digital ID &amp; Documents" style="object-fit:contain;"></div>
       <h3>Digital ID &amp; Documents</h3>
       <p>Apply for or renew your national identity card, passport, and residency permits online.</p>
       <span class="service-arrow">→</span>
     </a>
 
     <a class="service-card" href="services/service-public-safety.html" style="cursor:pointer;text-decoration:none;display:block;">
-      <div class="service-icon"><img src="svgs/icone/generico/public safety.svg" width="48" height="48" alt="Public Safety" style="object-fit:contain;"></div>
+      <div class="service-icon"><img loading="lazy" src="svgs/icone/generico/public safety.svg" width="48" height="48" alt="Public Safety" style="object-fit:contain;"></div>
       <h3>Public Safety</h3>
       <p>Report incidents, access emergency contacts, and find your local security office.</p>
       <span class="service-arrow">→</span>
     </a>
 
     <a class="service-card" href="services/service-education.html" style="cursor:pointer;text-decoration:none;display:block;">
-      <div class="service-icon"><img src="svgs/icone/generico/education.svg" width="48" height="48" alt="Education &amp; Grants" style="object-fit:contain;"></div>
+      <div class="service-icon"><img loading="lazy" src="svgs/icone/generico/education.svg" width="48" height="48" alt="Education &amp; Grants" style="object-fit:contain;"></div>
       <h3>Education &amp; Grants</h3>
       <p>State scholarships, school enrollment, and university admission portals.</p>
       <span class="service-arrow">→</span>
     </a>
 
     <a class="service-card" href="services/service-health.html" style="cursor:pointer;text-decoration:none;display:block;">
-      <div class="service-icon"><img src="svgs/icone/generico/health.svg" width="48" height="48" alt="Health Services" style="object-fit:contain;"></div>
+      <div class="service-icon"><img loading="lazy" src="svgs/icone/generico/health.svg" width="48" height="48" alt="Health Services" style="object-fit:contain;"></div>
       <h3>Health Services</h3>
       <p>National health card, public hospital bookings, immunization records and health programs.</p>
       <span class="service-arrow">→</span>
     </a>
 
     <a class="service-card" href="services/service-transport.html" style="cursor:pointer;text-decoration:none;display:block;">
-      <div class="service-icon"><img src="svgs/icone/generico/transport.svg" width="48" height="48" alt="Transport &amp; Mobility" style="object-fit:contain;"></div>
+      <div class="service-icon"><img loading="lazy" src="svgs/icone/generico/transport.svg" width="48" height="48" alt="Transport &amp; Mobility" style="object-fit:contain;"></div>
       <h3>Transport &amp; Mobility</h3>
       <p>Driving licenses, vehicle registration, public transit passes, and infrastructure reports.</p>
       <span class="service-arrow">→</span>
@@ -1071,7 +1075,7 @@
       <div class="news-img" style="aspect-ratio:4/3;">
         <div class="news-img-inner">
           <!-- Decorative emblem in news card -->
-          <img src="svgs/icone/republica/1.svg" width="260" style="display:block;margin:auto;" alt="Emblema">
+          <img loading="lazy" src="svgs/icone/republica/1.svg" width="260" style="display:block;margin:auto;" alt="United Republic of Stars — Emblema Ufficiale">
 
 
         </div>
@@ -1200,7 +1204,7 @@
         <div style="display:flex;align-items:center;gap:1.6rem;">
           <h2 class="section-title" style="margin-bottom:0;">Serve the<br/><em>Republic</em></h2>
           <div style="width:140px;height:140px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <img src="svgs/icone/ministeri/difesa.svg" width="120" height="120" alt="Ministry of Defence" style="object-fit:contain;filter:invert(1);">
+            <img loading="lazy" src="svgs/icone/ministeri/difesa.svg" width="120" height="120" alt="Ministry of Defence" style="object-fit:contain;filter:invert(1);">
           </div>
         </div>
         <p>The United Republic of Stars calls upon its citizens to defend, build, and uphold the values of the nation. Military service offers career, purpose, and the honor of serving the state.</p>
@@ -1224,25 +1228,25 @@
 
     <div class="enlistment-branches">
       <a href="military/ground-forces.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon"><img src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
+        <div class="branch-icon"><img loading="lazy" src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
         <h3>Ground Forces</h3>
         <p>The backbone of the Republic's defense. Infantry, armor, and engineering units operating across all terrain types.</p>
         <span class="branch-link">View Roles →</span>
       </a>
       <a href="military/air-corps.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon"><img src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
+        <div class="branch-icon"><img loading="lazy" src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
         <h3>Air Corps</h3>
         <p>Strategic air superiority, reconnaissance, and rapid-response operations defending the Republic's skies.</p>
         <span class="branch-link">View Roles →</span>
       </a>
       <a href="military/naval-command.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon"><img src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
+        <div class="branch-icon"><img loading="lazy" src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
         <h3>Naval Command</h3>
         <p>Protecting maritime borders and projecting power through the United Republic's coastal and deep-water fleet.</p>
         <span class="branch-link">View Roles →</span>
       </a>
       <a href="military/space-force.html" class="branch-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="branch-icon"><img src="svgs/icone/army/space.svg" alt="Space Force"></div>
+        <div class="branch-icon"><img loading="lazy" src="svgs/icone/army/space.svg" alt="Space Force"></div>
         <h3>Space Force</h3>
         <p>Orbital sovereignty and satellite operations defending the Republic beyond the atmosphere.</p>
         <span class="branch-link">View Roles →</span>
@@ -1254,10 +1258,11 @@
 
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblema">
+      <img loading="lazy" src="svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Emblema Ufficiale">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>

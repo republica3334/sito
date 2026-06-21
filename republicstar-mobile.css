@@ -392,7 +392,7 @@
   /* ── OVERFLOW SAFETY ── */
   html, body { overflow-x: hidden; max-width: 100%; }
   img, video, iframe { max-width: 100% !important; }
-  * { min-width: 0; }
+  flex > *, .flex > *, [style*="display:flex"] > *, [style*="display: flex"] > * { min-width: 0; }
   pre, code { overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
 
   /* ── INLINE PADDING: squash generous desktop padding ── */

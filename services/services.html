@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="Access all citizen services of the United Republic of Stars — ID, health, taxes, education and more.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Citizen Services — United Republic of Stars</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -718,7 +722,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/services.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/services/services.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="Citizen Services — United Republic of Stars">
   <meta property="og:description" content="Citizen services of the United Republic of Stars — digital ID, healthcare, education, taxes, and more.">
@@ -752,7 +756,7 @@
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Republicstar Eagle Emblem (inline SVG) -->
-    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -769,8 +773,7 @@
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
-
+<main>
 <div class="svc-hero" style="padding:4rem 4rem 3rem;border-bottom:3px solid var(--red);position:relative;overflow:hidden;">
   <div style="font-family:var(--font-sub);font-size:0.72rem;letter-spacing: 0.12em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;"><span style="display:block;width:30px;height:2px;background:var(--red);"></span>Citizen Portal</div>
   <h1 style="font-family:var(--font-head);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;line-height:1.05;margin-bottom:1rem;">Citizen <span style="color:var(--red);">Services</span></h1>
@@ -804,7 +807,7 @@
 <!-- ── DIGITAL ID & DOCUMENTS ── -->
 <div class="svc-section">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/id.svg" alt="ID"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/id.svg" alt="ID"></div>
     <div>
       <div class="svc-cat-title">Digital ID &amp; Documents</div>
       <div class="svc-cat-desc">National identity cards, passports, residency permits and document replacements</div>
@@ -842,7 +845,7 @@
 <!-- ── HEALTH SERVICES ── -->
 <div class="svc-section" style="background:var(--gray-light);">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/health.svg" alt="Health"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/health.svg" alt="Health"></div>
     <div>
       <div class="svc-cat-title">Health Services</div>
       <div class="svc-cat-desc">National health card, hospital bookings, immunization and public health programs</div>
@@ -880,7 +883,7 @@
 <!-- ── EDUCATION & GRANTS ── -->
 <div class="svc-section">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/education.svg" alt="Education"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/education.svg" alt="Education"></div>
     <div>
       <div class="svc-cat-title">Education &amp; Grants</div>
       <div class="svc-cat-desc">Scholarships, school enrollment, university admissions and state education grants</div>
@@ -918,7 +921,7 @@
 <!-- ── TRANSPORT & MOBILITY ── -->
 <div class="svc-section" style="background:var(--gray-light);">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/transport.svg" alt="Transport"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/transport.svg" alt="Transport"></div>
     <div>
       <div class="svc-cat-title">Transport &amp; Mobility</div>
       <div class="svc-cat-desc">Driving licenses, vehicle registration, transit passes and infrastructure reports</div>
@@ -956,7 +959,7 @@
 <!-- ── TAXES & REVENUE ── -->
 <div class="svc-section">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/tax.svg" alt="Taxes"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/tax.svg" alt="Taxes"></div>
     <div>
       <div class="svc-cat-title">Taxes &amp; Revenue</div>
       <div class="svc-cat-desc">File returns, check refund status, payment plans and business tax portal</div>
@@ -994,7 +997,7 @@
 <!-- ── CIVIL REGISTRATION ── -->
 <div class="svc-section" style="background:var(--gray-light);">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/civil reg.svg" alt="Civil Registration"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/civil reg.svg" alt="Civil Registration"></div>
     <div>
       <div class="svc-cat-title">Civil Registration</div>
       <div class="svc-cat-desc">Births, marriages, deaths and certified vital records from the national civil registry</div>
@@ -1032,7 +1035,7 @@
 <!-- ── PUBLIC SAFETY ── -->
 <div class="svc-section">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/public safety.svg" alt="Public Safety"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/public safety.svg" alt="Public Safety"></div>
     <div>
       <div class="svc-cat-title">Public Safety</div>
       <div class="svc-cat-desc">Emergency contacts, incident reporting, police reports and security office locator</div>
@@ -1070,7 +1073,7 @@
 <!-- ── BUSINESS & LICENSING ── -->
 <div class="svc-section" style="background:var(--gray-light);">
   <div class="svc-cat-header">
-    <div class="svc-cat-icon"><img src="../svgs/icone/generico/business.svg" alt="Business"></div>
+    <div class="svc-cat-icon"><img loading="lazy" src="../svgs/icone/generico/business.svg" alt="Business"></div>
     <div>
       <div class="svc-cat-title">Business &amp; Licensing</div>
       <div class="svc-cat-desc">Company registration, permits, import/export licenses and compliance filings</div>
@@ -1107,10 +1110,11 @@
 
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>

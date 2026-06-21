@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-auth.js" defer></script>
   <meta charset="UTF-8" />
+  <meta name="description" content="Explore the government structure of the United Republic of Stars — branches, ministries and elected officials.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Government — United Republic of Stars</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -708,7 +712,7 @@
 
   <!-- Open Graph / Discord -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://republica3334.github.io/sito/government.html">
+  <meta property="og:url"         content="https://republica3334.github.io/sito/gov/government.html">
   <meta property="og:site_name"   content="United Republic of Stars">
   <meta property="og:title"       content="Government — United Republic of Stars">
   <meta property="og:description" content="Explore the government structure of the United Republic of Stars — branches, ministries, and elected officials.">
@@ -742,7 +746,7 @@
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
     <!-- Republicstar Eagle Emblem (inline SVG) -->
-    <img src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
 
 
     <div class="brand-text">
@@ -759,8 +763,7 @@
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
-
-
+<main>
 <!-- PAGE HERO -->
 <div class="svc-hero" style="background:var(--black);color:var(--white);padding:4rem 4rem 3rem;border-bottom:3px solid var(--red);;position:relative;overflow:hidden;">
   <div style="font-family:var(--font-sub);font-size:0.72rem;letter-spacing: 0.12em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;">
@@ -855,10 +858,11 @@
 
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
 
 
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
