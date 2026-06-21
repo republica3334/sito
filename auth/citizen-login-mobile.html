@@ -395,14 +395,10 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 </script>
 
 <script>
-var _tfaCode = '';
 var _tfaExpiry = 0;
 var _tfaTimerInterval = null;
 
-function generateOTP(){ return String(Math.floor(100000 + Math.random() * 900000)); }
-
 function startTFA(user) {
-  _tfaCode   = generateOTP();
   _tfaExpiry = Date.now() + 5 * 60 * 1000;
 
   document.getElementById('loginCard').style.display = 'none';
@@ -414,21 +410,14 @@ function startTFA(user) {
   var emailEl = document.getElementById('tfaEmailDisplay');
   if (emailEl) emailEl.textContent = masked;
 
-  // EmailJS credentials loaded from Firestore, not source
-  if (user.email) {
-    republicstarDB.getEmailConfig().then(function(cfg) {
-      emailjs.init(cfg.publicKey);
-      emailjs.send(cfg.serviceId, cfg.templateId, {
-        to_email: user.email, to_name: user.name || user.id, otp_code: _tfaCode, portal: 'United Republic of Stars'
-      }).catch(function(e){ console.warn('EmailJS:', e); });
-    }).catch(function() {
+  // OTP generated and emailed server-side via Firebase Cloud Function
+  firebase.functions().httpsCallable('sendOtp')({ userId: user.id })
+    .catch(function(err) {
+      console.warn('sendOtp error:', err);
       var dev = document.getElementById('tfaDevCode');
-      if (dev){ dev.textContent = 'DEV — Code: ' + _tfaCode; dev.style.display='block'; }
+      if (dev){ dev.textContent = 'Error sending code. Contact support.'; dev.style.display='block'; }
     });
-  } else {
-    var dev = document.getElementById('tfaDevCode');
-    if (dev){ dev.textContent = 'DEV — Code: ' + _tfaCode; dev.style.display='block'; }
-  }
+
   startTFATimer();
 }
 
@@ -445,7 +434,6 @@ function startTFATimer() {
       var err = document.getElementById('tfaError');
       err.textContent = 'Verification code expired. Please request a new one.';
       err.style.display = 'block';
-      _tfaCode = '';
     }
   }, 1000);
 }
@@ -473,19 +461,38 @@ function verifyOTP() {
   var entered = [].slice.call(document.querySelectorAll('.otp')).map(function(i){ return i.value; }).join('');
   var err = document.getElementById('tfaError');
   if (entered.length < 6){ err.textContent='Please enter all 6 digits.'; err.style.display='block'; return; }
-  if (Date.now() > _tfaExpiry || !_tfaCode){ err.textContent='Code expired. Request a new one.'; err.style.display='block'; return; }
-  if (entered !== _tfaCode) {
-    err.textContent = 'Incorrect code. Please check your email and try again.';
-    err.style.display = 'block';
-    document.querySelectorAll('.otp').forEach(function(i){ i.value=''; i.style.borderColor='#c8102e'; });
-    document.querySelector('.otp').focus();
-    return;
-  }
-  clearInterval(_tfaTimerInterval);
+  if (Date.now() > _tfaExpiry){ err.textContent='Code expired. Request a new one.'; err.style.display='block'; return; }
+
   var btn = document.getElementById('tfaVerifyBtn');
-  btn.textContent = 'Verified ✓ Signing in...';
+  btn.textContent = 'Verifying…';
   btn.disabled = true;
-  setTimeout(function(){ finishLogin(window._pendingUser, window._pendingRemember); }, 800);
+
+  firebase.functions().httpsCallable('verifyOtp')({ userId: window._pendingUser.id, code: entered })
+    .then(function(result) {
+      if (result.data.valid) {
+        clearInterval(_tfaTimerInterval);
+        btn.textContent = 'Verified ✓ Signing in...';
+        setTimeout(function(){ finishLogin(window._pendingUser, window._pendingRemember); }, 800);
+      } else {
+        var reason = result.data.reason;
+        err.textContent = reason === 'expired'
+          ? 'Code expired. Request a new one.'
+          : reason === 'too_many_attempts'
+          ? 'Too many attempts. Request a new code.'
+          : 'Incorrect code. Please check your email and try again.';
+        err.style.display = 'block';
+        document.querySelectorAll('.otp').forEach(function(i){ i.value=''; i.style.borderColor='#c8102e'; });
+        document.querySelector('.otp').focus();
+        btn.textContent = 'Verify Code →';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() {
+      err.textContent = 'Verification failed. Please try again.';
+      err.style.display = 'block';
+      btn.textContent = 'Verify Code →';
+      btn.disabled = false;
+    });
 }
 
 function finishLogin(user, remember) {
@@ -510,7 +517,6 @@ function resendOTP() {
 
 function cancelTFA() {
   clearInterval(_tfaTimerInterval);
-  _tfaCode = '';
   window._pendingUser = null;
   document.getElementById('tfaPanel').style.display = 'none';
   document.getElementById('loginCard').style.display = 'block';
