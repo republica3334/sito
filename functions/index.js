@@ -80,7 +80,7 @@ function buildOtpEmail(toName, otpCode, toEmail) {
 
 /* ── sendOtp ──────────────────────────────────────────────────────────── */
 
-exports.sendOtp = onCall(async (request) => {
+exports.sendOtp = onCall({ invoker: 'public' }, async (request) => {
   const userId = (request.data.userId || '').toString().trim();
   if (!userId) throw new HttpsError('invalid-argument', 'userId required');
 
@@ -128,7 +128,7 @@ exports.sendOtp = onCall(async (request) => {
 
 /* ── sendEmailVerif ───────────────────────────────────────────────────── */
 
-exports.sendEmailVerif = onCall(async (request) => {
+exports.sendEmailVerif = onCall({ invoker: 'public' }, async (request) => {
   const userId = (request.data.userId || '').toString().trim();
   if (!userId) throw new HttpsError('invalid-argument', 'userId required');
 
@@ -170,7 +170,7 @@ exports.sendEmailVerif = onCall(async (request) => {
 
 /* ── verifyEmailVerif ─────────────────────────────────────────────────── */
 
-exports.verifyEmailVerif = onCall(async (request) => {
+exports.verifyEmailVerif = onCall({ invoker: 'public' }, async (request) => {
   const userId = (request.data.userId || '').toString().trim();
   const code   = (request.data.code   || '').toString().trim();
 
@@ -196,7 +196,7 @@ exports.verifyEmailVerif = onCall(async (request) => {
 
 /* ── verifyOtp ────────────────────────────────────────────────────────── */
 
-exports.verifyOtp = onCall(async (request) => {
+exports.verifyOtp = onCall({ invoker: 'public' }, async (request) => {
   const userId = (request.data.userId || '').toString().trim();
   const code   = (request.data.code   || '').toString().trim();
 
