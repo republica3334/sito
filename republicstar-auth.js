@@ -36,7 +36,6 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
   /* ── 2. Session API ── */
   var ADMIN_ID   = 'ilcreatore';
-  var ADMIN_PASS = '12345678';
 
   var session = {
     get: function(){

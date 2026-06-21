@@ -145,6 +145,7 @@ function addLog(msg){
   renderLog();
 }
 function isCreator(id){ return id==='ilcreatore'; }
+function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 
 function statusBadge(s){
   var colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -181,8 +182,8 @@ function renderPending(){
   list.innerHTML=pending.map(function(u){return(
     '<div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
     +'<div>'
-    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+( u.name||'—')+'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(u.id||'—')+' · '+(u.email||'—')+'</div>'
+    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</div>'
+    +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
     +'<button onclick="approveUser(\''+u.id+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
@@ -203,10 +204,10 @@ function renderAll(){
     '<div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
     +'<div>'
     +'<div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">'
-    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(u.name||'—')+'</span>'
+    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</span>'
     +statusBadge(u.status)+roleBadge(u.role)
     +'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(u.id||'—')+' · '+(u.email||'—')+'</div>'
+    +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">'
     +(u.status!=='approved'?'<button onclick="approveUser(\''+u.id+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')

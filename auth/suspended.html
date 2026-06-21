@@ -260,13 +260,16 @@
   document.addEventListener('DOMContentLoaded', function() {
     var s = republicstarSession.get();
     if (!s) return;
-    var users = JSON.parse(localStorage.getItem('republicstar_users') || '[]');
-    var user  = users.find(function(u){ return u.id === s.user; });
-    if (!user) return;
-
-    document.getElementById('infoId').textContent   = user.id   || '—';
-    document.getElementById('infoName').textContent = user.name || '—';
-    document.getElementById('infoBlock').style.display = 'flex';
+    function tryLoad() {
+      if (!window.republicstarDB) { setTimeout(tryLoad, 400); return; }
+      republicstarDB.getUser(s.user).then(function(user) {
+        if (!user) return;
+        document.getElementById('infoId').textContent   = user.id   || '—';
+        document.getElementById('infoName').textContent = user.name || '—';
+        document.getElementById('infoBlock').style.display = 'flex';
+      }).catch(function(){});
+    }
+    tryLoad();
   });
 </script>
 
