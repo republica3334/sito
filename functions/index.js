@@ -52,14 +52,14 @@ exports.sendOtp = onCall({ invoker: 'public' }, async (request) => {
   const code   = String(crypto.randomInt(100000, 1000000));
   const expiry = Date.now() + 5 * 60 * 1000;
 
+  await sendEmail(user.email, user.name || user.id, code);
+
   await db.collection('otp_sessions').doc(userId).set({
     hash:     sha256(code),
     expiry:   expiry,
     sentAt:   Date.now(),
     attempts: 0
   });
-
-  await sendEmail(user.email, user.name || user.id, code);
 
   return { sent: true };
 });
@@ -87,11 +87,11 @@ exports.sendEmailVerif = onCall({ invoker: 'public' }, async (request) => {
   const code   = String(crypto.randomInt(100000, 1000000));
   const expiry = Date.now() + 5 * 60 * 1000;
 
+  await sendEmail(user.email, user.name || user.id, code);
+
   await db.collection('email_verif_sessions').doc(userId).set({
     hash: sha256(code), expiry, sentAt: Date.now(), attempts: 0
   });
-
-  await sendEmail(user.email, user.name || user.id, code);
 
   return { sent: true };
 });
