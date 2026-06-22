@@ -352,7 +352,8 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
     throw new HttpsError('unauthenticated', 'Invalid credentials');
   }
 
-  if (!['pending', 'approved'].includes(user.status)) {
+  // Block explicitly rejected/suspended accounts; allow missing status for legacy accounts
+  if (user.status && !['pending', 'approved'].includes(user.status)) {
     throw new HttpsError('permission-denied', 'This account is not accessible');
   }
   if (user.twofa === true && user.email && user.emailVerified === true) {
