@@ -92,6 +92,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     requireAdmin: function(){
       var s = session.get();
       if (!s || (s.user !== ADMIN_ID && s.role !== 'admin')){ window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
+      // Verify Firebase Auth currentUser matches the stored session
+      if (window.firebase && firebase.auth) {
+        var fbUser = firebase.auth().currentUser;
+        if (!fbUser || fbUser.uid !== s.user) { session.clear(); window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
+      }
       return true;
     },
 
@@ -104,6 +109,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       var s = session.get();
       if (!s || (s.role !== 'moderator' && s.role !== 'admin' && s.user !== ADMIN_ID)){
         window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false;
+      }
+      // Verify Firebase Auth currentUser matches the stored session
+      if (window.firebase && firebase.auth) {
+        var fbUser = firebase.auth().currentUser;
+        if (!fbUser || fbUser.uid !== s.user) { session.clear(); window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
       }
       return true;
     },
