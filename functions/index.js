@@ -301,8 +301,12 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   if (user.status === 'suspended') {
     throw new HttpsError('permission-denied', 'This account has been suspended');
   }
-  if (user.twofa && user.email) {
+  if (user.twofa === true && user.email && user.emailVerified === true) {
     return createLoginChallenge(userId, user);
+  }
+  if (user.twofa === true && (!user.email || user.emailVerified !== true)) {
+    await found.ref.update({ twofa: false });
+    user.twofa = false;
   }
   return issueToken(userId, user);
 });
