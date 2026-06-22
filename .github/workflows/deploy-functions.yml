@@ -33,7 +33,10 @@ jobs:
 
       - name: Write environment file
         run: |
-          printf "BREVO_API_KEY=%s\n" "${{ secrets.BREVO_API_KEY }}" > functions/.env
+          printf "EMAILJS_SERVICE_ID=%s\n"  "${{ secrets.EMAILJS_SERVICE_ID }}"  > functions/.env
+          printf "EMAILJS_TEMPLATE_ID=%s\n" "${{ secrets.EMAILJS_TEMPLATE_ID }}" >> functions/.env
+          printf "EMAILJS_PUBLIC_KEY=%s\n"  "${{ secrets.EMAILJS_PUBLIC_KEY }}"  >> functions/.env
+          printf "EMAILJS_PRIVATE_KEY=%s\n" "${{ secrets.EMAILJS_PRIVATE_KEY }}" >> functions/.env
           # Firebase CLI honours .gitignore when zipping functions — remove the exclusion
           # so the .env file is included in the deployment package (this runner is ephemeral)
           sed -i '/^functions\/\.env/d' .gitignore
