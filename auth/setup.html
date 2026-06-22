@@ -706,6 +706,44 @@
     .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
 
+    /* ── LIGHT MODE OVERRIDES ── */
+    [data-theme="light"] #setupWrap { background: #f0f0f0 !important; }
+    [data-theme="light"] #step1,
+    [data-theme="light"] #step3,
+    [data-theme="light"] #stepDone { background: #ffffff !important; }
+    [data-theme="light"] #step1 h2,
+    [data-theme="light"] #step3 h2,
+    [data-theme="light"] #stepDone h2 { color: #0a0a0a !important; }
+    [data-theme="light"] #step1 p,
+    [data-theme="light"] #step3 p,
+    [data-theme="light"] #stepDone p { color: rgba(0,0,0,0.5) !important; }
+    [data-theme="light"] #setupWrap label { color: rgba(0,0,0,0.5) !important; }
+    [data-theme="light"] #setupEmail {
+      background: #f5f5f5 !important;
+      border-color: rgba(0,0,0,0.15) !important;
+      color: #0a0a0a !important;
+    }
+    [data-theme="light"] #setupEmail::placeholder { color: rgba(0,0,0,0.3) !important; }
+    /* Step line connector */
+    [data-theme="light"] #setupWrap [style*="background:rgba(255,255,255,0.1)"] { background: rgba(0,0,0,0.12) !important; }
+    /* Inactive step circle */
+    [data-theme="light"] #d3circle { background: rgba(0,0,0,0.08) !important; color: rgba(0,0,0,0.3) !important; }
+    [data-theme="light"] #d3label { color: rgba(0,0,0,0.3) !important; }
+    /* Emblem */
+    [data-theme="light"] #setupWrap img[style*="filter:invert"] { filter: none !important; opacity: 1 !important; }
+    [data-theme="light"] #setupWrap [style*="color:rgba(255,255,255,0.35)"] { color: rgba(0,0,0,0.35) !important; }
+    /* 2FA toggle box */
+    [data-theme="light"] #step3 > div[style*="background:#111"] { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.1) !important; }
+    [data-theme="light"] #step3 [style*="color:var(--white)"] { color: #0a0a0a !important; }
+    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.35)"] { color: rgba(0,0,0,0.4) !important; }
+    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.45)"] { color: rgba(0,0,0,0.45) !important; }
+    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.7)"] { color: rgba(0,0,0,0.7) !important; }
+    /* Back/Skip buttons */
+    [data-theme="light"] #step3 button[style*="rgba(255,255,255,0.15)"] {
+      border-color: rgba(0,0,0,0.2) !important;
+      color: rgba(0,0,0,0.5) !important;
+    }
+
     /* ── EAGLE EMBLEM SVG PATHS ── */
   </style>
 
@@ -772,7 +810,7 @@
 })();
 </script>
 
-<div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
+<div id="setupWrap" style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
   <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
 
   <div style="position:relative;z-index:1;width:100%;max-width:500px;">
@@ -1073,4 +1111,4 @@ document.querySelectorAll('input, select').forEach(el => {
 </script>
 
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
