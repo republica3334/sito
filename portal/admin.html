@@ -64,6 +64,24 @@
     [data-theme="light"] .admin-btn { color: rgba(0,0,0,0.5) !important; border-color: rgba(0,0,0,0.2) !important; }
     [data-theme="light"] #activityLog > div { border-bottom-color: rgba(0,0,0,0.06) !important; }
 
+    /* CSS vars used by JS render functions */
+    .admin-wrap {
+      --at: #ffffff;          /* primary text */
+      --at2: rgba(255,255,255,0.6); /* secondary */
+      --at3: rgba(255,255,255,0.3); /* muted */
+      --ab: #111111;          /* list row bg */
+      --ab2: rgba(255,255,255,0.04); /* list bg */
+      --aborder: rgba(255,255,255,0.04); /* borders */
+    }
+    [data-theme="light"] .admin-wrap {
+      --at: #0a0a0a;
+      --at2: rgba(0,0,0,0.6);
+      --at3: rgba(0,0,0,0.35);
+      --ab: #f8f8f8;
+      --ab2: rgba(0,0,0,0.03);
+      --aborder: rgba(0,0,0,0.06);
+    }
+
     /* ADMIN PANEL */
     .admin-wrap { min-height: calc(100vh - 120px); background: #070707; padding: 0; }
     .admin-topbar { background: #0a0a0a; border-bottom: 2px solid #c8102e; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
@@ -145,12 +163,12 @@
       <div class="admin-card-label">Action Required</div>
       <h2>Pending Approvals <span id="pendingCount" style="color:#c8102e;"></span></h2>
       <div id="pendingList" class="admin-list"></div>
-      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.25);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
+      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:var(--at3);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
     </div>
 
     <div class="admin-card">
       <div class="admin-card-label">Registry</div>
-      <h2>All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.3);font-size:0.8rem;"></span></h2>
+      <h2>All Citizens <span id="totalCount" style="color:var(--at3);font-size:0.8rem;"></span></h2>
       <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()" class="admin-search">
       <div id="citizenList" class="admin-list admin-list-scroll"></div>
     </div>
@@ -159,7 +177,7 @@
 
   <div class="admin-logwrap">
     <div class="admin-card-label">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:1.5rem;">Activity Log</h2>
+    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--at);margin-bottom:1.5rem;">Activity Log</h2>
     <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
   </div>
 
@@ -219,7 +237,7 @@ function renderStats(){
   document.getElementById('totalCount').textContent='('+total+')';
 }
 function stat(label,val){
-  return '<div style="border-left:2px solid #c8102e;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:#fff;">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);">'+label+'</span></div>';
+  return '<div style="border-left:2px solid #c8102e;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--at);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--at3);">'+label+'</span></div>';
 }
 
 function renderPending(){
@@ -230,18 +248,18 @@ function renderPending(){
   if(pending.length===0){ list.innerHTML=''; none.style.display='block'; return; }
   none.style.display='none';
   list.innerHTML=pending.map(function(u){
-    return '<div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
+    return '<div style="background:var(--ab);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
       +'<div>'
       +'<div style="display:flex;align-items:center;gap:0.6rem;">'
-      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:#fff;font-weight:600;">'+esc(u.name||'—')+'</span>'
+      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--at);font-weight:600;">'+esc(u.name||'—')+'</span>'
       +(u.approvalRequested?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">⚑ Requested</span>':'')
       +'</div>'
-      +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:0.2rem;">'+esc(u.id||'—')+' · '+esc(u.email||'—')+'</div>'
-      +'<div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: '+new Date(u.registered).toLocaleDateString()+'</div>'
+      +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:var(--at3);margin-top:0.2rem;">'+esc(u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      +'<div style="font-family:var(--font-body);font-size:0.7rem;color:var(--at3);margin-top:0.15rem;">Registered: '+new Date(u.registered).toLocaleDateString()+'</div>'
       +'</div>'
       +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
       +'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-      +'<button onclick="rejectUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
+      +'<button onclick="rejectUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid var(--at3);color:var(--at2);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
       +'</div></div>';
   }).join('');
 }
@@ -252,7 +270,7 @@ function renderAll(){
   var nonPending=users.filter(function(u){ return u.status!=='pending'&&!isAdminUser(u); });
   var filtered=q?nonPending.filter(function(u){ return (u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q); }):nonPending;
   var list=document.getElementById('citizenList');
-  if(filtered.length===0){ list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>'; return; }
+  if(filtered.length===0){ list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:var(--at3);text-align:center;">No citizens found.</div>'; return; }
   list.innerHTML=filtered.map(function(u){
     var isMod=u.role==='moderator';
     var actions=''
@@ -261,14 +279,14 @@ function renderAll(){
       +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
       +(!isMod?'<button onclick="makeModUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>'
              :'<button onclick="revokeModUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>')
-      +'<button onclick="deleteUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor=\'#c8102e\';this.style.color=\'#c8102e\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.1)\';this.style.color=\'rgba(255,255,255,0.3)\'">Delete</button>';
-    return '<div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'+(isMod?'border-left:2px solid rgba(126,91,255,0.4);':'')+'">'
+      +'<button onclick="deleteUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid var(--at3);color:var(--at3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor=\'#c8102e\';this.style.color=\'#c8102e\'" onmouseout="this.style.borderColor=\'var(--at3)\';this.style.color=\'var(--at3)\'">Delete</button>';
+    return '<div style="background:var(--ab);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'+(isMod?'border-left:2px solid rgba(126,91,255,0.4);':'')+'">'
       +'<div>'
       +'<div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">'
-      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:#fff;font-weight:600;">'+esc(u.name||'—')+'</span>'
+      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--at);font-weight:600;">'+esc(u.name||'—')+'</span>'
       +statusBadge(u.status)+roleBadge(u.role)
       +'</div>'
-      +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+esc(u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--at3);margin-top:0.2rem;">'+esc(u.id||'—')+' · '+esc(u.email||'—')+'</div>'
       +'</div>'
       +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">'+actions+'</div>'
       +'</div>';
@@ -278,11 +296,11 @@ function renderAll(){
 function renderLog(){
   var log=getLog();
   var el=document.getElementById('activityLog');
-  if(log.length===0){ el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>'; return; }
+  if(log.length===0){ el.innerHTML='<div style="color:var(--at3);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>'; return; }
   el.innerHTML=log.slice(0,15).map(function(e){
-    return '<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;">'
-      +'<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">'+esc(e.time)+'</span>'
-      +'<span style="color:rgba(255,255,255,0.6);">'+esc(e.msg)+'</span></div>';
+    return '<div style="padding:0.6rem 0;border-bottom:1px solid var(--aborder);display:flex;gap:1.5rem;align-items:baseline;">'
+      +'<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--at3);white-space:nowrap;">'+esc(e.time)+'</span>'
+      +'<span style="color:var(--at2);">'+esc(e.msg)+'</span></div>';
   }).join('');
 }
 
