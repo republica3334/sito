@@ -933,8 +933,9 @@ function roleBadge(r){
 }
 function isCreator(id){ return id === 'ilcreatore'; }
 
+function isAdminUser(u){ return u.role==='admin'||u.id==='ilcreatore'; }
 function renderStats(){
-  const users=getUsers();
+  const users=getUsers().filter(u=>!isAdminUser(u));
   const total=users.length;
   const pending=users.filter(u=>u.status==='pending').length;
   const approved=users.filter(u=>u.status==='approved').length;
@@ -950,7 +951,7 @@ function stat(label,val){
 }
 
 function renderPending(){
-  const users=getUsers();
+  const users=getUsers().filter(u=>!isAdminUser(u));
   const pending=users.filter(u=>u.status==='pending');
   const list=document.getElementById('pendingList');
   const none=document.getElementById('noPending');
@@ -976,7 +977,7 @@ function renderPending(){
 function renderAll(){
   const users=getUsers();
   const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const nonPending=users.filter(u=>u.status!=='pending'&&u.role!=='admin'&&u.id!=='ilcreatore');
+  const nonPending=users.filter(u=>u.status!=='pending'&&!isAdminUser(u));
   const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
   const list=document.getElementById('citizenList');
   if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
