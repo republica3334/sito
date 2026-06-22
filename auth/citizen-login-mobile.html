@@ -186,8 +186,18 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .tfa-actions button{background:none;border:none;color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;padding:0.5rem 0;min-height:44px;}
 
 /* ── LIGHT MODE ── */
-[data-theme="light"] html,
-[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !important; }
+html[data-theme="light"],
+html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !important; }
+[data-theme="light"] .top-bar {
+  background: #ffffff !important;
+  border-bottom-color: #c8102e !important;
+}
+[data-theme="light"] .top-brand-text h1 { color: #0a0a0a !important; }
+[data-theme="light"] .desktop-link {
+  color: rgba(0,0,0,0.4) !important;
+  border-color: rgba(0,0,0,0.15) !important;
+}
+[data-theme="light"] .top-brand img { filter: none !important; opacity: 1 !important; }
 [data-theme="light"] .main { background: #f0f0f0 !important; }
 [data-theme="light"] .card,
 [data-theme="light"] .tfa-panel {
@@ -206,10 +216,6 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 [data-theme="light"] .pwd-toggle { color: rgba(0,0,0,0.4) !important; }
 [data-theme="light"] .forgot { color: rgba(0,0,0,0.35) !important; }
 [data-theme="light"] .remember-row span { color: rgba(0,0,0,0.45) !important; }
-[data-theme="light"] .desktop-link {
-  color: rgba(0,0,0,0.4) !important;
-  border-color: rgba(0,0,0,0.15) !important;
-}
 [data-theme="light"] .divider::before,
 [data-theme="light"] .divider::after { background: rgba(0,0,0,0.1) !important; }
 [data-theme="light"] .divider span { color: rgba(0,0,0,0.3) !important; }
@@ -218,23 +224,38 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
   color: rgba(0,0,0,0.55) !important;
 }
 [data-theme="light"] .register-row span { color: rgba(0,0,0,0.4) !important; }
+[data-theme="light"] .register-row a { color: var(--red) !important; }
 [data-theme="light"] .emblem-wrap .republic-name { color: rgba(0,0,0,0.35) !important; }
 [data-theme="light"] .emblem-wrap img { filter: none !important; opacity: 1 !important; }
+[data-theme="light"] .security-note { color: rgba(0,0,0,0.35) !important; }
+[data-theme="light"] .security-note span { color: rgba(0,0,0,0.35) !important; }
+[data-theme="light"] .security-note svg { stroke: #0a0a0a !important; }
 [data-theme="light"] .tfa-email-notice {
   background: #f0f0f0 !important;
   border-color: rgba(0,0,0,0.1) !important;
 }
 [data-theme="light"] .tfa-email-from { color: rgba(0,0,0,0.4) !important; }
 [data-theme="light"] .tfa-email-body { color: rgba(0,0,0,0.7) !important; }
+[data-theme="light"] .tfa-email-body strong { color: #0a0a0a !important; }
 [data-theme="light"] .tfa-email-sub { color: rgba(0,0,0,0.35) !important; }
 [data-theme="light"] .otp {
   background: #f8f8f8 !important;
   border-color: rgba(0,0,0,0.15) !important;
   color: #0a0a0a !important;
 }
+[data-theme="light"] .otp-sep { color: rgba(0,0,0,0.2) !important; }
 [data-theme="light"] .otp-label { color: rgba(0,0,0,0.45) !important; }
 [data-theme="light"] .tfa-timer { color: rgba(0,0,0,0.35) !important; }
 [data-theme="light"] .tfa-actions button { color: rgba(0,0,0,0.4) !important; }
+[data-theme="light"] #cookieBanner {
+  background: #ffffff !important;
+  border-top-color: #c8102e !important;
+}
+[data-theme="light"] #cookieBanner p { color: rgba(0,0,0,0.55) !important; }
+[data-theme="light"] #cookieBanner button:first-of-type {
+  border-color: rgba(0,0,0,0.2) !important;
+  color: rgba(0,0,0,0.5) !important;
+}
 </style>
 </head>
 <body>
