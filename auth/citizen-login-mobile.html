@@ -511,7 +511,7 @@ function finishLogin(result, remember) {
     : Promise.resolve();
   signIn.then(function(){
     republicstarSession.set(user.id, user.role || 'citizen', days);
-    if (user.role === 'admin') { window.location.href = 'secret-code.html'; return; }
+    if (user.role === 'admin') { window.location.href = 'secret-code-mobile.html'; return; }
     if (!user.setup) { window.location.href = 'setup.html'; return; }
     var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('republicstar_redirect');
