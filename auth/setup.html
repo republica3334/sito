@@ -706,6 +706,14 @@
     .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
 
+    /* ── STEP INDICATOR DEFAULT STATES ── */
+    #d3circle { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.3); }
+    #d3label  { color: rgba(255,255,255,0.3); }
+    [data-theme="light"] #d3circle { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.3); }
+    [data-theme="light"] #d3label  { color: rgba(0,0,0,0.3); }
+    #d3circle.active { background: #c8102e !important; color: white !important; }
+    #d3label.active  { color: #c8102e !important; }
+
     /* ── LIGHT MODE OVERRIDES ── */
     [data-theme="light"] #setupWrap { background: #f0f0f0 !important; }
     /* Grid overlay — hide in light */
@@ -735,7 +743,11 @@
     }
     [data-theme="light"] #setupEmail::placeholder { color: rgba(0,0,0,0.3) !important; }
     /* 2FA toggle box */
-    [data-theme="light"] #step3 > div:first-of-type { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.1) !important; }
+    [data-theme="light"] #tfaToggleBox { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.1) !important; }
+    /* Toggle track inactive */
+    [data-theme="light"] #toggleTrack { background: rgba(0,0,0,0.15) !important; }
+    /* Toggle thumb — dark so it's visible on light track */
+    [data-theme="light"] #toggleThumb { background: #555 !important; }
     /* Security notice box */
     [data-theme="light"] #step3 > div:nth-of-type(2) { background: rgba(200,16,46,0.06) !important; border-color: rgba(200,16,46,0.2) !important; }
     /* Back/Skip buttons */
@@ -744,11 +756,8 @@
       border-color: rgba(0,0,0,0.2) !important;
       color: rgba(0,0,0,0.55) !important;
     }
-    /* Step indicator – inactive dot */
-    [data-theme="light"] #d3circle { background: rgba(0,0,0,0.08) !important; color: rgba(0,0,0,0.3) !important; }
-    [data-theme="light"] #d3label { color: rgba(0,0,0,0.3) !important; }
-    /* Connector line */
-    [data-theme="light"] #dot1 ~ div { background: rgba(0,0,0,0.12) !important; }
+    /* Step indicator – connector line */
+    [data-theme="light"] #stepConnector { background: rgba(0,0,0,0.12) !important; }
     /* Header subtitle + emblem */
     [data-theme="light"] #setupWrap > div > div:first-child * { color: rgba(0,0,0,0.4) !important; }
     [data-theme="light"] #setupWrap img { filter: none !important; opacity: 0.85 !important; }
@@ -836,10 +845,10 @@
         <div style="width:32px;height:32px;border-radius:50%;background:#c8102e;color:white;font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">1</div>
         <div style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#c8102e;">Email</div>
       </div>
-      <div style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
+      <div id="stepConnector" style="flex:2;height:2px;background:rgba(255,255,255,0.1);margin-bottom:1.4rem;"></div>
       <div class="step-dot" id="dot3" style="flex:1;text-align:center;">
-        <div id="d3circle" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">2</div>
-        <div id="d3label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);">2FA</div>
+        <div id="d3circle" style="width:32px;height:32px;border-radius:50%;font-family:var(--font-head);font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem;">2</div>
+        <div id="d3label" style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;">2FA</div>
       </div>
     </div>
 
@@ -863,7 +872,7 @@
       <p style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:1.8rem;">Protect your account with an extra layer of security. When enabled, each login requires a code sent to your email.</p>
 
       <!-- 2FA toggle -->
-      <div style="background:#111;border:1px solid rgba(255,255,255,0.07);padding:1.4rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+      <div id="tfaToggleBox" style="background:#111;border:1px solid rgba(255,255,255,0.07);padding:1.4rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">
         <div>
           <div style="font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);margin-bottom:0.3rem;">Email Verification</div>
           <div style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.35);">6-digit code sent to your email on each login</div>
@@ -1025,17 +1034,13 @@ function goStep(n) {
     if(el) el.style.display = 'none';
   });
   document.getElementById('step'+n).style.display = 'block';
-  // Update step indicators
+  // Update step indicators via CSS classes (theme-safe)
   [1,2,3].forEach(i => {
-    const circle = document.getElementById('d'+i+'circle') || (i===1?null:null);
-    const label  = document.getElementById('d'+i+'label');
-    if(i===1) return; // step 1 always active
-    const circ = document.getElementById('d'+i+'circle');
-    if(circ) {
-      circ.style.background = i <= n ? '#c8102e' : 'rgba(255,255,255,0.08)';
-      circ.style.color = i <= n ? 'white' : 'rgba(255,255,255,0.3)';
-    }
-    if(label) label.style.color = i <= n ? '#c8102e' : 'rgba(255,255,255,0.3)';
+    if(i===1) return;
+    const circ  = document.getElementById('d'+i+'circle');
+    const label = document.getElementById('d'+i+'label');
+    if(circ)  { circ.classList.toggle('active', i <= n);  circ.style.background = ''; circ.style.color = ''; }
+    if(label) { label.classList.toggle('active', i <= n); label.style.color = ''; }
   });
 }
 
@@ -1054,9 +1059,11 @@ function step1Next() {
 var _tfaEnabled = false;
 function toggleTrackFn() {
   _tfaEnabled = !_tfaEnabled;
+  var isLight = document.documentElement.getAttribute('data-theme') === 'light';
   const track = document.getElementById('toggleTrack');
   const thumb = document.getElementById('toggleThumb');
-  track.style.background = _tfaEnabled ? '#c8102e' : 'rgba(255,255,255,0.15)';
+  track.style.background = _tfaEnabled ? '#c8102e' : (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)');
+  thumb.style.background = _tfaEnabled ? 'white' : (isLight ? '#555' : 'white');
   thumb.style.transform = _tfaEnabled ? 'translateX(22px)' : 'translateX(0)';
 }
 
@@ -1120,4 +1127,4 @@ document.querySelectorAll('input, select').forEach(el => {
 </script>
 
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+</html>
