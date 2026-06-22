@@ -109,6 +109,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     },
 
     logout: function(){
+      if (w.republicstarLoader) w.republicstarLoader.show('Signing out…');
       session.clear();
       window.location.href = _republicstarBase + 'auth/citizen-login.html';
     }
@@ -801,7 +802,46 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       + '</div>';
   };
 
-  /* ── 8. Secret Override Code ── */
+  /* ── 8. Page Loader overlay ── */
+  w.republicstarLoader = (function(){
+    var _el = null;
+    function _create(){
+      if (_el) return;
+      var s = document.createElement('style');
+      s.textContent =
+        '@keyframes _rsSpinA{to{transform:rotate(360deg)}}'
+        + '#_rsLoader{position:fixed;inset:0;z-index:2147483645;background:rgba(0,0,0,0.88);'
+        + 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;'
+        + 'opacity:0;transition:opacity 0.18s;pointer-events:none;}'
+        + '#_rsLoader.active{opacity:1;pointer-events:auto;}'
+        + '#_rsSpinner{width:40px;height:40px;border:3px solid rgba(200,16,46,0.18);'
+        + 'border-top-color:#c8102e;border-radius:50%;animation:_rsSpinA 0.7s linear infinite;}'
+        + '#_rsLoaderMsg{font-family:var(--font-sub,"Inter",sans-serif);font-size:0.62rem;'
+        + 'letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.4);}';
+      document.head.appendChild(s);
+      _el = document.createElement('div');
+      _el.id = '_rsLoader';
+      _el.setAttribute('aria-live', 'polite');
+      _el.innerHTML = '<div id="_rsSpinner"></div><div id="_rsLoaderMsg"></div>';
+      document.body.appendChild(_el);
+    }
+    return {
+      show: function(msg){
+        if (document.body) { _create(); }
+        else { document.addEventListener('DOMContentLoaded', function(){ _create(); }); return; }
+        var m = document.getElementById('_rsLoaderMsg');
+        if (m) m.textContent = msg || 'Please wait…';
+        void _el.offsetWidth;
+        _el.classList.add('active');
+      },
+      hide: function(){
+        if (!_el) return;
+        _el.classList.remove('active');
+      }
+    };
+  })();
+
+  /* ── 9. Secret Override Code ── */
   /* Trigger: type REPUBLICSTAR (not inside an input) → secret modal appears.
      Disabled: admin sessions are issued only by backend custom tokens.
      3 wrong attempts → reactor-meltdown security screen. */

@@ -976,7 +976,7 @@ function renderPending(){
 function renderAll(){
   const users=getUsers();
   const q=(document.getElementById('searchBox').value||'').toLowerCase();
-  const nonPending=users.filter(u=>u.status!=='pending');
+  const nonPending=users.filter(u=>u.status!=='pending'&&u.role!=='admin'&&u.id!=='ilcreatore');
   const filtered=q?nonPending.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):nonPending;
   const list=document.getElementById('citizenList');
   if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.25);text-align:center;">No citizens found.</div>';return;}
@@ -1018,37 +1018,44 @@ function renderLog(){
   el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${esc(e.time)}</span><span style="color:rgba(255,255,255,0.6);">${esc(e.msg)}</span></div>`).join('');
 }
 
+function _adminCall(promise, logMsg) {
+  if (window.republicstarLoader) republicstarLoader.show('Processing…');
+  return promise
+    .then(function(){ if (window.republicstarLoader) republicstarLoader.hide(); addLog(logMsg); })
+    .catch(function(e){ if (window.republicstarLoader) republicstarLoader.hide(); console.error(e); });
+}
+
 function approveUser(id){
   const u=_users.find(x=>x.id===id);
   if(!u) return;
-  republicstarDB.updateUser(id,{status:'approved'}).then(()=>addLog('Approved: '+u.name+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+u.name+' ('+id+')');
 }
 function rejectUser(id){
   if(!confirm('Reject and delete this registration?')) return;
   const u=_users.find(x=>x.id===id);
-  republicstarDB.deleteUser(id).then(()=>addLog('Rejected: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')');
 }
 
 function deleteUser(id){
   if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
   if(!confirm('Permanently delete this citizen account?')) return;
   const u=_users.find(x=>x.id===id);
-  republicstarDB.deleteUser(id).then(()=>addLog('Deleted: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Deleted: '+(u?u.name:'?')+' ('+id+')');
 }
 function makeModUser(id){
   if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
   const u=_users.find(x=>x.id===id);
-  republicstarDB.updateUser(id,{role:'moderator',status:'approved'}).then(()=>addLog('Granted Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')');
 }
 function revokeModUser(id){
   if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
   const u=_users.find(x=>x.id===id);
-  republicstarDB.updateUser(id,{role:'citizen'}).then(()=>addLog('Revoked Mod: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')');
 }
 function suspendUser(id){
   if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
   const u=_users.find(x=>x.id===id);
-  republicstarDB.updateUser(id,{status:'suspended'}).then(()=>addLog('Suspended: '+(u?u.name:'?')+' ('+id+')')).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')');
 }
 
 function refresh(){renderStats();renderPending();renderAll();}
@@ -1056,7 +1063,16 @@ function refresh(){renderStats();renderPending();renderAll();}
 /* Real-time listener — auto-refreshes whenever Firestore data changes */
 function _attachListener(){
   if(window.republicstarDB){
-    republicstarDB.onUsers(function(users){ _users=users; refresh(); });
+    var _firstLoad = true;
+    if (window.republicstarLoader) republicstarLoader.show('Loading citizens…');
+    republicstarDB.onUsers(function(users){
+      _users=users;
+      refresh();
+      if (_firstLoad) {
+        _firstLoad = false;
+        if (window.republicstarLoader) republicstarLoader.hide();
+      }
+    });
   } else {
     setTimeout(_attachListener, 400);
   }

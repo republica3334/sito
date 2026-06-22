@@ -752,6 +752,7 @@ function handleRegister(e){
   }
   btn.textContent = 'Processing...';
   btn.disabled = true;
+  if (window.republicstarLoader) republicstarLoader.show('Submitting registration…');
   if (pwd.length < 8){
     err.textContent = 'Password must be at least 8 characters.';
     err.style.display = 'block';
@@ -773,11 +774,13 @@ function handleRegister(e){
     email: email,
     password: pwd
   }).then(function(result){
+    if (window.republicstarLoader) republicstarLoader.hide();
     showRegSuccessModal(result.id);
     document.getElementById('regForm').style.opacity = '0.4';
     document.getElementById('regForm').style.pointerEvents = 'none';
     btn.textContent = 'Submitted';
   }).catch(function(e){
+    if (window.republicstarLoader) republicstarLoader.hide();
     err.textContent = e && e.code === 'already-exists'
       ? 'An account with this email already exists.'
       : 'Failed to save. Check your internet connection.';
