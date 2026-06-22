@@ -413,7 +413,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       if (!user && republicstarSession.get()) republicstarSession.clear();
       return;
     }
-    var dest = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+    var dest = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
     localStorage.removeItem('republicstar_redirect');
     window.location.replace(dest);
   }

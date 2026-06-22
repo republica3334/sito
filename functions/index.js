@@ -265,7 +265,26 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   return { id };
 });
 
-exports.registerGuest = onCall({ invoker: 'public' }, async () => {
+exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
+  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ipKey = 'guest_rate_' + sha256(String(ip)).slice(0, 16);
+  const rateRef = db.collection('rate_limits').doc(ipKey);
+  const rateSnap = await rateRef.get();
+  if (rateSnap.exists) {
+    const { count, windowStart } = rateSnap.data();
+    const elapsed = Date.now() - (windowStart || 0);
+    if (elapsed < 60 * 60 * 1000 && count >= 3) {
+      throw new HttpsError('resource-exhausted', 'Too many guest accounts created. Please try again later.');
+    }
+    if (elapsed >= 60 * 60 * 1000) {
+      await rateRef.set({ count: 1, windowStart: Date.now() });
+    } else {
+      await rateRef.update({ count: count + 1 });
+    }
+  } else {
+    await rateRef.set({ count: 1, windowStart: Date.now() });
+  }
+
   const suffix = crypto.randomBytes(5).toString('hex').toUpperCase();
   const id = `GST-${suffix.slice(0, 3)}-${crypto.randomInt(100000, 1000000)}`;
   const user = {
