@@ -320,6 +320,25 @@ exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
 });
 
 exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
+  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ipKey = 'login_rate_' + sha256(String(ip)).slice(0, 16);
+  const rateRef = db.collection('rate_limits').doc(ipKey);
+  const rateSnap = await rateRef.get();
+  if (rateSnap.exists) {
+    const { count, windowStart } = rateSnap.data();
+    const elapsed = Date.now() - (windowStart || 0);
+    if (elapsed < 15 * 60 * 1000 && count >= 10) {
+      throw new HttpsError('resource-exhausted', 'Too many login attempts. Please try again later.');
+    }
+    if (elapsed >= 15 * 60 * 1000) {
+      await rateRef.set({ count: 1, windowStart: Date.now() });
+    } else {
+      await rateRef.update({ count: count + 1 });
+    }
+  } else {
+    await rateRef.set({ count: 1, windowStart: Date.now() });
+  }
+
   const userId = asString(request.data.userId);
   const password = request.data.password;
   if (!userId || typeof password !== 'string') {
@@ -327,17 +346,14 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   }
 
   const found = await getUserDoc(userId);
-  if (!found) {
+  const user = found ? found.data : null;
+  const ok = user ? await verifyStoredPassword(userId, user, password) : false;
+  if (!found || !ok) {
     throw new HttpsError('unauthenticated', 'Invalid credentials');
   }
 
-  const user = found.data;
-  const ok = await verifyStoredPassword(userId, user, password);
-  if (!ok) {
-    throw new HttpsError('unauthenticated', 'Invalid credentials');
-  }
-  if (user.status === 'suspended') {
-    throw new HttpsError('permission-denied', 'This account has been suspended');
+  if (!['pending', 'approved'].includes(user.status)) {
+    throw new HttpsError('permission-denied', 'This account is not accessible');
   }
   if (user.twofa === true && user.email && user.emailVerified === true) {
     return createLoginChallenge(userId, user);
