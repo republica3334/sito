@@ -1016,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', function(){
       republicstarDB.getUser(uid).then(function(user){
         if(!user) return;
         if(user.setup === true){
-          var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+          var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
           localStorage.removeItem('republicstar_redirect');
           window.location.replace(redirect);
           return;
@@ -1082,7 +1082,7 @@ function finishSetup() {
       document.getElementById('step3').style.display = 'none';
       document.getElementById('stepDone').style.display = 'block';
       setTimeout(function(){
-        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
         localStorage.removeItem('republicstar_redirect');
         window.location.href = redirect;
       }, 2200);
@@ -1106,12 +1106,12 @@ function skipSetup() {
       document.getElementById('step3').style.display = 'none';
       document.getElementById('stepDone').style.display = 'block';
       setTimeout(function(){
-        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
         localStorage.removeItem('republicstar_redirect');
         window.location.href = redirect;
       }, 2200);
     }).catch(function(){
-      var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+      var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
       localStorage.removeItem('republicstar_redirect');
       window.location.href = redirect;
     });
