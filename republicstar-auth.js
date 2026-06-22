@@ -851,14 +851,20 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     var _fails   = 0;
     var _seq     = '';
 
+    function _isAdmin(){
+      var s = w.republicstarSession && republicstarSession.get();
+      return s && (s.role === 'admin' || s.user === 'ilcreatore');
+    }
+
     document.addEventListener('keydown', function(e){
       /* Shortcut: Ctrl+Shift+A always works, regardless of focus */
       if(e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'A'){
         e.preventDefault();
-        _showModal();
+        if(_isAdmin()) _showModal();
         return;
       }
-      /* Sequence REPUBLICSTAR — only outside inputs */
+      /* Sequence REPUBLICSTAR — only outside inputs, only for admins */
+      if(!_isAdmin()) return;
       if(['INPUT','TEXTAREA','SELECT'].indexOf((document.activeElement||{}).tagName||'')!==-1) return;
       if(!e.key || e.key.length !== 1) return;
       _seq += e.key.toUpperCase();
