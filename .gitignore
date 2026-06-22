@@ -1,2 +1,4 @@
-.claude/
+﻿.claude/
 functions/.env
+functions/.env*
+functions/node_modules/

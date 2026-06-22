@@ -146,6 +146,7 @@ function addLog(msg){
 }
 function isCreator(id){ return id==='ilcreatore'; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
+function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 function statusBadge(s){
   var colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -186,8 +187,8 @@ function renderPending(){
     +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
-    +'<button onclick="approveUser(\''+u.id+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-    +'<button onclick="rejectUser(\''+u.id+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
+    +'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
+    +'<button onclick="rejectUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
     +'</div></div>'
   );}).join('');
 }
@@ -210,9 +211,9 @@ function renderAll(){
     +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">'
-    +(u.status!=='approved'?'<button onclick="approveUser(\''+u.id+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
-    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+u.id+'\')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
-    +(u.status==='suspended'?'<button onclick="approveUser(\''+u.id+'\')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
+    +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
+    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
+    +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
     +'</div></div>'
   );}).join('');
 }
@@ -221,7 +222,7 @@ function renderLog(){
   var log=getLog();
   var el=document.getElementById('activityLog');
   if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(function(e){return '<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">'+e.time+'</span><span style="color:rgba(255,255,255,0.6);">'+e.msg+'</span></div>';}).join('');
+  el.innerHTML=log.slice(0,15).map(function(e){return '<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">'+esc(e.time)+'</span><span style="color:rgba(255,255,255,0.6);">'+esc(e.msg)+'</span></div>';}).join('');
 }
 
 function approveUser(id){
@@ -231,4 +232,25 @@ function approveUser(id){
 function rejectUser(id){
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.deleteUser(id).then(function(){addLog('
+  republicstarDB.deleteUser(id).then(function(){addLog('Rejected: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+}
+function suspendUser(id){
+  var u=_users.find(function(x){return x.id===id;});
+  republicstarDB.updateUser(id,{status:'suspended'}).then(function(){addLog('Suspended: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+}
+
+function refresh(){renderStats();renderPending();renderAll();}
+
+function _attachListener(){
+  if(window.republicstarDB){
+    republicstarDB.onUsers(function(users){ _users=users; refresh(); });
+  } else {
+    setTimeout(_attachListener, 400);
+  }
+}
+_attachListener();
+renderLog();
+addLog('Moderator session started');
+</script>
+</body>
+</html>

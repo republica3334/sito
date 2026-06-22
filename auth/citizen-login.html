@@ -1003,12 +1003,17 @@
     const el = document.getElementById('infoMsg');
     if(el){ el.textContent = 'Your session expired after 30 minutes of inactivity. Please sign in again.'; el.style.display='block'; }
   }
-  // If already logged in, redirect away
-  if (republicstarSession.get()) {
+  function redirectIfAuthenticated(user) {
+    if (!user || !republicstarSession.get()) {
+      if (!user && republicstarSession.get()) republicstarSession.clear();
+      return;
+    }
     var dest = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('republicstar_redirect');
     window.location.replace(dest);
-    return;
+  }
+  if (window.republicstarDB && republicstarDB.authReady) {
+    republicstarDB.authReady.then(redirectIfAuthenticated);
   }
 })();
 </script>
@@ -1017,7 +1022,10 @@
 let _tfaExpiry = 0;
 let _tfaTimerInterval = null;
 
-function startTFA(user) {
+function startTFA(result) {
+  var user = result.user || result;
+  window._pendingUser = user;
+  window._pendingChallengeId = result.challengeId || null;
   _tfaExpiry = Date.now() + 5 * 60 * 1000;
 
   document.getElementById('loginForm').style.display = 'none';
@@ -1028,13 +1036,6 @@ function startTFA(user) {
   const emailEl = document.getElementById('tfaEmailDisplay');
   const masked  = user.email ? user.email.replace(/(.{2})(.+)(@.+)/, (_, a, b, c) => a + '***' + c) : '***';
   if (emailEl) emailEl.textContent = masked;
-
-  firebase.functions().httpsCallable('sendOtp')({ userId: user.id })
-    .catch(function(err) {
-      console.warn('sendOtp error:', err);
-      const dev = document.getElementById('tfaDevCode');
-      if (dev) { dev.textContent = 'Error sending code. Contact support.'; dev.style.display = 'block'; }
-    });
 
   startTFATimer();
 }
@@ -1081,12 +1082,12 @@ function verifyOTP() {
   btn.textContent = 'Verifying…';
   btn.disabled = true;
 
-  firebase.functions().httpsCallable('verifyOtp')({ userId: window._pendingUser.id, code: entered })
+  firebase.functions().httpsCallable('verifyLoginOtp')({ challengeId: window._pendingChallengeId, code: entered })
     .then(function(result) {
       if (result.data.valid) {
         clearInterval(_tfaTimerInterval);
         btn.textContent = 'Verified ✓ Signing in...';
-        setTimeout(() => finishLogin(window._pendingUser, window._pendingRemember), 800);
+        setTimeout(() => finishLogin(result.data, window._pendingRemember), 800);
       } else {
         const reason = result.data.reason;
         err.textContent = reason === 'expired'
@@ -1109,24 +1110,36 @@ function verifyOTP() {
     });
 }
 
-function finishLogin(user, remember) {
+function finishLogin(result, remember) {
+  var user = result.user || result;
+  var token = result.token || null;
   var days = (document.getElementById('rememberMe') && document.getElementById('rememberMe').checked) ? 30 : 0;
-  republicstarSession.set(user.id, user.role || 'citizen', days);
-  if (user.role === 'admin') {
-    window.location.href = 'secret-code.html';
-    return;
-  }
-  if (!user.setup) {
-    window.location.href = 'setup.html';
-    return;
-  }
-  var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
-  localStorage.removeItem('republicstar_redirect');
-  window.location.href = redirect;
+  var signIn = token && window.republicstarDB
+    ? republicstarDB.signInWithCustomToken(token, !!remember)
+    : Promise.resolve();
+  signIn.then(function(){
+    republicstarSession.set(user.id, user.role || 'citizen', days);
+    if (user.role === 'admin') {
+      window.location.href = '../portal/admin.html';
+      return;
+    }
+    if (!user.setup) {
+      window.location.href = 'setup.html';
+      return;
+    }
+    var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+    localStorage.removeItem('republicstar_redirect');
+    window.location.href = redirect;
+  }).catch(function(){
+    var err = document.getElementById('errorMsg') || document.getElementById('tfaError');
+    if (err) { err.textContent = 'Sign-in failed. Please try again.'; err.style.display = 'block'; }
+  });
 }
 function resendOTP() {
-  if (!window._pendingUser) return;
-  startTFA(window._pendingUser);
+  if (!window._lastLoginPayload) return;
+  firebase.functions().httpsCallable('loginUser')(window._lastLoginPayload).then(function(result){
+    startTFA(result.data);
+  }).catch(function(){});
   document.getElementById('tfaError').style.display = 'none';
   document.querySelectorAll('.otp').forEach(i => { i.value = ''; i.style.borderColor = 'rgba(255,255,255,0.12)'; });
   document.querySelector('.otp').focus();
@@ -1145,8 +1158,7 @@ function cancelTFA() {
 
 // Admin 2FA bypass (admin doesn't have 2FA in this demo)
 function finishAdminLogin() {
-  republicstarSession.set('ilcreatore', 'admin', 0);
-  window.location.href = 'secret-code.html';
+  showMsg('Admin access now requires server-issued credentials.');
 }
 </script>
 </body>
@@ -1189,39 +1201,27 @@ function handleLogin(e) {
     btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
   }
 
-  // Local test users — always checked as fallback
-  var LOCAL_USERS = {
-    'testuser': {id:'testuser',name:'Test User',dob:'2000-01-01',email:'test@test.com',pwd:btoa('test1234'),role:'citizen',status:'approved',setup:true}
-  };
+  if (!window.republicstarDB) {
+    failAttempt('Connection error — please check your internet and try again.');
+    return;
+  }
 
-  // Firestore lookup, falling back to local users if not found or DB unavailable
-  var dbLookup = window.republicstarDB
-    ? window.republicstarDB.getUser(nid).then(function(u){ return u || LOCAL_USERS[nid] || null; })
-    : Promise.resolve(LOCAL_USERS[nid] || null);
+  window._lastLoginPayload = { userId: nid, password: pwd };
 
-  dbLookup.then(function(user) {
-    if (!user) { failAttempt('National ID not found. Please register first.'); return; }
-    // TODO SECURITY: passwords are stored as base64 (not hashed). Migrate to
-    // server-side bcrypt/PBKDF2 via a Firebase Function before production use.
-    if (atob(user.pwd) !== pwd) { failAttempt('Incorrect credentials. Please try again.'); return; }
-    if (user.status === 'suspended') {
-      err.textContent = 'This account has been suspended. Contact the Ministry of the Interior for assistance.';
-      err.style.display = 'block';
-      btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
-      return;
-    }
-    // Success — check 2FA
-    if (user.twofa && user.email) {
-      window._pendingUser = user;
+  republicstarDB.loginUser(nid, pwd).then(function(result) {
+    if (result.requires2fa) {
       window._pendingRemember = document.getElementById('rememberMe').checked;
-      startTFA(user);
+      startTFA(result);
       btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
-      finishLogin(user, document.getElementById('rememberMe').checked);
+      finishLogin(result, document.getElementById('rememberMe').checked);
     }
   }).catch(function(e) {
     console.error(e);
-    failAttempt('Connection error — please check your internet and try again.');
+    var msg = e && e.code === 'permission-denied'
+      ? 'This account has been suspended. Contact the Ministry of the Interior for assistance.'
+      : 'Invalid National ID or password.';
+    failAttempt(msg);
   });
 }
 

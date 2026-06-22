@@ -921,6 +921,7 @@ function addLog(msg){
 function logout(){ republicstarSession.logout(); }
 
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
+function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 function statusBadge(s){
   const colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -966,8 +967,8 @@ function renderPending(){
         <div style="font-family:var(--font-body);font-size:0.7rem;color:rgba(255,255,255,0.25);margin-top:0.15rem;">Registered: ${new Date(u.registered).toLocaleDateString()}${u.approvalRequested?' &nbsp;·&nbsp; <span style="color:#f5a623;">Request: '+new Date(u.approvalRequested).toLocaleString()+'</span>':''}</div>
       </div>
       <div style="display:flex;gap:0.5rem;flex-shrink:0;">
-        <button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>
-        <button onclick="rejectUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>
+        <button onclick="approveUser('${jsString(u.id)}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>
+        <button onclick="rejectUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>
       </div>
     </div>`).join('');
 }
@@ -985,11 +986,11 @@ function renderAll(){
     const actions = creator ? `
       <span style="font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#c8102e;border:1px solid rgba(200,16,46,0.3);padding:0.2rem 0.6rem;">PROTECTED · CREATOR</span>
     ` : `
-      ${u.status!=='approved'?`<button onclick="approveUser('${u.id}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
-      ${u.status!=='suspended'?`<button onclick="suspendUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
-      ${u.status==='suspended'?`<button onclick="approveUser('${u.id}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
-      ${!isMod?`<button onclick="makeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${u.id}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
-      <button onclick="deleteUser('${u.id}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
+      ${u.status!=='approved'?`<button onclick="approveUser('${jsString(u.id)}')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>`:''}
+      ${u.status!=='suspended'?`<button onclick="suspendUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>`:''}
+      ${u.status==='suspended'?`<button onclick="approveUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>`:''}
+      ${!isMod?`<button onclick="makeModUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(126,91,255,0.45);color:rgba(126,91,255,0.9);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Make Mod</button>`:`<button onclick="revokeModUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(126,91,255,0.25);color:rgba(126,91,255,0.5);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke Mod</button>`}
+      <button onclick="deleteUser('${jsString(u.id)}')" style="background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.3)'">Delete</button>
     `;
     return `
     <div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;${creator?'border-left:2px solid rgba(200,16,46,0.4);':isMod?'border-left:2px solid rgba(126,91,255,0.4);':''}">
@@ -1014,7 +1015,7 @@ function renderLog(){
   const log=getLog();
   const el=document.getElementById('activityLog');
   if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${e.time}</span><span style="color:rgba(255,255,255,0.6);">${e.msg}</span></div>`).join('');
+  el.innerHTML=log.slice(0,15).map(e=>`<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">${esc(e.time)}</span><span style="color:rgba(255,255,255,0.6);">${esc(e.msg)}</span></div>`).join('');
 }
 
 function approveUser(id){

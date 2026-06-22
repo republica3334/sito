@@ -387,10 +387,17 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
     var el = document.getElementById('infoMsg');
     if (el){ el.textContent = 'Your session expired. Please sign in again.'; el.style.display='block'; }
   }
-  if (republicstarSession.get()) {
+  function redirectIfAuthenticated(user) {
+    if (!user || !republicstarSession.get()) {
+      if (!user && republicstarSession.get()) republicstarSession.clear();
+      return;
+    }
     var dest = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('republicstar_redirect');
     window.location.replace(dest);
+  }
+  if (window.republicstarDB && republicstarDB.authReady) {
+    republicstarDB.authReady.then(redirectIfAuthenticated);
   }
 })();
 </script>
@@ -399,7 +406,10 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 var _tfaExpiry = 0;
 var _tfaTimerInterval = null;
 
-function startTFA(user) {
+function startTFA(result) {
+  var user = result.user || result;
+  window._pendingUser = user;
+  window._pendingChallengeId = result.challengeId || null;
   _tfaExpiry = Date.now() + 5 * 60 * 1000;
 
   document.getElementById('loginCard').style.display = 'none';
@@ -410,13 +420,6 @@ function startTFA(user) {
   var masked = user.email ? user.email.replace(/(.{2})(.+)(@.+)/, function(_, a, b, c){ return a + '***' + c; }) : '***';
   var emailEl = document.getElementById('tfaEmailDisplay');
   if (emailEl) emailEl.textContent = masked;
-
-  firebase.functions().httpsCallable('sendOtp')({ userId: user.id })
-    .catch(function(err) {
-      console.warn('sendOtp error:', err);
-      var dev = document.getElementById('tfaDevCode');
-      if (dev){ dev.textContent = 'Error sending code. Contact support.'; dev.style.display='block'; }
-    });
 
   startTFATimer();
 }
@@ -467,12 +470,12 @@ function verifyOTP() {
   btn.textContent = 'Verifying…';
   btn.disabled = true;
 
-  firebase.functions().httpsCallable('verifyOtp')({ userId: window._pendingUser.id, code: entered })
+  firebase.functions().httpsCallable('verifyLoginOtp')({ challengeId: window._pendingChallengeId, code: entered })
     .then(function(result) {
       if (result.data.valid) {
         clearInterval(_tfaTimerInterval);
         btn.textContent = 'Verified ✓ Signing in...';
-        setTimeout(function(){ finishLogin(window._pendingUser, window._pendingRemember); }, 800);
+        setTimeout(function(){ finishLogin(result.data, window._pendingRemember); }, 800);
       } else {
         var reason = result.data.reason;
         err.textContent = reason === 'expired'
@@ -495,19 +498,31 @@ function verifyOTP() {
     });
 }
 
-function finishLogin(user, remember) {
+function finishLogin(result, remember) {
+  var user = result.user || result;
+  var token = result.token || null;
   var days = (document.getElementById('rememberMe') && document.getElementById('rememberMe').checked) ? 30 : 0;
-  republicstarSession.set(user.id, user.role || 'citizen', days);
-  if (user.role === 'admin') { window.location.href = 'secret-code.html'; return; }
-  if (!user.setup) { window.location.href = 'setup.html'; return; }
-  var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
-  localStorage.removeItem('republicstar_redirect');
-  window.location.href = redirect;
+  var signIn = token && window.republicstarDB
+    ? republicstarDB.signInWithCustomToken(token, !!remember)
+    : Promise.resolve();
+  signIn.then(function(){
+    republicstarSession.set(user.id, user.role || 'citizen', days);
+    if (user.role === 'admin') { window.location.href = '../portal/admin.html'; return; }
+    if (!user.setup) { window.location.href = 'setup.html'; return; }
+    var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+    localStorage.removeItem('republicstar_redirect');
+    window.location.href = redirect;
+  }).catch(function(){
+    var err = document.getElementById('errorMsg') || document.getElementById('tfaError');
+    if (err) { err.textContent = 'Sign-in failed. Please try again.'; err.style.display = 'block'; }
+  });
 }
 
 function resendOTP() {
-  if (!window._pendingUser) return;
-  startTFA(window._pendingUser);
+  if (!window._lastLoginPayload) return;
+  firebase.functions().httpsCallable('loginUser')(window._lastLoginPayload).then(function(result){
+    startTFA(result.data);
+  }).catch(function(){});
   document.getElementById('tfaError').style.display = 'none';
   document.querySelectorAll('.otp').forEach(function(i){ i.value=''; i.style.borderColor='rgba(255,255,255,0.12)'; });
   document.querySelector('.otp').focus();
@@ -562,27 +577,27 @@ function handleLogin(e) {
     btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
   }
 
-  var dbLookup = window.republicstarDB ? window.republicstarDB.getUser(nid) : Promise.reject(new Error('DB not ready'));
-  dbLookup.then(function(user) {
-    if (!user){ failAttempt('National ID not found. Please register first.'); return; }
-    if (atob(user.pwd) !== pwd){ failAttempt('Incorrect credentials. Please try again.'); return; }
-    if (user.status === 'suspended'){
-      err.textContent = 'This account has been suspended. Contact the Ministry of the Interior.';
-      err.style.display = 'block';
-      btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
-      return;
-    }
-    if (user.twofa && user.email) {
-      window._pendingUser = user;
+  if (!window.republicstarDB) {
+    failAttempt('Connection error — check your internet and try again.');
+    return;
+  }
+
+  window._lastLoginPayload = { userId: nid, password: pwd };
+
+  republicstarDB.loginUser(nid, pwd).then(function(result) {
+    if (result.requires2fa) {
       window._pendingRemember = document.getElementById('rememberMe').checked;
-      startTFA(user);
+      startTFA(result);
       btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
-      finishLogin(user, document.getElementById('rememberMe').checked);
+      finishLogin(result, document.getElementById('rememberMe').checked);
     }
   }).catch(function(e){
     console.error(e);
-    failAttempt('Connection error — check your internet and try again.');
+    var msg = e && e.code === 'permission-denied'
+      ? 'This account has been suspended. Contact the Ministry of the Interior.'
+      : 'Invalid National ID or password.';
+    failAttempt(msg);
   });
 }
 

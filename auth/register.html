@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>United Republic of Stars — Official Government Portal</title>
+  <title>United Republic of Stars — Citizen Registration</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -21,14 +21,14 @@
       --gray-mid: #cccccc;
       --gray-dark: #333333;
       --font-head: 'Oswald', sans-serif;
-      --font-sub: 'Inter', sans-serif;
+      --font-sub: 'Rajdhani', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
 
     html { scroll-behavior: smooth; }
-    body { background: var(--white); color: var(--black); font-family: var(--font-body); }
+    body { background: var(--bg-page); color: var(--text-primary); font-family: var(--font-body); }
 
-    /* ── TOP UTILITY BAR ── */
+    /* ── UTILITY BAR ── */
     .utility-bar {
       background: var(--black);
       color: var(--gray-mid);
@@ -48,8 +48,8 @@
 
     /* ── HEADER ── */
     header {
-      background: var(--white);
-      border-bottom: 3px solid var(--black);
+      background: var(--bg-header);
+      border-bottom: var(--border-header);
       padding: 1rem 3rem;
       display: flex;
       align-items: center;
@@ -58,21 +58,8 @@
       top: 0;
       z-index: 100;
     }
-
-    .header-brand {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-
-    /* SVG Emblem — eagle + star + wings (Republicstar style) */
-    .emblem-svg {
-      width: 78px;
-      height: auto;
-      flex-shrink: 0;
-      display: block;
-    }
-
+    .header-brand { display: flex; align-items: center; gap: 1.2rem; }
+    .emblem-svg { width: 78px; height: auto; flex-shrink: 0; display: block; filter: invert(1); }
     .brand-text h1 {
       font-family: var(--font-head);
       font-size: 1.4rem;
@@ -80,7 +67,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.1;
-      color: var(--black);
+      color: var(--text-primary);
     }
     .brand-text span {
       font-family: var(--font-sub);
@@ -91,24 +78,19 @@
       display: block;
       margin-top: 2px;
     }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-    }
+    nav { display: flex; align-items: center; gap: 0.2rem; }
     nav a {
       font-family: var(--font-sub);
       font-size: 0.82rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--black);
+      color: var(--nav-text);
       text-decoration: none;
       padding: 0.5rem 0.9rem;
       transition: color 0.2s, background 0.2s;
     }
-    nav a:hover { background: var(--black); color: var(--white); }
+    nav a:hover { background: var(--nav-hover-bg); color: var(--nav-hover-text); }
     .nav-cta {
       background: var(--red) !important;
       color: var(--white) !important;
@@ -117,556 +99,193 @@
     }
     .nav-cta:hover { background: var(--red-dark) !important; }
 
-    /* ── HERO ── */
-    .hero {
-      background: var(--black);
-      color: var(--white);
-      min-height: 88vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* ── REGISTRATION PAGE WRAPPER ── */
+    .reg-page {
+      min-height: calc(100vh - 120px);
+      background: var(--reg-page-bg);
+      display: flex;
       align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
       position: relative;
       overflow: hidden;
     }
-
-    .hero::before {
+    .reg-page::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0.015) 0px,
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px,
-          transparent 80px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          rgba(255,255,255,0.015) 0px,
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px,
-          transparent 80px
-        );
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 80px);
       pointer-events: none;
     }
-
-    .hero-content {
-      padding: 5rem 3rem 5rem 4rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: var(--font-sub);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 1.6rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 2px;
-      background: var(--red);
-    }
-
-    .hero-title {
-      font-family: var(--font-head);
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      line-height: 1.0;
-      margin-bottom: 1.6rem;
-    }
-    .hero-title em {
-      font-style: normal;
-      color: var(--red);
-    }
-
-    .hero-desc {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.75;
-      color: var(--gray-mid);
-      max-width: 460px;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--red);
-      color: var(--white);
-      font-family: var(--font-sub);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s;
-    }
-    .btn-primary:hover { background: var(--red-dark); }
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      font-family: var(--font-sub);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      border: 1.5px solid rgba(255,255,255,0.35);
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--white); color: var(--white); }
-
-    .hero-emblem {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-      padding: 3rem;
-    }
-
-    /* Large decorative emblem for hero */
-    .hero-emblem-wrap {
-      position: relative;
-      width: 360px;
-      height: 360px;
-    }
-    .hero-emblem-wrap::before,
-    .hero-emblem-wrap::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-emblem-wrap::before { inset: -30px; }
-    .hero-emblem-wrap::after  { inset: -60px; }
-
-    .hero-emblem-svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* ── TICKER ── */
-    .ticker {
-      background: var(--red);
-      color: var(--white);
-      overflow: hidden;
-      height: 42px;
-      display: flex;
-      align-items: center;
-    }
-    .ticker-label {
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--font-sub);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0 1.2rem;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      flex-shrink: 0;
-      border-right: 2px solid var(--red);
-    }
-    .ticker-overflow {
-      flex: 1;
-      overflow: hidden;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      animation: scroll-left 30s linear infinite;
-      white-space: nowrap;
-    }
-    .ticker-track span {
-      font-family: var(--font-sub);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0 2.5rem;
-    }
-    .ticker-track span::after {
-      content: '◆';
-      margin-left: 2.5rem;
-      opacity: 0.5;
-    }
-    @keyframes scroll-left {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ── SECTION COMMONS ── */
-    section { padding: 5rem 4rem; }
-    .section-label {
-      font-family: var(--font-sub);
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-    .section-label::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--red);
-    }
-    .section-title {
-      font-family: var(--font-head);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--gray-dark);
-      line-height: 1.7;
-      max-width: 560px;
-    }
-
-    /* ── SERVICES ── */
-    .services { background: var(--gray-light); }
-    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5px;
-      background: var(--black);
-    }
-    .service-card {
-      background: var(--white);
-      padding: 2.2rem 1.8rem;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .service-card:hover { background: var(--black); color: var(--white); }
-    .service-card:hover .service-icon svg path,
-    .service-card:hover .service-icon svg rect,
-    .service-card:hover .service-icon svg circle { fill: var(--white); }
-    .service-card:hover .service-arrow { color: var(--red); }
-    .service-icon { width: 40px; height: 40px; margin-bottom: 1.2rem; }
-    .service-card h3 {
-      font-family: var(--font-sub);
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    .service-card p { font-size: 0.82rem; line-height: 1.6; color: inherit; opacity: 0.75; }
-    .service-arrow { font-size: 1.2rem; margin-top: 1rem; display: block; color: var(--red); }
-
-    /* ── ANNOUNCEMENT BAND ── */
-    .announce-band {
-      background: var(--black);
-      color: var(--white);
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 0;
-      padding: 0;
-    }
-    .announce-label-col {
-      background: var(--red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 3.5rem 2rem;
-      text-align: center;
-    }
-    .announce-label-col .big-num {
-      font-family: var(--font-head);
-      font-size: 5rem;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--white);
-    }
-    .announce-label-col .big-label {
-      font-family: var(--font-sub);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.8);
-      margin-top: 0.5rem;
-    }
-    .announce-content { padding: 3.5rem; }
-    .announce-content .section-label { color: rgba(255,255,255,0.5); }
-    .announce-content .section-label::before { background: rgba(255,255,255,0.5); }
-    .announce-content .section-title { color: var(--white); }
-    .announce-content p { color: rgba(255,255,255,0.65); font-size: 0.9rem; line-height: 1.75; max-width: 560px; margin-bottom: 2rem; }
-
-
-    /* ── ENLISTMENT ── */
-    .enlistment {
-      background: var(--black);
-      color: var(--white);
-      padding: 5rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .enlistment::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0.012) 0px,
-          rgba(255,255,255,0.012) 1px,
-          transparent 1px,
-          transparent 80px
-        );
-      pointer-events: none;
-    }
-    .enlistment-inner {
+    .reg-inner {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 520px;
     }
-    .enlistment-top {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      margin-bottom: 4rem;
+
+    /* ── EMBLEM ABOVE FORM ── */
+    .reg-emblem-wrap {
+      text-align: center;
+      margin-bottom: 2.5rem;
     }
-    .enlistment-text .section-label { color: rgba(255,255,255,0.45); }
-    .enlistment-text .section-label::before { background: rgba(255,255,255,0.45); }
-    .enlistment-text .section-title { color: var(--white); margin-bottom: 1.2rem; }
-    .enlistment-text p {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      margin-bottom: 2rem;
+    .reg-emblem-wrap img {
+      width: 90px;
+      height: 90px;
+      opacity: 0.85;
     }
-    .enlistment-stats {
-      display: flex;
-      gap: 2.5rem;
-    }
-    .enlist-stat { border-left: 2px solid var(--red); padding-left: 1rem; }
-    .enlist-stat strong {
-      display: block;
+    .reg-emblem-label {
       font-family: var(--font-head);
-      font-size: 2rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--reg-emblem-label);
+      margin-top: 0.8rem;
+    }
+
+    /* ── FORM CARD ── */
+    .reg-card {
+      background: var(--reg-card-bg);
+      border-top: 3px solid var(--red);
+      padding: 2.8rem 2.5rem;
+    }
+    .reg-card-header { margin-bottom: 2rem; }
+    .reg-card-eyebrow {
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.4rem;
+    }
+    .reg-card-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
       font-weight: 700;
-      color: var(--white);
-      letter-spacing: 0.04em;
-    }
-    .enlist-stat span {
-      font-family: var(--font-sub);
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+      color: var(--reg-title-color);
     }
-    .enlistment-branches {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: rgba(255,255,255,0.08);
-    }
-    .branch-card {
-      background: #0f0f0f;
-      padding: 2.5rem 2rem;
-      transition: background 0.25s;
-      cursor: pointer;
-    }
-    .branch-card:hover { background: #1a1a1a; }
-    .branch-icon {
-      width: 52px;
-      height: 52px;
-      border: 1.5px solid var(--red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.4rem;
-    }
-    .branch-icon svg { width: 28px; height: 28px; }
-    .branch-card h3 {
-      font-family: var(--font-head);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.7rem;
-    }
-    .branch-card p {
+    .reg-card-desc {
       font-family: var(--font-body);
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--reg-desc-color);
+      margin-top: 0.5rem;
     }
-    .branch-link {
+
+    /* ── FORM FIELDS ── */
+    #regForm { display: flex; flex-direction: column; gap: 1.2rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .field label {
+      display: block;
       font-family: var(--font-sub);
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
+      font-size: 0.58rem;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--reg-label-color);
+      margin-bottom: 0.45rem;
+    }
+    .field input {
+      width: 100%;
+      background: var(--reg-input-bg);
+      border: 1.5px solid var(--reg-input-border);
+      color: var(--reg-input-color);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 0.8rem 1rem;
+      outline: none;
+    }
+    .field input:focus { border-color: var(--red); }
+
+    /* ── STRENGTH BAR ── */
+    #strengthBar { display: none; margin-top: -0.6rem; }
+    .strength-bars { display: flex; gap: 3px; margin-bottom: 0.3rem; }
+    .strength-bars div { height: 3px; flex: 1; background: var(--reg-strength-empty); border-radius: 2px; }
+    #strengthLabel {
+      font-family: var(--font-sub);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--reg-label-color);
+    }
+
+    /* ── TERMS ── */
+    .terms-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      cursor: pointer;
+      padding-top: 0.3rem;
+    }
+    .terms-label input[type="checkbox"] { accent-color: var(--red); width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
+    .terms-label span {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--reg-desc-color);
+      line-height: 1.5;
+    }
+    .terms-label a { color: var(--red); text-decoration: none; }
+
+    /* ── MESSAGES ── */
+    #regError {
+      display: none;
+      background: rgba(200,16,46,0.12);
+      border-left: 3px solid var(--red);
+      padding: 0.7rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--red);
+    }
+    #regSuccess {
+      display: none;
+      background: rgba(0,180,80,0.1);
+      border-left: 3px solid #00b450;
+      padding: 0.7rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: #00b450;
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    #regBtn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      font-family: var(--font-sub);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    #regBtn:hover { background: var(--red-dark); }
+
+    /* ── SIGN IN LINK ── */
+    .reg-signin {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .reg-signin span {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: var(--reg-desc-color);
+    }
+    .reg-signin a {
+      font-family: var(--font-sub);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--red);
       text-decoration: none;
+      margin-left: 0.5rem;
     }
-    .branch-link:hover { color: #ff3355; }
-    .enlistment-cta {
-      margin-top: 3rem;
-      text-align: center;
-    }
-
-    /* ── NEWS ── */
-    .news { background: var(--white); }
-    .news-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-    .news-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5px; background: var(--black); }
-    .news-card { background: var(--white); overflow: hidden; }
-    .news-card.featured { grid-row: span 2; }
-    .news-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-    .news-img.alt { background: #111; }
-    .news-img-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .news-body { padding: 1.5rem; }
-    .news-tag {
-      font-family: var(--font-sub);
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-    .news-card h3 {
-      font-family: var(--font-sub);
-      font-size: 1.0rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      line-height: 1.3;
-      margin-bottom: 0.6rem;
-    }
-    .news-card p { font-size: 0.82rem; line-height: 1.6; color: var(--gray-dark); }
-    .news-meta { font-size: 0.7rem; color: var(--gray-mid); margin-top: 0.8rem; letter-spacing: 0.06em; }
-
-    /* ── STATS ── */
-    .stats {
-      background: var(--black);
-      color: var(--white);
-      padding: 4rem;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5px;
-      background-color: var(--black);
-    }
-    .stat-item {
-      padding: 2.5rem 2rem;
-      background: #111;
-      border-left: 3px solid transparent;
-      transition: border-color 0.2s;
-    }
-    .stat-item:hover { border-color: var(--red); }
-    .stat-num {
-      font-family: var(--font-head);
-      font-size: 3.2rem;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1;
-    }
-    .stat-num span { color: var(--red); }
-    .stat-label {
-      font-family: var(--font-sub);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-top: 0.6rem;
-    }
-
-    /* ── MINISTRIES ── */
-    .ministries { background: var(--gray-light); }
-    .ministries-header { margin-bottom: 3rem; }
-    .ministries-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--gray-mid); }
-    .ministry-item {
-      background: var(--white);
-      padding: 1.8rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      cursor: pointer;
-      border-left: 3px solid transparent;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .ministry-item:hover { border-color: var(--red); background: #fafafa; }
-    .ministry-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .ministry-item h4 {
-      font-family: var(--font-sub);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.25rem;
-    }
-    .ministry-item p { font-size: 0.75rem; color: var(--gray-dark); }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--black);
-      color: var(--white);
-      padding: 4rem 4rem 2rem;
-    }
+    footer { background: var(--black); color: var(--white); padding: 4rem 4rem 2rem; }
     .footer-grid {
       display: grid;
       grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -687,13 +306,7 @@
       margin-bottom: 1.2rem;
     }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-col ul li a {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
+    .footer-col ul li a { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
     .footer-col ul li a:hover { color: var(--white); }
     .footer-bottom {
       display: flex;
@@ -706,26 +319,194 @@
     .footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
 
-    /* ── EAGLE EMBLEM SVG PATHS ── */
+    /* ── MODAL ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-card {
+      max-width: 480px;
+      width: 100%;
+      padding: 2.5rem 2.2rem;
+      position: relative;
+      border-top: 4px solid var(--red);
+    }
+    .modal-check {
+      width: 56px;
+      height: 56px;
+      background: rgba(0,180,80,0.1);
+      border: 1.5px solid rgba(0,180,80,0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .modal-eyebrow {
+      font-family: var(--font-sub);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    .modal-title {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .modal-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .modal-id-box {
+      border: 1.5px solid rgba(200,16,46,0.4);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .modal-id-label {
+      font-family: var(--font-sub);
+      font-size: 0.55rem;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .modal-id-value {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+    }
+    .modal-notice {
+      background: rgba(245,166,35,0.06);
+      border: 1px solid rgba(245,166,35,0.2);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+    .modal-cta {
+      display: block;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      font-family: var(--font-sub);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.6rem;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    /* ── THEME OVERRIDES ── */
+
+    /* Header / nav */
+    [data-theme="dark"] header  { background: #0a0a0a !important; border-bottom: 2px solid #c8102e !important; }
+    [data-theme="dark"] .brand-text h1 { color: #ffffff !important; }
+    [data-theme="dark"] nav a   { color: rgba(255,255,255,0.8) !important; }
+    [data-theme="dark"] nav a:hover { background: #c8102e !important; color: #ffffff !important; }
+
+    [data-theme="light"] header { background: #ffffff !important; border-bottom: 3px solid #0a0a0a !important; }
+    [data-theme="light"] .brand-text h1 { color: #0a0a0a !important; }
+    [data-theme="light"] nav a  { color: #0a0a0a !important; }
+    [data-theme="light"] nav a:hover { background: #0a0a0a !important; color: #ffffff !important; }
+
+    /* Emblem: white on dark header, dark on light header */
+    [data-theme="dark"]  header .header-brand .emblem-svg { filter: invert(1) !important; }
+    [data-theme="light"] header .header-brand .emblem-svg { filter: invert(0) !important; }
+
+    /* Registration page area */
+    [data-theme="dark"]  .reg-page { --reg-page-bg: #0a0a0a; }
+    [data-theme="light"] .reg-page { --reg-page-bg: #e8e8e8; }
+
+    [data-theme="dark"]  .reg-page::before { background: repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px); }
+    [data-theme="light"] .reg-page::before { background: none; }
+
+    [data-theme="dark"]  .reg-emblem-wrap img { filter: invert(1); }
+    [data-theme="light"] .reg-emblem-wrap img { filter: none; }
+
+    [data-theme="dark"]  .reg-emblem-label { color: rgba(255,255,255,0.35); }
+    [data-theme="light"] .reg-emblem-label { color: rgba(0,0,0,0.45); }
+
+    [data-theme="dark"]  .reg-card { background: #0f0f0f; }
+    [data-theme="light"] .reg-card { background: #ffffff; }
+
+    [data-theme="dark"]  .reg-card-title { color: #ffffff; }
+    [data-theme="light"] .reg-card-title { color: #0a0a0a; }
+
+    [data-theme="dark"]  .reg-card-desc  { color: rgba(255,255,255,0.4); }
+    [data-theme="light"] .reg-card-desc  { color: rgba(0,0,0,0.5); }
+
+    [data-theme="dark"]  .field label     { color: rgba(255,255,255,0.4); }
+    [data-theme="light"] .field label     { color: rgba(0,0,0,0.5); }
+
+    [data-theme="dark"]  .field input     { background: #1a1a1a; border-color: rgba(255,255,255,0.1); color: #ffffff; }
+    [data-theme="light"] .field input     { background: #f4f4f4; border-color: rgba(0,0,0,0.15); color: #0a0a0a; }
+
+    [data-theme="dark"]  .strength-bars div { background: rgba(255,255,255,0.08); }
+    [data-theme="light"] .strength-bars div { background: rgba(0,0,0,0.1); }
+
+    [data-theme="dark"]  #strengthLabel   { color: rgba(255,255,255,0.3); }
+    [data-theme="light"] #strengthLabel   { color: rgba(0,0,0,0.4); }
+
+    [data-theme="dark"]  .terms-label span { color: rgba(255,255,255,0.4); }
+    [data-theme="light"] .terms-label span { color: rgba(0,0,0,0.5); }
+
+    [data-theme="dark"]  .reg-signin span  { color: rgba(255,255,255,0.3); }
+    [data-theme="light"] .reg-signin span  { color: rgba(0,0,0,0.4); }
+
+    [data-theme="dark"]  body { background: #0a0a0a !important; }
+    [data-theme="light"] body { background: #f4f4f4 !important; }
+
+    [data-theme="dark"]  .footer-emblem { filter: invert(1); }
+    [data-theme="light"] .footer-emblem { filter: invert(0); }
+
+    /* Modal */
+    [data-theme="dark"]  .modal-card         { background: #0d0d0d; }
+    [data-theme="light"] .modal-card         { background: #ffffff; }
+    [data-theme="dark"]  .modal-title        { color: #ffffff; }
+    [data-theme="light"] .modal-title        { color: #0a0a0a; }
+    [data-theme="dark"]  .modal-desc         { color: rgba(255,255,255,0.5); }
+    [data-theme="light"] .modal-desc         { color: rgba(0,0,0,0.55); }
+    [data-theme="dark"]  .modal-desc-strong  { color: rgba(255,255,255,0.85); }
+    [data-theme="light"] .modal-desc-strong  { color: #0a0a0a; }
+    [data-theme="dark"]  .modal-id-box       { background: #1a1a1a; }
+    [data-theme="light"] .modal-id-box       { background: #f4f4f4; }
+    [data-theme="dark"]  .modal-id-label     { color: rgba(255,255,255,0.35); }
+    [data-theme="light"] .modal-id-label     { color: rgba(0,0,0,0.4); }
+    [data-theme="dark"]  .modal-id-value     { color: #ffffff; }
+    [data-theme="light"] .modal-id-value     { color: #0a0a0a; }
+    [data-theme="dark"]  .modal-notice       { color: rgba(255,255,255,0.5); }
+    [data-theme="light"] .modal-notice       { color: rgba(0,0,0,0.55); }
   </style>
 
-  <!-- Open Graph / Discord -->
+  <!-- Open Graph -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/auth/register.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="United Republic of Stars — Official Government Portal">
+  <meta property="og:title"       content="United Republic of Stars — Citizen Registration">
   <meta property="og:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
-  <!-- Twitter Card -->
-  <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="United Republic of Stars — Official Government Portal">
-  <meta name="twitter:description" content="Register as a citizen of the United Republic of Stars and gain access to all public services.">
-  <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta name="twitter:card"       content="summary_large_image">
 </head>
 <body>
+
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <div class="utility-links">
@@ -743,10 +524,7 @@
 <!-- HEADER -->
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
-    <!-- Republicstar Eagle Emblem (inline SVG) -->
     <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
-
-
     <div class="brand-text">
       <h1>United Republic of Stars</h1>
       <span>Official Government Portal · Est. MMXII</span>
@@ -761,95 +539,85 @@
     <a href="citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
+
 <main>
-<div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
-  <div style="position:relative;z-index:1;width:100%;max-width:520px;">
+  <div class="reg-page">
+    <div class="reg-inner">
 
-    <div style="text-align:center;margin-bottom:2.5rem;">
-      <img loading="lazy" src="../svgs/icone/republica/2.svg" style="width:90px;height:90px;filter:invert(1);opacity:0.85;" alt="United Republic of Stars — Official Emblem">
-      <div style="font-family:var(--font-head);font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
-    </div>
-
-    <div style="background:#0f0f0f;border-top:3px solid #c8102e;padding:2.8rem 2.5rem;">
-      <div style="margin-bottom:2rem;">
-        <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8102e;margin-bottom:0.4rem;">Citizen Registration</div>
-        <h1 style="font-family:var(--font-head);font-size:1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--white);">Create Account</h1>
-        <p style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;">Registration is subject to approval by the Civil Registry Authority.</p>
+      <div class="reg-emblem-wrap">
+        <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
+        <div class="reg-emblem-label">United Republic of Stars</div>
       </div>
 
-      <form id="regForm" onsubmit="handleRegister(event)" style="display:flex;flex-direction:column;gap:1.2rem;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-          <div>
-            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">First Name</label>
-            <input id="fname" type="text" placeholder="Alessandro" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+      <div class="reg-card">
+        <div class="reg-card-header">
+          <div class="reg-card-eyebrow">Citizen Registration</div>
+          <h1 class="reg-card-title">Create Account</h1>
+          <p class="reg-card-desc">Registration is subject to approval by the Civil Registry Authority.</p>
+        </div>
+
+        <form id="regForm" onsubmit="handleRegister(event)">
+          <div class="field-row">
+            <div class="field">
+              <label>First Name</label>
+              <input id="fname" type="text" placeholder="Alessandro" required>
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input id="lname" type="text" placeholder="Rossi" required>
+            </div>
           </div>
-          <div>
-            <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Last Name</label>
-            <input id="lname" type="text" placeholder="Rossi" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
+          <div class="field">
+            <label>Date of Birth</label>
+            <input id="dob" type="date" required>
           </div>
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Date of Birth</label>
-          <input id="dob" type="date" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Email Address</label>
-          <input id="email" type="email" placeholder="a.rossi@example.com" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Password</label>
-          <input id="reg_pwd" type="password" placeholder="Min. 8 characters" required minlength="8" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-        <div>
-          <label style="display:block;font-family:var(--font-sub);font-size:0.58rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.45rem;">Confirm Password</label>
-          <input id="reg_pwd2" type="password" placeholder="Repeat password" required style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.8rem 1rem;outline:none;box-sizing:border-box;">
-        </div>
-
-        <!-- Password strength -->
-        <div id="strengthBar" style="display:none;margin-top:-0.6rem;">
-          <div style="display:flex;gap:3px;margin-bottom:0.3rem;">
-            <div id="s1" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s2" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s3" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
-            <div id="s4" style="height:3px;flex:1;background:rgba(255,255,255,0.08);border-radius:2px;"></div>
+          <div class="field">
+            <label>Email Address</label>
+            <input id="email" type="email" placeholder="a.rossi@example.com" required>
           </div>
-          <span id="strengthLabel" style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);"></span>
-        </div>
+          <div class="field">
+            <label>Password</label>
+            <input id="reg_pwd" type="password" placeholder="Min. 8 characters" required minlength="8">
+          </div>
+          <div class="field">
+            <label>Confirm Password</label>
+            <input id="reg_pwd2" type="password" placeholder="Repeat password" required>
+          </div>
 
-        <!-- Terms -->
-        <label style="display:flex;align-items:flex-start;gap:0.7rem;cursor:pointer;padding-top:0.3rem;">
-          <input type="checkbox" id="terms" required style="accent-color:#c8102e;width:14px;height:14px;flex-shrink:0;margin-top:2px;">
-          <span style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;">I confirm this information is accurate and I accept the <a href="#" style="color:#c8102e;text-decoration:none;">Terms of Use</a> and <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a> of the United Republic of Stars.</span>
-        </label>
+          <div id="strengthBar">
+            <div class="strength-bars">
+              <div id="s1"></div><div id="s2"></div><div id="s3"></div><div id="s4"></div>
+            </div>
+            <span id="strengthLabel"></span>
+          </div>
 
-        <div id="regError" style="display:none;background:rgba(200,16,46,0.12);border-left:3px solid #c8102e;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#c8102e;"></div>
-        <div id="regSuccess" style="display:none;background:rgba(0,180,80,0.1);border-left:3px solid #00b450;padding:0.7rem 1rem;font-family:var(--font-body);font-size:0.8rem;color:#00b450;"></div>
+          <label class="terms-label">
+            <input type="checkbox" id="terms" required>
+            <span>I confirm this information is accurate and I accept the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a> of the United Republic of Stars.</span>
+          </label>
 
-        <button type="submit" id="regBtn" style="background:#c8102e;color:var(--white);border:none;font-family:var(--font-sub);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:1rem;cursor:pointer;width:100%;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">
-          Submit Registration →
-        </button>
-      </form>
-    </div>
+          <div id="regError"></div>
+          <div id="regSuccess"></div>
 
-    <div style="text-align:center;margin-top:1.5rem;">
-      <span style="font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.3);">Already registered?</span>
-      <a href="citizen-login.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:#c8102e;text-decoration:none;margin-left:0.5rem;">Sign In →</a>
+          <button type="submit" id="regBtn">Submit Registration →</button>
+        </form>
+      </div>
+
+      <div class="reg-signin">
+        <span>Already registered?</span>
+        <a href="citizen-login.html">Sign In →</a>
+      </div>
+
     </div>
   </div>
-</div>
-
-<!-- FOOTER -->
 </main>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">
-
-
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" class="footer-emblem" style="display:block;" alt="United Republic of Stars — Official Emblem">
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
-      <p style="font-size:0.7rem; color: rgba(255,255,255,0.2); letter-spacing:0.08em; text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
     </div>
     <div class="footer-col">
       <h5>Government</h5>
@@ -884,26 +652,13 @@
   </div>
   <div class="footer-bottom">
     <span>United Republic of Stars · Est. MMXII · Official Government Website</span>
-    <div style="display:flex; gap:1.5rem;">
+    <div style="display:flex;gap:1.5rem;">
       <a href="#">Privacy Policy</a>
       <a href="#">Accessibility</a>
       <a href="#">Terms of Use</a>
     </div>
   </div>
 </footer>
-
-<script>
-  // Ticker: pausa on hover
-  const track = document.getElementById('ticker');
-  if (track) {
-    track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
-    track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
-  }
-</script>
-
-<script>
-// Show logged-in indicator in nav
-</script>
 
 <!-- COOKIE CONSENT -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid #c8102e;z-index:9999;padding:1.2rem 2.5rem;font-family:var(--font-body);">
@@ -917,120 +672,153 @@
     </div>
     <div style="display:flex;gap:0.8rem;align-items:center;flex-shrink:0;">
       <button onclick="setCookiePref('essential')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.5)'">Essential Only</button>
-      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Accept & Continue</button>
+      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Accept &amp; Continue</button>
     </div>
   </div>
 </div>
 
+<!-- Registration Success Modal -->
+<div id="regSuccessModal" class="modal-backdrop">
+  <div class="modal-card">
+    <div class="modal-check">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="modal-eyebrow">Civil Registry Authority</div>
+    <div class="modal-title">Registration<br>Successful</div>
+    <p class="modal-desc">Your citizen account has been created. Save your <strong class="modal-desc-strong">National ID</strong> &mdash; you will need it to log in.</p>
+    <div class="modal-id-box">
+      <div class="modal-id-label">Your National ID</div>
+      <div id="modalNationalId" class="modal-id-value"></div>
+    </div>
+    <div class="modal-notice">
+      Your account is <strong style="color:#f5a623;">pending approval</strong> by the Civil Registry. You can log in, but services will be limited until approval.
+    </div>
+    <a href="citizen-login.html" class="modal-cta" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Go to Login &rarr;</a>
+  </div>
+</div>
 
 <script>
 document.getElementById('reg_pwd').addEventListener('input', function(){
-  const v = this.value;
-  const bar = document.getElementById('strengthBar');
+  var v = this.value;
+  var bar = document.getElementById('strengthBar');
   bar.style.display = v ? 'block' : 'none';
-  let score = 0;
+  var score = 0;
   if (v.length >= 8) score++;
   if (/[A-Z]/.test(v)) score++;
   if (/[0-9]/.test(v)) score++;
   if (/[^A-Za-z0-9]/.test(v)) score++;
-  const colors = ['#c8102e','#e86b00','#f5c000','#00b450'];
-  const labels = ['Weak','Fair','Good','Strong'];
-  [1,2,3,4].forEach(i => {
-    const el = document.getElementById('s'+i);
-    el.style.background = i <= score ? colors[score-1] : 'rgba(255,255,255,0.08)';
+  var colors = ['#c8102e','#e86b00','#f5c000','#00b450'];
+  var labels = ['Weak','Fair','Good','Strong'];
+  [1,2,3,4].forEach(function(i){
+    var el = document.getElementById('s'+i);
+    el.style.background = i <= score ? colors[score-1] : '';
   });
-  const lbl = document.getElementById('strengthLabel');
+  var lbl = document.getElementById('strengthLabel');
   lbl.textContent = score > 0 ? 'Password strength: ' + labels[score-1] : '';
-  lbl.style.color = score > 0 ? colors[score-1] : 'rgba(255,255,255,0.3)';
+  lbl.style.color = score > 0 ? colors[score-1] : '';
 });
-</script>
-</body>
 
+document.querySelectorAll('.field input').forEach(function(el){
+  el.addEventListener('focus', function(){ el.style.borderColor = '#c8102e'; });
+  el.addEventListener('blur',  function(){ el.style.borderColor = ''; });
+});
 
-<script>
 function generateID(){
-  const c='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let id='ARX-';
-  for(let i=0;i<3;i++) id+=c[Math.floor(Math.random()*36)];
-  id+='-';
-  for(let i=0;i<6;i++) id+=Math.floor(Math.random()*10);
+  var c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var id = 'ARX-';
+  for (var i = 0; i < 3; i++) id += c[Math.floor(Math.random()*36)];
+  id += '-';
+  for (var i = 0; i < 6; i++) id += Math.floor(Math.random()*10);
   return id;
 }
+
 function handleRegister(e){
   e.preventDefault();
-  const err=document.getElementById('regError');
-  const suc=document.getElementById('regSuccess');
-  const btn=document.getElementById('regBtn');
-  err.style.display='none'; suc.style.display='none';
-  const fname=document.getElementById('fname').value.trim();
-  const lname=document.getElementById('lname').value.trim();
-  const dob=document.getElementById('dob').value;
-  const email=document.getElementById('email').value.trim();
-  const pwd=document.getElementById('reg_pwd').value;
-  const pwd2=document.getElementById('reg_pwd2').value;
-  if(pwd!==pwd2){ err.textContent='Passwords do not match.'; err.style.display='block'; return; }
-  btn.textContent='Processing...'; btn.disabled=true;
-  (window.republicstarDB ? window.republicstarDB.emailExists(email) : Promise.resolve(false))
+  var err = document.getElementById('regError');
+  var suc = document.getElementById('regSuccess');
+  var btn = document.getElementById('regBtn');
+  err.style.display = 'none';
+  suc.style.display = 'none';
+  var fname = document.getElementById('fname').value.trim();
+  var lname = document.getElementById('lname').value.trim();
+  var dob   = document.getElementById('dob').value;
+  var email = document.getElementById('email').value.trim();
+  var pwd   = document.getElementById('reg_pwd').value;
+  var pwd2  = document.getElementById('reg_pwd2').value;
+  if (pwd !== pwd2){
+    err.textContent = 'Passwords do not match.';
+    err.style.display = 'block';
+    return;
+  }
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+  if (pwd.length < 8){
+    err.textContent = 'Password must be at least 8 characters.';
+    err.style.display = 'block';
+    btn.textContent = 'Submit Registration ->';
+    btn.disabled = false;
+    return;
+  }
+  if (!window.republicstarDB){
+    err.textContent = 'Connection error - please try again.';
+    err.style.display = 'block';
+    btn.textContent = 'Submit Registration ->';
+    btn.disabled = false;
+    return;
+  }
+  republicstarDB.registerUser({
+    firstName: fname,
+    lastName: lname,
+    dob: dob,
+    email: email,
+    password: pwd
+  }).then(function(result){
+    showRegSuccessModal(result.id);
+    document.getElementById('regForm').style.opacity = '0.4';
+    document.getElementById('regForm').style.pointerEvents = 'none';
+    btn.textContent = 'Submitted';
+  }).catch(function(e){
+    err.textContent = e && e.code === 'already-exists'
+      ? 'An account with this email already exists.'
+      : 'Failed to save. Check your internet connection.';
+    err.style.display = 'block';
+    btn.textContent = 'Submit Registration ->';
+    btn.disabled = false;
+  });
+  return;
+  Promise.resolve(false)
   .then(function(exists){
-    if(exists){
-      err.textContent='An account with this email already exists.';
-      err.style.display='block';
-      btn.textContent='Submit Registration →';
-      btn.disabled=false;
+    if (exists){
+      err.textContent = 'An account with this email already exists.';
+      err.style.display = 'block';
+      btn.textContent = 'Submit Registration →';
+      btn.disabled = false;
       return;
     }
-    const nu={id:generateID(),name:fname+' '+lname,dob,email,pwd:btoa(pwd),role:'citizen',status:'pending',setup:false,registered:new Date().toISOString()};
-    var savePromise = window.republicstarDB ? window.republicstarDB.saveUser(nu) : Promise.resolve();
+    var nu = {};
+    var savePromise = Promise.reject(new Error('legacy registration disabled'));
     savePromise.then(function(){
       showRegSuccessModal(nu.id);
-      document.getElementById('regForm').style.opacity='0.4';
-      document.getElementById('regForm').style.pointerEvents='none';
-      btn.textContent='Submitted ✓';
+      document.getElementById('regForm').style.opacity = '0.4';
+      document.getElementById('regForm').style.pointerEvents = 'none';
+      btn.textContent = 'Submitted ✓';
     }).catch(function(){
-      err.textContent='Failed to save. Check your internet connection.';
-      err.style.display='block';
-      btn.textContent='Submit Registration →';
-      btn.disabled=false;
+      err.textContent = 'Failed to save. Check your internet connection.';
+      err.style.display = 'block';
+      btn.textContent = 'Submit Registration →';
+      btn.disabled = false;
     });
   }).catch(function(){
-    err.textContent='Connection error — please try again.';
-    err.style.display='block';
-    btn.textContent='Submit Registration →';
-    btn.disabled=false;
+    err.textContent = 'Connection error — please try again.';
+    err.style.display = 'block';
+    btn.textContent = 'Submit Registration →';
+    btn.disabled = false;
   });
 }
 
-document.querySelectorAll('input').forEach(el=>{
-  el.addEventListener('focus',()=>el.style.borderColor='#c8102e');
-  el.addEventListener('blur',()=>el.style.borderColor='rgba(255,255,255,0.1)');
-});
-</script>
-
-<!-- Registration Success Modal -->
-<div id="regSuccessModal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:1.5rem;">
-  <div style="background:#0d0d0d;border-top:4px solid #c8102e;max-width:480px;width:100%;padding:2.5rem 2.2rem;position:relative;">
-    <div style="width:60px;height:60px;background:rgba(0,180,80,0.1);border:1.5px solid rgba(0,180,80,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00b450" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#c8102e;margin-bottom:0.5rem;">Civil Registry Authority</div>
-    <div style="font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;margin-bottom:0.8rem;">Registration<br>Successful</div>
-    <p style="font-family:'Inter',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.5rem;">Your citizen account has been created. Save your <strong style="color:rgba(255,255,255,0.8);">National ID</strong> &mdash; you will need it to log in.</p>
-    <div style="background:#1a1a1a;border:1.5px solid rgba(200,16,46,0.4);padding:1rem 1.2rem;margin-bottom:1.5rem;">
-      <div style="font-family:'Rajdhani',sans-serif;font-size:0.55rem;letter-spacing: 0.10em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.4rem;">Your National ID</div>
-      <div id="modalNationalId" style="font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:600;letter-spacing: 0.10em;color:#fff;"></div>
-    </div>
-    <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);padding:0.75rem 1rem;margin-bottom:1.5rem;font-family:'Inter',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.6;">
-      Your account is <strong style="color:#f5a623;">pending approval</strong> by the Civil Registry. You can log in, but services will be limited until approval.
-    </div>
-    <a href="citizen-login.html" style="display:block;background:#c8102e;color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.9rem 1.6rem;cursor:pointer;text-decoration:none;text-align:center;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Go to Login &rarr;</a>
-  </div>
-</div>
-
-<script>
-function showRegSuccessModal(id) {
+function showRegSuccessModal(id){
   document.getElementById('modalNationalId').textContent = id;
-  var modal = document.getElementById('regSuccessModal');
-  modal.style.display = 'flex';
+  document.getElementById('regSuccessModal').style.display = 'flex';
 }
 </script>
 </body>

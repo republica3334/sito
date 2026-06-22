@@ -3,6 +3,7 @@ var _republicstarBase = (document.currentScript ? document.currentScript.src.rep
 
 /* ── Firebase SDK (injected synchronously) ── */
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"><\/scr'+'ipt>');
+document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-functions-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><\/scr'+'ipt>');
@@ -35,15 +36,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   w.republicstarCookie = ck;
 
   /* ── Local dev users (fallback when Firestore unavailable) ── */
-  var LOCAL_USERS = {
-    'testuser': {id:'testuser',name:'Test User',dob:'2000-01-01',email:'test@test.com',pwd:btoa('test1234'),role:'citizen',status:'approved',setup:true}
-  };
-
   function getUser(id){
     if (window.republicstarDB){
-      return window.republicstarDB.getUser(id).then(function(u){ return u || LOCAL_USERS[id] || null; });
+      return window.republicstarDB.getUser(id).then(function(u){ return u || null; });
     }
-    return Promise.resolve(LOCAL_USERS[id] || null);
+    return Promise.resolve(null);
   }
 
   /* ── 2. Session API ── */
@@ -73,11 +70,14 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       ck.del('republicstar_role');
       localStorage.removeItem('republicstar_session_start');
       localStorage.removeItem('republicstar_remember');
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().catch(function(){});
+      }
     },
 
     isAdmin: function(){
       var s = session.get();
-      return s && s.user === ADMIN_ID;
+      return !!(s && (s.user === ADMIN_ID || s.role === 'admin'));
     },
 
     requireLogin: function(){
@@ -91,7 +91,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     requireAdmin: function(){
       var s = session.get();
-      if (!s || s.user !== ADMIN_ID){ window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
+      if (!s || (s.user !== ADMIN_ID && s.role !== 'admin')){ window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
       return true;
     },
 
@@ -102,7 +102,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     requireMod: function(){
       var s = session.get();
-      if (!s || (s.role !== 'moderator' && s.user !== ADMIN_ID)){
+      if (!s || (s.role !== 'moderator' && s.role !== 'admin' && s.user !== ADMIN_ID)){
         window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false;
       }
       return true;
@@ -128,9 +128,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       return;
     }
 
-    var isAdmin = (s.user === ADMIN_ID);
+    var isAdmin = (s.user === ADMIN_ID || s.role === 'admin');
     var isMod   = (s.role === 'moderator');
-    var label   = isAdmin ? 'ADMIN' : isMod ? 'MOD' : s.user.substring(0, 10).toUpperCase();
+    var initials = s.user.charAt(0).toUpperCase();
+    var shortLabel = isAdmin ? 'ADMIN' : isMod ? 'MOD' : s.user.substring(0, 8).toUpperCase();
+    var avatarColor = isAdmin ? '#c8102e' : isMod ? '#5a3ebf' : '#1f1f1f';
 
     /* wrapper */
     var wrapper = document.createElement('div');
@@ -138,10 +140,34 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     /* trigger button */
     var btn = document.createElement('button');
-    btn.style.cssText = 'background:var(--red);color:#fff;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.5rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:0.45rem;';
-    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>'
-                  + label
-                  + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+    btn.style.cssText = 'background:none;border:1.5px solid rgba(255,255,255,0.18);color:#fff;'
+      + 'font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;'
+      + 'padding:0.3rem 0.75rem 0.3rem 0.3rem;cursor:pointer;display:flex;align-items:center;gap:0.5rem;'
+      + 'transition:border-color 0.2s,background 0.2s;';
+    btn.onmouseover = function(){ btn.style.borderColor = 'rgba(255,255,255,0.45)'; btn.style.background = 'rgba(255,255,255,0.06)'; };
+    btn.onmouseout  = function(){ btn.style.borderColor = 'rgba(255,255,255,0.18)'; btn.style.background = 'none'; };
+
+    var avatar = document.createElement('span');
+    avatar.style.cssText = 'width:26px;height:26px;border-radius:0;background:' + avatarColor + ';'
+      + 'display:inline-flex;align-items:center;justify-content:center;'
+      + 'font-family:var(--font-head);font-size:0.75rem;font-weight:700;letter-spacing:0;color:#fff;flex-shrink:0;';
+    avatar.textContent = initials;
+
+    var labelNode = document.createTextNode(shortLabel);
+
+    var chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    chevron.setAttribute('width', '9');
+    chevron.setAttribute('height', '9');
+    chevron.setAttribute('viewBox', '0 0 24 24');
+    chevron.setAttribute('fill', 'none');
+    chevron.setAttribute('stroke', 'currentColor');
+    chevron.setAttribute('stroke-width', '2.5');
+    chevron.innerHTML = '<polyline points="6 9 12 15 18 9"/>';
+
+    btn.appendChild(avatar);
+    btn.appendChild(labelNode);
+    btn.appendChild(chevron);
+
     btn.onclick = function(e){
       e.preventDefault();
       e.stopPropagation();
@@ -190,22 +216,34 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     /* header row */
     var navHeader = document.createElement('div');
-    navHeader.style.cssText = 'padding:0.8rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+    navHeader.style.cssText = 'padding:0.85rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:0.75rem;';
     var roleColor = isAdmin ? '#c8102e' : isMod ? '#7e5bff' : 'rgba(255,255,255,0.35)';
+
+    var bigAvatar = document.createElement('div');
+    bigAvatar.style.cssText = 'width:36px;height:36px;background:' + avatarColor + ';flex-shrink:0;'
+      + 'display:flex;align-items:center;justify-content:center;'
+      + 'font-family:var(--font-head);font-size:1rem;font-weight:700;color:#fff;';
+    bigAvatar.textContent = initials;
+
+    var headerInfo = document.createElement('div');
+    headerInfo.style.cssText = 'min-width:0;flex:1;';
+
     var nameEl   = document.createElement('div');
     var emailEl  = document.createElement('div');
     var statusEl = document.createElement('div');
-    nameEl.style.cssText   = 'font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.9);font-family:var(--font-body);margin-bottom:1px;';
-    emailEl.style.cssText  = 'font-size:0.7rem;color:rgba(255,255,255,0.3);font-family:var(--font-body);';
-    statusEl.style.cssText = 'margin-top:5px;';
+    nameEl.style.cssText   = 'font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.9);font-family:var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    emailEl.style.cssText  = 'font-size:0.7rem;color:rgba(255,255,255,0.3);font-family:var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    statusEl.style.cssText = 'margin-top:4px;display:flex;align-items:center;gap:0.4rem;';
     nameEl.textContent = s.user;
     var roleLabel = document.createElement('div');
-    roleLabel.style.cssText = 'font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.14em;color:'+roleColor+';text-transform:uppercase;margin-bottom:3px;';
+    roleLabel.style.cssText = 'font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.14em;color:'+roleColor+';text-transform:uppercase;';
     roleLabel.textContent = isAdmin ? '★ Supreme Administrator' : isMod ? '⬡ Moderator' : '◈ Citizen';
-    navHeader.appendChild(roleLabel);
-    navHeader.appendChild(nameEl);
-    navHeader.appendChild(emailEl);
-    navHeader.appendChild(statusEl);
+    headerInfo.appendChild(roleLabel);
+    headerInfo.appendChild(nameEl);
+    headerInfo.appendChild(emailEl);
+    headerInfo.appendChild(statusEl);
+    navHeader.appendChild(bigAvatar);
+    navHeader.appendChild(headerInfo);
     menu.appendChild(navHeader);
 
     /* Load real profile data (falls back to local users) */
@@ -463,7 +501,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     };
   })();
 
-  /* ── 6. Mobile nav — hamburger + compressed profile button ── */
+  /* ── 6. Mobile nav — hamburger + avatar profile button ── */
   w.republicstarMobileNav = function(){
     if (window.innerWidth > 768) return;
     var header = document.querySelector('header');
@@ -473,108 +511,180 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     if (header.querySelector('#_republicstarMobileNavWidget')) return;
 
     var group = document.createElement('div');
-    group.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
-
-    /* ── Profile button (icon-only, compressed) ── */
-    var placeholder = document.createElement('a');
-    placeholder.id = '_republicstarMobileNavWidget';
-    placeholder.className = 'nav-cta';
-    placeholder.href = _republicstarBase + 'auth/citizen-login.html';
-    placeholder.textContent = 'Login';
-    group.appendChild(placeholder);
+    group.id = '_republicstarMobileNavWidget';
+    group.style.cssText = 'display:flex;align-items:center;gap:0.4rem;';
     header.appendChild(group);
-    w.republicstarUpdateNav(placeholder);
 
-    /* Compress the injected button to icon-only after it's built */
-    setTimeout(function(){
-      var btn = group.querySelector('button');
-      if (btn) {
-        btn.style.padding = '0.5rem';
-        btn.style.gap = '0';
-        var svgs = btn.querySelectorAll('svg');
-        /* hide label text node and chevron */
-        btn.childNodes.forEach(function(n){
-          if (n.nodeType === 3) n.textContent = '';
-        });
-        if (svgs[1]) svgs[1].style.display = 'none';
-      }
-    }, 0);
+    /* ── Profile / Login button ── */
+    var s = session.get();
+    var profileBtn = document.createElement('a');
+    profileBtn.href = _republicstarBase + 'auth/citizen-login.html';
+    profileBtn.style.cssText = 'display:flex;align-items:center;justify-content:center;'
+      + 'width:34px;height:34px;text-decoration:none;flex-shrink:0;';
+
+    if (s) {
+      var isAdminM = (s.user === ADMIN_ID || s.role === 'admin');
+      var isModM   = (s.role === 'moderator');
+      var aColor   = isAdminM ? '#c8102e' : isModM ? '#5a3ebf' : '#2a2a2a';
+      var aInit    = s.user.charAt(0).toUpperCase();
+      profileBtn.style.background = aColor;
+      profileBtn.style.color      = '#fff';
+      profileBtn.style.fontFamily = 'var(--font-head)';
+      profileBtn.style.fontSize   = '0.85rem';
+      profileBtn.style.fontWeight = '700';
+      profileBtn.style.border     = '1.5px solid rgba(255,255,255,0.2)';
+      profileBtn.textContent = aInit;
+
+      /* Enrich with real name initial once loaded */
+      getUser(s.user).then(function(user){
+        if (user && user.name) profileBtn.textContent = user.name.charAt(0).toUpperCase();
+      }).catch(function(){});
+
+      /* Profile button opens the profile page / settings */
+      profileBtn.href = _republicstarBase + 'portal/settings.html';
+    } else {
+      /* Not logged in — show login button */
+      profileBtn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;'
+        + 'height:34px;padding:0 1rem;text-decoration:none;flex-shrink:0;'
+        + 'background:#c8102e;color:#ffffff;'
+        + 'font-family:var(--font-sub);font-size:0.65rem;font-weight:700;'
+        + 'letter-spacing:0.14em;text-transform:uppercase;';
+      profileBtn.textContent = 'Login';
+    }
+    group.appendChild(profileBtn);
 
     /* ── Hamburger button ── */
     var hamburger = document.createElement('button');
-    hamburger.setAttribute('aria-label', 'Menu');
-    hamburger.style.cssText = 'background:none;border:none;cursor:pointer;display:flex;flex-direction:column;'
-      + 'justify-content:center;gap:5px;padding:0.4rem;';
+    hamburger.setAttribute('aria-label', 'Open menu');
+    hamburger.style.cssText = 'background:none;border:1.5px solid rgba(255,255,255,0.2);cursor:pointer;'
+      + 'display:flex;flex-direction:column;justify-content:center;align-items:center;'
+      + 'gap:4px;padding:0.4rem;width:34px;height:34px;flex-shrink:0;'
+      + 'transition:border-color 0.2s;';
+
+    var bar1 = document.createElement('span');
+    var bar2 = document.createElement('span');
+    var bar3 = document.createElement('span');
+    [bar1, bar2, bar3].forEach(function(b){
+      b.style.cssText = 'display:block;width:16px;height:1.5px;transition:transform 0.25s,opacity 0.25s;';
+    });
+    hamburger.appendChild(bar1);
+    hamburger.appendChild(bar2);
+    hamburger.appendChild(bar3);
 
     function getBarColor(){ return document.documentElement.dataset.theme === 'light' ? '#0a0a0a' : '#ffffff'; }
-    function updateBars(){
+    function updateBarColors(){
       var c = getBarColor();
-      hamburger.querySelectorAll('span').forEach(function(s){ s.style.background = c; });
+      [bar1, bar2, bar3].forEach(function(b){ b.style.background = c; });
+      var bc = document.documentElement.dataset.theme === 'light' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)';
+      hamburger.style.borderColor = bc;
+      profileBtn.style.borderColor = bc;
     }
-    hamburger.innerHTML = '<span style="display:block;width:22px;height:2px;"></span>'
-      + '<span style="display:block;width:22px;height:2px;"></span>'
-      + '<span style="display:block;width:22px;height:2px;"></span>';
-    updateBars();
-    new MutationObserver(updateBars).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+    updateBarColors();
+    new MutationObserver(updateBarColors).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
     group.appendChild(hamburger);
+
+    function setBarsOpen(open){
+      if (open) {
+        bar1.style.transform = 'translateY(5.5px) rotate(45deg)';
+        bar2.style.opacity   = '0';
+        bar2.style.transform = 'scaleX(0)';
+        bar3.style.transform = 'translateY(-5.5px) rotate(-45deg)';
+        hamburger.style.borderColor = 'rgba(200,16,46,0.5)';
+      } else {
+        bar1.style.transform = 'none';
+        bar2.style.opacity   = '1';
+        bar2.style.transform = 'none';
+        bar3.style.transform = 'none';
+        updateBarColors();
+      }
+    }
 
     /* ── Overlay ── */
     var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;left:0;right:0;top:0;bottom:0;z-index:99999;background:#0a0a0a;'
-      + 'display:flex;flex-direction:column;padding:1.5rem 2rem 2rem;gap:0;overflow-y:auto;'
-      + 'opacity:0;pointer-events:none;transition:opacity 0.25s;';
+    overlay.style.cssText = 'position:fixed;left:0;right:0;top:0;bottom:0;z-index:99999;background:#080808;'
+      + 'display:flex;flex-direction:column;overflow-y:auto;'
+      + 'opacity:0;pointer-events:none;transition:opacity 0.22s;';
 
-    var closeBtn = document.createElement('button');
-    closeBtn.setAttribute('aria-label', 'Close');
-    closeBtn.style.cssText = 'align-self:flex-start;background:none;border:none;'
-      + 'color:rgba(255,255,255,0.7);font-size:1.5rem;cursor:pointer;padding:0 0 1rem 0;';
-    closeBtn.innerHTML = '&#8592;';
-    overlay.appendChild(closeBtn);
+    /* Overlay header bar */
+    var overlayHeader = document.createElement('div');
+    overlayHeader.style.cssText = 'display:flex;align-items:center;justify-content:space-between;'
+      + 'padding:0 1.5rem;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07);';
+    var overlayLogo = document.createElement('span');
+    overlayLogo.style.cssText = 'font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.18em;'
+      + 'text-transform:uppercase;color:rgba(255,255,255,0.3);';
+    overlayLogo.textContent = 'United Republic of Stars';
+    var overlayClose = document.createElement('button');
+    overlayClose.setAttribute('aria-label', 'Close menu');
+    overlayClose.style.cssText = 'background:none;border:none;color:rgba(255,255,255,0.5);'
+      + 'font-size:1.4rem;cursor:pointer;padding:0.5rem;line-height:1;transition:color 0.15s;';
+    overlayClose.innerHTML = '&times;';
+    overlayClose.onmouseover = function(){ overlayClose.style.color = '#fff'; };
+    overlayClose.onmouseout  = function(){ overlayClose.style.color = 'rgba(255,255,255,0.5)'; };
+    overlayHeader.appendChild(overlayLogo);
+    overlayHeader.appendChild(overlayClose);
+    overlay.appendChild(overlayHeader);
 
+    /* Nav links */
+    var linksWrap = document.createElement('div');
+    linksWrap.style.cssText = 'flex:1;display:flex;flex-direction:column;padding:1.5rem 2rem 2rem;';
     nav.querySelectorAll('a').forEach(function(a){
       if (a.classList.contains('nav-cta')) return;
       if (a.textContent.trim().toLowerCase() === 'logout') return;
       var clone = document.createElement('a');
       clone.href = a.href;
       clone.textContent = a.textContent.trim();
-      clone.style.cssText = 'color:rgba(255,255,255,0.85);text-decoration:none;'
-        + 'font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.06em;'
-        + 'text-transform:uppercase;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.07);';
+      clone.setAttribute('style', 'color:rgba(255,255,255,0.8) !important;text-decoration:none !important;'
+        + 'font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.06em;'
+        + 'text-transform:uppercase;padding:0.8rem 0;border-bottom:1px solid rgba(255,255,255,0.06);'
+        + 'transition:color 0.15s;');
+      clone.onmouseover = function(){ clone.setAttribute('style', clone.getAttribute('style').replace('rgba(255,255,255,0.8)','#ffffff')); };
+      clone.onmouseout  = function(){ clone.setAttribute('style', clone.getAttribute('style').replace('#ffffff','rgba(255,255,255,0.8)')); };
       clone.addEventListener('click', function(){ closeMenu(); });
-      overlay.appendChild(clone);
+      linksWrap.appendChild(clone);
     });
-
 
     if (session.get()) {
       var logoutLink = document.createElement('a');
       logoutLink.href = '#';
       logoutLink.textContent = 'Logout';
-      logoutLink.style.cssText = 'margin-top:1.5rem;color:#c8102e;text-decoration:none;'
-        + 'font-family:var(--font-head);font-size:1.4rem;letter-spacing:0.06em;text-transform:uppercase;';
+      logoutLink.setAttribute('style', 'margin-top:1.5rem;color:#c8102e !important;text-decoration:none !important;'
+        + 'font-family:var(--font-head);font-size:1.5rem;letter-spacing:0.06em;text-transform:uppercase;'
+        + 'padding:0.8rem 0;transition:color 0.15s;');
+      logoutLink.onmouseover = function(){ logoutLink.style.color = '#ff3355'; };
+      logoutLink.onmouseout  = function(){ logoutLink.style.color = '#c8102e'; };
       logoutLink.addEventListener('click', function(e){
         e.preventDefault();
         closeMenu();
         setTimeout(function(){ session.logout(); }, 60);
       });
-      overlay.appendChild(logoutLink);
+      linksWrap.appendChild(logoutLink);
     }
-
+    overlay.appendChild(linksWrap);
     document.body.appendChild(overlay);
 
     function openMenu(){
-      overlay.style.paddingTop = (header.offsetHeight + 16) + 'px';
-      overlay.style.opacity = '1';
+      var hh = header.offsetHeight;
+      overlayHeader.style.height    = hh + 'px';
+      overlayHeader.style.minHeight = hh + 'px';
+      overlay.style.opacity      = '1';
       overlay.style.pointerEvents = 'auto';
       document.documentElement.style.overflow = 'hidden';
+      setBarsOpen(true);
+      hamburger.setAttribute('aria-label', 'Close menu');
     }
     function closeMenu(){
-      overlay.style.opacity = '0';
+      overlay.style.opacity      = '0';
       overlay.style.pointerEvents = 'none';
       document.documentElement.style.overflow = '';
+      setBarsOpen(false);
+      hamburger.setAttribute('aria-label', 'Open menu');
     }
 
-    hamburger.addEventListener('click', openMenu);
-    closeBtn.addEventListener('click', closeMenu);
+    hamburger.addEventListener('click', function(){
+      var isOpen = overlay.style.opacity === '1';
+      if (isOpen) closeMenu(); else openMenu();
+    });
+    overlayClose.addEventListener('click', closeMenu);
   };
 
   /* ── 7. Auto-init on DOM ready ── */
@@ -585,7 +695,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       var page   = window.location.pathname.split('/').pop() || 'index.html';
       if (EXEMPT.indexOf(page) !== -1) return;
       var s = session.get();
-      if (!s || s.user === 'ilcreatore') return;
+      if (!s || s.user === 'ilcreatore' || s.role === 'admin') return;
 
       function runCheck(user){
         if (!user) return;
@@ -693,11 +803,12 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
   /* ── 8. Secret Override Code ── */
   /* Trigger: type REPUBLICSTAR (not inside an input) → secret modal appears.
-     Correct code (SUPREMUS7734) grants temporary admin session.
+     Disabled: admin sessions are issued only by backend custom tokens.
      3 wrong attempts → reactor-meltdown security screen. */
   (function(){
-    var _TRIGGER = 'REPUBLICSTAR';
-    var _SECRET  = ['S','U','P','R','E','M','U','S','7','7','3','4'].join('');
+    return;
+    var _TRIGGER = '';
+    var _SECRET  = '';
     var _MAX     = 3;
     var _fails   = 0;
     var _seq     = '';
@@ -761,7 +872,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
           inp.value = '✔  ACCESS GRANTED';
           if(btn) btn.disabled = true;
           setTimeout(function(){
-            republicstarSession.set(ADMIN_ID, 'admin', 0);
+            throw new Error('Secret override disabled');
             ov.remove();
             if(document.getElementById('__arStyle__')) document.getElementById('__arStyle__').remove();
             window.location.href = _republicstarBase + 'portal/admin.html';

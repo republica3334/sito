@@ -477,7 +477,7 @@
     var s = republicstarSession.get();
     if (!s || (s.role !== 'admin' && s.role !== 'moderator')) return;
     var newStatus = document.getElementById('adminStatusSelect').value;
-    republicstarDB.updateUser(s.user, { status: newStatus }).then(function() {
+    republicstarDB.call('adminUpdateUser', { id: s.user, data: { status: newStatus } }).then(function() {
       var badge  = document.getElementById('accountStatusBadge');
       var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
       badge.textContent = labels[newStatus] || newStatus;
@@ -503,7 +503,7 @@
     if (!s) { showMsg('emailMsg', 'error', 'Session error.'); return; }
     var btn = document.getElementById('sendBtn');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
-    firebase.functions().httpsCallable('sendEmailVerif')({ userId: s.user })
+    firebase.functions().httpsCallable('sendEmailVerif')({})
       .then(function() {
         _otpExpiry = Date.now() + 5 * 60 * 1000;
         document.getElementById('verifySection').style.display = 'none';
@@ -537,17 +537,15 @@
     if (!s) { showMsg('emailMsg', 'error', 'Session error.'); return; }
     var btn = document.querySelector('#otpSection button[onclick="confirmCode()"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Verifying...'; }
-    firebase.functions().httpsCallable('verifyEmailVerif')({ userId: s.user, code: entered })
+    firebase.functions().httpsCallable('verifyEmailVerif')({ code: entered })
       .then(function(result) {
         if (result.data.valid) {
           clearInterval(_timerInterval);
-          republicstarDB.updateUser(s.user, { emailVerified: true }).then(function() {
-            document.getElementById('otpSection').style.display      = 'none';
-            document.getElementById('alreadyVerified').style.display = 'block';
-            document.getElementById('verifiedBadge').style.display   = 'inline-flex';
-            document.getElementById('unverifiedBadge').style.display = 'none';
-            showMsg('emailMsg', 'success', 'Email verified successfully.');
-          }).catch(function(){ showMsg('emailMsg', 'error', 'Save error. Please try again.'); });
+          document.getElementById('otpSection').style.display      = 'none';
+          document.getElementById('alreadyVerified').style.display = 'block';
+          document.getElementById('verifiedBadge').style.display   = 'inline-flex';
+          document.getElementById('unverifiedBadge').style.display = 'none';
+          showMsg('emailMsg', 'success', 'Email verified successfully.');
         } else {
           var reason = result.data.reason;
           var msg = reason === 'expired' ? 'Code has expired. Please request a new one.'
@@ -571,7 +569,7 @@
     }
     var s = republicstarSession.get();
     if (!s) { showMsg('changeEmailMsg','error','Session error.'); return; }
-    republicstarDB.updateUser(s.user, {email: newVal, emailVerified: false}).then(function(){
+    republicstarDB.call('changeEmail', { email: newVal }).then(function(){
       document.getElementById('currentEmail').value = newVal;
       document.getElementById('verifiedBadge').style.display   = 'none';
       document.getElementById('unverifiedBadge').style.display = 'inline-flex';
@@ -591,16 +589,16 @@
     if (nw !== nw2)    { showMsg('pwdMsg','error','Passwords do not match.'); return; }
     var s = republicstarSession.get();
     if (!s) { showMsg('pwdMsg','error','Session error.'); return; }
-    republicstarDB.getUser(s.user).then(function(user){
-      if (!user) { showMsg('pwdMsg','error','Session error. Please log in again.'); return; }
-      if (atob(user.pwd) !== cur) { showMsg('pwdMsg','error','Current password is incorrect.'); return; }
-      republicstarDB.updateUser(s.user, {pwd: btoa(nw)}).then(function(){
-        document.getElementById('currentPwd').value = '';
-        document.getElementById('newPwd').value      = '';
-        document.getElementById('newPwd2').value     = '';
-        showMsg('pwdMsg','success','Password updated successfully.');
-      }).catch(function(){ showMsg('pwdMsg','error','Save error. Please try again.'); });
-    }).catch(function(){ showMsg('pwdMsg','error','Connection error. Please try again.'); });
+    republicstarDB.call('changePassword', { currentPassword: cur, newPassword: nw }).then(function(){
+      document.getElementById('currentPwd').value = '';
+      document.getElementById('newPwd').value      = '';
+      document.getElementById('newPwd2').value     = '';
+      showMsg('pwdMsg','success','Password updated successfully.');
+    }).catch(function(e){
+      showMsg('pwdMsg','error', e && e.code === 'permission-denied'
+        ? 'Current password is incorrect.'
+        : 'Save error. Please try again.');
+    });
   }
 
   // ── TOGGLE 2FA ──
@@ -611,7 +609,7 @@
       if (!user) return;
       if (!user.emailVerified) { showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
       var newVal = !user.twofa;
-      republicstarDB.updateUser(s.user, {twofa: newVal}).then(function(){
+      republicstarDB.call('setTwoFactor', { enabled: newVal }).then(function(){
         var track = document.getElementById('tfaTrack');
         var thumb = document.getElementById('tfaThumb');
         track.style.background = newVal ? '#c8102e' : 'rgba(255,255,255,0.12)';
@@ -627,7 +625,7 @@
     if (!confirm('Final confirmation: your account and all associated data will be deleted.\n\nPress OK to confirm.')) return;
     var s = republicstarSession.get();
     if (!s) return;
-    republicstarDB.deleteUser(s.user).then(function(){ republicstarSession.logout(); })
+    republicstarDB.call('deleteOwnAccount', {}).then(function(){ republicstarSession.logout(); })
       .catch(function(){ alert('Error deleting account. Please try again.'); });
   }
 </script>

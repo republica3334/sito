@@ -275,9 +275,11 @@ function addLog(msg){
 }
 
 function isCreator(id){ return id === 'ilcreatore'; }
+function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
+function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 function statusBadge(s){
-  return '<span class="badge-status '+s+'">'+s+'</span>';
+  return '<span class="badge-status '+esc(s)+'">'+esc(s)+'</span>';
 }
 
 function renderStats(){
@@ -304,11 +306,11 @@ function renderPending(){
   none.style.display = 'none';
   list.innerHTML = pending.map(function(u){
     return '<div class="citizen-card">'
-      + '<div class="citizen-name">'+( u.name||'—')+'</div>'
-      + '<div class="citizen-meta">'+( u.id||'—')+' · '+(u.email||'—')+'</div>'
+      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
       + '<div class="citizen-actions">'
-      + '<button class="action-btn approve" onclick="approveUser(\''+u.id+'\')">Approve</button>'
-      + '<button class="action-btn delete"  onclick="rejectUser(\''+u.id+'\')">Reject</button>'
+      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>'
+      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\')">Reject</button>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -332,17 +334,17 @@ function renderAll(){
     var actions = creator
       ? '<span class="badge-protected">Protected</span>'
       : '<div class="citizen-actions">'
-        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+u.id+'\')">Approve</button>' : '')
-        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+u.id+'\')">Suspend</button>' : '')
-        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+u.id+'\')">Reinstate</button>' : '')
-        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+u.id+'\')">Make Mod</button>'
-                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+u.id+'\')">Revoke Mod</button>')
-        + '<button class="action-btn delete"    onclick="deleteUser(\''+u.id+'\')">Delete</button>'
+        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>' : '')
+        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\')">Suspend</button>' : '')
+        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\')">Reinstate</button>' : '')
+        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\')">Make Mod</button>'
+                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\')">Revoke Mod</button>')
+        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\')">Delete</button>'
         + '</div>';
     return '<div class="citizen-card '+cls+'">'
-      + '<div class="citizen-name">'+( u.name||'—')+'</div>'
+      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
       + '<div style="margin-bottom:0.4rem;">'+badges+'</div>'
-      + '<div class="citizen-meta">'+( u.id||'—')+' · '+(u.email||'—')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
       + actions
       + '</div>';
   }).join('');
@@ -353,7 +355,7 @@ function renderLog(){
   var el = document.getElementById('activityLog');
   if (log.length===0){ el.innerHTML='<div class="empty-state">No activity recorded yet.</div>'; return; }
   el.innerHTML = log.slice(0,20).map(function(e){
-    return '<div class="log-entry"><span class="log-time">'+e.time+'</span><span class="log-msg">'+e.msg+'</span></div>';
+    return '<div class="log-entry"><span class="log-time">'+esc(e.time)+'</span><span class="log-msg">'+esc(e.msg)+'</span></div>';
   }).join('');
 }
 
