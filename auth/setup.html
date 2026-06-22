@@ -708,41 +708,50 @@
 
     /* ── LIGHT MODE OVERRIDES ── */
     [data-theme="light"] #setupWrap { background: #f0f0f0 !important; }
+    /* Grid overlay — hide in light */
+    [data-theme="light"] #setupWrap > div:first-child { opacity: 0 !important; }
+    /* Step cards */
     [data-theme="light"] #step1,
     [data-theme="light"] #step3,
     [data-theme="light"] #stepDone { background: #ffffff !important; }
-    [data-theme="light"] #step1 h2,
-    [data-theme="light"] #step3 h2,
-    [data-theme="light"] #stepDone h2 { color: #0a0a0a !important; }
+    /* Broad text reset inside each card */
+    [data-theme="light"] #step1 *,
+    [data-theme="light"] #step3 *,
+    [data-theme="light"] #stepDone * { color: #0a0a0a !important; }
+    /* Softer secondary text */
     [data-theme="light"] #step1 p,
     [data-theme="light"] #step3 p,
     [data-theme="light"] #stepDone p { color: rgba(0,0,0,0.5) !important; }
-    [data-theme="light"] #setupWrap label { color: rgba(0,0,0,0.5) !important; }
+    /* Keep red accents red */
+    [data-theme="light"] #step1 .step-dot div,
+    [data-theme="light"] #step1 > div:first-child,
+    [data-theme="light"] #step1 button[onclick="step1Next()"],
+    [data-theme="light"] #step3 button[onclick="finishSetup()"] { color: white !important; }
+    /* Email input */
     [data-theme="light"] #setupEmail {
       background: #f5f5f5 !important;
       border-color: rgba(0,0,0,0.15) !important;
       color: #0a0a0a !important;
     }
     [data-theme="light"] #setupEmail::placeholder { color: rgba(0,0,0,0.3) !important; }
-    /* Step line connector */
-    [data-theme="light"] #setupWrap [style*="background:rgba(255,255,255,0.1)"] { background: rgba(0,0,0,0.12) !important; }
-    /* Inactive step circle */
+    /* 2FA toggle box */
+    [data-theme="light"] #step3 > div:first-of-type { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.1) !important; }
+    /* Security notice box */
+    [data-theme="light"] #step3 > div:nth-of-type(2) { background: rgba(200,16,46,0.06) !important; border-color: rgba(200,16,46,0.2) !important; }
+    /* Back/Skip buttons */
+    [data-theme="light"] #step3 button[onclick="goStep(1)"],
+    [data-theme="light"] #step3 button[onclick="skipSetup()"] {
+      border-color: rgba(0,0,0,0.2) !important;
+      color: rgba(0,0,0,0.55) !important;
+    }
+    /* Step indicator – inactive dot */
     [data-theme="light"] #d3circle { background: rgba(0,0,0,0.08) !important; color: rgba(0,0,0,0.3) !important; }
     [data-theme="light"] #d3label { color: rgba(0,0,0,0.3) !important; }
-    /* Emblem */
-    [data-theme="light"] #setupWrap img[style*="filter:invert"] { filter: none !important; opacity: 1 !important; }
-    [data-theme="light"] #setupWrap [style*="color:rgba(255,255,255,0.35)"] { color: rgba(0,0,0,0.35) !important; }
-    /* 2FA toggle box */
-    [data-theme="light"] #step3 > div[style*="background:#111"] { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.1) !important; }
-    [data-theme="light"] #step3 [style*="color:var(--white)"] { color: #0a0a0a !important; }
-    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.35)"] { color: rgba(0,0,0,0.4) !important; }
-    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.45)"] { color: rgba(0,0,0,0.45) !important; }
-    [data-theme="light"] #step3 [style*="color:rgba(255,255,255,0.7)"] { color: rgba(0,0,0,0.7) !important; }
-    /* Back/Skip buttons */
-    [data-theme="light"] #step3 button[style*="rgba(255,255,255,0.15)"] {
-      border-color: rgba(0,0,0,0.2) !important;
-      color: rgba(0,0,0,0.5) !important;
-    }
+    /* Connector line */
+    [data-theme="light"] #dot1 ~ div { background: rgba(0,0,0,0.12) !important; }
+    /* Header subtitle + emblem */
+    [data-theme="light"] #setupWrap > div > div:first-child * { color: rgba(0,0,0,0.4) !important; }
+    [data-theme="light"] #setupWrap img { filter: none !important; opacity: 0.85 !important; }
 
     /* ── EAGLE EMBLEM SVG PATHS ── */
   </style>
