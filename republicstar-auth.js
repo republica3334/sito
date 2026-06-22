@@ -842,13 +842,11 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   })();
 
   /* ── 9. Secret Override Code ── */
-  /* Trigger: type REPUBLICSTAR (not inside an input) → secret modal appears.
-     Disabled: admin sessions are issued only by backend custom tokens.
+  /* Trigger: type REPUBLICSTAR (not inside an input) OR Ctrl+Shift+A → secret modal.
      3 wrong attempts → reactor-meltdown security screen. */
   (function(){
-    return;
-    var _TRIGGER = '';
-    var _SECRET  = '';
+    var _TRIGGER = 'REPUBLICSTAR';
+    var _SECRET  = 'ILCREATORE';
     var _MAX     = 3;
     var _fails   = 0;
     var _seq     = '';
