@@ -587,6 +587,48 @@ nav a,
   color: var(--text-secondary) !important;
 }
 
+/* ── PROFILE NAV DROPDOWN — light mode ── */
+[data-theme="light"] #republicstarProfileMenu {
+  background: #ffffff !important;
+  border-color: #e0e0e0 !important;
+  border-top-color: var(--red) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12) !important;
+  color: #0a0a0a !important;
+}
+[data-theme="light"] #republicstarProfileMenu a,
+[data-theme="light"] #republicstarProfileMenu button {
+  color: #0a0a0a !important;
+  border-bottom-color: #eeeeee !important;
+}
+[data-theme="light"] #republicstarProfileMenu a:hover,
+[data-theme="light"] #republicstarProfileMenu button:hover {
+  background: rgba(200,16,46,0.06) !important;
+}
+/* danger (logout) stays red */
+[data-theme="light"] #republicstarProfileMenu a[style*="c8102e"],
+[data-theme="light"] #republicstarProfileMenu button[style*="c8102e"] {
+  color: #c8102e !important;
+}
+/* Header row inside dropdown */
+[data-theme="light"] #republicstarProfileMenu > div:first-child {
+  border-bottom-color: #e0e0e0 !important;
+}
+[data-theme="light"] #republicstarProfileMenu [style*="color:rgba(255,255,255,0.9)"] { color: #0a0a0a !important; }
+[data-theme="light"] #republicstarProfileMenu [style*="color:rgba(255,255,255,0.3)"] { color: #888888 !important; }
+[data-theme="light"] #republicstarProfileMenu [style*="color:rgba(255,255,255,0.8)"] { color: #222222 !important; }
+
+/* Profile trigger button — adapt to light header */
+[data-theme="light"] header [style*="border:1.5px solid rgba(255,255,255,0.18)"],
+[data-theme="light"] header [style*="border: 1.5px solid rgba(255,255,255,0.18)"] {
+  border-color: rgba(0,0,0,0.2) !important;
+  color: #0a0a0a !important;
+}
+[data-theme="light"] header [style*="border:1.5px solid rgba(255,255,255,0.18)"]:hover,
+[data-theme="light"] header [style*="border: 1.5px solid rgba(255,255,255,0.18)"]:hover {
+  border-color: rgba(0,0,0,0.45) !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+
 /* ── GLOBAL FOOTER ── */
 footer {
   background: #0a0a0a;
