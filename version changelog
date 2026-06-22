@@ -1,0 +1,28 @@
+🌗 Light & Dark Mode
+Added a theme toggle button (bottom-right corner of every page) to switch between light and dark mode
+Your preference is remembered across pages and sessions
+Service and government pages default to light mode; all other pages default to dark mode
+Dark mode now properly styles every element: cards, forms, navigation, footer, sidebars, icons, and backgrounds
+📱 Mobile Homepage (mobile.html)
+Tapping the theme toggle now actually changes the look of the page (was broken before — the page stayed dark regardless)
+Service cards in "Quick Access" now have a red top border, matching the desktop style
+Quick Access and News sections now scroll horizontally instead of stacking vertically
+Each Quick Access card now shows a custom icon (ID card, tax, health, etc.) instead of generic shapes
+Service descriptions are now capped to one line so cards stay compact
+📱 Mobile — All Pages
+Service grids, news grids, ministry lists, and branch cards now scroll horizontally on mobile instead of showing tiny squished columns
+Service action cards on subpages (e.g. "National Identity Card", "Passport") now also scroll horizontally
+Category header sections (icon + title + description) now stack vertically on mobile instead of being crushed side by side
+Large desktop padding on sections is automatically reduced on mobile
+🐛 Bug Fixes
+Fixed a 404 error when clicking "Government" in the main navigation
+Fixed the site logo (emblem) being invisible in certain theme/background combinations
+Fixed the browser tab icon conflicting with the in-page logo — they are now separate files
+Fixed hamburger menu bars being invisible on dark-themed pages
+Fixed footer text being invisible in light mode (footer is now always dark)
+Fixed the active navigation link showing black text on a black background
+Fixed the "Need Help?" sidebar card staying dark when switching to light mode
+🧹 Code Cleanup
+Removed duplicate and redundant CSS rules across all shared stylesheets
+Consolidated repeated code patterns into reusable blocks
+Added .gitignore to keep internal tooling files out of the repository

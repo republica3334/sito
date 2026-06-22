@@ -1,0 +1,633 @@
+/* ── GLOBAL FONT IMPORT (covers all pages via injection) ── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+
+/* ═══════════════════════════════════════════════════════
+   REPUBLICSTAR THEME SYSTEM
+   Semantic CSS variables — injected by republicstar-auth.js
+   Toggle: [data-theme="light"] / [data-theme="dark"] on <html>
+═══════════════════════════════════════════════════════ */
+
+/* ── LIGHT THEME (default for service/gov pages) ── */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg-page:       #ffffff;
+  --bg-surface:    #f4f4f4;
+  --bg-surface-2:  #eaeaea;
+  --bg-invert:     #0a0a0a;
+
+  /* Header */
+  --bg-header:       #ffffff;
+  --border-header:   3px solid #0a0a0a;
+  --bg-utility:      #0a0a0a;
+  --text-utility:    #cccccc;
+
+  /* Text */
+  --text-primary:    #0a0a0a;
+  --text-secondary:  #333333;
+  --text-muted:      #666666;
+  --text-invert:     #ffffff;
+  --text-link:       #0a0a0a;
+
+  /* Accent (same in both) */
+  --red:             #c8102e;
+  --red-dark:        #9b0c22;
+  --red-soft:        rgba(200,16,46,0.08);
+  --red-border:      rgba(200,16,46,0.35);
+
+  /* Borders & dividers */
+  --border-color:    #e0e0e0;
+  --border-color-2:  #e8e8e8;
+  --border-strong:   #0a0a0a;
+  --divider:         #d0d0d0;
+
+  /* Cards & surfaces */
+  --card-bg:         #ffffff;
+  --card-hover:      #f8f8f8;
+  --card-border:     1.5px solid #e0e0e0;
+
+  /* Nav */
+  --nav-bg:          #ffffff;
+  --nav-text:        #0a0a0a;
+  --nav-hover-bg:    #0a0a0a;
+  --nav-hover-text:  #ffffff;
+
+  /* Status */
+  --green:           #00b450;
+  --orange:          #f5a623;
+}
+
+/* ── PAGE-LOCAL VARIABLE REMAPPING ── */
+/* Uses :root[data-theme] (specificity 0,2,0) to beat the page's own
+   :root block (0,1,0) which is parsed after our injected stylesheet.
+   NOTE: --white is NOT remapped here — it is used for text color on
+   dark hero sections (color:var(--white)) and must stay #ffffff.
+   Background overrides for var(--white) are handled by attribute selectors below. */
+:root[data-theme="dark"] {
+  --gray:       #111111;
+  --gray-light: #1a1a1a;
+  --gray-mid:   rgba(255,255,255,0.45);
+  --gray-dark:  rgba(255,255,255,0.75);
+}
+:root[data-theme="light"] {
+  --gray:       #f4f4f4;
+  --gray-light: #f4f4f4;
+  --gray-mid:   #cccccc;
+  --gray-dark:  #333333;
+}
+
+/* ── DARK THEME (reference: mobile.html) ── */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-page:       #0a0a0a;
+  --bg-surface:    #111111;
+  --bg-surface-2:  #1a1a1a;
+  --bg-invert:     #ffffff;
+
+  /* Header */
+  --bg-header:       #0a0a0a;
+  --border-header:   2px solid #c8102e;
+  --bg-utility:      #000000;
+  --text-utility:    rgba(255,255,255,0.45);
+
+  /* Text */
+  --text-primary:    #ffffff;
+  --text-secondary:  rgba(255,255,255,0.75);
+  --text-muted:      rgba(255,255,255,0.45);
+  --text-invert:     #0a0a0a;
+  --text-link:       #ffffff;
+
+  /* Accent (same) */
+  --red:             #c8102e;
+  --red-dark:        #9b0c22;
+  --red-soft:        rgba(200,16,46,0.12);
+  --red-border:      rgba(200,16,46,0.4);
+
+  /* Borders & dividers */
+  --border-color:    rgba(255,255,255,0.07);
+  --border-color-2:  rgba(255,255,255,0.12);
+  --border-strong:   rgba(255,255,255,0.2);
+  --divider:         rgba(255,255,255,0.08);
+
+  /* Cards & surfaces */
+  --card-bg:         #111111;
+  --card-hover:      #1a1a1a;
+  --card-border:     1.5px solid rgba(255,255,255,0.07);
+
+  /* Nav */
+  --nav-bg:          #0a0a0a;
+  --nav-text:        rgba(255,255,255,0.8);
+  --nav-hover-bg:    #c8102e;
+  --nav-hover-text:  #ffffff;
+
+  /* Status */
+  --green:           #00b450;
+  --orange:          #f5a623;
+}
+
+/* ── GLOBAL TYPOGRAPHY ──
+   Font variables available to all pages via republicstar-auth.js injection.
+   Pages that define their own --font-* will get equal specificity but their
+   <style> block appears later → they win (and they all set the same families). */
+:root {
+  --font-head: 'Oswald', sans-serif;
+  --font-sub:  'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+.btn,
+[class*="btn-"],
+[class*="-cta"],
+[class*="-btn"],
+nav a,
+.nav a,
+.label,
+.eyebrow,
+.section-eyebrow,
+.section-label,
+.tag,
+.badge,
+.time-badge,
+.sidebar-label,
+.step-num {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* ── THEME TOGGLE BUTTON (fixed, always visible) ── */
+#republicstarThemeToggle {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#republicstarThemeToggle:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #ffffff;
+}
+#republicstarThemeToggle svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT-PAGE DARK MODE OVERRIDES
+   Applied to light-theme pages (services, gov, ministries)
+   when user switches to dark mode
+═══════════════════════════════════════════════════════ */
+
+/* ── SERVICE CARDS (services.html, service-*.html) ── */
+[data-theme="dark"] .services,
+[data-theme="dark"] .ministries,
+[data-theme="dark"] .svc-section,
+[data-theme="dark"] .news {
+  background: var(--bg-surface) !important;
+}
+[data-theme="dark"] .services-grid,
+[data-theme="dark"] .news-grid,
+[data-theme="dark"] .ministries-list,
+[data-theme="dark"] .svc-sub-grid {
+  background: var(--divider) !important;
+}
+[data-theme="dark"] .service-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .service-card:hover {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .svc-sub-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-left-color: transparent;
+}
+[data-theme="dark"] .svc-sub-card:hover {
+  background: var(--bg-surface-2) !important;
+  border-left-color: var(--red) !important;
+}
+[data-theme="dark"] .news-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .news-img { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .news-img.alt { background: var(--bg-surface) !important; }
+[data-theme="dark"] .news-card p,
+[data-theme="dark"] .news-meta { color: var(--text-muted) !important; }
+
+/* Ministry items */
+[data-theme="dark"] .ministry-item {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .ministry-item:hover { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .ministry-item p   { color: var(--text-muted) !important; }
+
+/* Service category (svc-cat) */
+[data-theme="dark"] .svc-cat-desc  { color: var(--text-muted) !important; }
+[data-theme="dark"] .svc-sub-card p { color: var(--text-secondary) !important; }
+[data-theme="dark"] .svc-cat-link  { color: var(--red) !important; }
+
+/* Stats */
+[data-theme="dark"] .stat-item  { background: var(--bg-surface) !important; }
+
+/* Section text */
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] .section-title { color: var(--text-primary) !important; }
+
+/* ── GOVERNMENT / MINISTRY PAGES ── */
+[data-theme="dark"] .page-hero  { background: var(--bg-surface) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] .page-hero h1,
+[data-theme="dark"] .page-hero h2 { color: var(--text-primary) !important; }
+[data-theme="dark"] .content-section { background: var(--bg-page) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] .card          { background: var(--card-bg) !important; color: var(--text-primary) !important; border-color: var(--border-color) !important; }
+[data-theme="dark"] .card:hover    { background: var(--bg-surface-2) !important; }
+[data-theme="dark"] .table-wrap, [data-theme="dark"] table { background: var(--card-bg) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] th { background: var(--bg-surface) !important; color: var(--text-primary) !important; }
+[data-theme="dark"] td { border-color: var(--border-color) !important; color: var(--text-secondary) !important; }
+
+/* ── GLOBAL SEMANTIC OVERRIDES (applied when theme system active) ── */
+[data-theme] body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+[data-theme] .utility-bar {
+  background: var(--bg-utility) !important;
+  color: var(--text-utility) !important;
+}
+[data-theme] .utility-bar a {
+  color: var(--text-utility) !important;
+}
+[data-theme] .utility-bar a:hover {
+  color: #ffffff !important;
+}
+[data-theme] header {
+  background: var(--bg-header) !important;
+  border-bottom: var(--border-header) !important;
+}
+[data-theme] .brand-text h1 {
+  color: var(--text-primary) !important;
+}
+[data-theme] .brand-text span {
+  color: var(--red) !important;
+}
+[data-theme] nav a {
+  color: var(--nav-text) !important;
+}
+/* Active nav link (inline background:var(--black)) — keep white text */
+[data-theme] nav a[style*="background:var(--black)"] {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+}
+[data-theme] nav a:hover {
+  background: var(--nav-hover-bg) !important;
+  color: var(--nav-hover-text) !important;
+}
+/* Footer: always dark — all pages design footers as dark sections */
+[data-theme] footer {
+  background: #0a0a0a !important;
+  color: rgba(255,255,255,0.65) !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* ── HAMBURGER BARS (dark on light pages, white on dark pages) ── */
+[data-theme="dark"] #republicstarHamburger span {
+  background: #ffffff !important;
+}
+[data-theme="light"] #republicstarHamburger span {
+  background: #0a0a0a !important;
+}
+
+/* ── INLINE color:var(--black) TEXT → white in dark mode ── */
+[data-theme="dark"] [style*="color:var(--black)"] {
+  color: rgba(255,255,255,0.9) !important;
+}
+[data-theme="dark"] [style*="color: var(--black)"] {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* Emblem SVG: dark paths on light bg, white on dark bg */
+[data-theme="light"] .emblem-svg {
+  filter: none !important;
+}
+[data-theme="dark"] .emblem-svg {
+  filter: invert(1) !important;
+}
+
+/* ── SIDEBAR "NEED HELP?" CARD — light mode override ── */
+/* In dark mode the card is black by design; in light mode it should be white */
+[data-theme="light"] .sidebar-card {
+  background: #ffffff !important;
+  border-top-color: var(--red) !important;
+}
+[data-theme="light"] .sidebar-card .sidebar-label {
+  color: var(--red) !important;
+}
+/* Override inline rgba(255,255,255,...) text colors inside sidebar-card */
+[data-theme="light"] .sidebar-card [style*="rgba(255,255,255"],
+[data-theme="light"] .sidebar-card p {
+  color: #555555 !important;
+}
+
+/* ── FORM ELEMENTS (service subpages: health, id, etc.) ── */
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: rgba(255,255,255,0.35) !important;
+}
+[data-theme="dark"] label { color: var(--text-secondary) !important; }
+
+/* ── SERVICE SUBPAGE LAYOUT SECTIONS ── */
+[data-theme="dark"] .page-wrap,
+[data-theme="dark"] .svc-detail,
+[data-theme="dark"] .svc-actions,
+[data-theme="dark"] .svc-info-grid,
+[data-theme="dark"] .form-section,
+[data-theme="dark"] .sidebar-section { background: var(--bg-page) !important; }
+
+[data-theme="dark"] .svc-info-box,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .sidebar-card,
+[data-theme="dark"] .svc-action-card,
+[data-theme="dark"] .info-box,
+[data-theme="dark"] .req-box,
+[data-theme="dark"] .step-card {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* ── GOVERNMENT PAGE: BRANCHES & CABINET ── */
+[data-theme="dark"] .branch-card,
+[data-theme="dark"] .minister-card,
+[data-theme="dark"] .cabinet-item {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] .branch-card:hover,
+[data-theme="dark"] .minister-card:hover { background: var(--bg-surface-2) !important; }
+
+/* ── SERVICE CATEGORY ICONS (services.html — img tags loading dark SVGs) ── */
+[data-theme="dark"] .svc-cat-icon img,
+[data-theme="dark"] .service-icon img {
+  filter: invert(1);
+}
+
+/* ── INLINE BACKGROUND OVERRIDES (attribute selectors) ── */
+/* Target elements with light background inline styles directly.
+   --white is NOT remapped globally (it breaks text colors on dark heroes),
+   so we override backgrounds here instead. */
+[data-theme="dark"] [style*="background:var(--white)"] {
+  background: #111111 !important;
+}
+[data-theme="dark"] [style*="background:var(--gray-light)"],
+[data-theme="dark"] [style*="background:var(--gray)"] {
+  background: #1a1a1a !important;
+}
+/* Text color on those remapped backgrounds */
+[data-theme="dark"] [style*="background:var(--white)"],
+[data-theme="dark"] [style*="background:var(--gray-light)"],
+[data-theme="dark"] [style*="background:var(--gray)"] {
+  color: var(--text-primary) !important;
+}
+
+/* ── ICON SQUARE BACKGROUND REMOVAL ── */
+/* Black icon squares (48x48, 40x40) disappear into dark bg — remove them */
+[data-theme="dark"] [style*="width:48px"][style*="height:48px"][style*="background:var(--black)"],
+[data-theme="dark"] [style*="width:40px"][style*="height:40px"][style*="background:var(--black)"] {
+  background: transparent !important;
+  border: 1.5px solid rgba(255,255,255,0.12) !important;
+}
+
+/* ── HARDCODED HEX OVERRIDES (bypass variable system) ── */
+/* Demo warning / info boxes with hardcoded light-pink bg */
+[data-theme="dark"] [style*="#fff8f8"],
+[data-theme="dark"] [style*="#fff3f3"],
+[data-theme="dark"] [style*="#fafafa"] {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="dark"] [style*="#f5c6c6"] {
+  border-color: rgba(200,16,46,0.35) !important;
+}
+/* Time badges on service pages */
+[data-theme="dark"] .time-badge {
+  background: rgba(200,16,46,0.1) !important;
+  border-color: rgba(200,16,46,0.3) !important;
+  color: var(--red) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE: DARK HARDCODED BACKGROUNDS
+   Ministry/military pages use inline hex values (#0a0a0a, #111, #0d0d0d)
+   for section backgrounds. These don't respond to the variable system,
+   so we override them here when the user switches to light mode.
+   Note: var(--black) backgrounds (heroes, CTAs) are intentionally excluded —
+   those stay dark as a design choice.
+═══════════════════════════════════════════════════════ */
+[data-theme="light"] [style*="background:#0a0a0a"],
+[data-theme="light"] [style*="background: #0a0a0a"] {
+  background: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] [style*="background:#0d0d0d"],
+[data-theme="light"] [style*="background: #0d0d0d"] {
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+}
+[data-theme="light"] [style*="background:#111;"],
+[data-theme="light"] [style*="background:#111 "],
+[data-theme="light"] [style*="background:#111111"] {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+}
+/* Protect red/brand backgrounds — always keep white text */
+[data-theme="light"] [style*="background:#c8102e"],
+[data-theme="light"] [style*="background:var(--red)"],
+[data-theme="light"] [style*="background:#9b0c22"] {
+  color: #ffffff !important;
+}
+
+/* Text colours inside flipped dark sections → dark on light bg */
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111;"] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111 "] [style*="color:rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111111"] [style*="color:rgba(255,255,255"] {
+  color: var(--text-muted) !important;
+}
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111;"] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111 "] [style*="color:var(--white)"],
+[data-theme="light"] [style*="background:#111111"] [style*="color:var(--white)"] {
+  color: var(--text-primary) !important;
+}
+
+/* Divider lines and subtle borders → dark on light bg */
+[data-theme="light"] [style*="background:#0a0a0a"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#0d0d0d"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111;"] [style*="border-bottom:1px solid rgba(255,255,255"],
+[data-theme="light"] [style*="background:#111 "] [style*="border-bottom:1px solid rgba(255,255,255"] {
+  border-bottom-color: var(--border-color) !important;
+}
+/* Card-gap dividers: rgba(255,255,255,...) grid backgrounds → dark */
+[data-theme="light"] [style*="background:rgba(255,255,255,0.06)"],
+[data-theme="light"] [style*="background:rgba(255,255,255,0.07)"],
+[data-theme="light"] [style*="background:rgba(255,255,255,0.08)"] {
+  background: var(--border-color) !important;
+}
+
+/* ── MINISTRY HEADER LOGOS ──
+   Ministry pages have no .emblem-svg class on their header <img>, so the
+   standard emblem invert rule doesn't fire. Force invert for any header
+   image that isn't an emblem-svg in dark mode (dark header → logos visible). */
+[data-theme="dark"] header img:not(.emblem-svg) {
+  filter: invert(1) !important;
+}
+
+/* ── MINISTRY CIRCLE ICONS — light mode ──
+   Cards use background:#111 (flipped to light by rule above) + red circle
+   rgba(200,16,46,0.15) + filter:invert(1) SVG icon. In light mode the card
+   goes light but the SVG stays white = invisible. Remove invert so icon is
+   its natural dark colour on the now-light card. */
+[data-theme="light"] [style*="background:rgba(200,16,46,0.15)"] img {
+  filter: none !important;
+}
+
+/* ── ENLISTMENT / MILITARY — always dark ──
+   Desktop homepage .enlistment and mobile .enlist-section are intentionally
+   dark (military aesthetic). Never flip them to light mode. */
+[data-theme="light"] .enlistment {
+  background: #0a0a0a !important;
+}
+[data-theme="light"] .enlistment .section-label {
+  color: rgba(255,255,255,0.45) !important;
+}
+[data-theme="light"] .enlistment .section-title {
+  color: #ffffff !important;
+}
+[data-theme="light"] .enlistment p {
+  color: rgba(255,255,255,0.6) !important;
+}
+[data-theme="light"] .branch-card {
+  background: #0f0f0f !important;
+  color: #ffffff !important;
+}
+[data-theme="light"] .branch-card:hover {
+  background: #1a1a1a !important;
+}
+[data-theme="light"] .branch-card h3 {
+  color: #ffffff !important;
+}
+[data-theme="light"] .branch-card p {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+
+/* ── SVC-HERO: theme-adaptive hero (gov / ministry / services pages) ──
+   The .svc-hero class is added to hero divs on gov/ministry pages.
+   Dark by default (inline style keeps it); override to light below. */
+[data-theme="light"] .svc-hero {
+  background: var(--gray-light) !important;
+  color: var(--black) !important;
+}
+/* Muted rgba(255,255,255,...) text → dark text on light bg */
+[data-theme="light"] .svc-hero [style*="color:rgba(255,255,255"] {
+  color: var(--text-muted) !important;
+}
+/* color:var(--white) elements (titles, stats) → dark */
+[data-theme="light"] .svc-hero [style*="color:var(--white)"] {
+  color: var(--text-primary) !important;
+}
+/* Repeating grid overlay (white lines → dark lines) */
+[data-theme="light"] .svc-hero [style*="rgba(255,255,255,0.01"] {
+  background: repeating-linear-gradient(90deg,rgba(0,0,0,0.04) 0,rgba(0,0,0,0.04) 1px,transparent 1px,transparent 80px) !important;
+}
+/* Outline CTA buttons inside hero */
+[data-theme="light"] .svc-hero a[style*="border:1px solid rgba(255,255,255"],
+[data-theme="light"] .svc-hero a[style*="border: 1px solid rgba(255,255,255"] {
+  border-color: rgba(0,0,0,0.2) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ── GLOBAL FOOTER ── */
+footer {
+  background: #0a0a0a;
+  color: #ffffff;
+  padding: 4rem 4rem 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 2rem;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+.footer-brand p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
+.footer-col h5 {
+  font-family: var(--font-sub);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red, #c8102e);
+  margin-bottom: 1.2rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-col ul li a {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: #ffffff; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.06em;
+}
+.footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-bottom a:hover { color: rgba(255,255,255,0.6); }

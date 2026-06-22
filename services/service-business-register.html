@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="../republicstar-auth.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <title>Register a Business · Business Services · United Republic of Stars</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Register a Business · United Republic of Stars">
+  <meta property="og:image" content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta name="theme-color" content="#c8102e">
+<style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
+      --gray:#f4f4f4;--gray-dark:#333;
+      --font-head:'Oswald',sans-serif;--font-sub:'Inter',sans-serif;--font-body:'Inter',sans-serif;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--gray);color:var(--black);font-family:var(--font-body);}
+    .utility-bar{background:var(--black);color:rgba(200,200,200,0.5);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
+    .utility-bar a{color:rgba(200,200,200,0.5);text-decoration:none;}
+    .utility-links{display:flex;gap:2rem;}
+    header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
+    .emblem-svg{width:78px;height:auto;flex-shrink:0;}
+    .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;}
+    .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:0.2rem;}
+    nav a{font-family:var(--font-sub);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);text-decoration:none;padding:0.5rem 0.9rem;transition:color 0.2s,background 0.2s;}
+    nav a:hover{background:var(--black);color:var(--white);}
+    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem!important;margin-left:0.5rem;}
+    .nav-cta:hover{background:var(--red-dark)!important;}
+    .hero{background:var(--black);color:var(--white);padding:3.5rem 4rem;border-bottom:3px solid var(--red);position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;}
+    .page-wrap{max-width:1100px;margin:0 auto;padding:3rem 4rem;display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;}
+    .form-card{background:var(--white);border-top:3px solid var(--red);padding:2.5rem;}
+    label{display:block;font-family:var(--font-sub);font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-dark);margin-bottom:0.35rem;margin-top:1.2rem;}
+    label:first-of-type{margin-top:0;}
+    input,select,textarea{width:100%;font-family:var(--font-body);font-size:0.85rem;border:1.5px solid #ddd;padding:0.7rem 0.9rem;outline:none;transition:border-color 0.2s;background:#fff;color:var(--black);}
+    input:focus,select:focus,textarea:focus{border-color:var(--red);}
+    textarea{min-height:100px;resize:vertical;}
+    .submit-btn{display:block;width:100%;background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.78rem;letter-spacing: 0.10em;text-transform:uppercase;padding:1rem;cursor:pointer;margin-top:1.8rem;transition:background 0.2s;}
+    .submit-btn:hover{background:var(--red-dark);}
+    .sidebar-card{background:var(--white);border-top:3px solid rgba(0,0,0,0.1);padding:1.8rem;}
+    .sidebar-card + .sidebar-card{margin-top:1.2rem;}
+    .sidebar-label{font-family:var(--font-sub);font-size:0.6rem;font-weight:700;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;}
+    .sidebar-card ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+    .sidebar-card ul li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);line-height:1.5;padding-left:1rem;position:relative;}
+    .sidebar-card ul li::before{content:'→';position:absolute;left:0;color:var(--red);font-size:0.7rem;}
+    .steps-list{counter-reset:steps;list-style:none;display:flex;flex-direction:column;gap:0.7rem;}
+    .steps-list li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);padding-left:2rem;position:relative;counter-increment:steps;line-height:1.5;}
+    .steps-list li::before{content:counter(steps);position:absolute;left:0;width:1.4rem;height:1.4rem;background:var(--red);color:#fff;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;top:0.1rem;}
+    .time-badge{display:inline-block;background:#fff3f3;border:1px solid #f5c6c6;color:var(--red);font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.8rem;margin-top:1.2rem;}
+    footer{background:var(--black);padding:2rem 3rem;border-top:1px solid rgba(255,255,255,0.06);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding:1rem 0 0;margin-top:1.2rem;display:flex;justify-content:space-between;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
+    .footer-bottom a{color:rgba(255,255,255,0.25);text-decoration:none;}
+  </style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="utility-links"><a href="#">Accessibility</a><a href="#">Language</a><a href="#">Emergency: 112</a></div>
+  <div class="utility-links"><a href="services.html">All Services</a><a href="../auth/citizen-login.html">Citizen Login</a></div>
+</div>
+
+<header>
+  <a href="../GOVERN_1.HTM" class="header-brand">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem">
+    <div class="brand-text"><h1>United Republic of Stars</h1><span>Official Government Portal</span></div>
+  </a>
+  <nav>
+    <a href="../gov/government.html">Government</a>
+    <a href="services.html" style="background:var(--black);color:var(--white);">Services</a>
+    <a href="../gov/ministries.html">Ministries</a>
+    <a href="../gov/laws-decrees.html">Laws &amp; Decrees</a>
+    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
+  </nav>
+</header>
+<main>
+<div class="hero">
+  <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;">
+    <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:28px;height:2px;background:var(--red);display:block;"></span>
+      <a href="services.html" style="color:var(--red);text-decoration:none;">Services</a>
+      &nbsp;/&nbsp;<a href="service-business.html" style="color:var(--red);text-decoration:none;">Business Services</a>
+      &nbsp;/&nbsp; Register a Business
+    </div>
+    <div style="font-size:2.2rem;margin-bottom:0.6rem;">🏢</div>
+    <h1 style="font-family:var(--font-head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#fff;margin-bottom:0.6rem;">Register a Business</h1>
+    <p style="font-family:var(--font-body);font-size:0.9rem;color:rgba(255,255,255,0.5);max-width:580px;line-height:1.8;">Register a new company, sole proprietorship or partnership with the Republic's Commercial Registry.</p>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:3rem 4rem;display:grid;grid-template-columns:1fr 320px;gap:2.5rem;align-items:start;">
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div style="font-family:var(--font-sub);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;"><span style="width:24px;height:2px;background:var(--red);display:block;"></span>Application Form</div>
+    <form onsubmit="handleSubmit(event)">
+<label for="proposed_business_name">Proposed Business Name</label><input type="text" id="proposed_business_name" name="proposed_business_name" placeholder="">
+<label for="business_type">Business Type</label><select id="business_type" name="business_type"><option>Sole Proprietorship</option><option>Partnership</option><option>Limited Company (LLC)</option><option>Public Company</option><option>NGO / Non-Profit</option></select>
+<label for="business_sector">Business Sector</label><select id="business_sector" name="business_sector"><option>Retail</option><option>Manufacturing</option><option>Technology</option><option>Services</option><option>Agriculture</option><option>Healthcare</option><option>Finance</option><option>Other</option></select>
+<label for="registered_address">Registered Address</label><input type="text" id="registered_address" name="registered_address" placeholder="">
+<label for="director___owner_full_name">Director / Owner Full Name</label><input type="text" id="director___owner_full_name" name="director___owner_full_name" placeholder="">
+<label for="director_national_id">Director National ID</label><input type="text" id="director_national_id" name="director_national_id" placeholder="ARX-000-000000">
+      <div style="background:#fff8f8;border-left:3px solid var(--red);padding:0.8rem 1rem;margin-top:1.5rem;font-family:var(--font-body);font-size:0.76rem;color:#666;">
+        ⚠ This portal is for demonstration purposes. Submissions are not processed. Log in with your Citizen Account to submit a real application.
+      </div>
+      <button type="submit" class="submit-btn">Submit Application →</button>
+    </form>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div>
+    <div class="sidebar-card">
+      <div class="sidebar-label">Documents Required</div>
+      <ul><li>Director/owner National ID</li>
+<li>Proposed company name (3 options in order of preference)</li>
+<li>Articles of Association (for limited companies)</li>
+<li>Proof of registered address</li></ul>
+    </div>
+    <div class="sidebar-card" style="margin-top:1.2rem;border-top-color:var(--red);">
+      <div class="sidebar-label">Process Steps</div>
+      <ol class="steps-list"><li>Name availability check (instant)</li>
+<li>Submit registration form and documents</li>
+<li>Commercial Registry review (5 days)</li>
+<li>Company number and certificate issued</li>
+<li>Automatic referral to Tax Authority for NTIN registration</li></ol>
+      <div class="time-badge">⏱ 5–7 working days</div>
+    </div>
+    <div class="sidebar-card" style="margin-top:1.2rem;background:var(--black);border-top-color:rgba(255,255,255,0.1);">
+      <div class="sidebar-label" style="color:rgba(255,255,255,0.4);">Need Help?</div>
+      <p style="font-family:var(--font-body);font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:1rem;">Contact the Citizen Helpdesk for assistance with this service.</p>
+      <a href="../gov/contact.html" style="display:block;text-align:center;background:var(--red);color:#fff;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.7rem;text-decoration:none;">Contact Us →</a>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer>
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:var(--font-head);font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.2rem;">United Republic of Stars</div>
+      <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Business Services · Official Service Portal</div>
+    </div>
+    <div style="display:flex;gap:1rem;">
+      <a href="service-business.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">← Back to Business Services</a>
+      <a href="services.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">All Services</a>
+    </div>
+  </div>
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;">
+    <span>© 2026 United Republic of Stars</span>
+    <div style="display:flex;gap:1.5rem;"><a href="#">Privacy</a><a href="#">Accessibility</a></div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('.submit-btn');
+  btn.textContent = 'Redirecting to login...';
+  btn.disabled = true;
+  setTimeout(function(){ window.location.href = '../auth/citizen-login.html'; }, 1000);
+}
+</script>
+
+</body>
+</html>
