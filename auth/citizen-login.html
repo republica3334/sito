@@ -715,6 +715,47 @@
     .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
 
     /* ── EAGLE EMBLEM SVG PATHS ── */
+
+    /* ── LIGHT MODE OVERRIDES ── */
+    [data-theme="light"] #loginWrap {
+      background: #f0f0f0 !important;
+    }
+    [data-theme="light"] #loginWrap::before {
+      background: repeating-linear-gradient(90deg,rgba(0,0,0,0.03) 0,rgba(0,0,0,0.03) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(0,0,0,0.03) 0,rgba(0,0,0,0.03) 1px,transparent 1px,transparent 80px) !important;
+    }
+    [data-theme="light"] #loginCard {
+      background: #ffffff !important;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10) !important;
+    }
+    [data-theme="light"] #loginCard h1 { color: #0a0a0a !important; }
+    [data-theme="light"] #loginCard label,
+    [data-theme="light"] #loginCard span { color: rgba(0,0,0,0.5) !important; }
+    [data-theme="light"] #loginCard label[style*="color:rgba(255,255,255"] { color: rgba(0,0,0,0.55) !important; }
+    [data-theme="light"] #nid,
+    [data-theme="light"] #pwd {
+      background: #f5f5f5 !important;
+      border-color: rgba(0,0,0,0.15) !important;
+      color: #0a0a0a !important;
+    }
+    [data-theme="light"] #nid:focus,
+    [data-theme="light"] #pwd:focus { border-color: #c8102e !important; }
+    [data-theme="light"] #nid::placeholder,
+    [data-theme="light"] #pwd::placeholder { color: rgba(0,0,0,0.3) !important; }
+    [data-theme="light"] #loginCard button[type="button"] { color: rgba(0,0,0,0.4) !important; }
+    [data-theme="light"] #loginCard .otp {
+      background: #f5f5f5 !important;
+      border-color: rgba(0,0,0,0.15) !important;
+      color: #0a0a0a !important;
+    }
+    [data-theme="light"] #loginCard .otp:focus { border-color: #c8102e !important; }
+    [data-theme="light"] #tfaPanel > div:first-child { background: #f5f5f5 !important; border-color: rgba(0,0,0,0.08) !important; }
+    [data-theme="light"] #tfaPanel > div:first-child div { color: #0a0a0a !important; }
+    [data-theme="light"] #loginWrap [style*="color:rgba(255,255,255"] { color: rgba(0,0,0,0.45) !important; }
+    [data-theme="light"] #loginWrap [style*="color:var(--white)"] { color: #0a0a0a !important; }
+    [data-theme="light"] #loginWrap [style*="background:rgba(255,255,255,0.08)"] { background: rgba(0,0,0,0.08) !important; }
+    [data-theme="light"] #loginWrap [style*="color:white"] { color: #0a0a0a !important; }
+    [data-theme="light"] #loginWrap svg[stroke="white"] { stroke: #0a0a0a !important; }
+    [data-theme="light"] .emblem-login { filter: none !important; opacity: 1 !important; }
   </style>
 
   <!-- Open Graph / Discord -->
@@ -772,7 +813,7 @@
 </header>
 <main>
 <!-- LOGIN PORTAL -->
-<div style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
+<div id="loginWrap" style="min-height:calc(100vh - 120px);background:var(--black);display:flex;align-items:center;justify-content:center;padding:4rem 2rem;position:relative;overflow:hidden;">
   <!-- Grid background -->
   <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
 
@@ -780,12 +821,12 @@
 
     <!-- Emblem -->
     <div style="text-align:center;margin-bottom:2.5rem;">
-      <img loading="lazy" src="../svgs/icone/republica/2.svg" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="United Republic of Stars — Official Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-login" style="width:120px;height:120px;filter:invert(1);opacity:0.85;" alt="United Republic of Stars — Official Emblem">
       <div style="font-family:var(--font-head);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.8rem;">United Republic of Stars</div>
     </div>
 
     <!-- Card -->
-    <div style="background:#0f0f0f;border-top:2px solid #c8102e;border-bottom:2px solid #c8102e;padding:3.1rem 3.1rem 3.6rem;">
+    <div id="loginCard" style="background:#0f0f0f;border-top:2px solid #c8102e;border-bottom:2px solid #c8102e;padding:3.1rem 3.1rem 3.6rem;">
 
       <div style="margin-bottom:2rem;">
         <div style="font-family:var(--font-sub);font-size:0.66rem;letter-spacing:0.36em;text-transform:uppercase;color:#c8102e;margin-bottom:0.55rem;">Secure Access</div>
