@@ -1124,7 +1124,7 @@ function finishLogin(result, remember) {
   signIn.then(function(){
     republicstarSession.set(user.id, user.role || 'citizen', days);
     if (user.role === 'admin') {
-      window.location.href = '../portal/admin.html';
+      window.location.href = 'secret-code.html';
       return;
     }
     if (!user.setup) {
