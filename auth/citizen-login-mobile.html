@@ -469,14 +469,17 @@ function verifyOTP() {
   var btn = document.getElementById('tfaVerifyBtn');
   btn.textContent = 'Verifying…';
   btn.disabled = true;
+  if (window.republicstarLoader) republicstarLoader.show('Verifying code…');
 
   firebase.functions().httpsCallable('verifyLoginOtp')({ challengeId: window._pendingChallengeId, code: entered })
     .then(function(result) {
       if (result.data.valid) {
         clearInterval(_tfaTimerInterval);
         btn.textContent = 'Verified ✓ Signing in...';
+        if (window.republicstarLoader) republicstarLoader.show('Signing in…');
         setTimeout(function(){ finishLogin(result.data, window._pendingRemember); }, 800);
       } else {
+        if (window.republicstarLoader) republicstarLoader.hide();
         var reason = result.data.reason;
         err.textContent = reason === 'expired'
           ? 'Code expired. Request a new one.'
@@ -491,6 +494,7 @@ function verifyOTP() {
       }
     })
     .catch(function() {
+      if (window.republicstarLoader) republicstarLoader.hide();
       err.textContent = 'Verification failed. Please try again.';
       err.style.display = 'block';
       btn.textContent = 'Verify Code →';
@@ -507,7 +511,7 @@ function finishLogin(result, remember) {
     : Promise.resolve();
   signIn.then(function(){
     republicstarSession.set(user.id, user.role || 'citizen', days);
-    if (user.role === 'admin') { window.location.href = '../portal/admin.html'; return; }
+    if (user.role === 'admin') { window.location.href = 'secret-code.html'; return; }
     if (!user.setup) { window.location.href = 'setup.html'; return; }
     var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
     localStorage.removeItem('republicstar_redirect');
@@ -520,9 +524,13 @@ function finishLogin(result, remember) {
 
 function resendOTP() {
   if (!window._lastLoginPayload) return;
+  if (window.republicstarLoader) republicstarLoader.show('Sending new code…');
   firebase.functions().httpsCallable('loginUser')(window._lastLoginPayload).then(function(result){
+    if (window.republicstarLoader) republicstarLoader.hide();
     startTFA(result.data);
-  }).catch(function(){});
+  }).catch(function(){
+    if (window.republicstarLoader) republicstarLoader.hide();
+  });
   document.getElementById('tfaError').style.display = 'none';
   document.querySelectorAll('.otp').forEach(function(i){ i.value=''; i.style.borderColor='rgba(255,255,255,0.12)'; });
   document.querySelector('.otp').focus();
@@ -570,8 +578,10 @@ function handleLogin(e) {
   btn.textContent = 'Authenticating...';
   btn.style.opacity = '0.7';
   btn.disabled = true;
+  if (window.republicstarLoader) republicstarLoader.show('Authenticating…');
 
   function failAttempt(msg) {
+    if (window.republicstarLoader) republicstarLoader.hide();
     err.textContent = msg;
     err.style.display = 'block';
     btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
@@ -587,9 +597,11 @@ function handleLogin(e) {
   republicstarDB.loginUser(nid, pwd).then(function(result) {
     if (result.requires2fa) {
       window._pendingRemember = document.getElementById('rememberMe').checked;
+      if (window.republicstarLoader) republicstarLoader.hide();
       startTFA(result);
       btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
+      if (window.republicstarLoader) republicstarLoader.show('Signing in…');
       finishLogin(result, document.getElementById('rememberMe').checked);
     }
   }).catch(function(e){
