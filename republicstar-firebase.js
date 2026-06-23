@@ -137,8 +137,10 @@ var REPUBLICSTAR_FB_CONFIG = {
           var data = snap.data();
           var blocked = ['suspended', 'rejected'];
           if (data.status && blocked.indexOf(data.status) !== -1) {
-            console.warn('[RepublicstarDB] Account suspended — forcing logout');
+            console.warn('[RepublicstarDB] Account suspended — redirecting');
             if (window.republicstarSession) window.republicstarSession.logout();
+            var base = window.location.pathname.includes('/portal/') ? '../auth/' : 'auth/';
+            window.location.replace(base + 'suspended.html');
             return;
           }
           if (sessionRole !== null && data.role && data.role !== sessionRole) {

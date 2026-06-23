@@ -488,10 +488,10 @@ function handleLogin(e) {
     }
   }).catch(function(e){
     console.error(e);
-    var msg = e && (e.code === 'functions/permission-denied' || e.code === 'permission-denied')
-      ? 'This account has been suspended. Contact the Ministry of the Interior.'
-      : 'Invalid National ID or password.';
-    failAttempt(msg);
+    if (e && (e.code === 'functions/permission-denied' || e.code === 'permission-denied')) {
+      window.location.href = 'suspended.html'; return;
+    }
+    failAttempt('Invalid National ID or password.');
   });
 }
 

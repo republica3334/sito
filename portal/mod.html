@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="../republicstar-theme.css">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Moderator Panel — United Republic of Stars">
 <meta property="og:image" content="https://republica3334.github.io/sito/svgs/icone/preview.png">
@@ -17,19 +18,59 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   :root{--black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;--font-head:'Oswald',sans-serif;--font-sub:'Inter',sans-serif;--font-body:'Inter',sans-serif;}
   html{scroll-behavior:smooth;}
-  body{background:#070707;color:var(--white);font-family:var(--font-body);}
+  body{background:var(--bg-page,#070707);color:var(--text-primary,#fff);font-family:var(--font-body);}
+
+  /* UTILITY BAR */
   .utility-bar{background:var(--black);color:rgba(200,200,200,0.4);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
   .utility-bar a{color:rgba(200,200,200,0.4);text-decoration:none;}
   .utility-links{display:flex;gap:2rem;}
+
+  /* HEADER */
   header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
   .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
   .emblem-svg{width:78px;height:auto;flex-shrink:0;}
-  .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;}
-  .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
+  .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;color:var(--black);}
+  .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.10em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
   nav{display:flex;align-items:center;gap:0.2rem;}
   nav a{font-family:var(--font-sub);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);text-decoration:none;padding:0.5rem 0.9rem;transition:color 0.2s,background 0.2s;}
   nav a:hover{background:var(--black);color:var(--white);}
   .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem!important;margin-left:0.5rem;}
+
+  /* MOD PANEL */
+  .mod-wrap{min-height:calc(100vh - 120px);background:var(--bg-page,#070707);}
+
+  /* CSS vars for JS-generated content */
+  .mod-wrap{
+    --mt:#ffffff;
+    --mt2:rgba(255,255,255,0.6);
+    --mt3:rgba(255,255,255,0.3);
+    --mb:#111111;
+    --mborder:rgba(255,255,255,0.04);
+  }
+  [data-theme="light"] .mod-wrap{
+    --mt:#0a0a0a;
+    --mt2:rgba(0,0,0,0.6);
+    --mt3:rgba(0,0,0,0.35);
+    --mb:#f8f8f8;
+    --mborder:rgba(0,0,0,0.06);
+  }
+
+  /* LIGHT MODE OVERRIDES */
+  [data-theme="light"] .mod-topbar{background:#ffffff!important;border-bottom-color:#7e5bff!important;}
+  [data-theme="light"] .mod-topbar h1{color:#0a0a0a!important;}
+  [data-theme="light"] .mod-topbar-title{color:#7e5bff!important;}
+  [data-theme="light"] .mod-statsbar{background:#f5f5f5!important;border-bottom-color:rgba(0,0,0,0.08)!important;}
+  [data-theme="light"] .mod-statsbar strong{color:#0a0a0a!important;}
+  [data-theme="light"] .mod-statsbar span{color:rgba(0,0,0,0.4)!important;}
+  [data-theme="light"] .mod-grid{background:rgba(0,0,0,0.08)!important;}
+  [data-theme="light"] .mod-card{background:#ffffff!important;}
+  [data-theme="light"] .mod-card h2{color:#0a0a0a!important;}
+  [data-theme="light"] .mod-list{background:rgba(0,0,0,0.04)!important;}
+  [data-theme="light"] .mod-search{background:#f0f0f0!important;border-color:rgba(0,0,0,0.12)!important;color:#0a0a0a!important;}
+  [data-theme="light"] .mod-logwrap{background:#ffffff!important;}
+  [data-theme="light"] .mod-logwrap h2{color:#0a0a0a!important;}
+  [data-theme="light"] .mod-notice{background:rgba(200,16,46,0.05)!important;}
+  [data-theme="light"] #activityLog>div{border-bottom-color:rgba(0,0,0,0.06)!important;}
 </style>
 </head>
 <body>
@@ -52,64 +93,64 @@
   </nav>
 </header>
 
-<div style="min-height:calc(100vh - 120px);background:#070707;">
+<div class="mod-wrap">
 
   <!-- Guard — requires mod OR admin -->
   <script>republicstarSession.requireMod();</script>
 
   <!-- Top Bar -->
-  <div style="background:#0a0a0a;border-bottom:2px solid #7e5bff;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
+  <div class="mod-topbar" style="background:#0a0a0a;border-bottom:2px solid #7e5bff;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
     <div>
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing: 0.12em;text-transform:uppercase;color:#7e5bff;display:flex;align-items:center;gap:0.6rem;">
+      <div class="mod-topbar-title" style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;display:flex;align-items:center;gap:0.6rem;">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7e5bff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Moderator Authority
       </div>
-      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-top:0.2rem;">Moderator Panel</h1>
+      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-top:0.2rem;">Moderator Panel</h1>
     </div>
     <div style="display:flex;gap:0.8rem;align-items:center;">
       <div id="modIdentity" style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);"></div>
-      <button onclick="republicstarSession.logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.4)'">Logout</button>
+      <button onclick="republicstarSession.logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.4)'">Logout</button>
     </div>
   </div>
 
   <!-- Stats Bar -->
-  <div id="statsBar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.05);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
+  <div id="statsBar" class="mod-statsbar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.05);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
 
-  <!-- Notice: ilcreatore protected -->
-  <div style="background:rgba(200,16,46,0.07);border-left:3px solid #c8102e;margin:1.5rem 3rem 0;padding:0.9rem 1.4rem;display:flex;align-items:center;gap:0.8rem;">
+  <!-- Notice -->
+  <div class="mod-notice" style="background:rgba(200,16,46,0.07);border-left:3px solid #c8102e;margin:1.5rem 3rem 0;padding:0.9rem 1.4rem;display:flex;align-items:center;gap:0.8rem;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,16,46,0.8);">The Supreme Creator account (ilcreatore) is protected and cannot be modified by moderators.</span>
+    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,16,46,0.8);">Admin accounts and ilcreatore are protected. You cannot modify your own account.</span>
   </div>
 
   <!-- Main Grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.04);margin:1.5rem 3rem 0;">
+  <div class="mod-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.04);margin:1.5rem 3rem 0;">
 
     <!-- Pending Approvals -->
-    <div style="background:#0a0a0a;padding:2rem;">
+    <div class="mod-card" style="background:#0a0a0a;padding:2rem;">
       <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">Action Required</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">Pending Approvals <span id="pendingCount" style="color:#7e5bff;"></span></h2>
+      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:1rem;">Pending Approvals <span id="pendingCount" style="color:#7e5bff;"></span></h2>
       <input id="pendingSearch" type="text" placeholder="Search pending..." oninput="renderPending()"
-        style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
+        class="mod-search" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:#fff;font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
         onfocus="this.style.borderColor='#7e5bff'" onblur="this.style.borderColor='rgba(255,255,255,0.07)'">
-      <div id="pendingList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
+      <div id="pendingList" class="mod-list" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
       <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.2);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
     </div>
 
-    <!-- All Citizens -->
-    <div style="background:#0a0a0a;padding:2rem;">
+    <!-- Citizens & Mods -->
+    <div class="mod-card" style="background:#0a0a0a;padding:2rem;">
       <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">Registry</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.25);font-size:0.8rem;"></span></h2>
+      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:1rem;">Citizens &amp; Moderators <span id="totalCount" style="color:rgba(255,255,255,0.25);font-size:0.8rem;"></span></h2>
       <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()"
-        style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
+        class="mod-search" style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:#fff;font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
         onfocus="this.style.borderColor='#7e5bff'" onblur="this.style.borderColor='rgba(255,255,255,0.07)'">
-      <div id="citizenList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
+      <div id="citizenList" class="mod-list" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
     </div>
   </div>
 
   <!-- Activity Log -->
-  <div style="margin:1.5rem 3rem 3rem;background:#0a0a0a;padding:2rem;">
+  <div class="mod-logwrap" style="margin:1.5rem 3rem 3rem;background:#0a0a0a;padding:2rem;">
     <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Activity Log</h2>
+    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:1.5rem;">Activity Log</h2>
     <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
   </div>
 
@@ -126,16 +167,22 @@
   </div>
 </div>
 
+<!-- Toast -->
+<div id="modToast" style="position:fixed;bottom:2rem;right:2rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 1.4rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;max-width:380px;line-height:1.5;box-shadow:0 4px 24px rgba(0,0,0,0.4);"></div>
+
 <script>
+var _currentModId = null;
 (function(){
   var s = republicstarSession.get();
-  if(s && document.getElementById('modIdentity')){
-    document.getElementById('modIdentity').textContent = 'Logged in as: ' + s.user + ' · ' + (s.role||'citizen').toUpperCase();
+  if(s){
+    _currentModId = s.user || null;
+    if(document.getElementById('modIdentity')){
+      document.getElementById('modIdentity').textContent = 'Logged in as: ' + s.user + ' · ' + (s.role||'citizen').toUpperCase();
+    }
   }
 })();
 
 var _users = [];
-function getUsers(){ return _users; }
 function getLog(){ return JSON.parse(localStorage.getItem('republicstar_log')||'[]'); }
 function addLog(msg){
   var log=getLog();
@@ -145,8 +192,37 @@ function addLog(msg){
   renderLog();
 }
 function isCreator(id){ return id==='ilcreatore'; }
+function isAdminUser(u){ return u.role==='admin'||u.id==='ilcreatore'; }
+function isSelf(id){ return _currentModId && id===_currentModId; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function showToast(msg, isError){
+  var t=document.getElementById('modToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _modCall(promise, logMsg, btn){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Error'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
 
 function statusBadge(s){
   var colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
@@ -158,62 +234,62 @@ function roleBadge(r){
 }
 
 function renderStats(){
-  var users=getUsers();
+  var users=_users.filter(function(u){ return !isAdminUser(u); });
   var total=users.length;
   var pending=users.filter(function(u){return u.status==='pending';}).length;
   var approved=users.filter(function(u){return u.status==='approved';}).length;
   var suspended=users.filter(function(u){return u.status==='suspended';}).length;
-  document.getElementById('statsBar').innerHTML=stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended);
+  document.getElementById('statsBar').innerHTML=stat('Total',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended);
   document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+total+')';
+  document.getElementById('totalCount').textContent='('+(total-pending)+')';
 }
 function stat(label,val){
-  return '<div style="border-left:2px solid #7e5bff;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">'+label+'</span></div>';
+  return '<div style="border-left:2px solid #7e5bff;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--mt,#fff);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mt3,rgba(255,255,255,0.25));">'+label+'</span></div>';
 }
 
 function renderPending(){
-  var users=getUsers();
   var q=(document.getElementById('pendingSearch').value||'').toLowerCase();
-  var pending=users.filter(function(u){return u.status==='pending' && !isCreator(u.id);});
+  var pending=_users.filter(function(u){return u.status==='pending' && !isAdminUser(u) && !isSelf(u.id);});
   if(q) pending=pending.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;});
   var list=document.getElementById('pendingList');
   var none=document.getElementById('noPending');
   if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
   none.style.display='none';
   list.innerHTML=pending.map(function(u){return(
-    '<div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
+    '<div style="background:var(--mb,#111);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
     +'<div>'
-    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
+    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt,#fff);font-weight:600;">'+(esc(u.name)||'—')+'</div>'
+    +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:var(--mt3,rgba(255,255,255,0.3));margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
-    +'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-    +'<button onclick="rejectUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
+    +'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
+    +'<button onclick="rejectUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
     +'</div></div>'
   );}).join('');
 }
 
 function renderAll(){
-  var users=getUsers();
   var q=(document.getElementById('searchBox').value||'').toLowerCase();
-  /* Mods never see ilcreatore */
-  var visible=users.filter(function(u){return !isCreator(u.id) && u.status!=='pending';});
+  /* Citizens + other mods only — no admins, no creator, no self */
+  var visible=_users.filter(function(u){
+    return !isAdminUser(u) && !isSelf(u.id) && u.status!=='pending';
+  });
   var filtered=q?visible.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;}):visible;
   var list=document.getElementById('citizenList');
-  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.2);text-align:center;">No citizens found.</div>';return;}
+  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:var(--mt3,rgba(255,255,255,0.2));text-align:center;">No citizens found.</div>';return;}
   list.innerHTML=filtered.map(function(u){return(
-    '<div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
+    '<div style="background:var(--mb,#111);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
     +'<div>'
     +'<div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">'
-    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</span>'
+    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt,#fff);font-weight:600;">'+(esc(u.name)||'—')+'</span>'
     +statusBadge(u.status)+roleBadge(u.role)
     +'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
+    +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--mt3,rgba(255,255,255,0.3));margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">'
-    +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
-    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
-    +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
+    +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
+    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
+    +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
     +'</div></div>'
   );}).join('');
 }
@@ -221,22 +297,25 @@ function renderAll(){
 function renderLog(){
   var log=getLog();
   var el=document.getElementById('activityLog');
-  if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(function(e){return '<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">'+esc(e.time)+'</span><span style="color:rgba(255,255,255,0.6);">'+esc(e.msg)+'</span></div>';}).join('');
+  if(log.length===0){el.innerHTML='<div style="color:var(--mt3,rgba(255,255,255,0.2));font-size:0.78rem;padding:1rem 0;">No activity yet.</div>';return;}
+  el.innerHTML=log.slice(0,15).map(function(e){return '<div style="padding:0.6rem 0;border-bottom:1px solid var(--mborder,rgba(255,255,255,0.04));display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--mt3,rgba(255,255,255,0.25));white-space:nowrap;">'+esc(e.time)+'</span><span style="color:var(--mt2,rgba(255,255,255,0.6));">'+esc(e.msg)+'</span></div>';}).join('');
 }
 
-function approveUser(id){
+function approveUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.updateUser(id,{status:'approved'}).then(function(){addLog('Approved: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function rejectUser(id){
+function rejectUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.deleteUser(id).then(function(){addLog('Rejected: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+  _modCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function suspendUser(id){
+function suspendUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
   var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.updateUser(id,{status:'suspended'}).then(function(){addLog('Suspended: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 
 function refresh(){renderStats();renderPending();renderAll();}
