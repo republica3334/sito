@@ -316,7 +316,7 @@ function showToast(msg, isError){
   t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
 }
 
-function _adminCall(promise, logMsg, btn){
+function _adminCall(promise, logMsg, btn, patch){
   if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
   if(window.republicstarLoader) republicstarLoader.show('Processing…');
   return promise
@@ -325,6 +325,14 @@ function _adminCall(promise, logMsg, btn){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
       addLog(logMsg);
       showToast('✓ '+logMsg, false);
+      // Optimistic local update so UI reflects change immediately
+      if(patch && patch.id){
+        _users = _users.map(function(u){
+          if(u.id !== patch.id) return u;
+          return Object.assign({}, u, patch.data);
+        });
+        refresh();
+      }
     })
     .catch(function(e){
       if(window.republicstarLoader) republicstarLoader.hide();
@@ -337,7 +345,7 @@ function _adminCall(promise, logMsg, btn){
 function approveUser(id,btn){
   var u=_users.find(function(x){ return x.id===id; });
   if(!u) return;
-  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u.name||id)+' ('+id+')', btn);
+  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u.name||id)+' ('+id+')', btn, {id:id,data:{status:'approved'}});
 }
 function rejectUser(id,btn){
   if(!confirm('Reject and delete this registration?')) return;
@@ -353,17 +361,17 @@ function deleteUser(id,btn){
 function makeModUser(id,btn){
   if(isCreator(id)){ showToast('ADMIN001 is already Supreme Administrator.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn);
+  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{role:'moderator',status:'approved'}});
 }
 function revokeModUser(id,btn){
   if(isCreator(id)){ showToast('Cannot revoke ADMIN001.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn);
+  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{role:'citizen'}});
 }
 function suspendUser(id,btn){
   if(isCreator(id)){ showToast('ADMIN001 cannot be suspended.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'suspended'}});
 }
 
 function refresh(){ renderStats(); renderPending(); renderAll(); }
