@@ -27,7 +27,10 @@ var REPUBLICSTAR_FB_CONFIG = {
       });
 
       function waitForAuth() {
-        return authReady.then(function(user){
+        // Re-check live auth state instead of relying solely on the one-shot promise,
+        // so pages loaded after a signInWithCustomToken also work correctly.
+        return authReady.then(function(){
+          var user = auth.currentUser;
           if (!user) throw new Error('Authentication required');
           return user;
         });
@@ -107,14 +110,18 @@ var REPUBLICSTAR_FB_CONFIG = {
           return Promise.reject(new Error('Direct user writes are disabled; use registerUser.'));
         },
 
-        onUsers: function(cb) {
+        onUsers: function(cb, onError) {
           var unsub = null;
           waitForAuth().then(function(){
             unsub = db.collection('users').onSnapshot(function(snap){
               cb(snap.docs.map(function(d){ return d.data(); }));
+            }, function(err){
+              console.error('[RepublicstarDB] onUsers snapshot error:', err);
+              if (onError) onError(err);
             });
           }).catch(function(err){
             console.error('[RepublicstarDB] onUsers auth error:', err);
+            if (onError) onError(err);
           });
           return function(){ if (unsub) unsub(); };
         },

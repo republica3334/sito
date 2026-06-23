@@ -252,13 +252,20 @@ function showToast(msg, isError){
   t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
 }
 
-function _modCall(promise, logMsg, btn){
+function _modCall(promise, logMsg, btn, patch){
   if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
   return promise
     .then(function(){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
       addLog(logMsg);
       showToast('✓ '+logMsg, false);
+      if(patch && patch.id){
+        _users = _users.map(function(u){
+          if(u.id !== patch.id) return u;
+          return Object.assign({}, u, patch.data);
+        });
+        refresh();
+      }
     })
     .catch(function(e){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Error'; }
@@ -366,7 +373,7 @@ function renderLog(){
 function approveUser(id,btn){
   if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'approved'}});
 }
 function rejectUser(id,btn){
   if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
@@ -377,13 +384,13 @@ function rejectUser(id,btn){
 function suspendUser(id,btn){
   if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'suspended'}});
 }
 function revokeUser(id,btn){
   if(isSelf(id)){ showToast('Cannot revoke your own account.', true); return; }
   if(!confirm('Set this account to revoked status?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'rejected'}});
 }
 
 function refresh(){ renderStats(); renderPending(); renderAll(); }
@@ -396,6 +403,12 @@ function _attachListener(){
       _users=users;
       refresh();
       if(_firstLoad){ _firstLoad=false; if(window.republicstarLoader) republicstarLoader.hide(); }
+    }, function(err){
+      if(window.republicstarLoader) republicstarLoader.hide();
+      // Firebase Auth missing — session was created before new login system
+      if(err && err.message && err.message.indexOf('Authentication') !== -1){
+        republicstarSession.logout();
+      }
     });
   } else {
     setTimeout(_attachListener, 400);
