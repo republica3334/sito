@@ -100,19 +100,6 @@ function requireAuth(request) {
   return request.auth.uid;
 }
 
-function requestRole(request) {
-  if (!request.auth) return null;
-  if (request.auth.uid === ADMIN_ID) return 'admin';
-  return request.auth.token.role || null;
-}
-
-function isAdmin(request) {
-  return requestRole(request) === 'admin';
-}
-
-function isModerator(request) {
-  return requestRole(request) === 'moderator';
-}
 
 async function requirePrivileged(request) {
   const uid = requireAuth(request);
@@ -444,6 +431,7 @@ exports.completeSetup = onCall(async (request) => {
 
 exports.changeEmail = onCall(async (request) => {
   const uid = requireAuth(request);
+  await rateCheck(db.collection('rate_limits').doc('email_chg_' + uid), 3, 60 * 60 * 1000, 'Too many email change attempts. Please try again later.');
   const currentPassword = request.data.currentPassword;
   if (typeof currentPassword !== 'string' || !currentPassword) {
     throw new HttpsError('invalid-argument', 'Current password required');
@@ -464,6 +452,7 @@ exports.changeEmail = onCall(async (request) => {
 
 exports.changePassword = onCall(async (request) => {
   const uid = requireAuth(request);
+  await rateCheck(db.collection('rate_limits').doc('pwd_chg_' + uid), 5, 60 * 60 * 1000, 'Too many password change attempts. Please try again later.');
   const currentPassword = request.data.currentPassword;
   const newPassword = request.data.newPassword;
   validatePassword(newPassword);
@@ -576,58 +565,6 @@ exports.verifyEmailVerif = onCall(async (request) => {
   return { valid: true };
 });
 
-exports.sendOtp = onCall(async (request) => {
-  const uid = requireAuth(request);
-  const userId = asString(request.data.userId || uid);
-  if (userId !== uid) throw new HttpsError('permission-denied', 'Cannot request another account OTP');
-
-  const found = await getUserDoc(uid);
-  if (!found || !found.data.twofa || !found.data.email) {
-    throw new HttpsError('failed-precondition', '2FA not enabled for this user');
-  }
-
-  await throttle(db.collection('otp_rate').doc(uid));
-
-  const code = randomCode();
-  await sendEmail(found.data.email, found.data.name || uid, code);
-  await db.collection('otp_sessions').doc(uid).set({
-    hash: sha256(code),
-    expiry: Date.now() + OTP_TTL_MS,
-    attempts: 0,
-    sentAt: Date.now()
-  });
-  return { sent: true };
-});
-
-exports.verifyOtp = onCall(async (request) => {
-  const uid = requireAuth(request);
-  const userId = asString(request.data.userId || uid);
-  const code = asString(request.data.code);
-  if (userId !== uid) throw new HttpsError('permission-denied', 'Cannot verify another account OTP');
-  if (!code) throw new HttpsError('invalid-argument', 'Code required');
-
-  const ref = db.collection('otp_sessions').doc(uid);
-  const snap = await ref.get();
-  if (!snap.exists) return { valid: false, reason: 'expired' };
-
-  const session = snap.data();
-  if (Date.now() > session.expiry) {
-    await ref.delete();
-    return { valid: false, reason: 'expired' };
-  }
-
-  const attempts = (session.attempts || 0) + 1;
-  if (sha256(code) === session.hash) {
-    await ref.delete();
-    return { valid: true };
-  }
-  if (attempts >= MAX_OTP_ATTEMPTS) {
-    await ref.delete();
-    return { valid: false, reason: 'too_many_attempts' };
-  }
-  await ref.update({ attempts });
-  return { valid: false, reason: 'invalid' };
-});
 
 exports.adminUpdateUser = onCall(async (request) => {
   const caller = await requirePrivileged(request);
