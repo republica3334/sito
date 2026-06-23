@@ -9,7 +9,7 @@
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Admin Panel — United Republic of Stars</title>
+  <title>Admin Panel ï¿½ United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -193,7 +193,7 @@
 <!-- HEADER -->
 <header>
   <a href="../mobile.html" class="header-brand" style="text-decoration:none;">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars ï¿½ Official Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>Rep. of Stars</h1>
       <span>Admin Panel</span>
@@ -228,7 +228,7 @@
 
 <!-- PANEL: CITIZENS -->
 <div class="panel" id="panel-citizens">
-  <input class="search-input" id="searchBox" type="text" placeholder="Search by name or ID…" oninput="renderAll()">
+  <input class="search-input" id="searchBox" type="text" placeholder="Search by name or IDï¿½" oninput="renderAll()">
   <div id="citizenList"></div>
 </div>
 
@@ -242,8 +242,8 @@
 <!-- FOOTER -->
 </main>
 <footer>
-  <span>© 2026 United Republic of Stars</span>
-  <a href="admin.html">Desktop version ?</a>
+  <span>&copy; 2026 United Republic of Stars</span>
+  <a href="admin.html">Desktop version &rarr;</a>
 </footer>
 
 <!-- Toast -->
@@ -280,12 +280,12 @@ function showToast(msg, isError){
 }
 
 function _adminCall(promise, logMsg, btn){
-  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='…'; }
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='ï¿½'; }
   return promise
     .then(function(){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
       addLog(logMsg);
-      showToast('? '+logMsg, false);
+      showToast('âœ“ '+logMsg, false);
     })
     .catch(function(e){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Err'; }
@@ -342,8 +342,8 @@ function renderPending(){
   none.style.display = 'none';
   list.innerHTML = pending.map(function(u){
     return '<div class="citizen-card">'
-      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-name">'+esc( u.name||'ï¿½')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'ï¿½')+' ï¿½ '+esc(u.email||'ï¿½')+'</div>'
       + '<div class="citizen-actions">'
       + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>'
       + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\',this)">Reject</button>'
@@ -365,7 +365,7 @@ function renderAll(){
     var isMod = u.role === 'moderator';
     var cls = creator ? 'creator' : isMod ? 'mod' : '';
     var badges = statusBadge(u.status);
-    if (creator) badges += '<span class="badge-creator">?? Creator</span>';
+    if (creator) badges += '<span class="badge-creator">&#9733; Creator</span>';
     if (isMod && !creator) badges += '<span class="badge-role">Mod</span>';
     var actions = creator
       ? '<span class="badge-protected">Protected</span>'
@@ -378,9 +378,9 @@ function renderAll(){
         + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\',this)">Delete</button>'
         + '</div>';
     return '<div class="citizen-card '+cls+'">'
-      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
+      + '<div class="citizen-name">'+esc( u.name||'ï¿½')+'</div>'
       + '<div style="margin-bottom:0.4rem;">'+badges+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'ï¿½')+' ï¿½ '+esc(u.email||'ï¿½')+'</div>'
       + actions
       + '</div>';
   }).join('');
