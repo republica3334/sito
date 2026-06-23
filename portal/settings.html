@@ -391,6 +391,10 @@
         <label class="field-label">New Email Address</label>
         <input id="newEmail" class="txt" type="email" placeholder="new@email.com">
       </div>
+      <div class="field">
+        <label class="field-label">Current Password</label>
+        <input id="emailChangePwd" class="txt" type="password" placeholder="••••••••">
+      </div>
       <div id="changeEmailMsg" class="msg"></div>
       <button class="btn-primary" onclick="changeEmail()">Update Email</button>
     </div>
@@ -623,9 +627,11 @@
     if (!newVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newVal)) {
       showMsg('changeEmailMsg', 'error', 'Please enter a valid email address.'); return;
     }
+    var pwd = document.getElementById('emailChangePwd').value;
+    if (!pwd) { showMsg('changeEmailMsg','error','Current password is required.'); return; }
     var s = republicstarSession.get();
     if (!s) { showMsg('changeEmailMsg','error','Session error.'); return; }
-    republicstarDB.call('changeEmail', { email: newVal }).then(function(){
+    republicstarDB.call('changeEmail', { email: newVal, currentPassword: pwd }).then(function(){
       document.getElementById('currentEmail').value = newVal;
       document.getElementById('verifiedBadge').style.display   = 'none';
       document.getElementById('unverifiedBadge').style.display = 'inline-flex';
@@ -678,11 +684,12 @@
   // ── DELETE ACCOUNT ──
   function confirmDeleteAccount() {
     if (!confirm('Are you sure you want to permanently delete your account?\n\nThis action cannot be undone.')) return;
-    if (!confirm('Final confirmation: your account and all associated data will be deleted.\n\nPress OK to confirm.')) return;
+    var pwd = prompt('Enter your current password to confirm account deletion:');
+    if (!pwd) return;
     var s = republicstarSession.get();
     if (!s) return;
-    republicstarDB.call('deleteOwnAccount', {}).then(function(){ republicstarSession.logout(); })
-      .catch(function(){ alert('Error deleting account. Please try again.'); });
+    republicstarDB.call('deleteOwnAccount', { currentPassword: pwd }).then(function(){ republicstarSession.logout(); })
+      .catch(function(e){ alert('Error: ' + (e && e.message ? e.message : 'Please try again.')); });
   }
 </script>
 
