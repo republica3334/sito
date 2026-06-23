@@ -1123,9 +1123,8 @@ function handleLogin(e) {
     return;
   }
 
-  window._lastLoginPayload = { userId: nid, password: pwd };
-
   republicstarDB.loginUser(nid, pwd).then(function(result) {
+    window._lastLoginPayload = null;
     if (result.requires2fa) {
       if (window.republicstarLoader) republicstarLoader.hide();
       window._pendingRemember = document.getElementById('rememberMe').checked;
