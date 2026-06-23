@@ -1155,7 +1155,14 @@ function showMsg(m) {
 </script>
 
 <script>
-// Show logged-in indicator in nav
+// Reset loader/button if browser restores page from bfcache
+window.addEventListener('pageshow', function(e) {
+  if (!e.persisted) return;
+  if (window.republicstarLoader) republicstarLoader.hide();
+  var btn = document.getElementById('submitBtn');
+  if (btn) { btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false; }
+  localStorage.removeItem('republicstar_admin_pending');
+});
 </script>
 </body>
 </html>
