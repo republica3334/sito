@@ -315,7 +315,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       <div id="errorMsg" class="msg-error"></div>
       <div id="infoMsg" class="msg-info"></div>
 
-      <button type="submit" id="submitBtn" class="btn-submit">Access Portal ?</button>
+      <button type="submit" id="submitBtn" class="btn-submit">Access Portal</button>
     </form>
 
     <div class="divider"><span>or</span></div>
@@ -466,7 +466,7 @@ function handleLogin(e) {
     if (window.republicstarLoader) republicstarLoader.hide();
     err.textContent = msg;
     err.style.display = 'block';
-    btn.textContent = 'Access Portal ?'; btn.style.opacity = '1'; btn.disabled = false;
+    btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false;
   }
 
   if (!window.republicstarDB) {
@@ -481,7 +481,7 @@ function handleLogin(e) {
       window._pendingRemember = document.getElementById('rememberMe').checked;
       if (window.republicstarLoader) republicstarLoader.hide();
       startTFA(result);
-      btn.textContent = 'Access Portal ?'; btn.style.opacity = '1'; btn.disabled = false;
+      btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
       if (window.republicstarLoader) republicstarLoader.show('Signing in…');
       finishLogin(result, document.getElementById('rememberMe').checked);
