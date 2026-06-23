@@ -1,4 +1,4 @@
-﻿    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
       --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
       --gray:#f4f4f4;--gray-dark:#333;
@@ -35,7 +35,7 @@
     .sidebar-label{font-family:var(--font-sub);font-size:0.6rem;font-weight:700;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;}
     .sidebar-card ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
     .sidebar-card ul li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);line-height:1.5;padding-left:1rem;position:relative;}
-    .sidebar-card ul li::before{content:'?';position:absolute;left:0;color:var(--red);font-size:0.7rem;}
+    .sidebar-card ul li::before{content:'›';position:absolute;left:0;color:var(--red);font-size:0.7rem;}
     .steps-list{counter-reset:steps;list-style:none;display:flex;flex-direction:column;gap:0.7rem;}
     .steps-list li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);padding-left:2rem;position:relative;counter-increment:steps;line-height:1.5;}
     .steps-list li::before{content:counter(steps);position:absolute;left:0;width:1.4rem;height:1.4rem;background:var(--red);color:#fff;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;top:0.1rem;}
