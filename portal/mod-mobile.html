@@ -1,15 +1,15 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script>
   if (!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    window.location.replace('admin.html');
+    window.location.replace('mod.html');
   }
 </script>
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Admin Panel &mdash; United Republic of Stars</title>
+  <title>Moderator Panel &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -19,6 +19,7 @@
     :root {
       --black: #0a0a0a;
       --red: #c8102e;
+      --mod: #7e5bff;
       --white: #ffffff;
       --font-head: 'Oswald', sans-serif;
       --font-sub:  'Inter', sans-serif;
@@ -31,7 +32,7 @@
     header {
       position: sticky; top: 0; z-index: 100;
       background: var(--black);
-      border-bottom: 2px solid var(--red);
+      border-bottom: 2px solid var(--mod);
       padding: 0 1.2rem;
       height: 56px;
       display: flex; align-items: center; justify-content: space-between;
@@ -44,27 +45,35 @@
     }
     .brand-text span {
       font-family: var(--font-sub); font-size: 0.5rem; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--red); display: block;
+      text-transform: uppercase; color: var(--mod); display: block;
     }
     .logout-btn {
       background: transparent; border: 1.5px solid rgba(255,255,255,0.15);
       color: rgba(255,255,255,0.5); font-family: var(--font-sub); font-size: 0.6rem;
       letter-spacing: 0.14em; text-transform: uppercase; padding: 0.5rem 0.85rem; cursor: pointer;
     }
-    .logout-btn:active { border-color: var(--red); color: var(--white); }
+    .logout-btn:active { border-color: var(--mod); color: var(--white); }
 
     /* -- PAGE TITLE -- */
     .page-title {
-      background: #0f0f0f; border-bottom: 1px solid rgba(200,16,46,0.3);
+      background: #0f0f0f; border-bottom: 1px solid rgba(126,91,255,0.3);
       padding: 1rem 1.2rem;
     }
     .page-title .eyebrow {
       font-family: var(--font-sub); font-size: 0.55rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--red); margin-bottom: 0.2rem;
+      text-transform: uppercase; color: var(--mod); margin-bottom: 0.2rem;
     }
     .page-title h2 {
       font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase; color: var(--white);
+    }
+
+    /* -- NOTICE -- */
+    .mod-notice {
+      background: rgba(126,91,255,0.07); border-left: 3px solid var(--mod);
+      margin: 0.8rem 1.2rem; padding: 0.75rem 1rem;
+      font-family: var(--font-sub); font-size: 0.65rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(126,91,255,0.85); line-height: 1.5;
     }
 
     /* -- STATS STRIP -- */
@@ -101,7 +110,7 @@
       background: none; border: none; border-bottom: 2px solid transparent;
       cursor: pointer;
     }
-    .tab.active { color: var(--white); border-bottom-color: var(--red); }
+    .tab.active { color: var(--white); border-bottom-color: var(--mod); }
 
     /* -- PANELS -- */
     .panel { display: none; padding: 1.2rem; }
@@ -113,15 +122,14 @@
       color: var(--white); font-family: var(--font-body); font-size: 0.85rem;
       padding: 0.75rem 1rem; outline: none; box-sizing: border-box; margin-bottom: 1rem;
     }
-    .search-input:focus { border-color: var(--red); }
+    .search-input:focus { border-color: var(--mod); }
 
     /* -- CITIZEN CARDS -- */
     .citizen-card {
       background: #111; border-left: 3px solid transparent;
       padding: 1rem 1.1rem; margin-bottom: 1px;
     }
-    .citizen-card.creator { border-left-color: rgba(200,16,46,0.5); }
-    .citizen-card.mod     { border-left-color: rgba(126,91,255,0.5); }
+    .citizen-card.mod-user { border-left-color: rgba(126,91,255,0.5); }
     .citizen-name {
       font-family: var(--font-head); font-size: 0.95rem; font-weight: 600;
       color: var(--white); margin-bottom: 0.2rem;
@@ -136,14 +144,13 @@
       text-transform: uppercase; padding: 0.45rem 0.75rem; cursor: pointer;
       border: none;
     }
-    .action-btn.approve  { background: var(--red); color: var(--white); }
-    .action-btn.suspend  { background: transparent; border: 1px solid rgba(255,100,0,0.5); color: rgba(255,150,0,0.9); }
-    .action-btn.reinstate{ background: transparent; border: 1px solid rgba(0,180,80,0.5); color: rgba(0,200,80,0.9); }
-    .action-btn.makemod  { background: transparent; border: 1px solid rgba(126,91,255,0.5); color: rgba(126,91,255,0.9); }
-    .action-btn.revokemod{ background: transparent; border: 1px solid rgba(126,91,255,0.25); color: rgba(126,91,255,0.5); }
-    .action-btn.delete   { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.35); }
+    .action-btn.approve   { background: var(--mod); color: var(--white); }
+    .action-btn.suspend   { background: transparent; border: 1px solid rgba(255,100,0,0.5); color: rgba(255,150,0,0.9); }
+    .action-btn.reinstate { background: transparent; border: 1px solid rgba(0,180,80,0.5); color: rgba(0,200,80,0.9); }
+    .action-btn.revoke    { background: transparent; border: 1px solid rgba(200,16,46,0.5); color: rgba(200,16,46,0.85); }
+    .action-btn.reject    { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.35); }
 
-    .badge-status, .badge-role, .badge-creator {
+    .badge-status, .badge-role {
       display: inline-block; font-family: var(--font-sub); font-size: 0.5rem;
       letter-spacing: 0.12em; text-transform: uppercase; padding: 0.1rem 0.4rem;
       margin-right: 0.25rem; margin-bottom: 0.25rem;
@@ -151,9 +158,8 @@
     .badge-status.approved  { color: #00b450; }
     .badge-status.pending   { color: #f5a623; }
     .badge-status.suspended { color: var(--red); }
-    .badge-role   { color: #7e5bff; border: 1px solid rgba(126,91,255,0.35); }
-    .badge-creator{ color: var(--red); border: 1px solid rgba(200,16,46,0.35); }
-    .badge-protected { color: var(--red); border: 1px solid rgba(200,16,46,0.3); font-family: var(--font-sub); font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.1rem 0.4rem; display: inline-block; }
+    .badge-status.rejected  { color: #666; }
+    .badge-role { color: #7e5bff; border: 1px solid rgba(126,91,255,0.35); }
 
     /* -- LOG -- */
     .log-entry {
@@ -169,7 +175,7 @@
     }
     .section-eyebrow {
       font-family: var(--font-sub); font-size: 0.55rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; display: block;
+      text-transform: uppercase; color: var(--mod); margin-bottom: 0.4rem; display: block;
     }
     .section-head {
       font-family: var(--font-head); font-size: 0.95rem; font-weight: 700;
@@ -188,7 +194,7 @@
 </head>
 <body>
 
-<script>republicstarSession.requireAdmin();</script>
+<script>republicstarSession.requireMod();</script>
 
 <!-- HEADER -->
 <header>
@@ -196,17 +202,21 @@
     <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars &middot; Official Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>Rep. of Stars</h1>
-      <span>Admin Panel</span>
+      <span>Mod Panel</span>
     </div>
   </a>
   <button class="logout-btn" onclick="republicstarSession.logout()">Logout</button>
 </header>
+
 <main>
 <!-- PAGE TITLE -->
 <div class="page-title">
-  <div class="eyebrow">Supreme Authority</div>
-  <h2>Administration Panel</h2>
+  <div class="eyebrow">Moderator Authority</div>
+  <h2>Moderator Panel</h2>
 </div>
+
+<!-- NOTICE -->
+<div class="mod-notice">Admin accounts and ADMIN001 are protected. You cannot modify your own account.</div>
 
 <!-- STATS STRIP -->
 <div class="stats-strip" id="statsStrip"></div>
@@ -221,7 +231,8 @@
 <!-- PANEL: PENDING -->
 <div class="panel active" id="panel-pending">
   <span class="section-eyebrow">Action Required</span>
-  <div class="section-head">Pending Approvals</div>
+  <div class="section-head">Pending &amp; Revoked</div>
+  <input class="search-input" id="pendingSearch" type="text" placeholder="Search pending..." oninput="renderPending()">
   <div id="pendingList"></div>
   <div id="noPending" class="empty-state" style="display:none;">No pending registrations.</div>
 </div>
@@ -239,36 +250,36 @@
   <div id="activityLog"></div>
 </div>
 
-<!-- FOOTER -->
 </main>
+
 <footer>
   <span>&copy; 2026 United Republic of Stars</span>
-  <a href="admin.html">Desktop version &rarr;</a>
+  <a href="mod.html">Desktop version &rarr;</a>
 </footer>
 
 <!-- Toast -->
-<div id="adminMobileToast" style="position:fixed;bottom:1.5rem;left:1rem;right:1rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.2rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
+<div id="modToast" style="position:fixed;bottom:1.5rem;left:1rem;right:1rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.2rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid var(--red);z-index:9999;padding:1rem 1.2rem;">
-  <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:0.7rem;">This portal uses only essential cookies. <a href="#" style="color:var(--red);">Privacy Policy</a></p>
+  <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:0.7rem;">This portal uses only essential cookies. <a href="#" style="color:var(--mod);">Privacy Policy</a></p>
   <div style="display:flex;gap:0.6rem;">
     <button onclick="setCookiePref('essential')" style="flex:1;padding:0.65rem;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.6);">Essential</button>
-    <button onclick="setCookiePref('all')" style="flex:1;padding:0.65rem;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;background:var(--red);border:none;color:white;">Accept</button>
+    <button onclick="setCookiePref('all')" style="flex:1;padding:0.65rem;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;background:var(--mod);border:none;color:white;">Accept</button>
   </div>
 </div>
 
 <script>
-var _users = [];
-var _currentAdminId = null;
+var _currentModId = null;
 (function(){
   var s = republicstarSession.get();
-  if(s) _currentAdminId = s.user || null;
+  if(s) _currentModId = s.user || null;
 })();
-function isSelf(id){ return _currentAdminId && id === _currentAdminId; }
+
+var _users = [];
 
 function showToast(msg, isError){
-  var t=document.getElementById('adminMobileToast');
+  var t=document.getElementById('modToast');
   if(!t) return;
   t.textContent=msg;
   t.style.background=isError?'#9b0c22':'#0f5a2e';
@@ -279,13 +290,13 @@ function showToast(msg, isError){
   t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
 }
 
-function _adminCall(promise, logMsg, btn){
-  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing'+'…'; }
+function _modCall(promise, logMsg, btn){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing'+'...'; }
   return promise
     .then(function(){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
       addLog(logMsg);
-      showToast('✓ '+logMsg, false);
+      showToast(logMsg, false);
     })
     .catch(function(e){
       if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Err'; }
@@ -295,8 +306,8 @@ function _adminCall(promise, logMsg, btn){
 }
 
 function switchTab(name, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
   el.classList.add('active');
   document.getElementById('panel-' + name).classList.add('active');
 }
@@ -310,7 +321,8 @@ function addLog(msg){
   renderLog();
 }
 
-function isCreator(id){ return id === 'ADMIN001'; }
+function isAdminUser(u){ return u.role==='admin'||u.id==='ADMIN001'; }
+function isSelf(id){ return _currentModId && id === _currentModId; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
@@ -319,34 +331,42 @@ function statusBadge(s){
 }
 
 function renderStats(){
-  var users = _users.filter(function(u){ return !isSelf(u.id); });
+  var users = _users.filter(function(u){ return !isAdminUser(u) && !isSelf(u.id); });
   var total = users.length;
   var pending = users.filter(function(u){ return u.status==='pending'; }).length;
+  var rejected = users.filter(function(u){ return u.status==='rejected'; }).length;
   var approved = users.filter(function(u){ return u.status==='approved'; }).length;
   var suspended = users.filter(function(u){ return u.status==='suspended'; }).length;
-  var mods = users.filter(function(u){ return u.role==='moderator'; }).length;
   document.getElementById('statsStrip').innerHTML =
     cell('Total', total) + cell('Approved', approved) + cell('Pending', pending) +
-    cell('Suspended', suspended) + cell('Mods', mods);
-  document.getElementById('tabPendingCount').textContent = pending ? '('+pending+')' : '';
+    cell('Suspended', suspended) + cell('Revoked', rejected);
+  document.getElementById('tabPendingCount').textContent = (pending+rejected) ? '('+(pending+rejected)+')' : '';
 }
 function cell(label, val){
   return '<div class="stat-cell"><strong>'+val+'</strong><span>'+label+'</span></div>';
 }
 
 function renderPending(){
-  var pending = _users.filter(function(u){ return u.status==='pending'; });
+  var q = (document.getElementById('pendingSearch').value||'').toLowerCase();
+  var pending = _users.filter(function(u){ return (u.status==='pending'||u.status==='rejected') && !isAdminUser(u) && !isSelf(u.id); });
+  if(q) pending = pending.filter(function(u){ return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1; });
   var list = document.getElementById('pendingList');
   var none = document.getElementById('noPending');
   if (pending.length === 0){ list.innerHTML=''; none.style.display='block'; return; }
   none.style.display = 'none';
   list.innerHTML = pending.map(function(u){
+    var isRejected = u.status==='rejected';
     return '<div class="citizen-card">'
-      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' &middot; '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-name">'+esc(u.name||'&mdash;')+'</div>'
+      + '<div style="margin-bottom:0.35rem;">'
+      + '<span class="badge-status '+(isRejected?'rejected':'pending')+'">'+(isRejected?'revoked':'pending')+'</span>'
+      + '</div>'
+      + '<div class="citizen-meta">'+esc(u.id||'&mdash;')+' &middot; '+esc(u.email||'&mdash;')+'</div>'
       + '<div class="citizen-actions">'
-      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>'
-      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\',this)">Reject</button>'
+      + (isRejected
+          ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\',this)">Reinstate</button>'
+          : '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>'
+            + '<button class="action-btn reject" onclick="rejectUser(\''+jsString(u.id)+'\',this)">Reject</button>')
       + '</div>'
       + '</div>';
   }).join('');
@@ -354,33 +374,27 @@ function renderPending(){
 
 function renderAll(){
   var q = (document.getElementById('searchBox').value||'').toLowerCase();
-  var nonPending = _users.filter(function(u){ return u.status!=='pending' && u.role!=='admin' && !isCreator(u.id); });
-  var filtered = q ? nonPending.filter(function(u){
-    return (u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q);
-  }) : nonPending;
+  var visible = _users.filter(function(u){ return !isAdminUser(u) && !isSelf(u.id) && u.status!=='pending' && u.status!=='rejected'; });
+  var filtered = q ? visible.filter(function(u){
+    return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;
+  }) : visible;
   var list = document.getElementById('citizenList');
   if (filtered.length===0){ list.innerHTML='<div class="empty-state">No citizens found.</div>'; return; }
   list.innerHTML = filtered.map(function(u){
-    var creator = isCreator(u.id);
     var isMod = u.role === 'moderator';
-    var cls = creator ? 'creator' : isMod ? 'mod' : '';
+    var cls = isMod ? 'mod-user' : '';
     var badges = statusBadge(u.status);
-    if (creator) badges += '<span class="badge-creator">&#9733; Creator</span>';
-    if (isMod && !creator) badges += '<span class="badge-role">Mod</span>';
-    var actions = creator
-      ? '<span class="badge-protected">Protected</span>'
-      : '<div class="citizen-actions">'
-        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>' : '')
-        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\',this)">Suspend</button>' : '')
-        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\',this)">Reinstate</button>' : '')
-        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\',this)">Make Mod</button>'
-                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\',this)">Revoke Mod</button>')
-        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\',this)">Delete</button>'
-        + '</div>';
+    if (isMod) badges += '<span class="badge-role">Mod</span>';
+    var actions = '<div class="citizen-actions">'
+      + (u.status!=='approved' ? '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>' : '')
+      + (u.status!=='suspended'&&u.status!=='rejected' ? '<button class="action-btn suspend" onclick="suspendUser(\''+jsString(u.id)+'\',this)">Suspend</button>' : '')
+      + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\',this)">Reinstate</button>' : '')
+      + (u.status!=='rejected' ? '<button class="action-btn revoke" onclick="revokeUser(\''+jsString(u.id)+'\',this)">Revoke</button>' : '')
+      + '</div>';
     return '<div class="citizen-card '+cls+'">'
-      + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
-      + '<div style="margin-bottom:0.4rem;">'+badges+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' &middot; '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-name">'+esc(u.name||'&mdash;')+'</div>'
+      + '<div style="margin-bottom:0.35rem;">'+badges+'</div>'
+      + '<div class="citizen-meta">'+esc(u.id||'&mdash;')+' &middot; '+esc(u.email||'&mdash;')+'</div>'
       + actions
       + '</div>';
   }).join('');
@@ -398,35 +412,26 @@ function renderLog(){
 function refresh(){ renderStats(); renderPending(); renderAll(); renderLog(); }
 
 function approveUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  if(!u) return;
-  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u.name||id)+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function rejectUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
-}
-function deleteUser(id,btn){
-  if(isCreator(id)){ showToast('ADMIN001 cannot be deleted.', true); return; }
-  if(!confirm('Permanently delete this account?')) return;
-  var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.deleteUser(id), 'Deleted: '+(u?u.name:'?')+' ('+id+')', btn);
-}
-function makeModUser(id,btn){
-  if(isCreator(id)){ showToast('ADMIN001 is already Supreme Administrator.', true); return; }
-  var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn);
-}
-function revokeModUser(id,btn){
-  if(isCreator(id)){ showToast('Cannot revoke ADMIN001.', true); return; }
-  var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function suspendUser(id,btn){
-  if(isCreator(id)){ showToast('ADMIN001 cannot be suspended.', true); return; }
+  if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+}
+function revokeUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot revoke your own account.', true); return; }
+  if(!confirm('Set this account to revoked status?')) return;
+  var u=_users.find(function(x){ return x.id===id; });
+  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 
 function _attachListener(){
@@ -438,11 +443,11 @@ function _attachListener(){
 }
 _attachListener();
 renderLog();
-addLog('Admin session started');
+addLog('Moderator session started');
 
 document.addEventListener('DOMContentLoaded', function(){
-  republicstarUpdateNav();
-  republicstarCookieBanner();
+  if(window.republicstarUpdateNav) republicstarUpdateNav();
+  if(window.republicstarCookieBanner) republicstarCookieBanner();
 });
 </script>
 </body>
