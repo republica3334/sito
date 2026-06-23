@@ -114,9 +114,16 @@ function isModerator(request) {
   return requestRole(request) === 'moderator';
 }
 
-function requirePrivileged(request) {
-  requireAuth(request);
-  if (!isAdmin(request) && !isModerator(request)) {
+async function requirePrivileged(request) {
+  const uid = requireAuth(request);
+  // Fast-path: ilcreatore is always admin
+  if (uid === ADMIN_ID) return;
+  // Check live Firestore doc — token claims can be stale after demotion/suspension
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('permission-denied', 'Account not found');
+  const role = found.data.role || 'citizen';
+  const status = found.data.status || 'pending';
+  if (!['admin', 'moderator'].includes(role) || status !== 'approved') {
     throw new HttpsError('permission-denied', 'Admin or moderator role required');
   }
 }
@@ -165,15 +172,37 @@ async function issueToken(userId, user) {
   return { token, user: publicUser(userId, Object.assign({}, user, { role })) };
 }
 
-async function throttle(ref) {
-  const snap = await ref.get();
-  if (snap.exists) {
-    const sentAt = snap.data().sentAt || 0;
-    if (Date.now() - sentAt < OTP_RESEND_MS) {
-      throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+async function rateCheck(ref, limit, windowMs, errorMsg) {
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (snap.exists) {
+      const { count, windowStart } = snap.data();
+      const elapsed = now - (windowStart || 0);
+      if (elapsed < windowMs) {
+        if (count >= limit) throw new HttpsError('resource-exhausted', errorMsg);
+        tx.update(ref, { count: count + 1 });
+      } else {
+        tx.set(ref, { count: 1, windowStart: now });
+      }
+    } else {
+      tx.set(ref, { count: 1, windowStart: now });
     }
-  }
-  await ref.set({ sentAt: Date.now() }, { merge: true });
+  });
+}
+
+async function throttle(ref) {
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (snap.exists) {
+      const sentAt = snap.data().sentAt || 0;
+      if (now - sentAt < OTP_RESEND_MS) {
+        throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+      }
+    }
+    tx.set(ref, { sentAt: now }, { merge: true });
+  });
 }
 
 async function createLoginChallenge(userId, user, ip) {
@@ -240,22 +269,7 @@ async function emailExists(email, exceptUserId) {
 exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   const ip = clientIp(request);
   const ipKey = 'reg_rate_' + sha256(String(ip)).slice(0, 16);
-  const rateRef = db.collection('rate_limits').doc(ipKey);
-  const rateSnap = await rateRef.get();
-  if (rateSnap.exists) {
-    const { count, windowStart } = rateSnap.data();
-    const elapsed = Date.now() - (windowStart || 0);
-    if (elapsed < 60 * 60 * 1000 && count >= 5) {
-      throw new HttpsError('resource-exhausted', 'Too many registration attempts. Please try again later.');
-    }
-    if (elapsed >= 60 * 60 * 1000) {
-      await rateRef.set({ count: 1, windowStart: Date.now() });
-    } else {
-      await rateRef.update({ count: count + 1 });
-    }
-  } else {
-    await rateRef.set({ count: 1, windowStart: Date.now() });
-  }
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 5, 60 * 60 * 1000, 'Too many registration attempts. Please try again later.');
 
   const firstName = asString(request.data.firstName).slice(0, 64);
   const lastName = asString(request.data.lastName).slice(0, 64);
@@ -308,22 +322,7 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
 exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
   const ip = clientIp(request);
   const ipKey = 'guest_rate_' + sha256(String(ip)).slice(0, 16);
-  const rateRef = db.collection('rate_limits').doc(ipKey);
-  const rateSnap = await rateRef.get();
-  if (rateSnap.exists) {
-    const { count, windowStart } = rateSnap.data();
-    const elapsed = Date.now() - (windowStart || 0);
-    if (elapsed < 60 * 60 * 1000 && count >= 3) {
-      throw new HttpsError('resource-exhausted', 'Too many guest accounts created. Please try again later.');
-    }
-    if (elapsed >= 60 * 60 * 1000) {
-      await rateRef.set({ count: 1, windowStart: Date.now() });
-    } else {
-      await rateRef.update({ count: count + 1 });
-    }
-  } else {
-    await rateRef.set({ count: 1, windowStart: Date.now() });
-  }
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 3, 60 * 60 * 1000, 'Too many guest accounts created. Please try again later.');
 
   const suffix = crypto.randomBytes(5).toString('hex').toUpperCase();
   const id = `GST-${suffix.slice(0, 3)}-${crypto.randomInt(100000, 1000000)}`;
@@ -343,22 +342,7 @@ exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
 exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   const ip = clientIp(request);
   const ipKey = 'login_rate_' + sha256(String(ip)).slice(0, 16);
-  const rateRef = db.collection('rate_limits').doc(ipKey);
-  const rateSnap = await rateRef.get();
-  if (rateSnap.exists) {
-    const { count, windowStart } = rateSnap.data();
-    const elapsed = Date.now() - (windowStart || 0);
-    if (elapsed < 15 * 60 * 1000 && count >= 10) {
-      throw new HttpsError('resource-exhausted', 'Too many login attempts. Please try again later.');
-    }
-    if (elapsed >= 15 * 60 * 1000) {
-      await rateRef.set({ count: 1, windowStart: Date.now() });
-    } else {
-      await rateRef.update({ count: count + 1 });
-    }
-  } else {
-    await rateRef.set({ count: 1, windowStart: Date.now() });
-  }
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 10, 15 * 60 * 1000, 'Too many login attempts. Please try again later.');
 
   const userId = asString(request.data.userId);
   const password = request.data.password;
@@ -416,7 +400,7 @@ exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
 
   await ref.delete();
   const found = await getUserDoc(session.userId);
-  if (!found || found.data.status === 'suspended') {
+  if (!found || !['pending', 'approved'].includes(found.data.status || '')) {
     throw new HttpsError('permission-denied', 'Account unavailable');
   }
   return Object.assign({ valid: true }, await issueToken(session.userId, found.data));
@@ -426,22 +410,7 @@ exports.completeSetup = onCall(async (request) => {
   const uid = requireAuth(request);
   const ip = clientIp(request);
   const ipKey = 'setup_rate_' + sha256(String(ip)).slice(0, 16);
-  const rateRef = db.collection('rate_limits').doc(ipKey);
-  const rateSnap = await rateRef.get();
-  if (rateSnap.exists) {
-    const { count, windowStart } = rateSnap.data();
-    const elapsed = Date.now() - (windowStart || 0);
-    if (elapsed < 60 * 60 * 1000 && count >= 10) {
-      throw new HttpsError('resource-exhausted', 'Too many requests. Please try again later.');
-    }
-    if (elapsed >= 60 * 60 * 1000) {
-      await rateRef.set({ count: 1, windowStart: Date.now() });
-    } else {
-      await rateRef.update({ count: count + 1 });
-    }
-  } else {
-    await rateRef.set({ count: 1, windowStart: Date.now() });
-  }
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 10, 60 * 60 * 1000, 'Too many requests. Please try again later.');
   const email = normalizeEmail(request.data.email);
   const twofaRequested = request.data.twofa === true;
   const found = await getUserDoc(uid);
@@ -662,16 +631,22 @@ exports.adminUpdateUser = onCall(async (request) => {
     throw new HttpsError('permission-denied', 'Moderators cannot modify their own account');
   }
 
+  // Mods cannot target admins or other moderators — fetch live role from Firestore
+  if (isModerator(request)) {
+    const targetDoc = await getUserDoc(targetId);
+    if (targetDoc) {
+      const targetRole = targetDoc.data.role || 'citizen';
+      if (targetRole === 'admin' || targetRole === 'moderator' || targetDoc.data.id === ADMIN_ID) {
+        throw new HttpsError('permission-denied', 'Moderators cannot modify admin or moderator accounts');
+      }
+    }
+  }
+
   const updates = {};
   if (Object.prototype.hasOwnProperty.call(data, 'status')) {
     const status = asString(data.status);
     if (!['pending', 'approved', 'suspended', 'rejected'].includes(status)) {
       throw new HttpsError('invalid-argument', 'Invalid status');
-    }
-    if (isModerator(request)) {
-      if (!['pending', 'approved', 'suspended', 'rejected'].includes(status)) {
-        throw new HttpsError('permission-denied', 'Moderators cannot set this status');
-      }
     }
     updates.status = status;
   }

@@ -260,6 +260,12 @@
 
 <script>
 var _users = [];
+var _currentAdminId = null;
+(function(){
+  var s = republicstarSession.get();
+  if(s) _currentAdminId = s.user || null;
+})();
+function isSelf(id){ return _currentAdminId && id === _currentAdminId; }
 
 function showToast(msg, isError){
   var t=document.getElementById('adminMobileToast');
@@ -313,7 +319,7 @@ function statusBadge(s){
 }
 
 function renderStats(){
-  var users = _users;
+  var users = _users.filter(function(u){ return !isSelf(u.id); });
   var total = users.length;
   var pending = users.filter(function(u){ return u.status==='pending'; }).length;
   var approved = users.filter(function(u){ return u.status==='approved'; }).length;
