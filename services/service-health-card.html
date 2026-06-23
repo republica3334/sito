@@ -13,53 +13,7 @@
   <meta property="og:title" content="Health Card (SSN) &mdash; United Republic of Stars">
   <meta property="og:image" content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta name="theme-color" content="#c8102e">
-<style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{
-      --black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;
-      --gray:#f4f4f4;--gray-dark:#333;
-      --font-head:'Oswald',sans-serif;--font-sub:'Inter',sans-serif;--font-body:'Inter',sans-serif;
-    }
-    html{scroll-behavior:smooth;}
-    body{background:var(--gray);color:var(--black);font-family:var(--font-body);}
-    .utility-bar{background:var(--black);color:rgba(200,200,200,0.5);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
-    .utility-bar a{color:rgba(200,200,200,0.5);text-decoration:none;}
-    .utility-links{display:flex;gap:2rem;}
-    header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-    .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
-    .emblem-svg{width:78px;height:auto;flex-shrink:0;}
-    .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;}
-    .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
-    nav{display:flex;align-items:center;gap:0.2rem;}
-    nav a{font-family:var(--font-sub);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);text-decoration:none;padding:0.5rem 0.9rem;transition:color 0.2s,background 0.2s;}
-    nav a:hover{background:var(--black);color:var(--white);}
-    .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem!important;margin-left:0.5rem;}
-    .nav-cta:hover{background:var(--red-dark)!important;}
-    .hero{background:var(--black);color:var(--white);padding:3.5rem 4rem;border-bottom:3px solid var(--red);position:relative;overflow:hidden;}
-    .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);pointer-events:none;}
-    .page-wrap{max-width:1100px;margin:0 auto;padding:3rem 4rem;display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;}
-    .form-card{background:var(--white);border-top:3px solid var(--red);padding:2.5rem;}
-    label{display:block;font-family:var(--font-sub);font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-dark);margin-bottom:0.35rem;margin-top:1.2rem;}
-    label:first-of-type{margin-top:0;}
-    input,select,textarea{width:100%;font-family:var(--font-body);font-size:0.85rem;border:1.5px solid #ddd;padding:0.7rem 0.9rem;outline:none;transition:border-color 0.2s;background:#fff;color:var(--black);}
-    input:focus,select:focus,textarea:focus{border-color:var(--red);}
-    textarea{min-height:100px;resize:vertical;}
-    .submit-btn{display:block;width:100%;background:var(--red);color:var(--white);border:none;font-family:var(--font-sub);font-size:0.78rem;letter-spacing: 0.10em;text-transform:uppercase;padding:1rem;cursor:pointer;margin-top:1.8rem;transition:background 0.2s;}
-    .submit-btn:hover{background:var(--red-dark);}
-    .sidebar-card{background:var(--white);border-top:3px solid rgba(0,0,0,0.1);padding:1.8rem;}
-    .sidebar-card + .sidebar-card{margin-top:1.2rem;}
-    .sidebar-label{font-family:var(--font-sub);font-size:0.6rem;font-weight:700;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;}
-    .sidebar-card ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
-    .sidebar-card ul li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);line-height:1.5;padding-left:1rem;position:relative;}
-    .sidebar-card ul li::before{content:'?';position:absolute;left:0;color:var(--red);font-size:0.7rem;}
-    .steps-list{counter-reset:steps;list-style:none;display:flex;flex-direction:column;gap:0.7rem;}
-    .steps-list li{font-family:var(--font-body);font-size:0.8rem;color:var(--gray-dark);padding-left:2rem;position:relative;counter-increment:steps;line-height:1.5;}
-    .steps-list li::before{content:counter(steps);position:absolute;left:0;width:1.4rem;height:1.4rem;background:var(--red);color:#fff;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;top:0.1rem;}
-    .time-badge{display:inline-block;background:#fff3f3;border:1px solid #f5c6c6;color:var(--red);font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.8rem;margin-top:1.2rem;}
-    footer{background:var(--black);padding:2rem 3rem;border-top:1px solid rgba(255,255,255,0.06);}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding:1rem 0 0;margin-top:1.2rem;display:flex;justify-content:space-between;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
-    .footer-bottom a{color:rgba(255,255,255,0.25);text-decoration:none;}
-  </style>
+  <link rel="stylesheet" href="service-detail.css">
 </head>
 <body>
 
@@ -90,7 +44,7 @@
       &nbsp;/&nbsp;<a href="service-health.html" style="color:var(--red);text-decoration:none;">Health Services</a>
       &nbsp;/&nbsp; Health Card (SSN)
     </div>
-    <div style="font-size:2.2rem;margin-bottom:0.6rem;">??</div>
+    <div style="font-size:2.2rem;margin-bottom:0.6rem;">💳</div>
     <h1 style="font-family:var(--font-head);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#fff;margin-bottom:0.6rem;">Health Card (SSN)</h1>
     <p style="font-family:var(--font-body);font-size:0.9rem;color:rgba(255,255,255,0.5);max-width:580px;line-height:1.8;">Apply for or replace your National Health Service card &mdash; required to access all NHS services.</p>
   </div>
@@ -109,7 +63,7 @@
 <label for="delivery_address">Delivery Address</label><input type="text" id="delivery_address" name="delivery_address" placeholder="">
 <label for="reason">Reason</label><select id="reason" name="reason"><option>New Application</option><option>Lost Card</option><option>Damaged Card</option><option>Name Change</option></select>
       <div style="background:#fff8f8;border-left:3px solid var(--red);padding:0.8rem 1rem;margin-top:1.5rem;font-family:var(--font-body);font-size:0.76rem;color:#666;">
-        ? This portal is for demonstration purposes. Submissions are not processed. Log in with your Citizen Account to submit a real application.
+        This portal is for demonstration purposes. Submissions are not processed. Log in with your Citizen Account to submit a real application.
       </div>
       <button type="submit" class="submit-btn">Submit Application ?</button>
     </form>
@@ -129,7 +83,7 @@
 <li>Identity verified against Citizens Registry (2 days)</li>
 <li>NHS number assigned (if new)</li>
 <li>Card posted to registered address within 7 days</li></ol>
-      <div class="time-badge">? 5-7 working days</div>
+      <div class="time-badge">⏱5-7 working days</div>
     </div>
     <div class="sidebar-card" style="margin-top:1.2rem;background:var(--black);border-top-color:rgba(255,255,255,0.1);">
       <div class="sidebar-label" style="color:rgba(255,255,255,0.4);">Need Help?</div>
@@ -147,7 +101,7 @@
       <div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Health Services &mdash; Official Service Portal</div>
     </div>
     <div style="display:flex;gap:1rem;">
-      <a href="service-health.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">? Back to Health Services</a>
+      <a href="service-health.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">‹ Back to Health Services</a>
       <a href="services.html" style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;">All Services</a>
     </div>
   </div>

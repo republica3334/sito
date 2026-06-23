@@ -61,7 +61,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       ck.set('republicstar_session', '1',    days, isSess);
       ck.set('republicstar_user',    userId, days, isSess);
       ck.set('republicstar_role',    role,   days, isSess);
-      localStorage.setItem('republicstar_session_start', Date.now().toString());
+      if (!isSess) localStorage.setItem('republicstar_session_start', Date.now().toString());
     },
 
     clear: function(){
@@ -114,6 +114,18 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     }
   };
   w.republicstarSession = session;
+
+  /* ── Live session verification ── */
+  w.republicstarVerifySession = function() {
+    var s = session.get();
+    if (!s || !window.republicstarDB) return;
+    republicstarDB.getUser(s.user).then(function(user) {
+      if (!user || !['pending', 'approved'].includes(user.status)) {
+        session.clear();
+        window.location.replace(_republicstarBase + 'auth/citizen-login.html');
+      }
+    }).catch(function() {});
+  };
 
   /* ── 3. Nav dropdown ── */
   w.republicstarUpdateNav = function(targetEl){
