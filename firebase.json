@@ -9,7 +9,12 @@
       "firebase.json",
       "firestore.rules",
       ".firebaserc",
-      "node_modules/**"
+      "node_modules/**",
+      ".claude/**",
+      ".github/**",
+      "*.local*",
+      "*.md",
+      "*.json.backup"
     ],
     "headers": [
       {
