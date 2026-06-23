@@ -666,9 +666,9 @@ exports.adminUpdateUser = onCall(async (request) => {
       throw new HttpsError('invalid-argument', 'Invalid status');
     }
     if (isModerator(request)) {
-      const found = await getUserDoc(targetId);
-      if (!found || found.data.status !== 'pending') {
-        throw new HttpsError('permission-denied', 'Moderators can only update pending registrations');
+      // Mods can approve/suspend/reinstate citizens but not set rejected
+      if (!['pending', 'approved', 'suspended'].includes(status)) {
+        throw new HttpsError('permission-denied', 'Moderators cannot set this status');
       }
     }
     updates.status = status;

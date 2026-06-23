@@ -246,6 +246,9 @@
   <a href="admin.html">Desktop version →</a>
 </footer>
 
+<!-- Toast -->
+<div id="adminMobileToast" style="position:fixed;bottom:1.5rem;left:1rem;right:1rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.2rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
+
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid var(--red);z-index:9999;padding:1rem 1.2rem;">
   <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5;margin-bottom:0.7rem;">This portal uses only essential cookies. <a href="#" style="color:var(--red);">Privacy Policy</a></p>
@@ -257,6 +260,33 @@
 
 <script>
 var _users = [];
+
+function showToast(msg, isError){
+  var t=document.getElementById('adminMobileToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _adminCall(promise, logMsg, btn){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Err'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
 
 function switchTab(name, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -309,8 +339,8 @@ function renderPending(){
       + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
       + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
       + '<div class="citizen-actions">'
-      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>'
-      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\')">Reject</button>'
+      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>'
+      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\',this)">Reject</button>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -334,12 +364,12 @@ function renderAll(){
     var actions = creator
       ? '<span class="badge-protected">Protected</span>'
       : '<div class="citizen-actions">'
-        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>' : '')
-        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\')">Suspend</button>' : '')
-        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\')">Reinstate</button>' : '')
-        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\')">Make Mod</button>'
-                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\')">Revoke Mod</button>')
-        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\')">Delete</button>'
+        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>' : '')
+        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\',this)">Suspend</button>' : '')
+        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\',this)">Reinstate</button>' : '')
+        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\',this)">Make Mod</button>'
+                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\',this)">Revoke Mod</button>')
+        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\',this)">Delete</button>'
         + '</div>';
     return '<div class="citizen-card '+cls+'">'
       + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
@@ -361,36 +391,36 @@ function renderLog(){
 
 function refresh(){ renderStats(); renderPending(); renderAll(); renderLog(); }
 
-function approveUser(id){
+function approveUser(id,btn){
   var u=_users.find(function(x){ return x.id===id; });
   if(!u) return;
-  republicstarDB.updateUser(id,{status:'approved'}).then(function(){ addLog('Approved: '+(u.name||id)); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u.name||id)+' ('+id+')', btn);
 }
-function rejectUser(id){
+function rejectUser(id,btn){
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.deleteUser(id).then(function(){ addLog('Rejected: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function deleteUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
+function deleteUser(id,btn){
+  if(isCreator(id)){ showToast('ilcreatore cannot be deleted.', true); return; }
   if(!confirm('Permanently delete this account?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.deleteUser(id).then(function(){ addLog('Deleted: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Deleted: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function makeModUser(id){
-  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
+function makeModUser(id,btn){
+  if(isCreator(id)){ showToast('ilcreatore is already Supreme Administrator.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{role:'moderator',status:'approved'}).then(function(){ addLog('Granted Mod: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function revokeModUser(id){
-  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
+function revokeModUser(id,btn){
+  if(isCreator(id)){ showToast('Cannot revoke ilcreatore.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{role:'citizen'}).then(function(){ addLog('Revoked Mod: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function suspendUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
+function suspendUser(id,btn){
+  if(isCreator(id)){ showToast('ilcreatore cannot be suspended.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{status:'suspended'}).then(function(){ addLog('Suspended: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 
 function _attachListener(){
