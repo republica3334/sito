@@ -1,10 +1,10 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Account Suspended â€” United Republic of Stars</title>
+  <title>Account Suspended — United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -14,14 +14,14 @@
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/auth/suspended.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="Account Suspended â€” United Republic of Stars">
+  <meta property="og:title"       content="Account Suspended — United Republic of Stars">
   <meta property="og:description" content="Access to this citizen account has been restricted by the Civil Registry Authority.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <meta name="twitter:card"       content="summary_large_image">
-  <meta name="twitter:title"      content="Account Suspended â€” United Republic of Stars">
+  <meta name="twitter:title"      content="Account Suspended — United Republic of Stars">
   <meta name="twitter:description" content="Access to this citizen account has been restricted by the Civil Registry Authority.">
   <meta name="twitter:image"      content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 
@@ -187,7 +187,7 @@
 
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars â€” Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
     <span>United Republic of Stars</span>
   </a>
 </header>
@@ -202,7 +202,7 @@
       </svg>
     </div>
 
-    <div class="eyebrow">Civil Registry Authority Â· Account Notice</div>
+    <div class="eyebrow">Civil Registry Authority · Account Notice</div>
     <h1>Account<br/>Suspended</h1>
     <p class="subtitle">
       Access to your citizen account has been <strong style="color:var(--text-secondary,rgba(255,255,255,0.7));">restricted</strong> by the
@@ -213,11 +213,11 @@
     <div class="info-block" id="infoBlock">
       <div class="info-row">
         <span class="info-label">National ID</span>
-        <span class="info-value" id="infoId">â€”</span>
+        <span class="info-value" id="infoId">—</span>
       </div>
       <div class="info-row">
         <span class="info-label">Full Name</span>
-        <span class="info-value" id="infoName">â€”</span>
+        <span class="info-value" id="infoName">—</span>
       </div>
       <div class="info-row">
         <span class="info-label">Status</span>
@@ -230,7 +230,7 @@
     <p class="notice">
       If you believe this suspension is an error, contact the <strong>Civil Registry Authority</strong>
       and provide your National ID. A review can be requested through official channels.<br/><br/>
-      Reference: <strong>Emergency Line 1-800-ARX-0001</strong> Â· Official Communications Portal
+      Reference: <strong>Emergency Line 1-800-ARX-0001</strong> · Official Communications Portal
     </p>
 
     <div class="actions">
@@ -242,8 +242,8 @@
 </main>
 
 <div class="footer-strip">
-  <span>United Republic of Stars Â· Official Government Portal</span>
-  <span>Ref. Civil Registry Â· Account Access Control</span>
+  <span>United Republic of Stars · Official Government Portal</span>
+  <span>Ref. Civil Registry · Account Access Control</span>
 </div>
 
 <script>
@@ -255,8 +255,8 @@
       if (!window.republicstarDB) { setTimeout(tryLoad, 400); return; }
       republicstarDB.getUser(s.user).then(function(user) {
         if (!user) return;
-        document.getElementById('infoId').textContent   = user.id   || 'â€”';
-        document.getElementById('infoName').textContent = user.name || 'â€”';
+        document.getElementById('infoId').textContent   = user.id   || '—';
+        document.getElementById('infoName').textContent = user.name || '—';
         document.getElementById('infoBlock').style.display = 'flex';
       }).catch(function(){});
     }
