@@ -130,8 +130,13 @@
         ? republicstarDB.signInWithCustomToken(token, !!remember)
         : Promise.resolve();
       signIn.then(function(){
+        if (user.role === 'admin') {
+          // Don't activate session yet — store pending data, complete after secret code
+          localStorage.setItem('republicstar_admin_pending', JSON.stringify({ id: user.id, role: user.role, days: days }));
+          w.location.href = _adminRedirect;
+          return;
+        }
         republicstarSession.set(user.id, user.role || 'citizen', days);
-        if (user.role === 'admin') { w.location.href = _adminRedirect; return; }
         if (!user.setup) { w.location.href = 'setup.html'; return; }
         var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
         localStorage.removeItem('republicstar_redirect');
