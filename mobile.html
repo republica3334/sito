@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Device detection: redirect desktop users to main homepage -->
@@ -9,9 +9,9 @@
 </script>
 <script src="republicstar-auth.js"></script>
   <meta charset="UTF-8" />
-  <meta name="description" content="The Official Mobile Portal of the United Republic of Stars — government services at your fingertips.">
+  <meta name="description" content="The Official Mobile Portal of the United Republic of Stars � government services at your fingertips.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>United Republic of Stars — Mobile Portal</title>
+  <title>United Republic of Stars � Mobile Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -34,7 +34,7 @@
       --font-sub:  'Inter', sans-serif;
       --font-body: 'Inter', sans-serif;
 
-      /* Theme tokens — dark by default */
+      /* Theme tokens � dark by default */
       --m-page-bg:   #0a0a0a;
       --m-surface:   #111111;
       --m-card-bg:   #1a1a1a;
@@ -45,7 +45,7 @@
       --m-border-card: rgba(255,255,255,0.08);
     }
 
-    /* ── LIGHT MODE TOKEN OVERRIDES ── */
+    /* -- LIGHT MODE TOKEN OVERRIDES -- */
     [data-theme="light"] {
       --m-page-bg:   #f0f0f0;
       --m-surface:   #ffffff;
@@ -57,9 +57,9 @@
       --m-border-card: rgba(0,0,0,0.12);
     }
 
-    /* ── LIGHT MODE EXPLICIT OVERRIDES
+    /* -- LIGHT MODE EXPLICIT OVERRIDES
        republicstar-theme.css injects [data-theme] header with !important (specificity 0,1,1).
-       We beat it with same specificity but later cascade position. ── */
+       We beat it with same specificity but later cascade position. -- */
     [data-theme="light"] header {
       background: #0a0a0a !important;
       border-bottom: 2px solid #c8102e !important;
@@ -68,7 +68,7 @@
     [data-theme="light"] .brand-text span { color: #c8102e !important; }
     [data-theme="light"] .nav-cta { background: #c8102e !important; color: #ffffff !important; }
 
-    /* Announce section — explicit so it responds to light mode */
+    /* Announce section � explicit so it responds to light mode */
     [data-theme="light"] .announce-section { background: #f0f0f0 !important; }
     [data-theme="light"] .announce-item {
       background: #ffffff !important;
@@ -87,7 +87,7 @@
     [data-theme="light"] .service-card-title { color: #0a0a0a !important; }
     [data-theme="light"] .service-card-sub { color: rgba(0,0,0,0.5) !important; }
 
-    /* Gov links — explicit so they always respond to light mode */
+    /* Gov links � explicit so they always respond to light mode */
     [data-theme="light"] .gov-links-section { background: #ffffff !important; }
     [data-theme="light"] .gov-link-row {
       color: #0a0a0a !important;
@@ -112,7 +112,7 @@
       border-color: rgba(0,0,0,0.15) !important;
     }
 
-    /* ── VIDEO & ENLISTMENT — light mode adjustments ── */
+    /* -- VIDEO & ENLISTMENT � light mode adjustments -- */
     [data-theme="light"] .enlist-section::before {
       background: repeating-linear-gradient(
         90deg,
@@ -122,7 +122,7 @@
     }
     [data-theme="light"] .m-branch-icon img { filter: invert(0); opacity: 0.85; }
 
-    /* ── FOOTER — light mode ──
+    /* -- FOOTER � light mode --
        html[data-theme="light"] (specificity 0,1,2) beats republicstar-theme.css's
        [data-theme] footer (0,1,1) which is injected after this block. */
     html[data-theme="light"] footer {
@@ -139,7 +139,7 @@
 
     html, body { background: var(--m-page-bg); color: var(--m-text); font-family: var(--font-body); overflow-x: hidden; }
 
-    /* ── HEADER ── */
+    /* -- HEADER -- */
     header {
       background: #0f0f0f;
       border-bottom: 2px solid #c8102e;
@@ -191,7 +191,7 @@
       display: inline-block;
     }
 
-    /* ── HERO ── */
+    /* -- HERO -- */
     .hero {
       position: relative;
       min-height: calc(100svh - 56px);
@@ -327,7 +327,7 @@
       flex-shrink: 0;
     }
 
-    /* ── QUICK ACCESS ── */
+    /* -- QUICK ACCESS -- */
     .quick-section {
       background: var(--m-surface);
       padding: 2rem 1.4rem;
@@ -408,7 +408,7 @@
       text-overflow: ellipsis;
     }
 
-    /* ── ANNOUNCEMENTS ── */
+    /* -- ANNOUNCEMENTS -- */
     .announce-section {
       background: var(--m-page-bg);
       padding: 2rem 1.4rem;
@@ -471,7 +471,7 @@
       line-height: 1.5;
     }
 
-    /* ── GOV QUICK LINKS ── */
+    /* -- GOV QUICK LINKS -- */
     .gov-links-section {
       background: var(--m-surface);
       padding: 2rem 1.4rem;
@@ -515,7 +515,7 @@
       font-size: 1rem;
     }
 
-    /* ── VIDEO ── */
+    /* -- VIDEO -- */
     .video-section {
       background: var(--m-surface);
       padding: 2rem 1.4rem;
@@ -560,7 +560,7 @@
       border: none;
     }
 
-    /* ── ENLISTMENT ── */
+    /* -- ENLISTMENT -- */
     .enlist-section {
       background: var(--m-page-bg);
       border-top: 2px solid var(--red);
@@ -726,7 +726,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* ── FOOTER ── */
+    /* -- FOOTER -- */
     footer {
       background: #080808;
       border-top: 2px solid rgba(255,255,255,0.06);
@@ -772,7 +772,7 @@
       gap: 0.3rem;
     }
 
-    /* ── COOKIE BANNER ── */
+    /* -- COOKIE BANNER -- */
     #cookieBanner {
       display: none;
       position: fixed;
@@ -808,7 +808,7 @@
 <!-- HEADER -->
 <header>
   <a href="GOVERN_1.HTM" class="header-brand">
-    <img loading="lazy" src="svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars � Official Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>United Republic</h1>
       <span>Official Portal</span>
@@ -938,7 +938,7 @@
       </div>
       <span class="gov-link-label">Office of the President</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 
   <a href="gov/national-assembly.html" class="gov-link-row">
@@ -950,7 +950,7 @@
       </div>
       <span class="gov-link-label">National Assembly</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 
   <a href="gov/constitution.html" class="gov-link-row">
@@ -962,7 +962,7 @@
       </div>
       <span class="gov-link-label">Constitution</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 
   <a href="gov/laws-decrees.html" class="gov-link-row">
@@ -974,7 +974,7 @@
       </div>
       <span class="gov-link-label">Laws &amp; Decrees</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 
   <a href="gov/official-gazette.html" class="gov-link-row">
@@ -986,7 +986,7 @@
       </div>
       <span class="gov-link-label">Official Gazette</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 
   <a href="gov/ministries.html" class="gov-link-row">
@@ -998,7 +998,7 @@
       </div>
       <span class="gov-link-label">Cabinet of Ministers</span>
     </div>
-    <span class="gov-link-arrow">›</span>
+    <span class="gov-link-arrow">�</span>
   </a>
 </section>
 
@@ -1009,7 +1009,7 @@
   <div class="video-wrapper">
     <iframe
       src="https://www.youtube.com/embed/JOWRembdPS8"
-      title="United Republic of Stars — Armed Forces"
+      title="United Republic of Stars � Armed Forces"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen>
@@ -1046,25 +1046,25 @@
       <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/terrestre.svg" alt="Ground Forces"></div>
       <h3>Ground Forces</h3>
       <p>Infantry, armor, and engineering units operating across all terrain types.</p>
-      <span class="m-branch-link">View Roles →</span>
+      <span class="m-branch-link">View Roles ?</span>
     </a>
     <a href="military/air-corps.html" class="m-branch-card">
       <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/air%20force.svg" alt="Air Corps"></div>
       <h3>Air Corps</h3>
       <p>Strategic air superiority and rapid-response operations defending the skies.</p>
-      <span class="m-branch-link">View Roles →</span>
+      <span class="m-branch-link">View Roles ?</span>
     </a>
     <a href="military/naval-command.html" class="m-branch-card">
       <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/navy.svg" alt="Naval Command"></div>
       <h3>Naval Command</h3>
       <p>Protecting maritime borders through the Republic's coastal and deep-water fleet.</p>
-      <span class="m-branch-link">View Roles →</span>
+      <span class="m-branch-link">View Roles ?</span>
     </a>
     <a href="military/space-force.html" class="m-branch-card">
       <div class="m-branch-icon"><img loading="lazy" src="svgs/icone/army/space.svg" alt="Space Force"></div>
       <h3>Space Force</h3>
       <p>Orbital sovereignty and satellite operations beyond the atmosphere.</p>
-      <span class="m-branch-link">View Roles →</span>
+      <span class="m-branch-link">View Roles ?</span>
     </a>
   </div>
   <div class="enlist-cta">
@@ -1079,7 +1079,7 @@
 </main>
 <footer>
   <div class="footer-brand">
-    <img loading="lazy" src="svgs/icone/republica/2.svg" width="90" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="svgs/icone/republica/2.svg" width="90" class="emblem-svg" alt="United Republic of Stars � Official Emblem" onerror="this.style.display='none'">
     <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
   </div>
   <div class="footer-links">
@@ -1091,8 +1091,8 @@
     <a href="auth/citizen-login.html">Citizen Login</a>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 United Republic of Stars · All Rights Reserved</span>
-    <span>Official Government Website · Est. MMXII</span>
+    <span>� 2026 United Republic of Stars � All Rights Reserved</span>
+    <span>Official Government Website � Est. MMXII</span>
   </div>
 </footer>
 
@@ -1110,7 +1110,7 @@
   document.addEventListener('DOMContentLoaded', function(){
     republicstarUpdateNav();
     republicstarCookieBanner();
-    // No hamburger on mobile.html — layout is already mobile-native
+    // No hamburger on mobile.html � layout is already mobile-native
   });
 </script>
 

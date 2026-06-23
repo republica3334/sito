@@ -8,7 +8,7 @@ admin.initializeApp();
 const db = admin.firestore();
 const FieldValue = admin.firestore.FieldValue;
 
-const ADMIN_ID = 'ilcreatore';
+const ADMIN_ID = 'ADMIN001';
 const PASSWORD_ITERATIONS = 310000;
 const PASSWORD_KEYLEN = 32;
 const PASSWORD_DIGEST = 'sha256';

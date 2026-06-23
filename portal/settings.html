@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>United Republic of Stars — Account Settings</title>
+  <title>United Republic of Stars � Account Settings</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -153,7 +153,7 @@
     .card.danger { border-top-color: #555; }
     .card.danger .card-title { color: rgba(255,255,255,0.6); }
 
-    /* ── LIGHT THEME OVERRIDES ── */
+    /* -- LIGHT THEME OVERRIDES -- */
     [data-theme="light"] .page-wrap {
       background: #f0f0f0 !important;
     }
@@ -227,7 +227,7 @@
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/portal/settings.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="United Republic of Stars — Account Settings">
+  <meta property="og:title"       content="United Republic of Stars � Account Settings">
   <meta property="og:description" content="Manage your Stars Citizen Account settings and security.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
@@ -235,7 +235,7 @@
   <meta name="theme-color"        content="#c8102e">
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="United Republic of Stars — Account Settings">
+  <meta name="twitter:title"       content="United Republic of Stars � Account Settings">
   <meta name="twitter:description" content="Manage your Stars Citizen Account settings and security.">
   <meta name="twitter:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 </head>
@@ -256,10 +256,10 @@
 
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars � Official Emblem">
     <div class="brand-text">
       <h1>United Republic of Stars</h1>
-      <span>Official Government Portal · Est. MMXII</span>
+      <span>Official Government Portal � Est. MMXII</span>
     </div>
   </a>
   <nav>
@@ -276,8 +276,8 @@
   <div class="page-inner">
 
     <div class="page-header">
-      <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
-      <div class="eyebrow">United Republic of Stars — Account Settings</div>
+      <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars � Official Emblem">
+      <div class="eyebrow">United Republic of Stars � Account Settings</div>
     </div>
 
     <!-- ACCOUNT STATUS CARD -->
@@ -325,13 +325,13 @@
       <div id="adminStatusSection" style="display:none;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:1.2rem;">
         <div style="font-family:var(--font-sub);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#c8102e;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Admin — Change Account Status
+          Admin � Change Account Status
         </div>
         <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
           <select id="adminStatusSelect" style="background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--font-sub);font-size:0.82rem;padding:0.7rem 1rem;outline:none;cursor:pointer;flex:1;min-width:160px;">
-            <option value="pending">⏳ Pending</option>
-            <option value="approved">✓ Approved</option>
-            <option value="suspended">✗ Suspended</option>
+            <option value="pending">? Pending</option>
+            <option value="approved">? Approved</option>
+            <option value="suspended">? Suspended</option>
           </select>
           <button onclick="adminSetStatus()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.4rem;cursor:pointer;white-space:nowrap;">Apply Status</button>
         </div>
@@ -343,8 +343,8 @@
     <div class="card" id="emailCard">
       <div class="card-title">
         Email Address
-        <span id="verifiedBadge" class="badge-verified" style="display:none;">✓ Verified</span>
-        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">⚠ Unverified</span>
+        <span id="verifiedBadge" class="badge-verified" style="display:none;">? Verified</span>
+        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">? Unverified</span>
       </div>
       <div class="card-sub">Verify your email to enable two-factor authentication and receive security alerts.</div>
 
@@ -370,7 +370,7 @@
             <label class="field-label">Verification Code</label>
             <input id="otpInput" class="txt" type="text" maxlength="6" placeholder="000000" oninput="this.value=this.value.replace(/\D/g,'')">
           </div>
-          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm →</button>
+          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm ?</button>
         </div>
         <div style="margin-top:0.8rem;">
           <button class="btn-ghost" onclick="sendVerificationCode()" style="font-size:0.62rem;padding:0.5rem 0.9rem;">Resend Code</button>
@@ -397,7 +397,7 @@
       </div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="emailChangePwd" class="txt" type="password" placeholder="••••••••">
+        <input id="emailChangePwd" class="txt" type="password" placeholder="��������">
       </div>
       <div id="changeEmailMsg" class="msg"></div>
       <button class="btn-primary" onclick="changeEmail()">Update Email</button>
@@ -409,15 +409,15 @@
       <div class="card-sub">Choose a strong password of at least 8 characters.</div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="currentPwd" class="txt" type="password" placeholder="••••••••">
+        <input id="currentPwd" class="txt" type="password" placeholder="��������">
       </div>
       <div class="field">
         <label class="field-label">New Password</label>
-        <input id="newPwd" class="txt" type="password" placeholder="••••••••">
+        <input id="newPwd" class="txt" type="password" placeholder="��������">
       </div>
       <div class="field">
         <label class="field-label">Confirm New Password</label>
-        <input id="newPwd2" class="txt" type="password" placeholder="••••••••">
+        <input id="newPwd2" class="txt" type="password" placeholder="��������">
       </div>
       <div id="pwdMsg" class="msg"></div>
       <button class="btn-primary" onclick="changePassword()">Update Password</button>
@@ -470,16 +470,16 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" alt="United Republic of Stars — Official Emblem">
+      <img loading="lazy" src="../svgs/icone/republica/1.svg" width="78" alt="United Republic of Stars � Official Emblem">
       <p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>
-      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">© 2026 United Republic of Stars. All Rights Reserved.</p>
+      <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">� 2026 United Republic of Stars. All Rights Reserved.</p>
     </div>
     <div class="footer-col"><h5>Government</h5><ul><li><a href="../gov/government.html">Office of the President</a></li><li><a href="../gov/national-assembly.html">National Assembly</a></li><li><a href="../gov/supreme-court.html">Supreme Court</a></li><li><a href="../gov/ministries.html">Cabinet of Ministers</a></li></ul></div>
     <div class="footer-col"><h5>Citizen Services</h5><ul><li><a href="../services/service-digital-id.html">National ID Portal</a></li><li><a href="../services/service-taxes.html">Tax Authority</a></li><li><a href="../services/service-civil-registration.html">Civil Registry</a></li><li><a href="../services/service-health.html">Health Services</a></li></ul></div>
     <div class="footer-col"><h5>Information</h5><ul><li><a href="../GOVERN_1.HTM">About the Republic</a></li><li><a href="../gov/constitution.html">Constitution</a></li><li><a href="../gov/laws-decrees.html">Laws &amp; Decrees</a></li><li><a href="../gov/contact.html">Contact Government</a></li></ul></div>
   </div>
   <div class="footer-bottom">
-    <span>United Republic of Stars · Est. MMXII · Official Government Website</span>
+    <span>United Republic of Stars � Est. MMXII � Official Government Website</span>
     <div style="display:flex;gap:1.5rem;"><a href="#">Privacy Policy</a><a href="#">Accessibility</a><a href="#">Terms of Use</a></div>
   </div>
 </footer>
@@ -490,7 +490,7 @@
   var _timerInterval = null;
   var _otpExpiry = null;
 
-  // ── INIT ──
+  // -- INIT --
   function _initSettings(user){
     if(!user) return;
     document.getElementById('currentEmail').value = user.email || '';
@@ -518,16 +518,16 @@
     _load();
   });
 
-  // ── ACCOUNT STATUS ──
+  // -- ACCOUNT STATUS --
   function renderStatusCard(user) {
-    document.getElementById('displayId').value = user.id || '—';
+    document.getElementById('displayId').value = user.id || '�';
     document.getElementById('displayRegistered').value = user.registered
       ? new Date(user.registered).toLocaleDateString('en-GB', {day:'2-digit',month:'long',year:'numeric'})
-      : '—';
+      : '�';
 
     var badge  = document.getElementById('accountStatusBadge');
     var status = user.status || 'pending';
-    var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+    var labels = { approved:'? Approved', pending:'? Pending Approval', suspended:'? Suspended' };
     badge.textContent = labels[status] || status;
     badge.className   = 'badge-status ' + status;
 
@@ -560,7 +560,7 @@
     var newStatus = document.getElementById('adminStatusSelect').value;
     republicstarDB.call('adminUpdateUser', { id: s.user, data: { status: newStatus } }).then(function() {
       var badge  = document.getElementById('accountStatusBadge');
-      var labels = { approved:'✓ Approved', pending:'⏳ Pending Approval', suspended:'✗ Suspended' };
+      var labels = { approved:'? Approved', pending:'? Pending Approval', suspended:'? Suspended' };
       badge.textContent = labels[newStatus] || newStatus;
       badge.className   = 'badge-status ' + newStatus;
       showMsg('adminStatusMsg', 'success', 'Status updated to: ' + newStatus);
@@ -569,7 +569,7 @@
     });
   }
 
-  // ── HELPERS ──
+  // -- HELPERS --
   function showMsg(id, type, text) {
     var el = document.getElementById(id);
     el.className = 'msg ' + type;
@@ -578,7 +578,7 @@
   }
   function hideMsg(id) { document.getElementById(id).style.display = 'none'; }
 
-  // ── SEND VERIFICATION CODE ──
+  // -- SEND VERIFICATION CODE --
   function sendVerificationCode() {
     var s = republicstarSession.get();
     if (!s) { showMsg('emailMsg', 'error', 'Session error.'); return; }
@@ -610,7 +610,7 @@
     }, 1000);
   }
 
-  // ── CONFIRM VERIFICATION CODE ──
+  // -- CONFIRM VERIFICATION CODE --
   function confirmCode() {
     var entered = document.getElementById('otpInput').value.trim();
     if (!entered) { showMsg('emailMsg', 'error', 'Please enter the code.'); return; }
@@ -642,7 +642,7 @@
       });
   }
 
-  // ── CHANGE EMAIL ──
+  // -- CHANGE EMAIL --
   function changeEmail() {
     var newVal = document.getElementById('newEmail').value.trim();
     if (!newVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newVal)) {
@@ -663,7 +663,7 @@
     }).catch(function(){ showMsg('changeEmailMsg','error','Save error. Please try again.'); });
   }
 
-  // ── CHANGE PASSWORD ──
+  // -- CHANGE PASSWORD --
   function changePassword() {
     var cur = document.getElementById('currentPwd').value;
     var nw  = document.getElementById('newPwd').value;
@@ -684,7 +684,7 @@
     });
   }
 
-  // ── TOGGLE 2FA ──
+  // -- TOGGLE 2FA --
   function toggle2FA() {
     var s = republicstarSession.get();
     if (!s) return;
@@ -702,7 +702,7 @@
     }).catch(function(){});
   }
 
-  // ── DELETE ACCOUNT MODAL ──
+  // -- DELETE ACCOUNT MODAL --
   function openDeleteModal() {
     document.getElementById('deleteModalPwd').value = '';
     document.getElementById('deleteModalMsg').style.display = 'none';
@@ -718,7 +718,7 @@
     if (!pwd) {
       msgEl.className = 'msg error'; msgEl.textContent = 'Password is required.'; msgEl.style.display = 'block'; return;
     }
-    btn.disabled = true; btn.textContent = 'Deleting…';
+    btn.disabled = true; btn.textContent = 'Deleting�';
     var s = republicstarSession.get();
     if (!s) { closeDeleteModal(); return; }
     republicstarDB.call('deleteOwnAccount', { currentPassword: pwd })
