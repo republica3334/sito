@@ -116,9 +116,7 @@ function isModerator(request) {
 
 async function requirePrivileged(request) {
   const uid = requireAuth(request);
-  // Fast-path: ilcreatore is always admin
-  if (uid === ADMIN_ID) return;
-  // Check live Firestore doc — token claims can be stale after demotion/suspension
+  if (uid === ADMIN_ID) return { role: 'admin', status: 'approved' };
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('permission-denied', 'Account not found');
   const role = found.data.role || 'citizen';
@@ -126,6 +124,7 @@ async function requirePrivileged(request) {
   if (!['admin', 'moderator'].includes(role) || status !== 'approved') {
     throw new HttpsError('permission-denied', 'Admin or moderator role required');
   }
+  return { role, status };
 }
 
 async function sendEmail(toEmail, toName, otpCode) {
@@ -620,23 +619,25 @@ exports.verifyOtp = onCall(async (request) => {
 });
 
 exports.adminUpdateUser = onCall(async (request) => {
-  await requirePrivileged(request);
+  const caller = await requirePrivileged(request);
+  const callerIsAdmin = caller.role === 'admin';
+  const callerIsMod = caller.role === 'moderator';
   const targetId = asString(request.data.id);
   const data = request.data.data || {};
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
   if (targetId === ADMIN_ID && request.auth.uid !== ADMIN_ID) {
     throw new HttpsError('permission-denied', 'Protected account');
   }
-  if (isModerator(request) && targetId === request.auth.uid) {
+  if (callerIsMod && targetId === request.auth.uid) {
     throw new HttpsError('permission-denied', 'Moderators cannot modify their own account');
   }
 
   // Mods cannot target admins or other moderators — fetch live role from Firestore
-  if (isModerator(request)) {
+  if (callerIsMod) {
     const targetDoc = await getUserDoc(targetId);
     if (targetDoc) {
       const targetRole = targetDoc.data.role || 'citizen';
-      if (targetRole === 'admin' || targetRole === 'moderator' || targetDoc.data.id === ADMIN_ID) {
+      if (targetRole === 'admin' || targetRole === 'moderator' || targetId === ADMIN_ID) {
         throw new HttpsError('permission-denied', 'Moderators cannot modify admin or moderator accounts');
       }
     }
@@ -651,7 +652,7 @@ exports.adminUpdateUser = onCall(async (request) => {
     updates.status = status;
   }
   if (Object.prototype.hasOwnProperty.call(data, 'role')) {
-    if (!isAdmin(request)) {
+    if (!callerIsAdmin) {
       throw new HttpsError('permission-denied', 'Only administrators can change roles');
     }
     const role = asString(data.role);
@@ -684,14 +685,14 @@ exports.adminUpdateUser = onCall(async (request) => {
 });
 
 exports.adminDeleteUser = onCall(async (request) => {
-  await requirePrivileged(request);
+  const caller = await requirePrivileged(request);
   const targetId = asString(request.data.id);
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
   if (targetId === ADMIN_ID) throw new HttpsError('permission-denied', 'Protected account');
 
   const found = await getUserDoc(targetId);
   if (!found) return { deleted: true };
-  if (isModerator(request) && found.data.status !== 'pending') {
+  if (caller.role === 'moderator' && found.data.status !== 'pending') {
     throw new HttpsError('permission-denied', 'Moderators can delete pending registrations only');
   }
 
