@@ -367,6 +367,17 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
     await found.ref.update({ twofa: false });
     user.twofa = false;
   }
+
+  // Admin accounts require a second secret code verified server-side
+  if (roleFor(userId, user) === 'admin') {
+    const challengeId = crypto.randomBytes(24).toString('hex');
+    await db.collection('admin_challenges').doc(challengeId).set({
+      userId,
+      expiry: Date.now() + 5 * 60 * 1000,
+    });
+    return { requiresSecretCode: true, challengeId, user: publicUser(userId, user) };
+  }
+
   return issueToken(userId, user);
 });
 
@@ -684,6 +695,31 @@ exports.adminUpdateUser = onCall(async (request) => {
   return { saved: true };
 });
 
+exports.verifyAdminCode = onCall({ invoker: 'public' }, async (request) => {
+  const challengeId = asString(request.data.challengeId);
+  const code = asString(request.data.code).toUpperCase();
+  if (!challengeId || !code) throw new HttpsError('invalid-argument', 'Challenge and code required');
+
+  const ref = db.collection('admin_challenges').doc(challengeId);
+  const snap = await ref.get();
+  if (!snap.exists || Date.now() > snap.data().expiry) {
+    if (snap.exists) await ref.delete();
+    throw new HttpsError('unauthenticated', 'Challenge expired — please log in again');
+  }
+
+  const expectedHash = process.env.ADMIN_SECRET_HASH || '';
+  if (!expectedHash || sha256(code) !== expectedHash) {
+    await ref.delete();
+    throw new HttpsError('unauthenticated', 'Invalid code');
+  }
+
+  await ref.delete();
+  const userId = snap.data().userId;
+  const found = await getUserDoc(userId);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  return issueToken(userId, found.data);
+});
+
 exports.adminDeleteUser = onCall(async (request) => {
   const caller = await requirePrivileged(request);
   const targetId = asString(request.data.id);
@@ -692,8 +728,16 @@ exports.adminDeleteUser = onCall(async (request) => {
 
   const found = await getUserDoc(targetId);
   if (!found) return { deleted: true };
-  if (caller.role === 'moderator' && found.data.status !== 'pending') {
-    throw new HttpsError('permission-denied', 'Moderators can delete pending registrations only');
+
+  // Mods cannot delete admins or other moderators
+  if (caller.role === 'moderator') {
+    const targetRole = found.data.role || 'citizen';
+    if (targetRole === 'admin' || targetRole === 'moderator') {
+      throw new HttpsError('permission-denied', 'Moderators cannot delete admin or moderator accounts');
+    }
+    if (found.data.status !== 'pending') {
+      throw new HttpsError('permission-denied', 'Moderators can delete pending registrations only');
+    }
   }
 
   const batch = db.batch();
