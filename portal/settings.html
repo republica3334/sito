@@ -329,9 +329,9 @@
         </div>
         <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
           <select id="adminStatusSelect" style="background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--font-sub);font-size:0.82rem;padding:0.7rem 1rem;outline:none;cursor:pointer;flex:1;min-width:160px;">
-            <option value="pending">? Pending</option>
-            <option value="approved">? Approved</option>
-            <option value="suspended">? Suspended</option>
+            <option value="pending">&#9711; Pending</option>
+            <option value="approved">&#10003; Approved</option>
+            <option value="suspended">&#33; Suspended</option>
           </select>
           <button onclick="adminSetStatus()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.4rem;cursor:pointer;white-space:nowrap;">Apply Status</button>
         </div>
@@ -343,8 +343,8 @@
     <div class="card" id="emailCard">
       <div class="card-title">
         Email Address
-        <span id="verifiedBadge" class="badge-verified" style="display:none;">? Verified</span>
-        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">? Unverified</span>
+        <span id="verifiedBadge" class="badge-verified" style="display:none;">&#10003; Verified</span>
+        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">&#33; Unverified</span>
       </div>
       <div class="card-sub">Verify your email to enable two-factor authentication and receive security alerts.</div>
 
@@ -370,7 +370,7 @@
             <label class="field-label">Verification Code</label>
             <input id="otpInput" class="txt" type="text" maxlength="6" placeholder="000000" oninput="this.value=this.value.replace(/\D/g,'')">
           </div>
-          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm ?</button>
+          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm &#8594;</button>
         </div>
         <div style="margin-top:0.8rem;">
           <button class="btn-ghost" onclick="sendVerificationCode()" style="font-size:0.62rem;padding:0.5rem 0.9rem;">Resend Code</button>
@@ -397,7 +397,7 @@
       </div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="emailChangePwd" class="txt" type="password" placeholder="-------...">
+        <input id="emailChangePwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div id="changeEmailMsg" class="msg"></div>
       <button class="btn-primary" onclick="changeEmail()">Update Email</button>
@@ -409,15 +409,15 @@
       <div class="card-sub">Choose a strong password of at least 8 characters.</div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="currentPwd" class="txt" type="password" placeholder="-------...">
+        <input id="currentPwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div class="field">
         <label class="field-label">New Password</label>
-        <input id="newPwd" class="txt" type="password" placeholder="-------...">
+        <input id="newPwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div class="field">
         <label class="field-label">Confirm New Password</label>
-        <input id="newPwd2" class="txt" type="password" placeholder="-------...">
+        <input id="newPwd2" class="txt" type="password" placeholder="••••••••">
       </div>
       <div id="pwdMsg" class="msg"></div>
       <button class="btn-primary" onclick="changePassword()">Update Password</button>
@@ -425,16 +425,14 @@
 
     <!-- 2FA CARD -->
     <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-        <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;">
           <div class="card-title" style="margin-bottom:0.3rem;">Two-Factor Authentication</div>
           <div class="card-sub" style="margin-bottom:0;">Each login will require a 6-digit code sent to your email.</div>
         </div>
-        <label style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;">
-          <span id="tfaTrack" onclick="toggle2FA()" style="position:absolute;inset:0;border-radius:28px;cursor:pointer;transition:background 0.3s;background:rgba(255,255,255,0.12);">
-            <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);"></span>
-          </span>
-        </label>
+        <div onclick="toggle2FA()" id="tfaTrack" style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;border-radius:28px;transition:background 0.3s;background:rgba(255,255,255,0.12);">
+          <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);pointer-events:none;"></span>
+        </div>
       </div>
       <div id="tfaMsg" class="msg" style="margin-top:1rem;margin-bottom:0;"></div>
     </div>
@@ -688,18 +686,29 @@
   function toggle2FA() {
     var s = republicstarSession.get();
     if (!s) return;
+    var track = document.getElementById('tfaTrack');
+    var thumb = document.getElementById('tfaThumb');
+    track.style.opacity = '0.5';
+    track.style.pointerEvents = 'none';
+    showMsg('tfaMsg', 'info', 'Updating…');
     republicstarDB.getUser(s.user).then(function(user){
-      if (!user) return;
-      if (!user.emailVerified) { showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
+      if (!user) { track.style.opacity='1'; track.style.pointerEvents=''; showMsg('tfaMsg','error','Could not load user.'); return; }
+      if (!user.emailVerified) { track.style.opacity='1'; track.style.pointerEvents=''; showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
       var newVal = !user.twofa;
       republicstarDB.call('setTwoFactor', { enabled: newVal }).then(function(){
-        var track = document.getElementById('tfaTrack');
-        var thumb = document.getElementById('tfaThumb');
+        track.style.opacity = '1';
+        track.style.pointerEvents = '';
         track.style.background = newVal ? '#c8102e' : 'rgba(255,255,255,0.12)';
         thumb.style.transform  = newVal ? 'translateX(24px)' : 'translateX(0)';
         showMsg('tfaMsg','success', newVal ? '2FA enabled.' : '2FA disabled.');
-      }).catch(function(){ showMsg('tfaMsg','error','Save error.'); });
-    }).catch(function(){});
+      }).catch(function(e){
+        track.style.opacity='1'; track.style.pointerEvents='';
+        showMsg('tfaMsg','error', (e&&e.message)||'Save error. Try again.');
+      });
+    }).catch(function(){
+      track.style.opacity='1'; track.style.pointerEvents='';
+      showMsg('tfaMsg','error','Connection error.');
+    });
   }
 
   // -- DELETE ACCOUNT MODAL --
