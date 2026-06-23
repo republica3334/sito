@@ -620,7 +620,7 @@ exports.verifyOtp = onCall(async (request) => {
 });
 
 exports.adminUpdateUser = onCall(async (request) => {
-  requirePrivileged(request);
+  await requirePrivileged(request);
   const targetId = asString(request.data.id);
   const data = request.data.data || {};
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
@@ -684,7 +684,7 @@ exports.adminUpdateUser = onCall(async (request) => {
 });
 
 exports.adminDeleteUser = onCall(async (request) => {
-  requirePrivileged(request);
+  await requirePrivileged(request);
   const targetId = asString(request.data.id);
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
   if (targetId === ADMIN_ID) throw new HttpsError('permission-denied', 'Protected account');
