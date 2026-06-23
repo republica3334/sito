@@ -44,7 +44,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   }
 
   /* ── 2. Session API ── */
-  var ADMIN_ID   = 'ADMIN001';
+  /* ADMIN_ID intentionally not exposed client-side — use role checks only */
 
   var session = {
     get: function(){
@@ -77,7 +77,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     isAdmin: function(){
       var s = session.get();
-      return !!(s && (s.user === ADMIN_ID || s.role === 'admin'));
+      return !!(s && s.role === 'admin');
     },
 
     requireLogin: function(){
@@ -91,7 +91,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     requireAdmin: function(){
       var s = session.get();
-      if (!s || (s.user !== ADMIN_ID && s.role !== 'admin')){ window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
+      if (!s || s.role !== 'admin'){ window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false; }
       return true;
     },
 
@@ -102,7 +102,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     requireMod: function(){
       var s = session.get();
-      if (!s || (s.role !== 'moderator' && s.role !== 'admin' && s.user !== ADMIN_ID)){
+      if (!s || (s.role !== 'moderator' && s.role !== 'admin')){
         window.location.replace(_republicstarBase + 'auth/citizen-login.html'); return false;
       }
       return true;
@@ -128,7 +128,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       return;
     }
 
-    var isAdmin = (s.user === ADMIN_ID || s.role === 'admin');
+    var isAdmin = (s.role === 'admin');
     var isMod   = (s.role === 'moderator');
     var initials = s.user.charAt(0).toUpperCase();
     var shortLabel = isAdmin ? 'ADMIN' : isMod ? 'MOD' : s.user.substring(0, 8).toUpperCase();
@@ -428,7 +428,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     function _isPrivileged() {
       var s = session.get();
-      return s && (s.role === 'admin' || s.role === 'moderator' || s.user === 'ADMIN001');
+      return s && (s.role === 'admin' || s.role === 'moderator');
     }
 
     function _buildPanel() {
@@ -523,7 +523,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       + 'width:34px;height:34px;text-decoration:none;flex-shrink:0;';
 
     if (s) {
-      var isAdminM = (s.user === ADMIN_ID || s.role === 'admin');
+      var isAdminM = (s.role === 'admin');
       var isModM   = (s.role === 'moderator');
       var aColor   = isAdminM ? '#c8102e' : isModM ? '#5a3ebf' : '#2a2a2a';
       var aInit    = s.user.charAt(0).toUpperCase();
@@ -706,7 +706,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       var page   = window.location.pathname.split('/').pop() || 'index.html';
       if (EXEMPT.indexOf(page) !== -1) return;
       var s = session.get();
-      if (!s || s.user === 'ADMIN001' || s.role === 'admin') return;
+      if (!s || s.role === 'admin') return;
 
       function runCheck(user){
         if (!user) return;
