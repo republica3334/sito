@@ -318,7 +318,7 @@ function renderPending(){
 
 function renderAll(){
   var q = (document.getElementById('searchBox').value||'').toLowerCase();
-  var nonPending = _users.filter(function(u){ return u.status!=='pending'; });
+  var nonPending = _users.filter(function(u){ return u.status!=='pending' && u.role!=='admin' && !isCreator(u.id); });
   var filtered = q ? nonPending.filter(function(u){
     return (u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q);
   }) : nonPending;

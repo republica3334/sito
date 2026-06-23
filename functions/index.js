@@ -167,10 +167,15 @@ async function throttle(ref) {
   await ref.set({ sentAt: Date.now() }, { merge: true });
 }
 
-async function createLoginChallenge(userId, user) {
+async function createLoginChallenge(userId, user, ip) {
   if (!user.email) throw new HttpsError('failed-precondition', 'No email on this account');
 
   await throttle(db.collection('login_challenge_rate').doc(userId));
+
+  if (ip) {
+    const ipKey = 'challenge_ip_' + sha256(String(ip)).slice(0, 16);
+    await throttle(db.collection('rate_limits').doc(ipKey));
+  }
 
   const challengeId = crypto.randomBytes(24).toString('hex');
   const code = randomCode();
@@ -243,14 +248,21 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
     await rateRef.set({ count: 1, windowStart: Date.now() });
   }
 
-  const firstName = asString(request.data.firstName);
-  const lastName = asString(request.data.lastName);
+  const firstName = asString(request.data.firstName).slice(0, 64);
+  const lastName = asString(request.data.lastName).slice(0, 64);
   const dob = asString(request.data.dob);
   const email = normalizeEmail(request.data.email);
   const password = request.data.password;
 
   if (!firstName || !lastName || !dob) {
     throw new HttpsError('invalid-argument', 'Name and date of birth are required');
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    throw new HttpsError('invalid-argument', 'Date of birth must be in YYYY-MM-DD format');
+  }
+  const dobDate = new Date(dob);
+  if (isNaN(dobDate.getTime()) || dobDate >= new Date()) {
+    throw new HttpsError('invalid-argument', 'Invalid date of birth');
   }
   validateEmail(email);
   validatePassword(password);
@@ -357,7 +369,7 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
     throw new HttpsError('permission-denied', 'This account is not accessible');
   }
   if (user.twofa === true && user.email && user.emailVerified === true) {
-    return createLoginChallenge(userId, user);
+    return createLoginChallenge(userId, user, ip);
   }
   if (user.twofa === true && (!user.email || user.emailVerified !== true)) {
     await found.ref.update({ twofa: false });
@@ -403,6 +415,24 @@ exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
 
 exports.completeSetup = onCall(async (request) => {
   const uid = requireAuth(request);
+  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ipKey = 'setup_rate_' + sha256(String(ip)).slice(0, 16);
+  const rateRef = db.collection('rate_limits').doc(ipKey);
+  const rateSnap = await rateRef.get();
+  if (rateSnap.exists) {
+    const { count, windowStart } = rateSnap.data();
+    const elapsed = Date.now() - (windowStart || 0);
+    if (elapsed < 60 * 60 * 1000 && count >= 10) {
+      throw new HttpsError('resource-exhausted', 'Too many requests. Please try again later.');
+    }
+    if (elapsed >= 60 * 60 * 1000) {
+      await rateRef.set({ count: 1, windowStart: Date.now() });
+    } else {
+      await rateRef.update({ count: count + 1 });
+    }
+  } else {
+    await rateRef.set({ count: 1, windowStart: Date.now() });
+  }
   const email = normalizeEmail(request.data.email);
   const twofaRequested = request.data.twofa === true;
   const found = await getUserDoc(uid);
@@ -426,6 +456,15 @@ exports.completeSetup = onCall(async (request) => {
 
 exports.changeEmail = onCall(async (request) => {
   const uid = requireAuth(request);
+  const currentPassword = request.data.currentPassword;
+  if (typeof currentPassword !== 'string' || !currentPassword) {
+    throw new HttpsError('invalid-argument', 'Current password required');
+  }
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  const ok = await verifyStoredPassword(uid, found.data, currentPassword);
+  if (!ok) throw new HttpsError('permission-denied', 'Incorrect password');
+
   const email = normalizeEmail(request.data.email);
   validateEmail(email);
   if (await emailExists(email, uid)) {
@@ -472,6 +511,15 @@ exports.setTwoFactor = onCall(async (request) => {
 exports.deleteOwnAccount = onCall(async (request) => {
   const uid = requireAuth(request);
   if (uid === ADMIN_ID) throw new HttpsError('permission-denied', 'Protected account');
+
+  const currentPassword = request.data.currentPassword;
+  if (typeof currentPassword !== 'string' || !currentPassword) {
+    throw new HttpsError('invalid-argument', 'Current password required');
+  }
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  const ok = await verifyStoredPassword(uid, found.data, currentPassword);
+  if (!ok) throw new HttpsError('permission-denied', 'Incorrect password');
 
   const batch = db.batch();
   batch.delete(db.collection('user_private').doc(uid));
@@ -607,6 +655,12 @@ exports.adminUpdateUser = onCall(async (request) => {
     const status = asString(data.status);
     if (!['pending', 'approved', 'suspended', 'rejected'].includes(status)) {
       throw new HttpsError('invalid-argument', 'Invalid status');
+    }
+    if (isModerator(request)) {
+      const found = await getUserDoc(targetId);
+      if (!found || found.data.status !== 'pending') {
+        throw new HttpsError('permission-denied', 'Moderators can only update pending registrations');
+      }
     }
     updates.status = status;
   }
