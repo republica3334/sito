@@ -61,7 +61,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       ck.set('republicstar_session', '1',    days, isSess);
       ck.set('republicstar_user',    userId, days, isSess);
       ck.set('republicstar_role',    role,   days, isSess);
-      localStorage.setItem('republicstar_session_start', Date.now().toString());
+      if (!isSess) localStorage.setItem('republicstar_session_start', Date.now().toString());
     },
 
     clear: function(){
