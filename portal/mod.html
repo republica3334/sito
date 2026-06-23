@@ -145,7 +145,7 @@
 <main>
 <div class="mod-wrap">
 
-  <script>republicstarSession.requireMod();</script>
+  <script>republicstarSession.requireMod(); republicstarVerifySession();</script>
 
   <div class="mod-topbar">
     <div>
@@ -238,7 +238,57 @@ function addLog(msg){
 function isAdminUser(u){ return u.role==='admin'||u.id==='ADMIN001'; }
 function isSelf(id){ return _currentModId && id===_currentModId; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
-function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function mbtn(action, label, style){
+  return '<button data-action="'+action+'" style="'+style+'" type="button">'+label+'</button>';
+}
+function attachModListeners(container){
+  container.querySelectorAll('[data-action]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('[data-uid]');
+      var id = row ? row.getAttribute('data-uid') : null;
+      if (!id) return;
+      var action = b.getAttribute('data-action');
+      if (action==='approve')  approveUser(id, b);
+      else if (action==='reject')  rejectUser(id, b);
+      else if (action==='suspend') suspendUser(id, b);
+      else if (action==='revoke')  revokeUser(id, b);
+    });
+  });
+}
+
+function showToast(msg, isError){
+  var t=document.getElementById('modToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _modCall(promise, logMsg, btn, patch){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+      if(patch && patch.id){
+        _users = _users.map(function(u){
+          if(u.id !== patch.id) return u;
+          return Object.assign({}, u, patch.data);
+        });
+        refresh();
+      }
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Error'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
 
 function showToast(msg, isError){
   var t=document.getElementById('modToast');
@@ -303,8 +353,9 @@ function renderPending(){
   list.innerHTML=pending.map(function(u){
     var isRejected=u.status==='rejected';
     var statusColor=isRejected?'#c8102e':'#f5a623';
+    var bS='font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;';
     return(
-      '<div style="background:var(--mb);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
+      '<div data-uid="'+esc(u.id)+'" style="background:var(--mb);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
       +'<div>'
       +'<div style="display:flex;align-items:center;gap:0.6rem;">'
       +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt);font-weight:600;">'+esc(u.name||'&mdash;')+'</span>'
@@ -316,12 +367,13 @@ function renderPending(){
       +'</div>'
       +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
       +(isRejected
-        ?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reinstate</button>'
-        :'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-         +'<button onclick="rejectUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>')
+        ?mbtn('approve','Reinstate','background:#7e5bff;color:white;border:none;'+bS)
+        :mbtn('approve','Approve','background:#7e5bff;color:white;border:none;'+bS)
+         +mbtn('reject','Reject','background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);'+bS))
       +'</div></div>'
     );
   }).join('');
+  attachModListeners(list);
 }
 
 function renderAll(){
@@ -334,12 +386,13 @@ function renderAll(){
   if(filtered.length===0){ list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:var(--mt3);text-align:center;">No citizens found.</div>'; return; }
   list.innerHTML=filtered.map(function(u){
     var isMod=u.role==='moderator';
+    var bS='font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;';
     var actions=''
-      +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
-      +(u.status!=='suspended'&&u.status!=='rejected'?'<button onclick="suspendUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
-      +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
-      +(u.status!=='rejected'?'<button onclick="revokeUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(200,16,46,0.5);color:rgba(200,16,46,0.85);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke</button>':'');
-    return '<div style="background:var(--mb);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'+(isMod?'border-left:2px solid rgba(126,91,255,0.4);':'')+'">'
+      +(u.status!=='approved'?mbtn('approve','Approve','background:#7e5bff;color:white;border:none;'+bS):'')
+      +(u.status!=='suspended'&&u.status!=='rejected'?mbtn('suspend','Suspend','background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);'+bS):'')
+      +(u.status==='suspended'?mbtn('approve','Reinstate','background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);'+bS):'')
+      +(u.status!=='rejected'?mbtn('revoke','Revoke','background:transparent;border:1px solid rgba(200,16,46,0.5);color:rgba(200,16,46,0.85);'+bS):'');
+    return '<div data-uid="'+esc(u.id)+'" style="background:var(--mb);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'+(isMod?'border-left:2px solid rgba(126,91,255,0.4);':'')+'">'
       +'<div>'
       +'<div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">'
       +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt);font-weight:600;">'+esc(u.name||'&mdash;')+'</span>'
@@ -350,6 +403,7 @@ function renderAll(){
       +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">'+actions+'</div>'
       +'</div>';
   }).join('');
+  attachModListeners(list);
 }
 
 function renderLog(){
@@ -366,7 +420,7 @@ function renderLog(){
 function approveUser(id,btn){
   if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'approved'}});
 }
 function rejectUser(id,btn){
   if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
@@ -377,13 +431,13 @@ function rejectUser(id,btn){
 function suspendUser(id,btn){
   if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'suspended'}});
 }
 function revokeUser(id,btn){
   if(isSelf(id)){ showToast('Cannot revoke your own account.', true); return; }
   if(!confirm('Set this account to revoked status?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn);
+  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'rejected'}});
 }
 
 function refresh(){ renderStats(); renderPending(); renderAll(); }
@@ -396,6 +450,12 @@ function _attachListener(){
       _users=users;
       refresh();
       if(_firstLoad){ _firstLoad=false; if(window.republicstarLoader) republicstarLoader.hide(); }
+    }, function(err){
+      if(window.republicstarLoader) republicstarLoader.hide();
+      // Firebase Auth missing — session was created before new login system
+      if(err && err.message && err.message.indexOf('Authentication') !== -1){
+        republicstarSession.logout();
+      }
     });
   } else {
     setTimeout(_attachListener, 400);

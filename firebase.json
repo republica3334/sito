@@ -14,7 +14,8 @@
       ".github/**",
       "*.local*",
       "*.md",
-      "*.json.backup"
+      "*.json.backup",
+      "auth/emailjs-otp-template.html"
     ],
     "headers": [
       {
@@ -30,7 +31,14 @@
       {
         "source": "**/*.@(html|js|css)",
         "headers": [
-          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+          { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        ]
+      },
+      {
+        "source": "**/*.@(png|jpg|jpeg|webp|svg|ico|woff|woff2|ttf|otf)",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
         ]
       }
     ]
