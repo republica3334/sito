@@ -237,11 +237,12 @@ function renderStats(){
   var users=_users.filter(function(u){ return !isAdminUser(u) && !isSelf(u.id); });
   var total=users.length;
   var pending=users.filter(function(u){return u.status==='pending';}).length;
+  var rejected=users.filter(function(u){return u.status==='rejected';}).length;
   var approved=users.filter(function(u){return u.status==='approved';}).length;
   var suspended=users.filter(function(u){return u.status==='suspended';}).length;
-  document.getElementById('statsBar').innerHTML=stat('Total',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended);
-  document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+(total-pending)+')';
+  document.getElementById('statsBar').innerHTML=stat('Total',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Revoked',rejected);
+  document.getElementById('pendingCount').textContent='('+(pending+rejected)+')';
+  document.getElementById('totalCount').textContent='('+(approved+suspended)+')';
 }
 function stat(label,val){
   return '<div style="border-left:2px solid #7e5bff;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--mt,#fff);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mt3,rgba(255,255,255,0.25));">'+label+'</span></div>';
@@ -249,21 +250,29 @@ function stat(label,val){
 
 function renderPending(){
   var q=(document.getElementById('pendingSearch').value||'').toLowerCase();
-  var pending=_users.filter(function(u){return u.status==='pending' && !isAdminUser(u) && !isSelf(u.id);});
+  var pending=_users.filter(function(u){return (u.status==='pending'||u.status==='rejected') && !isAdminUser(u) && !isSelf(u.id);});
   if(q) pending=pending.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;});
   var list=document.getElementById('pendingList');
   var none=document.getElementById('noPending');
   if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
   none.style.display='none';
-  list.innerHTML=pending.map(function(u){return(
+  list.innerHTML=pending.map(function(u){
+    var isRejected=u.status==='rejected';
+    var statusColor=isRejected?'#c8102e':'#f5a623';
+    return(
     '<div style="background:var(--mb,#111);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
     +'<div>'
-    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt,#fff);font-weight:600;">'+(esc(u.name)||'—')+'</div>'
+    +'<div style="display:flex;align-items:center;gap:0.6rem;">'
+    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt,#fff);font-weight:600;">'+(esc(u.name)||'—')+'</span>'
+    +'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:'+statusColor+';">'+u.status+'</span>'
+    +'</div>'
     +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:var(--mt3,rgba(255,255,255,0.3));margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
     +'</div>'
     +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
-    +'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-    +'<button onclick="rejectUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
+    +(isRejected
+      ?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reinstate</button>'
+      :'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
+       +'<button onclick="rejectUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>')
     +'</div></div>'
   );}).join('');
 }
@@ -272,7 +281,7 @@ function renderAll(){
   var q=(document.getElementById('searchBox').value||'').toLowerCase();
   /* Citizens + other mods only — no admins, no creator, no self */
   var visible=_users.filter(function(u){
-    return !isAdminUser(u) && !isSelf(u.id) && u.status!=='pending';
+    return !isAdminUser(u) && !isSelf(u.id) && u.status!=='pending' && u.status!=='rejected';
   });
   var filtered=q?visible.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;}):visible;
   var list=document.getElementById('citizenList');
