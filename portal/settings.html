@@ -329,9 +329,9 @@
         </div>
         <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
           <select id="adminStatusSelect" style="background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--font-sub);font-size:0.82rem;padding:0.7rem 1rem;outline:none;cursor:pointer;flex:1;min-width:160px;">
-            <option value="pending">? Pending</option>
-            <option value="approved">? Approved</option>
-            <option value="suspended">? Suspended</option>
+            <option value="pending">&#9711; Pending</option>
+            <option value="approved">&#10003; Approved</option>
+            <option value="suspended">&#33; Suspended</option>
           </select>
           <button onclick="adminSetStatus()" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 1.4rem;cursor:pointer;white-space:nowrap;">Apply Status</button>
         </div>
@@ -343,8 +343,8 @@
     <div class="card" id="emailCard">
       <div class="card-title">
         Email Address
-        <span id="verifiedBadge" class="badge-verified" style="display:none;">? Verified</span>
-        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">? Unverified</span>
+        <span id="verifiedBadge" class="badge-verified" style="display:none;">&#10003; Verified</span>
+        <span id="unverifiedBadge" class="badge-unverified" style="display:none;">&#33; Unverified</span>
       </div>
       <div class="card-sub">Verify your email to enable two-factor authentication and receive security alerts.</div>
 
@@ -370,7 +370,7 @@
             <label class="field-label">Verification Code</label>
             <input id="otpInput" class="txt" type="text" maxlength="6" placeholder="000000" oninput="this.value=this.value.replace(/\D/g,'')">
           </div>
-          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm ?</button>
+          <button class="btn-primary" onclick="confirmCode()" style="white-space:nowrap;">Confirm &#8594;</button>
         </div>
         <div style="margin-top:0.8rem;">
           <button class="btn-ghost" onclick="sendVerificationCode()" style="font-size:0.62rem;padding:0.5rem 0.9rem;">Resend Code</button>
@@ -425,8 +425,8 @@
 
     <!-- 2FA CARD -->
     <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-        <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;">
           <div class="card-title" style="margin-bottom:0.3rem;">Two-Factor Authentication</div>
           <div class="card-sub" style="margin-bottom:0;">Each login will require a 6-digit code sent to your email.</div>
         </div>
