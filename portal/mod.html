@@ -119,7 +119,7 @@
   <!-- Notice -->
   <div class="mod-notice" style="background:rgba(200,16,46,0.07);border-left:3px solid #c8102e;margin:1.5rem 3rem 0;padding:0.9rem 1.4rem;display:flex;align-items:center;gap:0.8rem;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,16,46,0.8);">Admin accounts and ilcreatore are protected. You cannot modify your own account.</span>
+    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,16,46,0.8);">Admin accounts and ADMIN001 are protected. You cannot modify your own account.</span>
   </div>
 
   <!-- Main Grid -->
@@ -191,8 +191,8 @@ function addLog(msg){
   localStorage.setItem('republicstar_log',JSON.stringify(log));
   renderLog();
 }
-function isCreator(id){ return id==='ilcreatore'; }
-function isAdminUser(u){ return u.role==='admin'||u.id==='ilcreatore'; }
+function isCreator(id){ return id==='ADMIN001'; }
+function isAdminUser(u){ return u.role==='admin'||u.id==='ADMIN001'; }
 function isSelf(id){ return _currentModId && id===_currentModId; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }

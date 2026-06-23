@@ -44,7 +44,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   }
 
   /* ── 2. Session API ── */
-  var ADMIN_ID   = 'ilcreatore';
+  var ADMIN_ID   = 'ADMIN001';
 
   var session = {
     get: function(){
@@ -428,7 +428,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
     function _isPrivileged() {
       var s = session.get();
-      return s && (s.role === 'admin' || s.role === 'moderator' || s.user === 'ilcreatore');
+      return s && (s.role === 'admin' || s.role === 'moderator' || s.user === 'ADMIN001');
     }
 
     function _buildPanel() {
@@ -706,7 +706,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
       var page   = window.location.pathname.split('/').pop() || 'index.html';
       if (EXEMPT.indexOf(page) !== -1) return;
       var s = session.get();
-      if (!s || s.user === 'ilcreatore' || s.role === 'admin') return;
+      if (!s || s.user === 'ADMIN001' || s.role === 'admin') return;
 
       function runCheck(user){
         if (!user) return;

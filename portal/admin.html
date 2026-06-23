@@ -221,8 +221,8 @@ function roleBadge(r){
   if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
   return '';
 }
-function isCreator(id){ return id==='ilcreatore'; }
-function isAdminUser(u){ return u.role==='admin'||u.id==='ilcreatore'; }
+function isCreator(id){ return id==='ADMIN001'; }
+function isAdminUser(u){ return u.role==='admin'||u.id==='ADMIN001'; }
 
 function renderStats(){
   var users=getUsers().filter(function(u){ return !isAdminUser(u); });
@@ -345,23 +345,23 @@ function rejectUser(id,btn){
   _adminCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function deleteUser(id,btn){
-  if(isCreator(id)){ showToast('ilcreatore cannot be deleted.', true); return; }
+  if(isCreator(id)){ showToast('ADMIN001 cannot be deleted.', true); return; }
   if(!confirm('Permanently delete this citizen account?')) return;
   var u=_users.find(function(x){ return x.id===id; });
   _adminCall(republicstarDB.deleteUser(id), 'Deleted: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function makeModUser(id,btn){
-  if(isCreator(id)){ showToast('ilcreatore is already Supreme Administrator.', true); return; }
+  if(isCreator(id)){ showToast('ADMIN001 is already Supreme Administrator.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
   _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function revokeModUser(id,btn){
-  if(isCreator(id)){ showToast('Cannot revoke ilcreatore.', true); return; }
+  if(isCreator(id)){ showToast('Cannot revoke ADMIN001.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
   _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 function suspendUser(id,btn){
-  if(isCreator(id)){ showToast('ilcreatore cannot be suspended.', true); return; }
+  if(isCreator(id)){ showToast('ADMIN001 cannot be suspended.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
   _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
 }
