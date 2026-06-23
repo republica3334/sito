@@ -686,18 +686,29 @@
   function toggle2FA() {
     var s = republicstarSession.get();
     if (!s) return;
+    var track = document.getElementById('tfaTrack');
+    var thumb = document.getElementById('tfaThumb');
+    track.style.opacity = '0.5';
+    track.style.pointerEvents = 'none';
+    showMsg('tfaMsg', 'info', 'Updating…');
     republicstarDB.getUser(s.user).then(function(user){
-      if (!user) return;
-      if (!user.emailVerified) { showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
+      if (!user) { track.style.opacity='1'; track.style.pointerEvents=''; showMsg('tfaMsg','error','Could not load user.'); return; }
+      if (!user.emailVerified) { track.style.opacity='1'; track.style.pointerEvents=''; showMsg('tfaMsg','error','You must verify your email before enabling 2FA.'); return; }
       var newVal = !user.twofa;
       republicstarDB.call('setTwoFactor', { enabled: newVal }).then(function(){
-        var track = document.getElementById('tfaTrack');
-        var thumb = document.getElementById('tfaThumb');
+        track.style.opacity = '1';
+        track.style.pointerEvents = '';
         track.style.background = newVal ? '#c8102e' : 'rgba(255,255,255,0.12)';
         thumb.style.transform  = newVal ? 'translateX(24px)' : 'translateX(0)';
         showMsg('tfaMsg','success', newVal ? '2FA enabled.' : '2FA disabled.');
-      }).catch(function(){ showMsg('tfaMsg','error','Save error.'); });
-    }).catch(function(){});
+      }).catch(function(e){
+        track.style.opacity='1'; track.style.pointerEvents='';
+        showMsg('tfaMsg','error', (e&&e.message)||'Save error. Try again.');
+      });
+    }).catch(function(){
+      track.style.opacity='1'; track.style.pointerEvents='';
+      showMsg('tfaMsg','error','Connection error.');
+    });
   }
 
   // -- DELETE ACCOUNT MODAL --
