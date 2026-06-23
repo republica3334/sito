@@ -288,8 +288,9 @@ function renderAll(){
     +'</div>'
     +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">'
     +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
-    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
-    +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
+    +(u.status!=='suspended'&&u.status!=='rejected'?'<button onclick="suspendUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
+    +(u.status==='suspended'||u.status==='rejected'?'<button onclick="approveUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
+    +(u.status!=='rejected'?'<button onclick="revokeUser(\''+jsString(u.id)+'\',this)" style="background:transparent;border:1px solid rgba(200,16,46,0.5);color:rgba(200,16,46,0.85);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Revoke</button>':'')
     +'</div></div>'
   );}).join('');
 }
@@ -316,6 +317,12 @@ function suspendUser(id,btn){
   if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
   var u=_users.find(function(x){return x.id===id;});
   _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
+}
+function revokeUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot revoke your own account.', true); return; }
+  if(!confirm('Permanently revoke this citizen account?')) return;
+  var u=_users.find(function(x){return x.id===id;});
+  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 
 function refresh(){renderStats();renderPending();renderAll();}

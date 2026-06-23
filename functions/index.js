@@ -666,8 +666,7 @@ exports.adminUpdateUser = onCall(async (request) => {
       throw new HttpsError('invalid-argument', 'Invalid status');
     }
     if (isModerator(request)) {
-      // Mods can approve/suspend/reinstate citizens but not set rejected
-      if (!['pending', 'approved', 'suspended'].includes(status)) {
+      if (!['pending', 'approved', 'suspended', 'rejected'].includes(status)) {
         throw new HttpsError('permission-denied', 'Moderators cannot set this status');
       }
     }
