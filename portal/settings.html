@@ -439,9 +439,26 @@
     <div class="card danger">
       <div class="card-title">Danger Zone</div>
       <div class="card-sub">These actions are irreversible. Proceed with caution.</div>
-      <button class="btn-ghost" onclick="confirmDeleteAccount()" style="border-color:rgba(200,16,46,0.4);color:rgba(200,16,46,0.7);" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(200,16,46,0.4)';this.style.color='rgba(200,16,46,0.7)'">Delete My Account</button>
+      <button class="btn-ghost" onclick="openDeleteModal()" style="border-color:rgba(200,16,46,0.4);color:rgba(200,16,46,0.7);" onmouseover="this.style.borderColor='#c8102e';this.style.color='#c8102e'" onmouseout="this.style.borderColor='rgba(200,16,46,0.4)';this.style.color='rgba(200,16,46,0.7)'">Delete My Account</button>
     </div>
 
+  </div>
+</div>
+
+<!-- DELETE ACCOUNT MODAL -->
+<div id="deleteModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="background:#0f0f0f;border-top:3px solid #c8102e;max-width:420px;width:100%;padding:2rem 2.2rem;">
+    <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#fff;margin-bottom:0.3rem;">Delete Account</div>
+    <div style="font-family:'Inter',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:1.5rem;line-height:1.6;">This will permanently delete your account and all associated data. This action cannot be undone.</div>
+    <div style="margin-bottom:1rem;">
+      <label style="display:block;font-family:'Inter',sans-serif;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.4rem;">Current Password</label>
+      <input id="deleteModalPwd" class="txt" type="password" placeholder="Enter your password to confirm">
+    </div>
+    <div id="deleteModalMsg" class="msg"></div>
+    <div style="display:flex;gap:0.8rem;margin-top:0.5rem;">
+      <button class="btn-ghost" onclick="closeDeleteModal()" style="flex:1;">Cancel</button>
+      <button class="btn-primary" onclick="submitDeleteAccount()" style="flex:1;background:#c8102e;" id="deleteModalBtn">Delete Account</button>
+    </div>
   </div>
 </div>
 
@@ -681,16 +698,34 @@
     }).catch(function(){});
   }
 
-  // ── DELETE ACCOUNT ──
-  function confirmDeleteAccount() {
-    if (!confirm('Are you sure you want to permanently delete your account?\n\nThis action cannot be undone.')) return;
-    var pwd = prompt('Enter your current password to confirm account deletion:');
-    if (!pwd) return;
-    var s = republicstarSession.get();
-    if (!s) return;
-    republicstarDB.call('deleteOwnAccount', { currentPassword: pwd }).then(function(){ republicstarSession.logout(); })
-      .catch(function(e){ alert('Error: ' + (e && e.message ? e.message : 'Please try again.')); });
+  // ── DELETE ACCOUNT MODAL ──
+  function openDeleteModal() {
+    document.getElementById('deleteModalPwd').value = '';
+    document.getElementById('deleteModalMsg').style.display = 'none';
+    document.getElementById('deleteModal').style.display = 'flex';
   }
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+  }
+  function submitDeleteAccount() {
+    var pwd = document.getElementById('deleteModalPwd').value;
+    var msgEl = document.getElementById('deleteModalMsg');
+    var btn = document.getElementById('deleteModalBtn');
+    if (!pwd) {
+      msgEl.className = 'msg error'; msgEl.textContent = 'Password is required.'; msgEl.style.display = 'block'; return;
+    }
+    btn.disabled = true; btn.textContent = 'Deleting…';
+    var s = republicstarSession.get();
+    if (!s) { closeDeleteModal(); return; }
+    republicstarDB.call('deleteOwnAccount', { currentPassword: pwd })
+      .then(function(){ republicstarSession.logout(); })
+      .catch(function(e) {
+        var msg = (e && e.message) ? e.message : 'Incorrect password or error.';
+        msgEl.className = 'msg error'; msgEl.textContent = msg; msgEl.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Delete Account';
+      });
+  }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDeleteModal(); });
 </script>
 
 </body>

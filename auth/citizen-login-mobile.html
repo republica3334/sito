@@ -488,7 +488,7 @@ function handleLogin(e) {
     }
   }).catch(function(e){
     console.error(e);
-    var msg = e && e.code === 'permission-denied'
+    var msg = e && (e.code === 'functions/permission-denied' || e.code === 'permission-denied')
       ? 'This account has been suspended. Contact the Ministry of the Interior.'
       : 'Invalid National ID or password.';
     failAttempt(msg);
