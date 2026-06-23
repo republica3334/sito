@@ -124,6 +124,34 @@ var REPUBLICSTAR_FB_CONFIG = {
         }
       };
 
+      // Watch the current user's Firestore doc — force logout on suspend/role change
+      auth.onAuthStateChanged(function(firebaseUser) {
+        if (!firebaseUser) return;
+        var uid = firebaseUser.uid;
+        var sessionRole = null;
+        var s = window.republicstarSession && window.republicstarSession.get ? window.republicstarSession.get() : null;
+        if (s) sessionRole = s.role || null;
+
+        db.collection('users').doc(uid).onSnapshot(function(snap) {
+          if (!snap.exists) return;
+          var data = snap.data();
+          var blocked = ['suspended', 'rejected'];
+          if (data.status && blocked.indexOf(data.status) !== -1) {
+            console.warn('[RepublicstarDB] Account suspended — redirecting');
+            if (window.republicstarSession) window.republicstarSession.logout();
+            var base = window.location.pathname.includes('/portal/') ? '../auth/' : 'auth/';
+            window.location.replace(base + 'suspended.html');
+            return;
+          }
+          if (sessionRole !== null && data.role && data.role !== sessionRole) {
+            console.warn('[RepublicstarDB] Role changed — forcing re-login');
+            if (window.republicstarSession) window.republicstarSession.logout();
+          }
+        }, function(err) {
+          console.warn('[RepublicstarDB] User watch error:', err);
+        });
+      });
+
       console.log('[RepublicstarDB] Firebase connected');
     } catch(e) {
       console.error('[RepublicstarDB] Init error:', e);

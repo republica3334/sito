@@ -128,12 +128,15 @@
     .hero {
       background: var(--black);
       color: var(--white);
-      min-height: 100vh;
+      height: calc(100vh + 144px);
+      min-height: 700px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
       position: relative;
       overflow: hidden;
+      border-bottom: 3px solid var(--red);
+      padding-bottom: 6rem;
     }
 
     .hero::before {
@@ -159,7 +162,7 @@
     }
 
     .hero-content {
-      padding: 8rem 3rem 6rem 4rem;
+      padding: 8rem 3rem 2rem 4rem;
       position: relative;
       z-index: 2;
     }
@@ -364,7 +367,7 @@
     }
 
     /* ── SERVICES ── */
-    .services { background: var(--gray-light); }
+    .services { background: var(--gray-light); margin-top: 5rem; }
     .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
     .services-grid {
       display: grid;
@@ -782,13 +785,13 @@
   <div id="heroBg" style="position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 70% 50%, #1a0a0a 0%, #0a0a0a 60%);"></div>
 
   <!-- Left arrow -->
-  <button onclick="heroSlide(-1)" aria-label="Previous slide" style="position:absolute;left:1.2rem;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.18);color:#fff;width:50px;height:50px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(200,16,46,0.55)';this.style.borderColor='#c8102e'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.borderColor='rgba(255,255,255,0.18)'">&#8249;</button>
+  <button onclick="heroSlide(-1)" aria-label="Previous slide" style="position:absolute;left:1.2rem;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.28);color:#fff;width:50px;height:50px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(200,16,46,0.55)';this.style.borderColor='#c8102e'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.borderColor='rgba(255,255,255,0.28)'">&#8249;</button>
 
   <!-- Right arrow -->
-  <button onclick="heroSlide(1)" aria-label="Next slide" style="position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.18);color:#fff;width:50px;height:50px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(200,16,46,0.55)';this.style.borderColor='#c8102e'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.borderColor='rgba(255,255,255,0.18)'">&#8250;</button>
+  <button onclick="heroSlide(1)" aria-label="Next slide" style="position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.28);color:#fff;width:50px;height:50px;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(200,16,46,0.55)';this.style.borderColor='#c8102e'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.borderColor='rgba(255,255,255,0.28)'">&#8250;</button>
 
   <!-- Dots -->
-  <div id="heroDots" style="position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);display:flex;gap:0.55rem;z-index:10;align-items:center;"></div>
+  <div id="heroDots" style="position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;gap:0.55rem;z-index:10;align-items:center;"></div>
 
   <div class="hero-content" style="position:relative;z-index:2;">
     <div id="heroSlideContent" style="opacity:1;transform:translateY(0);">
@@ -972,6 +975,24 @@
   </div></div>
 </div>
 
+<!-- ANNOUNCEMENT BAND -->
+<div class="announce-band">
+  <div class="announce-label-col">
+    <div class="big-num">2026</div>
+    <div class="big-label">National Year of Infrastructure</div>
+  </div>
+  <div class="announce-content">
+    <div class="section-label">Presidential Proclamation</div>
+    <h2 class="section-title" style="color:white;">The Republic Builds<br/>Its Future Today.</h2>
+    <p>
+      By Presidential Decree No. 2026-01, the year 2026 has been declared the National Year of Infrastructure.
+      The government commits 14.8 billion in public investment across transport, digital networks, housing,
+      and clean energy — the largest infrastructure program in the United Republic's history.
+    </p>
+    <a href="gov/ministries.html" class="btn-primary">View All Ministries</a>
+  </div>
+</div>
+
 <!-- SERVICES -->
 <section class="services">
   <div class="services-header">
@@ -1020,24 +1041,6 @@
 
   </div>
 </section>
-
-<!-- ANNOUNCEMENT BAND -->
-<div class="announce-band">
-  <div class="announce-label-col">
-    <div class="big-num">2026</div>
-    <div class="big-label">National Year of Infrastructure</div>
-  </div>
-  <div class="announce-content">
-    <div class="section-label">Presidential Proclamation</div>
-    <h2 class="section-title" style="color:white;">The Republic Builds<br/>Its Future Today.</h2>
-    <p>
-      By Presidential Decree No. 2026-01, the year 2026 has been declared the National Year of Infrastructure.
-      The government commits 14.8 billion in public investment across transport, digital networks, housing,
-      and clean energy — the largest infrastructure program in the United Republic's history.
-    </p>
-    <a href="gov/ministries.html" class="btn-primary">View All Ministries</a>
-  </div>
-</div>
 
 <!-- STATS -->
 <div class="stats">
