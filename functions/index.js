@@ -347,15 +347,8 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   if (user.status && !['pending', 'approved'].includes(user.status)) {
     throw new HttpsError('permission-denied', 'This account is not accessible');
   }
-  if (user.twofa === true && user.email && user.emailVerified === true) {
-    return createLoginChallenge(userId, user, ip);
-  }
-  if (user.twofa === true && (!user.email || user.emailVerified !== true)) {
-    await found.ref.update({ twofa: false });
-    user.twofa = false;
-  }
 
-  // Admin accounts require a second secret code verified server-side
+  // Admin secret code check MUST come before 2FA so email-OTP cannot bypass it
   if (roleFor(userId, user) === 'admin') {
     const challengeId = crypto.randomBytes(24).toString('hex');
     await db.collection('admin_challenges').doc(challengeId).set({
@@ -363,6 +356,14 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
       expiry: Date.now() + 5 * 60 * 1000,
     });
     return { requiresSecretCode: true, challengeId, user: publicUser(userId, user) };
+  }
+
+  if (user.twofa === true && user.email && user.emailVerified === true) {
+    return createLoginChallenge(userId, user, ip);
+  }
+  if (user.twofa === true && (!user.email || user.emailVerified !== true)) {
+    await found.ref.update({ twofa: false });
+    user.twofa = false;
   }
 
   return issueToken(userId, user);
@@ -401,6 +402,29 @@ exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
     throw new HttpsError('permission-denied', 'Account unavailable');
   }
   return Object.assign({ valid: true }, await issueToken(session.userId, found.data));
+});
+
+exports.resendLoginOtp = onCall({ invoker: 'public' }, async (request) => {
+  const challengeId = asString(request.data.challengeId);
+  if (!challengeId) throw new HttpsError('invalid-argument', 'challengeId required');
+
+  const ref = db.collection('login_challenges').doc(challengeId);
+  const snap = await ref.get();
+  if (!snap.exists || Date.now() > snap.data().expiry) {
+    throw new HttpsError('not-found', 'Challenge expired or not found');
+  }
+
+  const { userId } = snap.data();
+  await throttle(db.collection('login_challenge_rate').doc(userId));
+
+  const found = await getUserDoc(userId);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+
+  const code = randomCode();
+  await sendEmail(found.data.email, found.data.name || userId, code);
+  await ref.update({ hash: sha256(code), attempts: 0, expiry: Date.now() + OTP_TTL_MS });
+
+  return { sent: true };
 });
 
 exports.completeSetup = onCall(async (request) => {
@@ -475,6 +499,7 @@ exports.changePassword = onCall(async (request) => {
 
 exports.setTwoFactor = onCall(async (request) => {
   const uid = requireAuth(request);
+  if (uid === ADMIN_ID) throw new HttpsError('permission-denied', 'Admin account cannot use email 2FA');
   const enabled = request.data.enabled === true;
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('not-found', 'User not found');
@@ -503,9 +528,10 @@ exports.deleteOwnAccount = onCall(async (request) => {
   batch.delete(db.collection('users').doc(uid));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(uid);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(uid); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(uid); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 
@@ -682,9 +708,10 @@ exports.adminDeleteUser = onCall(async (request) => {
   batch.delete(db.collection('users').doc(targetId));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(targetId);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(targetId); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(targetId); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 

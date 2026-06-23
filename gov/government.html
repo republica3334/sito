@@ -117,7 +117,8 @@
 <section style="background:var(--gray-light);padding:4rem;">
   <div style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.6rem;"><span style="display:block;width:20px;height:2px;background:var(--red);"></span>Executive Council</div>
   <h2 style="font-family:var(--font-head);font-size:2rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2.5rem;">Cabinet of Ministers</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
+  <style>@media(max-width:600px){.cab-grid{grid-template-columns:1fr!important;}}</style>
+  <div class="cab-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
     
     <div style="background:var(--white);padding:1.5rem;border-left:3px solid var(--red);display:flex;align-items:center;gap:1rem;">
       <div style="flex-shrink:0;width:40px;height:40px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);color:white;font-weight:700;">PM</div>

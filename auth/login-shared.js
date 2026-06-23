@@ -150,12 +150,11 @@
 
     /* ── Resend OTP ── */
     w.resendOTP = function() {
-      if (!w._lastLoginPayload) return;
+      if (!w._pendingChallengeId) return;
       if (w.republicstarLoader) republicstarLoader.show('Sending new code…');
-      firebase.functions().httpsCallable('loginUser')(w._lastLoginPayload)
-        .then(function(result){
+      firebase.functions().httpsCallable('resendLoginOtp')({ challengeId: w._pendingChallengeId })
+        .then(function(){
           if (w.republicstarLoader) republicstarLoader.hide();
-          w.startTFA(result.data);
         })
         .catch(function(){
           if (w.republicstarLoader) republicstarLoader.hide();
