@@ -109,9 +109,8 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     },
 
     logout: function(){
-      if (w.republicstarLoader) w.republicstarLoader.show('Signing out…');
       session.clear();
-      window.location.href = _republicstarBase + 'auth/citizen-login.html';
+      window.location.replace(_republicstarBase + 'auth/citizen-login.html');
     }
   };
   w.republicstarSession = session;
@@ -687,6 +686,17 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     });
     overlayClose.addEventListener('click', closeMenu);
   };
+
+  /* ── 7. bfcache guard — re-check session if page is restored from cache ── */
+  window.addEventListener('pageshow', function(e) {
+    if (!e.persisted) return;
+    var PROTECTED = ['admin.html','mod.html','settings.html','admin-mobile.html'];
+    var page = window.location.pathname.split('/').pop() || '';
+    if (PROTECTED.indexOf(page) === -1) return;
+    if (!session.get()) {
+      window.location.replace(_republicstarBase + 'auth/citizen-login.html');
+    }
+  });
 
   /* ── 7. Auto-init on DOM ready ── */
   document.addEventListener('DOMContentLoaded', function(){

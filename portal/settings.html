@@ -142,6 +142,10 @@
 
     .otp-row { display: flex; gap: 0.8rem; align-items: flex-end; }
     .otp-row input.txt { flex: 1; letter-spacing: 0.3em; font-size: 1.1rem; text-align: center; }
+    @media (max-width: 520px) {
+      .otp-row { flex-direction: column; align-items: stretch; }
+      .otp-row > div, .otp-row button { width: 100%; }
+    }
 
     .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.2rem 0; }
 
@@ -528,14 +532,14 @@
     badge.className   = 'badge-status ' + status;
 
     var s = republicstarSession.get();
-    var isPrivileged = s && (s.role === 'admin' || s.role === 'moderator');
+    var isAdmin = s && (s.role === 'admin');
 
     // Hide all sections first
     ['citizenPendingSection','citizenApprovedSection','citizenSuspendedSection','adminStatusSection'].forEach(function(id){
       document.getElementById(id).style.display = 'none';
     });
 
-    if (isPrivileged) {
+    if (isAdmin) {
       var sel = document.getElementById('adminStatusSelect');
       sel.value = status;
       document.getElementById('adminStatusSection').style.display = 'block';
@@ -552,7 +556,7 @@
 
   function adminSetStatus() {
     var s = republicstarSession.get();
-    if (!s || (s.role !== 'admin' && s.role !== 'moderator')) return;
+    if (!s || s.role !== 'admin') return;
     var newStatus = document.getElementById('adminStatusSelect').value;
     republicstarDB.call('adminUpdateUser', { id: s.user, data: { status: newStatus } }).then(function() {
       var badge  = document.getElementById('accountStatusBadge');
