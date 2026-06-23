@@ -299,7 +299,7 @@
       padding: 0 2.5rem;
     }
     .ticker-track span::after {
-      content: '?';
+      content: '›';
       margin-left: 2.5rem;
       opacity: 0.5;
     }
