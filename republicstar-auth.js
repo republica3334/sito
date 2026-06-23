@@ -115,6 +115,18 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
   };
   w.republicstarSession = session;
 
+  /* ── Live session verification ── */
+  w.republicstarVerifySession = function() {
+    var s = session.get();
+    if (!s || !window.republicstarDB) return;
+    republicstarDB.getUser(s.user).then(function(user) {
+      if (!user || !['pending', 'approved'].includes(user.status)) {
+        session.clear();
+        window.location.replace(_republicstarBase + 'auth/citizen-login.html');
+      }
+    }).catch(function() {});
+  };
+
   /* ── 3. Nav dropdown ── */
   w.republicstarUpdateNav = function(targetEl){
     var s   = session.get();
