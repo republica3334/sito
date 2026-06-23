@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Citizen Login � United Republic of Stars</title>
+<title>Citizen Login &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -263,7 +263,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 <!-- TOP BAR -->
 <div class="top-bar">
   <a href="../GOVERN_1.HTM" class="top-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars � Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars &mdash; Official Emblem">
     <div class="top-brand-text">
       <h1>United Republic</h1>
       <span>Official Portal</span>
@@ -277,7 +277,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 
   <!-- Emblem -->
   <div class="emblem-wrap">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars � Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars &mdash; Official Emblem">
     <div class="republic-name">United Republic of Stars</div>
   </div>
 
@@ -297,7 +297,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       <div class="field">
         <label>Password</label>
         <div class="pwd-wrap">
-          <input id="pwd" type="password" placeholder="��������" autocomplete="current-password">
+          <input id="pwd" type="password" placeholder="••••••••" autocomplete="current-password">
           <button type="button" class="pwd-toggle" onclick="togglePwd()" tabindex="-1" aria-label="Show/hide password">
             <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -335,7 +335,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 
     <div class="security-note">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>256-bit TLS Encrypted � Government Secure Network</span>
+      <span>256-bit TLS Encrypted &mdash; Government Secure Network</span>
     </div>
   </div>
 
@@ -346,7 +346,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
       <div>
-        <div class="tfa-email-from">United Republic of Stars � Security Code</div>
+        <div class="tfa-email-from">United Republic of Stars &mdash; Security Code</div>
         <div class="tfa-email-body">Code sent to <strong id="tfaEmailDisplay"></strong></div>
         <div class="tfa-email-sub">Check your inbox and enter the 6-digit code below.</div>
       </div>
@@ -357,7 +357,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
-      <span class="otp-sep">�</span>
+      <span class="otp-sep">...</span>
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
@@ -460,7 +460,7 @@ function handleLogin(e) {
   btn.textContent = 'Authenticating...';
   btn.style.opacity = '0.7';
   btn.disabled = true;
-  if (window.republicstarLoader) republicstarLoader.show('Authenticating�');
+  if (window.republicstarLoader) republicstarLoader.show('Authenticating...');
 
   function failAttempt(msg) {
     if (window.republicstarLoader) republicstarLoader.hide();
@@ -470,7 +470,7 @@ function handleLogin(e) {
   }
 
   if (!window.republicstarDB) {
-    failAttempt('Connection error � check your internet and try again.');
+    failAttempt('Connection error &mdash; check your internet and try again.');
     return;
   }
 
@@ -483,7 +483,7 @@ function handleLogin(e) {
       startTFA(result);
       btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
-      if (window.republicstarLoader) republicstarLoader.show('Signing in�');
+      if (window.republicstarLoader) republicstarLoader.show('Signing in...');
       finishLogin(result, document.getElementById('rememberMe').checked);
     }
   }).catch(function(e){
