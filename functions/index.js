@@ -28,6 +28,15 @@ function sha256(str) {
   return crypto.createHash('sha256').update(str).digest('hex');
 }
 
+function clientIp(request) {
+  const fwd = request.rawRequest && request.rawRequest.headers['x-forwarded-for'];
+  if (fwd) {
+    const parts = fwd.split(',');
+    return parts[parts.length - 1].trim();
+  }
+  return (request.rawRequest && request.rawRequest.ip) || 'unknown';
+}
+
 function randomCode() {
   return String(crypto.randomInt(100000, 1000000));
 }
@@ -229,7 +238,7 @@ async function emailExists(email, exceptUserId) {
 }
 
 exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
-  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ip = clientIp(request);
   const ipKey = 'reg_rate_' + sha256(String(ip)).slice(0, 16);
   const rateRef = db.collection('rate_limits').doc(ipKey);
   const rateSnap = await rateRef.get();
@@ -267,7 +276,7 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   validateEmail(email);
   validatePassword(password);
   if (await emailExists(email)) {
-    throw new HttpsError('already-exists', 'An account with this email already exists');
+    throw new HttpsError('invalid-argument', 'Registration could not be completed');
   }
 
   const id = await uniqueNationalId();
@@ -297,7 +306,7 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
 });
 
 exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
-  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ip = clientIp(request);
   const ipKey = 'guest_rate_' + sha256(String(ip)).slice(0, 16);
   const rateRef = db.collection('rate_limits').doc(ipKey);
   const rateSnap = await rateRef.get();
@@ -332,7 +341,7 @@ exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
 });
 
 exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
-  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ip = clientIp(request);
   const ipKey = 'login_rate_' + sha256(String(ip)).slice(0, 16);
   const rateRef = db.collection('rate_limits').doc(ipKey);
   const rateSnap = await rateRef.get();
@@ -415,7 +424,7 @@ exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
 
 exports.completeSetup = onCall(async (request) => {
   const uid = requireAuth(request);
-  const ip = request.rawRequest && (request.rawRequest.headers['x-forwarded-for'] || request.rawRequest.ip || 'unknown');
+  const ip = clientIp(request);
   const ipKey = 'setup_rate_' + sha256(String(ip)).slice(0, 16);
   const rateRef = db.collection('rate_limits').doc(ipKey);
   const rateSnap = await rateRef.get();
@@ -680,6 +689,20 @@ exports.adminUpdateUser = onCall(async (request) => {
   }
 
   await db.collection('users').doc(targetId).update(updates);
+
+  try {
+    await admin.auth().revokeRefreshTokens(targetId);
+  } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  if (updates.role) {
+    try {
+      await admin.auth().setCustomUserClaims(targetId, { role: updates.role });
+    } catch (err) {
+      if (err.code !== 'auth/user-not-found') console.error('setCustomUserClaims:', err);
+    }
+  }
+
   return { saved: true };
 });
 
