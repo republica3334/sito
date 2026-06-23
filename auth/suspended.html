@@ -4,7 +4,7 @@
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Account Suspended — United Republic of Stars</title>
+  <title>Account Suspended &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -14,87 +14,79 @@
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://republica3334.github.io/sito/auth/suspended.html">
   <meta property="og:site_name"   content="United Republic of Stars">
-  <meta property="og:title"       content="Account Suspended — United Republic of Stars">
+  <meta property="og:title"       content="Account Suspended &mdash; United Republic of Stars">
   <meta property="og:description" content="Access to this citizen account has been restricted by the Civil Registry Authority.">
   <meta property="og:image"       content="https://republica3334.github.io/sito/svgs/icone/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="theme-color"        content="#c8102e">
   <meta name="twitter:card"       content="summary_large_image">
-  <meta name="twitter:title"      content="Account Suspended — United Republic of Stars">
+  <meta name="twitter:title"      content="Account Suspended &mdash; United Republic of Stars">
   <meta name="twitter:description" content="Access to this citizen account has been restricted by the Civil Registry Authority.">
   <meta name="twitter:image"      content="https://republica3334.github.io/sito/svgs/icone/preview.png">
 
+  <link rel="stylesheet" href="../republicstar-theme.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --black: #0a0a0a; --white: #ffffff; --red: #c8102e; --red-dark: #9b0c22;
-      --gray-mid: #cccccc;
+      --red: #c8102e; --red-dark: #9b0c22;
       --font-head: 'Oswald', sans-serif;
       --font-sub:  'Inter', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
     html, body { height: 100%; }
     body {
-      background: var(--black);
-      color: var(--white);
+      background: var(--bg-page, #0a0a0a);
+      color: var(--text-primary, #ffffff);
       font-family: var(--font-body);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      display: flex; flex-direction: column; min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
     }
 
-    /* grid overlay */
     body::before {
       content: '';
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px),
-        repeating-linear-gradient(0deg,  rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 80px);
+        repeating-linear-gradient(90deg, rgba(128,128,128,0.04) 0,rgba(128,128,128,0.04) 1px,transparent 1px,transparent 80px),
+        repeating-linear-gradient(0deg,  rgba(128,128,128,0.04) 0,rgba(128,128,128,0.04) 1px,transparent 1px,transparent 80px);
     }
 
-    /* top red accent bar */
-    .top-bar {
-      height: 4px;
-      background: var(--red);
-      flex-shrink: 0;
-      position: relative; z-index: 1;
-    }
+    .top-bar { height: 4px; background: var(--red); flex-shrink: 0; position: relative; z-index: 1; }
 
-    /* small header */
     header {
-      background: rgba(10,10,10,0.95);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: var(--bg-header, rgba(10,10,10,0.95));
+      border-bottom: var(--border-header, 1px solid rgba(255,255,255,0.07));
       padding: 1rem 3rem;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center;
       position: relative; z-index: 1;
     }
     .header-brand {
       display: flex; align-items: center; gap: 1rem;
-      text-decoration: none; color: var(--white);
+      text-decoration: none; color: var(--text-primary, #fff);
     }
-    .header-brand img { width: 52px; height: auto; filter: invert(1); opacity: 0.6; }
+    .header-brand img { width: 68px; height: auto; filter: invert(1); opacity: 1; }
+    [data-theme="light"] .header-brand img { filter: none; opacity: 1; }
     .header-brand span {
-      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+      font-family: var(--font-head); font-size: 1.25rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-primary, #fff);
     }
+    [data-theme="light"] .header-brand span { color: #0a0a0a; }
 
-    /* main content */
     main {
-      flex: 1;
-      display: flex; align-items: center; justify-content: center;
-      padding: 3rem 1.5rem;
-      position: relative; z-index: 1;
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 3rem 1.5rem; position: relative; z-index: 1;
     }
 
     .suspended-card {
       max-width: 560px; width: 100%;
-      background: #0d0d0d;
+      background: var(--card-bg, #0d0d0d);
+      border: var(--card-border, none);
       border-top: 4px solid var(--red);
       padding: 3rem 2.5rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
     }
 
-    /* icon */
     .icon-wrap {
       width: 72px; height: 72px;
       background: rgba(200,16,46,0.1);
@@ -105,8 +97,8 @@
     }
 
     .eyebrow {
-      font-family: var(--font-sub);
-      font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
+      font-family: var(--font-sub); font-size: 0.6rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
       color: var(--red); margin-bottom: 0.6rem;
     }
     h1 {
@@ -114,48 +106,44 @@
       font-size: clamp(1.6rem, 4vw, 2.4rem);
       font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
       line-height: 1.1; margin-bottom: 1rem;
+      color: var(--text-primary, #fff);
     }
     .subtitle {
-      font-family: var(--font-body);
-      font-size: 0.9rem; color: rgba(255,255,255,0.5);
+      font-family: var(--font-body); font-size: 0.9rem;
+      color: var(--text-muted, rgba(255,255,255,0.5));
       line-height: 1.7; margin-bottom: 2rem;
     }
+    .subtitle strong { color: var(--text-secondary, rgba(255,255,255,0.7)); }
 
-    /* info row */
     .info-block {
-      background: #141414;
+      background: var(--bg-surface, #141414);
       border-left: 3px solid rgba(200,16,46,0.5);
-      padding: 1rem 1.2rem;
-      margin-bottom: 1.8rem;
+      padding: 1rem 1.2rem; margin-bottom: 1.8rem;
       display: flex; flex-direction: column; gap: 0.6rem;
     }
-    .info-row {
-      display: flex; align-items: baseline; gap: 0.8rem;
-    }
+    .info-row { display: flex; align-items: baseline; gap: 0.8rem; }
     .info-label {
       font-family: var(--font-sub); font-size: 0.55rem; letter-spacing: 0.16em;
-      text-transform: uppercase; color: rgba(255,255,255,0.3); min-width: 90px;
+      text-transform: uppercase; color: var(--text-muted, rgba(255,255,255,0.3)); min-width: 90px;
     }
     .info-value {
-      font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.65);
+      font-family: var(--font-body); font-size: 0.82rem;
+      color: var(--text-secondary, rgba(255,255,255,0.65));
     }
     #infoBlock { display: none; }
 
-    /* divider */
-    hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.6rem 0; }
+    hr { border: none; border-top: 1px solid var(--divider, rgba(255,255,255,0.07)); margin: 1.6rem 0; }
 
-    /* notice */
     .notice {
       font-family: var(--font-body); font-size: 0.8rem;
-      color: rgba(255,255,255,0.35); line-height: 1.7;
-      margin-bottom: 2rem;
+      color: var(--text-muted, rgba(255,255,255,0.35));
+      line-height: 1.7; margin-bottom: 2rem;
     }
-    .notice strong { color: rgba(255,255,255,0.55); }
+    .notice strong { color: var(--text-secondary, rgba(255,255,255,0.55)); }
 
-    /* actions */
     .actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
     .btn-primary {
-      background: var(--red); color: white; border: none;
+      background: var(--red); color: #fff; border: none;
       font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: 0.10em;
       text-transform: uppercase; padding: 0.85rem 1.6rem;
       cursor: pointer; text-decoration: none; display: inline-block;
@@ -163,23 +151,26 @@
     }
     .btn-primary:hover { background: var(--red-dark); }
     .btn-ghost {
-      background: transparent; border: 1.5px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.45);
+      background: transparent;
+      border: 1.5px solid var(--border-color, rgba(255,255,255,0.15));
+      color: var(--text-muted, rgba(255,255,255,0.45));
       font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: 0.15em;
       text-transform: uppercase; padding: 0.85rem 1.4rem;
       cursor: pointer; transition: all 0.2s;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: rgba(255,255,255,0.8); }
+    .btn-ghost:hover {
+      border-color: var(--text-secondary, rgba(255,255,255,0.5));
+      color: var(--text-primary, rgba(255,255,255,0.8));
+    }
 
-    /* footer strip */
     .footer-strip {
-      background: #060606;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      background: var(--bg-surface, #060606);
+      border-top: 1px solid var(--border-color, rgba(255,255,255,0.05));
       padding: 1.2rem 3rem;
       display: flex; justify-content: space-between; align-items: center;
       font-family: var(--font-sub); font-size: 0.55rem;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      color: var(--text-muted, rgba(255,255,255,0.2));
       position: relative; z-index: 1;
     }
 
@@ -196,7 +187,7 @@
 
 <header>
   <a href="../GOVERN_1.HTM" class="header-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars &mdash; Official Emblem">
     <span>United Republic of Stars</span>
   </a>
 </header>
@@ -211,10 +202,10 @@
       </svg>
     </div>
 
-    <div class="eyebrow">Civil Registry Authority · Account Notice</div>
+    <div class="eyebrow">Civil Registry Authority &mdash; Account Notice</div>
     <h1>Account<br/>Suspended</h1>
     <p class="subtitle">
-      Access to your citizen account has been <strong style="color:rgba(255,255,255,0.7);">restricted</strong> by the
+      Access to your citizen account has been <strong style="color:var(--text-secondary,rgba(255,255,255,0.7));">restricted</strong> by the
       Civil Registry Authority of the United Republic of Stars.<br/>
       You cannot access government services until this restriction is lifted.
     </p>
@@ -222,11 +213,11 @@
     <div class="info-block" id="infoBlock">
       <div class="info-row">
         <span class="info-label">National ID</span>
-        <span class="info-value" id="infoId">—</span>
+        <span class="info-value" id="infoId">...</span>
       </div>
       <div class="info-row">
         <span class="info-label">Full Name</span>
-        <span class="info-value" id="infoName">—</span>
+        <span class="info-value" id="infoName">...</span>
       </div>
       <div class="info-row">
         <span class="info-label">Status</span>
@@ -239,7 +230,7 @@
     <p class="notice">
       If you believe this suspension is an error, contact the <strong>Civil Registry Authority</strong>
       and provide your National ID. A review can be requested through official channels.<br/><br/>
-      Reference: <strong>Emergency Line 1-800-ARX-0001</strong> · Official Communications Portal
+      Reference: <strong>Emergency Line 1-800-ARX-0001</strong> &mdash; Official Communications Portal
     </p>
 
     <div class="actions">
@@ -251,8 +242,8 @@
 </main>
 
 <div class="footer-strip">
-  <span>United Republic of Stars · Official Government Portal</span>
-  <span>Ref. Civil Registry · Account Access Control</span>
+  <span>United Republic of Stars &mdash; Official Government Portal</span>
+  <span>Ref. Civil Registry &mdash; Account Access Control</span>
 </div>
 
 <script>
@@ -264,8 +255,8 @@
       if (!window.republicstarDB) { setTimeout(tryLoad, 400); return; }
       republicstarDB.getUser(s.user).then(function(user) {
         if (!user) return;
-        document.getElementById('infoId').textContent   = user.id   || '—';
-        document.getElementById('infoName').textContent = user.name || '—';
+        document.getElementById('infoId').textContent   = user.id   || '...';
+        document.getElementById('infoName').textContent = user.name || '...';
         document.getElementById('infoBlock').style.display = 'flex';
       }).catch(function(){});
     }

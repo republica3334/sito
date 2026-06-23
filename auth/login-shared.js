@@ -126,14 +126,19 @@
       var token = result.token || null;
       var rememberEl = document.getElementById('rememberMe');
       var days = (rememberEl && rememberEl.checked) ? 30 : 0;
+      if (user.role === 'admin') {
+        // Store token too — signInWithCustomToken deferred until after secret code
+        localStorage.setItem('republicstar_admin_pending', JSON.stringify({ id: user.id, role: user.role, days: days, token: token || null }));
+        w.location.href = _adminRedirect;
+        return;
+      }
       var signIn = token && w.republicstarDB
         ? republicstarDB.signInWithCustomToken(token, !!remember)
         : Promise.resolve();
       signIn.then(function(){
         republicstarSession.set(user.id, user.role || 'citizen', days);
-        if (user.role === 'admin') { w.location.href = _adminRedirect; return; }
         if (!user.setup) { w.location.href = 'setup.html'; return; }
-        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
         localStorage.removeItem('republicstar_redirect');
         w.location.href = redirect;
       }).catch(function(){
