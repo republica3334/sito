@@ -658,6 +658,9 @@ exports.adminUpdateUser = onCall(async (request) => {
   if (targetId === ADMIN_ID && request.auth.uid !== ADMIN_ID) {
     throw new HttpsError('permission-denied', 'Protected account');
   }
+  if (isModerator(request) && targetId === request.auth.uid) {
+    throw new HttpsError('permission-denied', 'Moderators cannot modify their own account');
+  }
 
   const updates = {};
   if (Object.prototype.hasOwnProperty.call(data, 'status')) {
