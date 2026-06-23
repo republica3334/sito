@@ -397,7 +397,7 @@
       </div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="emailChangePwd" class="txt" type="password" placeholder="-------...">
+        <input id="emailChangePwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div id="changeEmailMsg" class="msg"></div>
       <button class="btn-primary" onclick="changeEmail()">Update Email</button>
@@ -409,15 +409,15 @@
       <div class="card-sub">Choose a strong password of at least 8 characters.</div>
       <div class="field">
         <label class="field-label">Current Password</label>
-        <input id="currentPwd" class="txt" type="password" placeholder="-------...">
+        <input id="currentPwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div class="field">
         <label class="field-label">New Password</label>
-        <input id="newPwd" class="txt" type="password" placeholder="-------...">
+        <input id="newPwd" class="txt" type="password" placeholder="••••••••">
       </div>
       <div class="field">
         <label class="field-label">Confirm New Password</label>
-        <input id="newPwd2" class="txt" type="password" placeholder="-------...">
+        <input id="newPwd2" class="txt" type="password" placeholder="••••••••">
       </div>
       <div id="pwdMsg" class="msg"></div>
       <button class="btn-primary" onclick="changePassword()">Update Password</button>
@@ -430,11 +430,9 @@
           <div class="card-title" style="margin-bottom:0.3rem;">Two-Factor Authentication</div>
           <div class="card-sub" style="margin-bottom:0;">Each login will require a 6-digit code sent to your email.</div>
         </div>
-        <label style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;">
-          <span id="tfaTrack" onclick="toggle2FA()" style="position:absolute;inset:0;border-radius:28px;cursor:pointer;transition:background 0.3s;background:rgba(255,255,255,0.12);">
-            <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);"></span>
-          </span>
-        </label>
+        <div onclick="toggle2FA()" id="tfaTrack" style="position:relative;display:inline-block;width:52px;height:28px;flex-shrink:0;cursor:pointer;border-radius:28px;transition:background 0.3s;background:rgba(255,255,255,0.12);">
+          <span id="tfaThumb" style="position:absolute;left:3px;top:4px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.3s;transform:translateX(0);pointer-events:none;"></span>
+        </div>
       </div>
       <div id="tfaMsg" class="msg" style="margin-top:1rem;margin-bottom:0;"></div>
     </div>

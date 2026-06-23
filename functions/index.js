@@ -528,9 +528,10 @@ exports.deleteOwnAccount = onCall(async (request) => {
   batch.delete(db.collection('users').doc(uid));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(uid);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(uid); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(uid); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 
@@ -707,9 +708,10 @@ exports.adminDeleteUser = onCall(async (request) => {
   batch.delete(db.collection('users').doc(targetId));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(targetId);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(targetId); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(targetId); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 
