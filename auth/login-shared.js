@@ -126,14 +126,19 @@
       var token = result.token || null;
       var rememberEl = document.getElementById('rememberMe');
       var days = (rememberEl && rememberEl.checked) ? 30 : 0;
+      if (result.requiresSecretCode) {
+        // No token stored — server issues token only after secret code is verified
+        localStorage.setItem('republicstar_admin_pending', JSON.stringify({ challengeId: result.challengeId, id: user.id, days: days }));
+        w.location.href = _adminRedirect;
+        return;
+      }
       var signIn = token && w.republicstarDB
         ? republicstarDB.signInWithCustomToken(token, !!remember)
         : Promise.resolve();
       signIn.then(function(){
         republicstarSession.set(user.id, user.role || 'citizen', days);
-        if (user.role === 'admin') { w.location.href = _adminRedirect; return; }
         if (!user.setup) { w.location.href = 'setup.html'; return; }
-        var redirect = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+        var redirect = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
         localStorage.removeItem('republicstar_redirect');
         w.location.href = redirect;
       }).catch(function(){
@@ -145,12 +150,11 @@
 
     /* ── Resend OTP ── */
     w.resendOTP = function() {
-      if (!w._lastLoginPayload) return;
+      if (!w._pendingChallengeId) return;
       if (w.republicstarLoader) republicstarLoader.show('Sending new code…');
-      firebase.functions().httpsCallable('loginUser')(w._lastLoginPayload)
-        .then(function(result){
+      firebase.functions().httpsCallable('resendLoginOtp')({ challengeId: w._pendingChallengeId })
+        .then(function(){
           if (w.republicstarLoader) republicstarLoader.hide();
-          w.startTFA(result.data);
         })
         .catch(function(){
           if (w.republicstarLoader) republicstarLoader.hide();

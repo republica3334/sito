@@ -1,141 +1,232 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var m=/Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+       ||(window.matchMedia&&window.matchMedia('(max-width:768px)').matches);
+  if(m) window.location.replace('mod-mobile.html');
+})();
+</script>
 <script src="../republicstar-auth.js"></script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Moderator Panel — United Republic of Stars</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moderator Panel &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Moderator Panel — United Republic of Stars">
-<meta property="og:image" content="https://republica3334.github.io/sito/svgs/icone/preview.png">
-<meta name="theme-color" content="#c8102e">
-<style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  :root{--black:#0a0a0a;--white:#ffffff;--red:#c8102e;--red-dark:#9b0c22;--font-head:'Oswald',sans-serif;--font-sub:'Inter',sans-serif;--font-body:'Inter',sans-serif;}
-  html{scroll-behavior:smooth;}
-  body{background:#070707;color:var(--white);font-family:var(--font-body);}
-  .utility-bar{background:var(--black);color:rgba(200,200,200,0.4);font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:34px;}
-  .utility-bar a{color:rgba(200,200,200,0.4);text-decoration:none;}
-  .utility-links{display:flex;gap:2rem;}
-  header{background:var(--white);border-bottom:3px solid var(--black);padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-  .header-brand{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;}
-  .emblem-svg{width:78px;height:auto;flex-shrink:0;}
-  .brand-text h1{font-family:var(--font-head);font-size:1.4rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;line-height:1.1;}
-  .brand-text span{font-family:var(--font-sub);font-size:0.68rem;letter-spacing: 0.10em;text-transform:uppercase;color:var(--red);display:block;margin-top:2px;}
-  nav{display:flex;align-items:center;gap:0.2rem;}
-  nav a{font-family:var(--font-sub);font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);text-decoration:none;padding:0.5rem 0.9rem;transition:color 0.2s,background 0.2s;}
-  nav a:hover{background:var(--black);color:var(--white);}
-  .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem!important;margin-left:0.5rem;}
-</style>
+  <link rel="stylesheet" href="../republicstar-theme.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --red: #c8102e; --red-dark: #9b0c22;
+      --mod: #7e5bff;
+      --gray-light: #f4f4f4; --gray-mid: #cccccc; --gray-dark: #333333;
+      --font-head: 'Oswald', sans-serif; --font-sub: 'Inter', sans-serif; --font-body: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-page, #0a0a0a); color: var(--text-primary, #fff); font-family: var(--font-body); }
+
+    /* UTILITY BAR */
+    .utility-bar { background: var(--black); color: var(--gray-mid); font-family: var(--font-sub); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding: 0 3rem; height: 34px; }
+    .utility-bar a { color: var(--gray-mid); text-decoration: none; }
+    .utility-bar a:hover { color: var(--white); }
+    .utility-links { display: flex; gap: 2rem; }
+
+    /* HEADER */
+    header { background: var(--white); border-bottom: 3px solid var(--black); padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .header-brand { display: flex; align-items: center; gap: 1.2rem; }
+    .emblem-svg { width: 78px; height: auto; flex-shrink: 0; display: block; }
+    .brand-text h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; color: var(--black); }
+    .brand-text span { font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--red); display: block; margin-top: 2px; }
+    nav { display: flex; align-items: center; gap: 0.2rem; }
+    nav a { font-family: var(--font-sub); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--black); text-decoration: none; padding: 0.5rem 0.9rem; transition: color 0.2s, background 0.2s; }
+    nav a:hover { background: var(--black); color: var(--white); }
+    .nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 0.5rem 1.2rem !important; margin-left: 0.5rem; }
+    .nav-cta:hover { background: var(--red-dark) !important; }
+
+    /* LIGHT MODE OVERRIDES */
+    [data-theme="light"] .mod-wrap { background: #f0f0f0 !important; }
+    [data-theme="light"] .mod-topbar { background: #ffffff !important; border-bottom-color: #7e5bff !important; }
+    [data-theme="light"] .mod-topbar h1 { color: #0a0a0a !important; }
+    [data-theme="light"] .mod-topbar-title { color: #7e5bff !important; }
+    [data-theme="light"] .mod-statsbar { background: #f5f5f5 !important; border-bottom-color: rgba(0,0,0,0.08) !important; }
+    [data-theme="light"] .mod-statsbar strong { color: #0a0a0a !important; }
+    [data-theme="light"] .mod-statsbar span { color: rgba(0,0,0,0.4) !important; }
+    [data-theme="light"] .mod-grid { background: rgba(0,0,0,0.08) !important; }
+    [data-theme="light"] .mod-card { background: #ffffff !important; }
+    [data-theme="light"] .mod-card h2 { color: #0a0a0a !important; }
+    [data-theme="light"] .mod-list { background: rgba(0,0,0,0.04) !important; }
+    [data-theme="light"] .mod-list > div { background: #f8f8f8 !important; }
+    [data-theme="light"] .mod-search { background: #f0f0f0 !important; border-color: rgba(0,0,0,0.12) !important; color: #0a0a0a !important; }
+    [data-theme="light"] .mod-search::placeholder { color: rgba(0,0,0,0.35) !important; }
+    [data-theme="light"] .mod-logwrap { background: #ffffff !important; }
+    [data-theme="light"] .mod-logwrap h2 { color: #0a0a0a !important; }
+    [data-theme="light"] .mod-notice { background: rgba(126,91,255,0.06) !important; }
+    [data-theme="light"] .mod-btn { color: rgba(0,0,0,0.5) !important; border-color: rgba(0,0,0,0.2) !important; }
+    [data-theme="light"] #activityLog > div { border-bottom-color: rgba(0,0,0,0.06) !important; }
+
+    /* CSS vars used by JS render functions */
+    .mod-wrap {
+      --mt: #ffffff;
+      --mt2: rgba(255,255,255,0.6);
+      --mt3: rgba(255,255,255,0.3);
+      --mb: #111111;
+      --mb2: rgba(255,255,255,0.04);
+      --mborder: rgba(255,255,255,0.04);
+    }
+    [data-theme="light"] .mod-wrap {
+      --mt: #0a0a0a;
+      --mt2: rgba(0,0,0,0.6);
+      --mt3: rgba(0,0,0,0.35);
+      --mb: #f8f8f8;
+      --mb2: rgba(0,0,0,0.03);
+      --mborder: rgba(0,0,0,0.06);
+    }
+
+    /* MOD PANEL */
+    .mod-wrap { min-height: calc(100vh - 120px); background: #070707; padding: 0; }
+    .mod-topbar { background: #0a0a0a; border-bottom: 2px solid #7e5bff; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+    .mod-topbar-title { font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7e5bff; display: flex; align-items: center; gap: 0.5rem; }
+    .mod-topbar h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; margin-top: 0.2rem; }
+    .mod-statsbar { background: #0f0f0f; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 3rem; display: flex; gap: 3rem; }
+    .mod-notice { background: rgba(126,91,255,0.06); border-left: 3px solid #7e5bff; margin: 1.5rem 3rem 0; padding: 0.9rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
+    .mod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: rgba(255,255,255,0.05); margin: 1.5rem 3rem 0; }
+    .mod-card { background: #0a0a0a; padding: 2rem; }
+    .mod-card-label { font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #7e5bff; margin-bottom: 0.5rem; }
+    .mod-card h2 { font-family: var(--font-head); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; margin-bottom: 1.5rem; }
+    .mod-list { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.04); }
+    .mod-list-scroll { max-height: 420px; overflow-y: auto; }
+    .mod-search { width: 100%; background: #1a1a1a; border: 1.5px solid rgba(255,255,255,0.08); color: #fff; font-family: var(--font-body); font-size: 0.82rem; padding: 0.65rem 0.9rem; outline: none; box-sizing: border-box; margin-bottom: 1rem; }
+    .mod-search:focus { border-color: #7e5bff; }
+    .mod-logwrap { margin: 1.5rem 3rem 3rem; background: #0a0a0a; padding: 2rem; }
+    .mod-btn { border: none; font-family: var(--font-sub); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.2rem; cursor: pointer; transition: all 0.2s; }
+  </style>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Moderator Panel &mdash; United Republic of Stars">
+  <meta property="og:image" content="https://republica3334.github.io/sito/svgs/icone/preview.png">
+  <meta name="theme-color" content="#c8102e">
 </head>
 <body>
 
 <div class="utility-bar">
-  <div class="utility-links"><a href="#">Accessibility</a><a href="#">Emergency: 112</a></div>
-  <div class="utility-links"><a href="../services/services.html">Services</a><a href="../auth/citizen-login.html">Citizen Login</a></div>
+  <div class="utility-links">
+    <a href="#">Accessibility</a>
+    <a href="#">Language / Lingua</a>
+    <a href="#">Emergency Line: 1-800-ARX-0001</a>
+  </div>
+  <div class="utility-links">
+    <a href="#">Citizen Portal</a>
+    <a href="#">Official Gazette</a>
+    <a href="#">Transparency</a>
+  </div>
 </div>
 
 <header>
-  <a href="../GOVERN_1.HTM" class="header-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem">
-    <div class="brand-text"><h1>United Republic of Stars</h1><span>Official Government Portal · Est. MMXII</span></div>
+  <a href="../GOVERN_1.HTM" class="header-brand" style="text-decoration:none;color:inherit;">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="Emblem of the United Republic of Stars">
+    <div class="brand-text">
+      <h1>United Republic of Stars</h1>
+      <span>Official Government Portal &middot; Est. MMXII</span>
+    </div>
   </a>
   <nav>
     <a href="../gov/government.html">Government</a>
     <a href="../services/services.html">Services</a>
     <a href="../gov/ministries.html">Ministries</a>
+    <a href="#">Laws &amp; Decrees</a>
+    <a href="#">News</a>
     <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 
-<div style="min-height:calc(100vh - 120px);background:#070707;">
+<main>
+<div class="mod-wrap">
 
-  <!-- Guard — requires mod OR admin -->
-  <script>republicstarSession.requireMod();</script>
+  <script>republicstarSession.requireMod(); republicstarVerifySession();</script>
 
-  <!-- Top Bar -->
-  <div style="background:#0a0a0a;border-bottom:2px solid #7e5bff;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;">
+  <div class="mod-topbar">
     <div>
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing: 0.12em;text-transform:uppercase;color:#7e5bff;display:flex;align-items:center;gap:0.6rem;">
+      <div class="mod-topbar-title">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7e5bff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Moderator Authority
       </div>
-      <h1 style="font-family:var(--font-head);font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-top:0.2rem;">Moderator Panel</h1>
+      <h1>Moderator Panel</h1>
     </div>
     <div style="display:flex;gap:0.8rem;align-items:center;">
       <div id="modIdentity" style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);"></div>
-      <button onclick="republicstarSession.logout()" style="background:transparent;border:1.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.4);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1.2rem;cursor:pointer;" onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.4)'">Logout</button>
+      <button onclick="republicstarSession.logout()" class="mod-btn" style="background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);"
+        onmouseover="this.style.borderColor='#7e5bff';this.style.color='#fff'"
+        onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">Logout</button>
     </div>
   </div>
 
-  <!-- Stats Bar -->
-  <div id="statsBar" style="background:#0f0f0f;border-bottom:1px solid rgba(255,255,255,0.05);padding:1.2rem 3rem;display:flex;gap:3rem;"></div>
+  <div id="statsBar" class="mod-statsbar"></div>
 
-  <!-- Notice: ilcreatore protected -->
-  <div style="background:rgba(200,16,46,0.07);border-left:3px solid #c8102e;margin:1.5rem 3rem 0;padding:0.9rem 1.4rem;display:flex;align-items:center;gap:0.8rem;">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8102e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(200,16,46,0.8);">The Supreme Creator account (ilcreatore) is protected and cannot be modified by moderators.</span>
+  <div class="mod-notice">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7e5bff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span style="font-family:var(--font-sub);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(126,91,255,0.85);">Admin accounts and ADMIN001 are protected. You cannot modify your own account.</span>
   </div>
 
-  <!-- Main Grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,0.04);margin:1.5rem 3rem 0;">
+  <div class="mod-grid">
 
-    <!-- Pending Approvals -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">Action Required</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">Pending Approvals <span id="pendingCount" style="color:#7e5bff;"></span></h2>
-      <input id="pendingSearch" type="text" placeholder="Search pending..." oninput="renderPending()"
-        style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
-        onfocus="this.style.borderColor='#7e5bff'" onblur="this.style.borderColor='rgba(255,255,255,0.07)'">
-      <div id="pendingList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
-      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:rgba(255,255,255,0.2);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
+    <div class="mod-card">
+      <div class="mod-card-label">Action Required</div>
+      <h2>Pending &amp; Revoked <span id="pendingCount" style="color:#7e5bff;"></span></h2>
+      <input id="pendingSearch" type="text" placeholder="Search pending..." oninput="renderPending()" class="mod-search">
+      <div id="pendingList" class="mod-list mod-list-scroll"></div>
+      <div id="noPending" style="font-family:var(--font-body);font-size:0.82rem;color:var(--mt3);text-align:center;padding:2rem 0;display:none;">No pending registrations.</div>
     </div>
 
-    <!-- All Citizens -->
-    <div style="background:#0a0a0a;padding:2rem;">
-      <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">Registry</div>
-      <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1rem;">All Citizens <span id="totalCount" style="color:rgba(255,255,255,0.25);font-size:0.8rem;"></span></h2>
-      <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()"
-        style="width:100%;background:#1a1a1a;border:1.5px solid rgba(255,255,255,0.07);color:var(--white);font-family:var(--font-body);font-size:0.82rem;padding:0.65rem 0.9rem;outline:none;box-sizing:border-box;margin-bottom:1rem;"
-        onfocus="this.style.borderColor='#7e5bff'" onblur="this.style.borderColor='rgba(255,255,255,0.07)'">
-      <div id="citizenList" style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.03);max-height:420px;overflow-y:auto;"></div>
+    <div class="mod-card">
+      <div class="mod-card-label">Registry</div>
+      <h2>Citizens &amp; Moderators <span id="totalCount" style="color:var(--mt3);font-size:0.8rem;"></span></h2>
+      <input id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()" class="mod-search">
+      <div id="citizenList" class="mod-list mod-list-scroll"></div>
     </div>
+
   </div>
 
-  <!-- Activity Log -->
-  <div style="margin:1.5rem 3rem 3rem;background:#0a0a0a;padding:2rem;">
-    <div style="font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#7e5bff;margin-bottom:0.5rem;">System</div>
-    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:1.5rem;">Activity Log</h2>
+  <div class="mod-logwrap">
+    <div class="mod-card-label">System</div>
+    <h2 style="font-family:var(--font-head);font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--mt);margin-bottom:1.5rem;">Activity Log</h2>
     <div id="activityLog" style="display:flex;flex-direction:column;gap:0;font-family:var(--font-body);font-size:0.78rem;"></div>
   </div>
 
 </div>
+</main>
 
-<!-- COOKIE BANNER -->
+<footer></footer>
+
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid #c8102e;z-index:9999;padding:1.2rem 2.5rem;font-family:var(--font-body);">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
-    <p style="font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.6;flex:1;min-width:260px;">This portal uses strictly necessary session cookies.</p>
-    <div style="display:flex;gap:0.8rem;flex-shrink:0;">
-      <button onclick="setCookiePref('essential')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;">Essential Only</button>
-      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;">Accept &amp; Continue</button>
+    <div style="flex:1;min-width:260px;">
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;margin:0;">This portal uses strictly necessary cookies for session authentication. <a href="#" style="color:#c8102e;text-decoration:none;">Privacy Policy</a>.</p>
+    </div>
+    <div style="display:flex;gap:0.8rem;align-items:center;flex-shrink:0;">
+      <button onclick="setCookiePref('essential')" style="background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;" onmouseover="this.style.borderColor='white';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.5)'">Essential Only</button>
+      <button onclick="setCookiePref('all')" style="background:#c8102e;color:white;border:none;font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.65rem 1.3rem;cursor:pointer;" onmouseover="this.style.background='#9b0c22'" onmouseout="this.style.background='#c8102e'">Accept &amp; Continue</button>
     </div>
   </div>
 </div>
 
+<!-- Toast -->
+<div id="modToast" style="position:fixed;bottom:2rem;right:2rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem 1.4rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;max-width:380px;line-height:1.5;box-shadow:0 4px 24px rgba(0,0,0,0.4);"></div>
+
 <script>
+var _currentModId = null;
 (function(){
   var s = republicstarSession.get();
-  if(s && document.getElementById('modIdentity')){
-    document.getElementById('modIdentity').textContent = 'Logged in as: ' + s.user + ' · ' + (s.role||'citizen').toUpperCase();
+  if(s){
+    _currentModId = s.user || null;
+    var el = document.getElementById('modIdentity');
+    if(el) el.textContent = 'Logged in as: ' + s.user + ' · ' + (s.role||'citizen').toUpperCase();
   }
 })();
 
 var _users = [];
-function getUsers(){ return _users; }
 function getLog(){ return JSON.parse(localStorage.getItem('republicstar_log')||'[]'); }
 function addLog(msg){
   var log=getLog();
@@ -144,13 +235,91 @@ function addLog(msg){
   localStorage.setItem('republicstar_log',JSON.stringify(log));
   renderLog();
 }
-function isCreator(id){ return id==='ilcreatore'; }
+function isAdminUser(u){ return u.role==='admin'||u.id==='ADMIN001'; }
+function isSelf(id){ return _currentModId && id===_currentModId; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
-function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function mbtn(action, label, style){
+  return '<button data-action="'+action+'" style="'+style+'" type="button">'+label+'</button>';
+}
+function attachModListeners(container){
+  container.querySelectorAll('[data-action]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('[data-uid]');
+      var id = row ? row.getAttribute('data-uid') : null;
+      if (!id) return;
+      var action = b.getAttribute('data-action');
+      if (action==='approve')  approveUser(id, b);
+      else if (action==='reject')  rejectUser(id, b);
+      else if (action==='suspend') suspendUser(id, b);
+      else if (action==='revoke')  revokeUser(id, b);
+    });
+  });
+}
+
+function showToast(msg, isError){
+  var t=document.getElementById('modToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _modCall(promise, logMsg, btn, patch){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+      if(patch && patch.id){
+        _users = _users.map(function(u){
+          if(u.id !== patch.id) return u;
+          return Object.assign({}, u, patch.data);
+        });
+        refresh();
+      }
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Error'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
+
+function showToast(msg, isError){
+  var t=document.getElementById('modToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _modCall(promise, logMsg, btn){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Error'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
 
 function statusBadge(s){
   var colors={approved:'#00b450',pending:'#f5a623',suspended:'#c8102e',rejected:'#666'};
-  return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+(colors[s]||'#aaa')+';">'+s+'</span>';
+  return '<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:'+(colors[s]||'#aaa')+';">'+esc(s)+'</span>';
 }
 function roleBadge(r){
   if(r==='moderator') return '<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#7e5bff;background:rgba(126,91,255,0.12);border:1px solid rgba(126,91,255,0.35);padding:0.12rem 0.45rem;margin-left:0.4rem;">MOD</span>';
@@ -158,92 +327,136 @@ function roleBadge(r){
 }
 
 function renderStats(){
-  var users=getUsers();
+  var users=_users.filter(function(u){ return !isAdminUser(u) && !isSelf(u.id); });
   var total=users.length;
   var pending=users.filter(function(u){return u.status==='pending';}).length;
+  var rejected=users.filter(function(u){return u.status==='rejected';}).length;
   var approved=users.filter(function(u){return u.status==='approved';}).length;
   var suspended=users.filter(function(u){return u.status==='suspended';}).length;
-  document.getElementById('statsBar').innerHTML=stat('Total Citizens',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended);
-  document.getElementById('pendingCount').textContent='('+pending+')';
-  document.getElementById('totalCount').textContent='('+total+')';
+  document.getElementById('statsBar').innerHTML=
+    stat('Total',total)+stat('Approved',approved)+stat('Pending',pending)+stat('Suspended',suspended)+stat('Revoked',rejected);
+  document.getElementById('pendingCount').textContent='('+(pending+rejected)+')';
+  document.getElementById('totalCount').textContent='('+(approved+suspended)+')';
 }
 function stat(label,val){
-  return '<div style="border-left:2px solid #7e5bff;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--white);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);">'+label+'</span></div>';
+  return '<div style="border-left:2px solid #7e5bff;padding-left:1rem;"><strong style="display:block;font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--mt);">'+val+'</strong><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mt3);">'+label+'</span></div>';
 }
 
 function renderPending(){
-  var users=getUsers();
   var q=(document.getElementById('pendingSearch').value||'').toLowerCase();
-  var pending=users.filter(function(u){return u.status==='pending' && !isCreator(u.id);});
-  if(q) pending=pending.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;});
+  var pending=_users.filter(function(u){ return (u.status==='pending'||u.status==='rejected') && !isAdminUser(u) && !isSelf(u.id); });
+  if(q) pending=pending.filter(function(u){ return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1; });
   var list=document.getElementById('pendingList');
   var none=document.getElementById('noPending');
-  if(pending.length===0){list.innerHTML='';none.style.display='block';return;}
+  if(pending.length===0){ list.innerHTML=''; none.style.display='block'; return; }
   none.style.display='none';
-  list.innerHTML=pending.map(function(u){return(
-    '<div style="background:#111;padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
-    +'<div>'
-    +'<div style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
-    +'</div>'
-    +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
-    +'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Approve</button>'
-    +'<button onclick="rejectUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;">Reject</button>'
-    +'</div></div>'
-  );}).join('');
+  list.innerHTML=pending.map(function(u){
+    var isRejected=u.status==='rejected';
+    var statusColor=isRejected?'#c8102e':'#f5a623';
+    var bS='font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 0.9rem;cursor:pointer;';
+    return(
+      '<div data-uid="'+esc(u.id)+'" style="background:var(--mb);padding:1.2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
+      +'<div>'
+      +'<div style="display:flex;align-items:center;gap:0.6rem;">'
+      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt);font-weight:600;">'+esc(u.name||'&mdash;')+'</span>'
+      +(u.approvalRequested&&!isRejected?'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:#f5a623;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);padding:0.15rem 0.5rem;">Requested</span>':'')
+      +'<span style="font-family:var(--font-sub);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:'+statusColor+';">'+esc(u.status)+'</span>'
+      +'</div>'
+      +'<div style="font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;color:var(--mt3);margin-top:0.2rem;">'+esc(u.id||'&mdash;')+' &middot; '+esc(u.email||'&mdash;')+'</div>'
+      +(u.registered?'<div style="font-family:var(--font-body);font-size:0.7rem;color:var(--mt3);margin-top:0.15rem;">Registered: '+new Date(u.registered).toLocaleDateString()+'</div>':'')
+      +'</div>'
+      +'<div style="display:flex;gap:0.5rem;flex-shrink:0;">'
+      +(isRejected
+        ?mbtn('approve','Reinstate','background:#7e5bff;color:white;border:none;'+bS)
+        :mbtn('approve','Approve','background:#7e5bff;color:white;border:none;'+bS)
+         +mbtn('reject','Reject','background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);'+bS))
+      +'</div></div>'
+    );
+  }).join('');
+  attachModListeners(list);
 }
 
 function renderAll(){
-  var users=getUsers();
   var q=(document.getElementById('searchBox').value||'').toLowerCase();
-  /* Mods never see ilcreatore */
-  var visible=users.filter(function(u){return !isCreator(u.id) && u.status!=='pending';});
-  var filtered=q?visible.filter(function(u){return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1;}):visible;
+  var visible=_users.filter(function(u){
+    return !isAdminUser(u) && !isSelf(u.id) && u.status!=='pending' && u.status!=='rejected';
+  });
+  var filtered=q?visible.filter(function(u){ return (u.name||'').toLowerCase().indexOf(q)!==-1||(u.id||'').toLowerCase().indexOf(q)!==-1||(u.email||'').toLowerCase().indexOf(q)!==-1; }):visible;
   var list=document.getElementById('citizenList');
-  if(filtered.length===0){list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:rgba(255,255,255,0.2);text-align:center;">No citizens found.</div>';return;}
-  list.innerHTML=filtered.map(function(u){return(
-    '<div style="background:#111;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;">'
-    +'<div>'
-    +'<div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">'
-    +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--white);font-weight:600;">'+(esc(u.name)||'—')+'</span>'
-    +statusBadge(u.status)+roleBadge(u.role)
-    +'</div>'
-    +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-top:0.2rem;">'+(esc(u.id)||'—')+' · '+(esc(u.email)||'—')+'</div>'
-    +'</div>'
-    +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">'
-    +(u.status!=='approved'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:#7e5bff;color:white;border:none;font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Approve</button>':'')
-    +(u.status!=='suspended'?'<button onclick="suspendUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Suspend</button>':'')
-    +(u.status==='suspended'?'<button onclick="approveUser(\''+jsString(u.id)+'\')" style="background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;">Reinstate</button>':'')
-    +'</div></div>'
-  );}).join('');
+  if(filtered.length===0){ list.innerHTML='<div style="padding:1.5rem;font-family:var(--font-body);font-size:0.8rem;color:var(--mt3);text-align:center;">No citizens found.</div>'; return; }
+  list.innerHTML=filtered.map(function(u){
+    var isMod=u.role==='moderator';
+    var bS='font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.7rem;cursor:pointer;';
+    var actions=''
+      +(u.status!=='approved'?mbtn('approve','Approve','background:#7e5bff;color:white;border:none;'+bS):'')
+      +(u.status!=='suspended'&&u.status!=='rejected'?mbtn('suspend','Suspend','background:transparent;border:1px solid rgba(255,100,0,0.5);color:rgba(255,150,0,0.8);'+bS):'')
+      +(u.status==='suspended'?mbtn('approve','Reinstate','background:transparent;border:1px solid rgba(0,180,80,0.4);color:rgba(0,180,80,0.8);'+bS):'')
+      +(u.status!=='rejected'?mbtn('revoke','Revoke','background:transparent;border:1px solid rgba(200,16,46,0.5);color:rgba(200,16,46,0.85);'+bS):'');
+    return '<div data-uid="'+esc(u.id)+'" style="background:var(--mb);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;'+(isMod?'border-left:2px solid rgba(126,91,255,0.4);':'')+'">'
+      +'<div>'
+      +'<div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">'
+      +'<span style="font-family:var(--font-head);font-size:0.85rem;color:var(--mt);font-weight:600;">'+esc(u.name||'&mdash;')+'</span>'
+      +statusBadge(u.status)+roleBadge(u.role)
+      +'</div>'
+      +'<div style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--mt3);margin-top:0.2rem;">'+esc(u.id||'&mdash;')+' &middot; '+esc(u.email||'&mdash;')+'</div>'
+      +'</div>'
+      +'<div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;">'+actions+'</div>'
+      +'</div>';
+  }).join('');
+  attachModListeners(list);
 }
 
 function renderLog(){
   var log=getLog();
   var el=document.getElementById('activityLog');
-  if(log.length===0){el.innerHTML='<div style="color:rgba(255,255,255,0.2);font-size:0.78rem;padding:1rem 0;">No activity yet.</div>';return;}
-  el.innerHTML=log.slice(0,15).map(function(e){return '<div style="padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:1.5rem;align-items:baseline;"><span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:rgba(255,255,255,0.25);white-space:nowrap;">'+esc(e.time)+'</span><span style="color:rgba(255,255,255,0.6);">'+esc(e.msg)+'</span></div>';}).join('');
+  if(log.length===0){ el.innerHTML='<div style="color:var(--mt3);font-size:0.78rem;padding:1rem 0;">No activity recorded yet.</div>'; return; }
+  el.innerHTML=log.slice(0,15).map(function(e){
+    return '<div style="padding:0.6rem 0;border-bottom:1px solid var(--mborder);display:flex;gap:1.5rem;align-items:baseline;">'
+      +'<span style="font-family:var(--font-sub);font-size:0.55rem;letter-spacing:0.1em;color:var(--mt3);white-space:nowrap;">'+esc(e.time)+'</span>'
+      +'<span style="color:var(--mt2);">'+esc(e.msg)+'</span></div>';
+  }).join('');
 }
 
-function approveUser(id){
-  var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.updateUser(id,{status:'approved'}).then(function(){addLog('Approved: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+function approveUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
+  var u=_users.find(function(x){ return x.id===id; });
+  _modCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'approved'}});
 }
-function rejectUser(id){
+function rejectUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot modify your own account.', true); return; }
   if(!confirm('Reject and delete this registration?')) return;
-  var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.deleteUser(id).then(function(){addLog('Rejected: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+  var u=_users.find(function(x){ return x.id===id; });
+  _modCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function suspendUser(id){
-  var u=_users.find(function(x){return x.id===id;});
-  republicstarDB.updateUser(id,{status:'suspended'}).then(function(){addLog('Suspended: '+(u?u.name:'?')+' ('+id+')');}).catch(console.error);
+function suspendUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot suspend your own account.', true); return; }
+  var u=_users.find(function(x){ return x.id===id; });
+  _modCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'suspended'}});
+}
+function revokeUser(id,btn){
+  if(isSelf(id)){ showToast('Cannot revoke your own account.', true); return; }
+  if(!confirm('Set this account to revoked status?')) return;
+  var u=_users.find(function(x){ return x.id===id; });
+  _modCall(republicstarDB.updateUser(id,{status:'rejected'}), 'Revoked: '+(u?u.name:'?')+' ('+id+')', btn, {id:id,data:{status:'rejected'}});
 }
 
-function refresh(){renderStats();renderPending();renderAll();}
+function refresh(){ renderStats(); renderPending(); renderAll(); }
 
 function _attachListener(){
   if(window.republicstarDB){
-    republicstarDB.onUsers(function(users){ _users=users; refresh(); });
+    var _firstLoad=true;
+    if(window.republicstarLoader) republicstarLoader.show('Loading citizens…');
+    republicstarDB.onUsers(function(users){
+      _users=users;
+      refresh();
+      if(_firstLoad){ _firstLoad=false; if(window.republicstarLoader) republicstarLoader.hide(); }
+    }, function(err){
+      if(window.republicstarLoader) republicstarLoader.hide();
+      // Firebase Auth missing — session was created before new login system
+      if(err && err.message && err.message.indexOf('Authentication') !== -1){
+        republicstarSession.logout();
+      }
+    });
   } else {
     setTimeout(_attachListener, 400);
   }
@@ -252,5 +465,6 @@ _attachListener();
 renderLog();
 addLog('Moderator session started');
 </script>
+
 </body>
 </html>

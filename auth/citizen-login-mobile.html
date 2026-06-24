@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <script src="../republicstar-auth.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Citizen Login — United Republic of Stars</title>
+<title>Citizen Login &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -23,7 +23,7 @@
 html,body{background:var(--black);color:var(--white);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;}
 a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 
-/* ── TOP BAR ── */
+/* -- TOP BAR -- */
 .top-bar{
   background:#0f0f0f;
   border-bottom:2px solid #c8102e;
@@ -40,7 +40,7 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .desktop-link{font-family:var(--font-sub);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;border:1px solid rgba(255,255,255,0.1);padding:0.4rem 0.7rem;}
 .nav-cta{background:var(--red);color:var(--white);font-family:var(--font-sub);font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:0.5rem 1rem;text-decoration:none;display:inline-block;border:none;cursor:pointer;}
 
-/* ── MAIN ── */
+/* -- MAIN -- */
 .main{
   display:flex;
   flex-direction:column;
@@ -132,7 +132,7 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .security-note{display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:1.6rem;opacity:0.28;}
 .security-note span{font-family:var(--font-sub);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;}
 
-/* ── 2FA PANEL ── */
+/* -- 2FA PANEL -- */
 .tfa-panel{
   display:none;
   width:100%;max-width:420px;
@@ -185,7 +185,7 @@ a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .tfa-actions{display:flex;justify-content:space-between;align-items:center;}
 .tfa-actions button{background:none;border:none;color:rgba(255,255,255,0.3);font-family:var(--font-sub);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;padding:0.5rem 0;min-height:44px;}
 
-/* ── LIGHT MODE ── */
+/* -- LIGHT MODE -- */
 html[data-theme="light"],
 html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !important; }
 [data-theme="light"] .top-bar {
@@ -263,7 +263,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 <!-- TOP BAR -->
 <div class="top-bar">
   <a href="../GOVERN_1.HTM" class="top-brand">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars &mdash; Official Emblem">
     <div class="top-brand-text">
       <h1>United Republic</h1>
       <span>Official Portal</span>
@@ -277,7 +277,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 
   <!-- Emblem -->
   <div class="emblem-wrap">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars — Official Emblem">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" alt="United Republic of Stars &mdash; Official Emblem">
     <div class="republic-name">United Republic of Stars</div>
   </div>
 
@@ -315,7 +315,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       <div id="errorMsg" class="msg-error"></div>
       <div id="infoMsg" class="msg-info"></div>
 
-      <button type="submit" id="submitBtn" class="btn-submit">Access Portal →</button>
+      <button type="submit" id="submitBtn" class="btn-submit">Access Portal</button>
     </form>
 
     <div class="divider"><span>or</span></div>
@@ -330,12 +330,12 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
 
     <div class="register-row">
       <span>Don't have an account?</span>
-      <a href="register.html">Create Account →</a>
+      <a href="register.html">Create Account ?</a>
     </div>
 
     <div class="security-note">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>256-bit TLS Encrypted · Government Secure Network</span>
+      <span>256-bit TLS Encrypted &mdash; Government Secure Network</span>
     </div>
   </div>
 
@@ -346,10 +346,9 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
       <div>
-        <div class="tfa-email-from">United Republic of Stars — Security Code</div>
+        <div class="tfa-email-from">United Republic of Stars &mdash; Security Code</div>
         <div class="tfa-email-body">Code sent to <strong id="tfaEmailDisplay"></strong></div>
         <div class="tfa-email-sub">Check your inbox and enter the 6-digit code below.</div>
-        <div id="tfaDevCode" class="dev-code"></div>
       </div>
     </div>
 
@@ -358,7 +357,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
-      <span class="otp-sep">—</span>
+      <span class="otp-sep">...</span>
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
       <input class="otp" maxlength="1" inputmode="numeric" oninput="otpInput(this)" onkeydown="otpKey(event,this)">
@@ -367,11 +366,11 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
     <div id="tfaTimer" class="tfa-timer"></div>
     <div id="tfaError" class="tfa-error"></div>
 
-    <button id="tfaVerifyBtn" class="btn-tfa-verify" onclick="verifyOTP()">Verify Code →</button>
+    <button id="tfaVerifyBtn" class="btn-tfa-verify" onclick="verifyOTP()">Verify Code ?</button>
 
     <div class="tfa-actions">
       <button onclick="resendOTP()" id="resendBtn">Resend Code</button>
-      <button onclick="cancelTFA()">← Back to Login</button>
+      <button onclick="cancelTFA()">? Back to Login</button>
     </div>
   </div>
 
@@ -413,7 +412,7 @@ html[data-theme="light"] body { background: #f0f0f0 !important; color: #0a0a0a !
       if (!user && republicstarSession.get()) republicstarSession.clear();
       return;
     }
-    var dest = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+    var dest = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
     localStorage.removeItem('republicstar_redirect');
     window.location.replace(dest);
   }
@@ -461,38 +460,37 @@ function handleLogin(e) {
   btn.textContent = 'Authenticating...';
   btn.style.opacity = '0.7';
   btn.disabled = true;
-  if (window.republicstarLoader) republicstarLoader.show('Authenticating…');
+  if (window.republicstarLoader) republicstarLoader.show('Authenticating...');
 
   function failAttempt(msg) {
     if (window.republicstarLoader) republicstarLoader.hide();
     err.textContent = msg;
     err.style.display = 'block';
-    btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
+    btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false;
   }
 
   if (!window.republicstarDB) {
-    failAttempt('Connection error — check your internet and try again.');
+    failAttempt('Connection error &mdash; check your internet and try again.');
     return;
   }
 
-  window._lastLoginPayload = { userId: nid, password: pwd };
-
   republicstarDB.loginUser(nid, pwd).then(function(result) {
+    window._lastLoginPayload = null;
     if (result.requires2fa) {
       window._pendingRemember = document.getElementById('rememberMe').checked;
       if (window.republicstarLoader) republicstarLoader.hide();
       startTFA(result);
-      btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false;
+      btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false;
     } else {
-      if (window.republicstarLoader) republicstarLoader.show('Signing in…');
+      if (window.republicstarLoader) republicstarLoader.show('Signing in...');
       finishLogin(result, document.getElementById('rememberMe').checked);
     }
   }).catch(function(e){
     console.error(e);
-    var msg = e && e.code === 'permission-denied'
-      ? 'This account has been suspended. Contact the Ministry of the Interior.'
-      : 'Invalid National ID or password.';
-    failAttempt(msg);
+    if (e && (e.code === 'functions/permission-denied' || e.code === 'permission-denied')) {
+      window.location.href = 'suspended.html'; return;
+    }
+    failAttempt('Invalid National ID or password.');
   });
 }
 
@@ -504,6 +502,14 @@ function showMsg(m) {
   err.textContent = m;
   err.style.display = 'block';
 }
+
+window.addEventListener('pageshow', function(e) {
+  if (!e.persisted) return;
+  if (window.republicstarLoader) republicstarLoader.hide();
+  var btn = document.getElementById('submitBtn');
+  if (btn) { btn.textContent = 'Access Portal'; btn.style.opacity = '1'; btn.disabled = false; }
+  localStorage.removeItem('republicstar_admin_pending');
+});
 </script>
 
 </body>

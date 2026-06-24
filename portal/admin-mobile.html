@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <script>
@@ -9,7 +9,7 @@
 <script src="../republicstar-auth.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Admin Panel — United Republic of Stars</title>
+  <title>Admin Panel &mdash; United Republic of Stars</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -27,7 +27,7 @@
     html, body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
     a, button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
-    /* ── HEADER ── */
+    /* -- HEADER -- */
     header {
       position: sticky; top: 0; z-index: 100;
       background: var(--black);
@@ -53,7 +53,7 @@
     }
     .logout-btn:active { border-color: var(--red); color: var(--white); }
 
-    /* ── PAGE TITLE ── */
+    /* -- PAGE TITLE -- */
     .page-title {
       background: #0f0f0f; border-bottom: 1px solid rgba(200,16,46,0.3);
       padding: 1rem 1.2rem;
@@ -67,7 +67,7 @@
       letter-spacing: 0.08em; text-transform: uppercase; color: var(--white);
     }
 
-    /* ── STATS STRIP ── */
+    /* -- STATS STRIP -- */
     .stats-strip {
       display: flex; gap: 0; overflow-x: auto; background: #0a0a0a;
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -88,7 +88,7 @@
       text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 0.15rem; display: block;
     }
 
-    /* ── TABS ── */
+    /* -- TABS -- */
     .tabs {
       display: flex; background: #080808;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -103,11 +103,11 @@
     }
     .tab.active { color: var(--white); border-bottom-color: var(--red); }
 
-    /* ── PANELS ── */
+    /* -- PANELS -- */
     .panel { display: none; padding: 1.2rem; }
     .panel.active { display: block; }
 
-    /* ── SEARCH ── */
+    /* -- SEARCH -- */
     .search-input {
       width: 100%; background: #1a1a1a; border: 1.5px solid rgba(255,255,255,0.08);
       color: var(--white); font-family: var(--font-body); font-size: 0.85rem;
@@ -115,7 +115,7 @@
     }
     .search-input:focus { border-color: var(--red); }
 
-    /* ── CITIZEN CARDS ── */
+    /* -- CITIZEN CARDS -- */
     .citizen-card {
       background: #111; border-left: 3px solid transparent;
       padding: 1rem 1.1rem; margin-bottom: 1px;
@@ -155,7 +155,7 @@
     .badge-creator{ color: var(--red); border: 1px solid rgba(200,16,46,0.35); }
     .badge-protected { color: var(--red); border: 1px solid rgba(200,16,46,0.3); font-family: var(--font-sub); font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.1rem 0.4rem; display: inline-block; }
 
-    /* ── LOG ── */
+    /* -- LOG -- */
     .log-entry {
       padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
       display: flex; gap: 0.8rem; align-items: baseline;
@@ -176,7 +176,7 @@
       letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 1rem;
     }
 
-    /* ── FOOTER ── */
+    /* -- FOOTER -- */
     footer {
       background: #080808; border-top: 1px solid rgba(255,255,255,0.06);
       padding: 1.2rem; text-align: center;
@@ -193,7 +193,7 @@
 <!-- HEADER -->
 <header>
   <a href="../mobile.html" class="header-brand" style="text-decoration:none;">
-    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars — Official Emblem" onerror="this.style.display='none'">
+    <img loading="lazy" src="../svgs/icone/republica/2.svg" class="emblem-svg" alt="United Republic of Stars &middot; Official Emblem" onerror="this.style.display='none'">
     <div class="brand-text">
       <h1>Rep. of Stars</h1>
       <span>Admin Panel</span>
@@ -228,7 +228,7 @@
 
 <!-- PANEL: CITIZENS -->
 <div class="panel" id="panel-citizens">
-  <input class="search-input" id="searchBox" type="text" placeholder="Search by name or ID…" oninput="renderAll()">
+  <input class="search-input" id="searchBox" type="text" placeholder="Search by name or ID..." oninput="renderAll()">
   <div id="citizenList"></div>
 </div>
 
@@ -242,9 +242,12 @@
 <!-- FOOTER -->
 </main>
 <footer>
-  <span>© 2026 United Republic of Stars</span>
-  <a href="admin.html">Desktop version →</a>
+  <span>&copy; 2026 United Republic of Stars</span>
+  <a href="admin.html">Desktop version &rarr;</a>
 </footer>
+
+<!-- Toast -->
+<div id="adminMobileToast" style="position:fixed;bottom:1.5rem;left:1rem;right:1rem;background:#0f5a2e;border-left:4px solid #00b450;color:#fff;font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.9rem 1.2rem;z-index:9999;opacity:0;transform:translateY(12px);transition:opacity 0.25s,transform 0.25s;pointer-events:none;line-height:1.5;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f0f0f;border-top:2px solid var(--red);z-index:9999;padding:1rem 1.2rem;">
@@ -257,6 +260,39 @@
 
 <script>
 var _users = [];
+var _currentAdminId = null;
+(function(){
+  var s = republicstarSession.get();
+  if(s) _currentAdminId = s.user || null;
+})();
+function isSelf(id){ return _currentAdminId && id === _currentAdminId; }
+
+function showToast(msg, isError){
+  var t=document.getElementById('adminMobileToast');
+  if(!t) return;
+  t.textContent=msg;
+  t.style.background=isError?'#9b0c22':'#0f5a2e';
+  t.style.borderLeft=isError?'4px solid #c8102e':'4px solid #00b450';
+  t.style.opacity='1';
+  t.style.transform='translateY(0)';
+  clearTimeout(t._tid);
+  t._tid=setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; },4000);
+}
+
+function _adminCall(promise, logMsg, btn){
+  if(btn){ btn.disabled=true; btn._origText=btn.textContent; btn.textContent='Processing'+'…'; }
+  return promise
+    .then(function(){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Done'; }
+      addLog(logMsg);
+      showToast('✓ '+logMsg, false);
+    })
+    .catch(function(e){
+      if(btn){ btn.disabled=false; btn.textContent=btn._origText||'Err'; }
+      console.error(e);
+      showToast('Error: '+((e&&e.message)||'Request failed'), true);
+    });
+}
 
 function switchTab(name, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -274,7 +310,7 @@ function addLog(msg){
   renderLog();
 }
 
-function isCreator(id){ return id === 'ilcreatore'; }
+function isCreator(id){ return id === 'ADMIN001'; }
 function esc(s){ var d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
 function jsString(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
@@ -283,7 +319,7 @@ function statusBadge(s){
 }
 
 function renderStats(){
-  var users = _users;
+  var users = _users.filter(function(u){ return !isSelf(u.id); });
   var total = users.length;
   var pending = users.filter(function(u){ return u.status==='pending'; }).length;
   var approved = users.filter(function(u){ return u.status==='approved'; }).length;
@@ -307,10 +343,10 @@ function renderPending(){
   list.innerHTML = pending.map(function(u){
     return '<div class="citizen-card">'
       + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'—')+' &middot; '+esc(u.email||'—')+'</div>'
       + '<div class="citizen-actions">'
-      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>'
-      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\')">Reject</button>'
+      + '<button class="action-btn approve" onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>'
+      + '<button class="action-btn delete"  onclick="rejectUser(\''+jsString(u.id)+'\',this)">Reject</button>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -318,7 +354,7 @@ function renderPending(){
 
 function renderAll(){
   var q = (document.getElementById('searchBox').value||'').toLowerCase();
-  var nonPending = _users.filter(function(u){ return u.status!=='pending'; });
+  var nonPending = _users.filter(function(u){ return u.status!=='pending' && u.role!=='admin' && !isCreator(u.id); });
   var filtered = q ? nonPending.filter(function(u){
     return (u.name||'').toLowerCase().includes(q)||(u.id||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q);
   }) : nonPending;
@@ -329,22 +365,22 @@ function renderAll(){
     var isMod = u.role === 'moderator';
     var cls = creator ? 'creator' : isMod ? 'mod' : '';
     var badges = statusBadge(u.status);
-    if (creator) badges += '<span class="badge-creator">👑 Creator</span>';
+    if (creator) badges += '<span class="badge-creator">&#9733; Creator</span>';
     if (isMod && !creator) badges += '<span class="badge-role">Mod</span>';
     var actions = creator
       ? '<span class="badge-protected">Protected</span>'
       : '<div class="citizen-actions">'
-        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\')">Approve</button>' : '')
-        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\')">Suspend</button>' : '')
-        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\')">Reinstate</button>' : '')
-        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\')">Make Mod</button>'
-                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\')">Revoke Mod</button>')
-        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\')">Delete</button>'
+        + (u.status!=='approved' ? '<button class="action-btn approve"   onclick="approveUser(\''+jsString(u.id)+'\',this)">Approve</button>' : '')
+        + (u.status!=='suspended'? '<button class="action-btn suspend"   onclick="suspendUser(\''+jsString(u.id)+'\',this)">Suspend</button>' : '')
+        + (u.status==='suspended' ? '<button class="action-btn reinstate" onclick="approveUser(\''+jsString(u.id)+'\',this)">Reinstate</button>' : '')
+        + (!isMod ? '<button class="action-btn makemod"  onclick="makeModUser(\''+jsString(u.id)+'\',this)">Make Mod</button>'
+                  : '<button class="action-btn revokemod" onclick="revokeModUser(\''+jsString(u.id)+'\',this)">Revoke Mod</button>')
+        + '<button class="action-btn delete"    onclick="deleteUser(\''+jsString(u.id)+'\',this)">Delete</button>'
         + '</div>';
     return '<div class="citizen-card '+cls+'">'
       + '<div class="citizen-name">'+esc( u.name||'—')+'</div>'
       + '<div style="margin-bottom:0.4rem;">'+badges+'</div>'
-      + '<div class="citizen-meta">'+esc( u.id||'—')+' · '+esc(u.email||'—')+'</div>'
+      + '<div class="citizen-meta">'+esc( u.id||'—')+' &middot; '+esc(u.email||'—')+'</div>'
       + actions
       + '</div>';
   }).join('');
@@ -361,36 +397,36 @@ function renderLog(){
 
 function refresh(){ renderStats(); renderPending(); renderAll(); renderLog(); }
 
-function approveUser(id){
+function approveUser(id,btn){
   var u=_users.find(function(x){ return x.id===id; });
   if(!u) return;
-  republicstarDB.updateUser(id,{status:'approved'}).then(function(){ addLog('Approved: '+(u.name||id)); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'approved'}), 'Approved: '+(u.name||id)+' ('+id+')', btn);
 }
-function rejectUser(id){
+function rejectUser(id,btn){
   if(!confirm('Reject and delete this registration?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.deleteUser(id).then(function(){ addLog('Rejected: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Rejected: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function deleteUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be deleted.');return;}
+function deleteUser(id,btn){
+  if(isCreator(id)){ showToast('ADMIN001 cannot be deleted.', true); return; }
   if(!confirm('Permanently delete this account?')) return;
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.deleteUser(id).then(function(){ addLog('Deleted: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.deleteUser(id), 'Deleted: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function makeModUser(id){
-  if(isCreator(id)){alert('ilcreatore is already Supreme Administrator.');return;}
+function makeModUser(id,btn){
+  if(isCreator(id)){ showToast('ADMIN001 is already Supreme Administrator.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{role:'moderator',status:'approved'}).then(function(){ addLog('Granted Mod: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'moderator',status:'approved'}), 'Granted Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function revokeModUser(id){
-  if(isCreator(id)){alert('Cannot revoke ilcreatore.');return;}
+function revokeModUser(id,btn){
+  if(isCreator(id)){ showToast('Cannot revoke ADMIN001.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{role:'citizen'}).then(function(){ addLog('Revoked Mod: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{role:'citizen'}), 'Revoked Mod: '+(u?u.name:'?')+' ('+id+')', btn);
 }
-function suspendUser(id){
-  if(isCreator(id)){alert('ilcreatore cannot be suspended.');return;}
+function suspendUser(id,btn){
+  if(isCreator(id)){ showToast('ADMIN001 cannot be suspended.', true); return; }
   var u=_users.find(function(x){ return x.id===id; });
-  republicstarDB.updateUser(id,{status:'suspended'}).then(function(){ addLog('Suspended: '+((u?u.name:'?')+' ('+id+')')); }).catch(console.error);
+  _adminCall(republicstarDB.updateUser(id,{status:'suspended'}), 'Suspended: '+(u?u.name:'?')+' ('+id+')', btn);
 }
 
 function _attachListener(){

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - sito-test
   workflow_dispatch:
 
 permissions:
@@ -40,6 +41,7 @@ jobs:
           printf "EMAILJS_TEMPLATE_ID=%s\n" "${{ secrets.EMAILJS_TEMPLATE_ID }}" >> functions/.env.database-star-787e0
           printf "EMAILJS_PUBLIC_KEY=%s\n" "${{ secrets.EMAILJS_PUBLIC_KEY }}" >> functions/.env.database-star-787e0
           printf "EMAILJS_PRIVATE_KEY=%s\n" "${{ secrets.EMAILJS_PRIVATE_KEY }}" >> functions/.env.database-star-787e0
+          printf "ADMIN_SECRET_HASH=%s\n" "${{ secrets.ADMIN_SECRET_HASH }}" >> functions/.env.database-star-787e0
 
       - name: Deploy Firebase
         run: firebase deploy --only functions,hosting --project database-star-787e0 --force

@@ -8,7 +8,7 @@ admin.initializeApp();
 const db = admin.firestore();
 const FieldValue = admin.firestore.FieldValue;
 
-const ADMIN_ID = 'ilcreatore';
+const ADMIN_ID = 'ADMIN001';
 const PASSWORD_ITERATIONS = 310000;
 const PASSWORD_KEYLEN = 32;
 const PASSWORD_DIGEST = 'sha256';
@@ -26,6 +26,15 @@ function normalizeEmail(value) {
 
 function sha256(str) {
   return crypto.createHash('sha256').update(str).digest('hex');
+}
+
+function clientIp(request) {
+  const fwd = request.rawRequest && request.rawRequest.headers['x-forwarded-for'];
+  if (fwd) {
+    const parts = fwd.split(',');
+    return parts[parts.length - 1].trim();
+  }
+  return (request.rawRequest && request.rawRequest.ip) || 'unknown';
 }
 
 function randomCode() {
@@ -91,25 +100,18 @@ function requireAuth(request) {
   return request.auth.uid;
 }
 
-function requestRole(request) {
-  if (!request.auth) return null;
-  if (request.auth.uid === ADMIN_ID) return 'admin';
-  return request.auth.token.role || null;
-}
 
-function isAdmin(request) {
-  return requestRole(request) === 'admin';
-}
-
-function isModerator(request) {
-  return requestRole(request) === 'moderator';
-}
-
-function requirePrivileged(request) {
-  requireAuth(request);
-  if (!isAdmin(request) && !isModerator(request)) {
+async function requirePrivileged(request) {
+  const uid = requireAuth(request);
+  if (uid === ADMIN_ID) return { role: 'admin', status: 'approved' };
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('permission-denied', 'Account not found');
+  const role = found.data.role || 'citizen';
+  const status = found.data.status || 'pending';
+  if (!['admin', 'moderator'].includes(role) || status !== 'approved') {
     throw new HttpsError('permission-denied', 'Admin or moderator role required');
   }
+  return { role, status };
 }
 
 async function sendEmail(toEmail, toName, otpCode) {
@@ -156,21 +158,48 @@ async function issueToken(userId, user) {
   return { token, user: publicUser(userId, Object.assign({}, user, { role })) };
 }
 
-async function throttle(ref) {
-  const snap = await ref.get();
-  if (snap.exists) {
-    const sentAt = snap.data().sentAt || 0;
-    if (Date.now() - sentAt < OTP_RESEND_MS) {
-      throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+async function rateCheck(ref, limit, windowMs, errorMsg) {
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (snap.exists) {
+      const { count, windowStart } = snap.data();
+      const elapsed = now - (windowStart || 0);
+      if (elapsed < windowMs) {
+        if (count >= limit) throw new HttpsError('resource-exhausted', errorMsg);
+        tx.update(ref, { count: count + 1 });
+      } else {
+        tx.set(ref, { count: 1, windowStart: now });
+      }
+    } else {
+      tx.set(ref, { count: 1, windowStart: now });
     }
-  }
-  await ref.set({ sentAt: Date.now() }, { merge: true });
+  });
 }
 
-async function createLoginChallenge(userId, user) {
+async function throttle(ref) {
+  const now = Date.now();
+  await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (snap.exists) {
+      const sentAt = snap.data().sentAt || 0;
+      if (now - sentAt < OTP_RESEND_MS) {
+        throw new HttpsError('resource-exhausted', 'Please wait before requesting a new code');
+      }
+    }
+    tx.set(ref, { sentAt: now }, { merge: true });
+  });
+}
+
+async function createLoginChallenge(userId, user, ip) {
   if (!user.email) throw new HttpsError('failed-precondition', 'No email on this account');
 
   await throttle(db.collection('login_challenge_rate').doc(userId));
+
+  if (ip) {
+    const ipKey = 'challenge_ip_' + sha256(String(ip)).slice(0, 16);
+    await throttle(db.collection('rate_limits').doc(ipKey));
+  }
 
   const challengeId = crypto.randomBytes(24).toString('hex');
   const code = randomCode();
@@ -224,8 +253,12 @@ async function emailExists(email, exceptUserId) {
 }
 
 exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
-  const firstName = asString(request.data.firstName);
-  const lastName = asString(request.data.lastName);
+  const ip = clientIp(request);
+  const ipKey = 'reg_rate_' + sha256(String(ip)).slice(0, 16);
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 5, 60 * 60 * 1000, 'Too many registration attempts. Please try again later.');
+
+  const firstName = asString(request.data.firstName).slice(0, 64);
+  const lastName = asString(request.data.lastName).slice(0, 64);
   const dob = asString(request.data.dob);
   const email = normalizeEmail(request.data.email);
   const password = request.data.password;
@@ -233,10 +266,17 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   if (!firstName || !lastName || !dob) {
     throw new HttpsError('invalid-argument', 'Name and date of birth are required');
   }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    throw new HttpsError('invalid-argument', 'Date of birth must be in YYYY-MM-DD format');
+  }
+  const dobDate = new Date(dob);
+  if (isNaN(dobDate.getTime()) || dobDate >= new Date()) {
+    throw new HttpsError('invalid-argument', 'Invalid date of birth');
+  }
   validateEmail(email);
   validatePassword(password);
   if (await emailExists(email)) {
-    throw new HttpsError('already-exists', 'An account with this email already exists');
+    throw new HttpsError('invalid-argument', 'Registration could not be completed');
   }
 
   const id = await uniqueNationalId();
@@ -265,7 +305,11 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   return { id };
 });
 
-exports.registerGuest = onCall({ invoker: 'public' }, async () => {
+exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
+  const ip = clientIp(request);
+  const ipKey = 'guest_rate_' + sha256(String(ip)).slice(0, 16);
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 3, 60 * 60 * 1000, 'Too many guest accounts created. Please try again later.');
+
   const suffix = crypto.randomBytes(5).toString('hex').toUpperCase();
   const id = `GST-${suffix.slice(0, 3)}-${crypto.randomInt(100000, 1000000)}`;
   const user = {
@@ -282,6 +326,10 @@ exports.registerGuest = onCall({ invoker: 'public' }, async () => {
 });
 
 exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
+  const ip = clientIp(request);
+  const ipKey = 'login_rate_' + sha256(String(ip)).slice(0, 16);
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 10, 15 * 60 * 1000, 'Too many login attempts. Please try again later.');
+
   const userId = asString(request.data.userId);
   const password = request.data.password;
   if (!userId || typeof password !== 'string') {
@@ -289,25 +337,35 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   }
 
   const found = await getUserDoc(userId);
-  if (!found) {
+  const user = found ? found.data : null;
+  const ok = user ? await verifyStoredPassword(userId, user, password) : false;
+  if (!found || !ok) {
     throw new HttpsError('unauthenticated', 'Invalid credentials');
   }
 
-  const user = found.data;
-  const ok = await verifyStoredPassword(userId, user, password);
-  if (!ok) {
-    throw new HttpsError('unauthenticated', 'Invalid credentials');
+  // Block explicitly rejected/suspended accounts; allow missing status for legacy accounts
+  if (user.status && !['pending', 'approved'].includes(user.status)) {
+    throw new HttpsError('permission-denied', 'This account is not accessible');
   }
-  if (user.status === 'suspended') {
-    throw new HttpsError('permission-denied', 'This account has been suspended');
+
+  // Admin secret code check MUST come before 2FA so email-OTP cannot bypass it
+  if (roleFor(userId, user) === 'admin') {
+    const challengeId = crypto.randomBytes(24).toString('hex');
+    await db.collection('admin_challenges').doc(challengeId).set({
+      userId,
+      expiry: Date.now() + 5 * 60 * 1000,
+    });
+    return { requiresSecretCode: true, challengeId, user: publicUser(userId, user) };
   }
+
   if (user.twofa === true && user.email && user.emailVerified === true) {
-    return createLoginChallenge(userId, user);
+    return createLoginChallenge(userId, user, ip);
   }
   if (user.twofa === true && (!user.email || user.emailVerified !== true)) {
     await found.ref.update({ twofa: false });
     user.twofa = false;
   }
+
   return issueToken(userId, user);
 });
 
@@ -340,14 +398,40 @@ exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
 
   await ref.delete();
   const found = await getUserDoc(session.userId);
-  if (!found || found.data.status === 'suspended') {
+  if (!found || !['pending', 'approved'].includes(found.data.status || '')) {
     throw new HttpsError('permission-denied', 'Account unavailable');
   }
   return Object.assign({ valid: true }, await issueToken(session.userId, found.data));
 });
 
+exports.resendLoginOtp = onCall({ invoker: 'public' }, async (request) => {
+  const challengeId = asString(request.data.challengeId);
+  if (!challengeId) throw new HttpsError('invalid-argument', 'challengeId required');
+
+  const ref = db.collection('login_challenges').doc(challengeId);
+  const snap = await ref.get();
+  if (!snap.exists || Date.now() > snap.data().expiry) {
+    throw new HttpsError('not-found', 'Challenge expired or not found');
+  }
+
+  const { userId } = snap.data();
+  await throttle(db.collection('login_challenge_rate').doc(userId));
+
+  const found = await getUserDoc(userId);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+
+  const code = randomCode();
+  await sendEmail(found.data.email, found.data.name || userId, code);
+  await ref.update({ hash: sha256(code), attempts: 0, expiry: Date.now() + OTP_TTL_MS });
+
+  return { sent: true };
+});
+
 exports.completeSetup = onCall(async (request) => {
   const uid = requireAuth(request);
+  const ip = clientIp(request);
+  const ipKey = 'setup_rate_' + sha256(String(ip)).slice(0, 16);
+  await rateCheck(db.collection('rate_limits').doc(ipKey), 10, 60 * 60 * 1000, 'Too many requests. Please try again later.');
   const email = normalizeEmail(request.data.email);
   const twofaRequested = request.data.twofa === true;
   const found = await getUserDoc(uid);
@@ -371,6 +455,16 @@ exports.completeSetup = onCall(async (request) => {
 
 exports.changeEmail = onCall(async (request) => {
   const uid = requireAuth(request);
+  await rateCheck(db.collection('rate_limits').doc('email_chg_' + uid), 3, 60 * 60 * 1000, 'Too many email change attempts. Please try again later.');
+  const currentPassword = request.data.currentPassword;
+  if (typeof currentPassword !== 'string' || !currentPassword) {
+    throw new HttpsError('invalid-argument', 'Current password required');
+  }
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  const ok = await verifyStoredPassword(uid, found.data, currentPassword);
+  if (!ok) throw new HttpsError('permission-denied', 'Incorrect password');
+
   const email = normalizeEmail(request.data.email);
   validateEmail(email);
   if (await emailExists(email, uid)) {
@@ -382,6 +476,7 @@ exports.changeEmail = onCall(async (request) => {
 
 exports.changePassword = onCall(async (request) => {
   const uid = requireAuth(request);
+  await rateCheck(db.collection('rate_limits').doc('pwd_chg_' + uid), 5, 60 * 60 * 1000, 'Too many password change attempts. Please try again later.');
   const currentPassword = request.data.currentPassword;
   const newPassword = request.data.newPassword;
   validatePassword(newPassword);
@@ -404,6 +499,7 @@ exports.changePassword = onCall(async (request) => {
 
 exports.setTwoFactor = onCall(async (request) => {
   const uid = requireAuth(request);
+  if (uid === ADMIN_ID) throw new HttpsError('permission-denied', 'Admin account cannot use email 2FA');
   const enabled = request.data.enabled === true;
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('not-found', 'User not found');
@@ -418,14 +514,24 @@ exports.deleteOwnAccount = onCall(async (request) => {
   const uid = requireAuth(request);
   if (uid === ADMIN_ID) throw new HttpsError('permission-denied', 'Protected account');
 
+  const currentPassword = request.data.currentPassword;
+  if (typeof currentPassword !== 'string' || !currentPassword) {
+    throw new HttpsError('invalid-argument', 'Current password required');
+  }
+  const found = await getUserDoc(uid);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  const ok = await verifyStoredPassword(uid, found.data, currentPassword);
+  if (!ok) throw new HttpsError('permission-denied', 'Incorrect password');
+
   const batch = db.batch();
   batch.delete(db.collection('user_private').doc(uid));
   batch.delete(db.collection('users').doc(uid));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(uid);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(uid); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(uid); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 
@@ -485,66 +591,30 @@ exports.verifyEmailVerif = onCall(async (request) => {
   return { valid: true };
 });
 
-exports.sendOtp = onCall(async (request) => {
-  const uid = requireAuth(request);
-  const userId = asString(request.data.userId || uid);
-  if (userId !== uid) throw new HttpsError('permission-denied', 'Cannot request another account OTP');
-
-  const found = await getUserDoc(uid);
-  if (!found || !found.data.twofa || !found.data.email) {
-    throw new HttpsError('failed-precondition', '2FA not enabled for this user');
-  }
-
-  await throttle(db.collection('otp_rate').doc(uid));
-
-  const code = randomCode();
-  await sendEmail(found.data.email, found.data.name || uid, code);
-  await db.collection('otp_sessions').doc(uid).set({
-    hash: sha256(code),
-    expiry: Date.now() + OTP_TTL_MS,
-    attempts: 0,
-    sentAt: Date.now()
-  });
-  return { sent: true };
-});
-
-exports.verifyOtp = onCall(async (request) => {
-  const uid = requireAuth(request);
-  const userId = asString(request.data.userId || uid);
-  const code = asString(request.data.code);
-  if (userId !== uid) throw new HttpsError('permission-denied', 'Cannot verify another account OTP');
-  if (!code) throw new HttpsError('invalid-argument', 'Code required');
-
-  const ref = db.collection('otp_sessions').doc(uid);
-  const snap = await ref.get();
-  if (!snap.exists) return { valid: false, reason: 'expired' };
-
-  const session = snap.data();
-  if (Date.now() > session.expiry) {
-    await ref.delete();
-    return { valid: false, reason: 'expired' };
-  }
-
-  const attempts = (session.attempts || 0) + 1;
-  if (sha256(code) === session.hash) {
-    await ref.delete();
-    return { valid: true };
-  }
-  if (attempts >= MAX_OTP_ATTEMPTS) {
-    await ref.delete();
-    return { valid: false, reason: 'too_many_attempts' };
-  }
-  await ref.update({ attempts });
-  return { valid: false, reason: 'invalid' };
-});
 
 exports.adminUpdateUser = onCall(async (request) => {
-  requirePrivileged(request);
+  const caller = await requirePrivileged(request);
+  const callerIsAdmin = caller.role === 'admin';
+  const callerIsMod = caller.role === 'moderator';
   const targetId = asString(request.data.id);
   const data = request.data.data || {};
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
   if (targetId === ADMIN_ID && request.auth.uid !== ADMIN_ID) {
     throw new HttpsError('permission-denied', 'Protected account');
+  }
+  if (callerIsMod && targetId === request.auth.uid) {
+    throw new HttpsError('permission-denied', 'Moderators cannot modify their own account');
+  }
+
+  // Mods cannot target admins or other moderators — fetch live role from Firestore
+  if (callerIsMod) {
+    const targetDoc = await getUserDoc(targetId);
+    if (targetDoc) {
+      const targetRole = targetDoc.data.role || 'citizen';
+      if (targetRole === 'admin' || targetRole === 'moderator' || targetId === ADMIN_ID) {
+        throw new HttpsError('permission-denied', 'Moderators cannot modify admin or moderator accounts');
+      }
+    }
   }
 
   const updates = {};
@@ -556,7 +626,7 @@ exports.adminUpdateUser = onCall(async (request) => {
     updates.status = status;
   }
   if (Object.prototype.hasOwnProperty.call(data, 'role')) {
-    if (!isAdmin(request)) {
+    if (!callerIsAdmin) {
       throw new HttpsError('permission-denied', 'Only administrators can change roles');
     }
     const role = asString(data.role);
@@ -571,19 +641,66 @@ exports.adminUpdateUser = onCall(async (request) => {
   }
 
   await db.collection('users').doc(targetId).update(updates);
+
+  try {
+    await admin.auth().revokeRefreshTokens(targetId);
+  } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  if (updates.role) {
+    try {
+      await admin.auth().setCustomUserClaims(targetId, { role: updates.role });
+    } catch (err) {
+      if (err.code !== 'auth/user-not-found') console.error('setCustomUserClaims:', err);
+    }
+  }
+
   return { saved: true };
 });
 
+exports.verifyAdminCode = onCall({ invoker: 'public' }, async (request) => {
+  const challengeId = asString(request.data.challengeId);
+  const code = asString(request.data.code).toUpperCase();
+  if (!challengeId || !code) throw new HttpsError('invalid-argument', 'Challenge and code required');
+
+  const ref = db.collection('admin_challenges').doc(challengeId);
+  const snap = await ref.get();
+  if (!snap.exists || Date.now() > snap.data().expiry) {
+    if (snap.exists) await ref.delete();
+    throw new HttpsError('unauthenticated', 'Challenge expired — please log in again');
+  }
+
+  const expectedHash = process.env.ADMIN_SECRET_HASH || '';
+  if (!expectedHash || sha256(code) !== expectedHash) {
+    await ref.delete();
+    throw new HttpsError('unauthenticated', 'Invalid code');
+  }
+
+  await ref.delete();
+  const userId = snap.data().userId;
+  const found = await getUserDoc(userId);
+  if (!found) throw new HttpsError('not-found', 'User not found');
+  return issueToken(userId, found.data);
+});
+
 exports.adminDeleteUser = onCall(async (request) => {
-  requirePrivileged(request);
+  const caller = await requirePrivileged(request);
   const targetId = asString(request.data.id);
   if (!targetId) throw new HttpsError('invalid-argument', 'Target user required');
   if (targetId === ADMIN_ID) throw new HttpsError('permission-denied', 'Protected account');
 
   const found = await getUserDoc(targetId);
   if (!found) return { deleted: true };
-  if (isModerator(request) && found.data.status !== 'pending') {
-    throw new HttpsError('permission-denied', 'Moderators can delete pending registrations only');
+
+  // Mods cannot delete admins or other moderators
+  if (caller.role === 'moderator') {
+    const targetRole = found.data.role || 'citizen';
+    if (targetRole === 'admin' || targetRole === 'moderator') {
+      throw new HttpsError('permission-denied', 'Moderators cannot delete admin or moderator accounts');
+    }
+    if (found.data.status !== 'pending') {
+      throw new HttpsError('permission-denied', 'Moderators can delete pending registrations only');
+    }
   }
 
   const batch = db.batch();
@@ -591,9 +708,10 @@ exports.adminDeleteUser = onCall(async (request) => {
   batch.delete(db.collection('users').doc(targetId));
   await batch.commit();
 
-  try {
-    await admin.auth().deleteUser(targetId);
-  } catch (err) {
+  try { await admin.auth().revokeRefreshTokens(targetId); } catch (err) {
+    if (err.code !== 'auth/user-not-found') console.error('revokeRefreshTokens:', err);
+  }
+  try { await admin.auth().deleteUser(targetId); } catch (err) {
     if (err.code !== 'auth/user-not-found') console.error('delete auth user:', err);
   }
 

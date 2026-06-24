@@ -755,7 +755,20 @@
     [data-theme="light"] #loginWrap [style*="background:rgba(255,255,255,0.08)"] { background: rgba(0,0,0,0.08) !important; }
     [data-theme="light"] #loginWrap [style*="color:white"] { color: #0a0a0a !important; }
     [data-theme="light"] #loginWrap svg[stroke="white"] { stroke: #0a0a0a !important; }
+    [data-theme="light"] .digital-id-btn { color: rgba(0,0,0,0.55) !important; border-color: rgba(0,0,0,0.15) !important; }
+    [data-theme="light"] .digital-id-btn:hover { color: #0a0a0a !important; border-color: #c8102e !important; }
     [data-theme="light"] .emblem-login { filter: none !important; opacity: 1 !important; }
+    .digital-id-btn {
+      width: 100%; background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.68);
+      font-family: var(--font-sub); font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 1.05rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 0.85rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .digital-id-btn:hover { border-color: #c8102e; color: #ffffff; }
   </style>
 
   <!-- Open Graph / Discord -->
@@ -889,9 +902,7 @@
       </div>
 
       <!-- Digital ID login -->
-      <button onclick="showMsg('Inserire la Digital ID Card nel lettore.')"
-        style="width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.68);font-family:var(--font-sub);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;padding:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.85rem;transition:border-color 0.2s,color 0.2s;"
-        onmouseover="this.style.borderColor='#c8102e';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='rgba(255,255,255,0.6)'">
+      <button onclick="showMsg('Inserire la Digital ID Card nel lettore.')" class="digital-id-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="20" height="15" rx="2"/><rect x="2" y="5" width="20" height="3.5" rx="2" fill="#c8102e" stroke="none"/>
         </svg>
@@ -913,8 +924,6 @@
           <div style="font-family:var(--font-sub);font-size:0.62rem;letter-spacing:0.16em;color:rgba(255,255,255,0.42);text-transform:uppercase;margin-bottom:0.35rem;">United Republic of Stars — Security Code</div>
           <div style="font-size:1rem;line-height:1.28;color:rgba(255,255,255,0.82);">A verification code has been sent to <strong id="tfaEmailDisplay" style="color:white;"></strong></div>
           <div style="font-size:0.9rem;line-height:1.35;color:rgba(255,255,255,0.42);margin-top:0.45rem;">Check your inbox and enter the 6-digit code below.</div>
-          <!-- Dev helper: show code directly -->
-          <div id="tfaDevCode" style="margin-top:8px;font-family:monospace;font-size:0.78rem;color:#c8102e;display:none;"></div>
         </div>
       </div>
 
@@ -1049,7 +1058,7 @@
       if (!user && republicstarSession.get()) republicstarSession.clear();
       return;
     }
-    var dest = localStorage.getItem('republicstar_redirect') || '../GOVERN_1.HTM';
+    var dest = republicstarSafeRedirect(localStorage.getItem('republicstar_redirect'));
     localStorage.removeItem('republicstar_redirect');
     window.location.replace(dest);
   }
@@ -1114,9 +1123,8 @@ function handleLogin(e) {
     return;
   }
 
-  window._lastLoginPayload = { userId: nid, password: pwd };
-
   republicstarDB.loginUser(nid, pwd).then(function(result) {
+    window._lastLoginPayload = null;
     if (result.requires2fa) {
       if (window.republicstarLoader) republicstarLoader.hide();
       window._pendingRemember = document.getElementById('rememberMe').checked;
@@ -1128,10 +1136,10 @@ function handleLogin(e) {
     }
   }).catch(function(e) {
     console.error(e);
-    var msg = e && e.code === 'permission-denied'
-      ? 'This account has been suspended. Contact the Ministry of the Interior for assistance.'
-      : 'Invalid National ID or password.';
-    failAttempt(msg);
+    if (e && (e.code === 'functions/permission-denied' || e.code === 'permission-denied')) {
+      window.location.href = 'suspended.html'; return;
+    }
+    failAttempt('Invalid National ID or password.');
   });
 }
 
@@ -1146,7 +1154,14 @@ function showMsg(m) {
 </script>
 
 <script>
-// Show logged-in indicator in nav
+// Reset loader/button if browser restores page from bfcache
+window.addEventListener('pageshow', function(e) {
+  if (!e.persisted) return;
+  if (window.republicstarLoader) republicstarLoader.hide();
+  var btn = document.getElementById('submitBtn');
+  if (btn) { btn.textContent = 'Access Portal →'; btn.style.opacity = '1'; btn.disabled = false; }
+  localStorage.removeItem('republicstar_admin_pending');
+});
 </script>
 </body>
 </html>
