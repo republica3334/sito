@@ -1,4 +1,9 @@
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
+const { setGlobalOptions } = require('firebase-functions/v2');
+
+// Cost guard for the Blaze plan: cap how far each function can scale out and
+// keep memory at the minimum, so abuse or a traffic spike cannot multiply costs.
+setGlobalOptions({ maxInstances: 3, memory: '256MiB', concurrency: 40 });
 const admin = require('firebase-admin');
 const crypto = require('crypto');
 const emailjs = require('@emailjs/nodejs');
