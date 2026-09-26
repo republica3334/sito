@@ -68,10 +68,6 @@ var REPUBLICSTAR_FB_CONFIG = {
           return callFunction('registerUser', data);
         },
 
-        registerGuest: function() {
-          return callFunction('registerGuest', {});
-        },
-
         loginUser: function(userId, password) {
           return callFunction('loginUser', { userId: userId, password: password });
         },

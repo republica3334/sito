@@ -1,0 +1,43 @@
+rules_version = '2';
+
+// Firestore security rules — deployed by CI (firebase deploy --only firestore:rules).
+// These rules are not secret: keep them versioned so every change is reviewable.
+//
+// All writes go through Cloud Functions (Admin SDK bypasses these rules).
+// Clients may only read user profiles: their own, or all of them if they are
+// an approved admin/moderator. Role and status are read LIVE from the user's
+// document, so a suspension or demotion takes effect immediately instead of
+// waiting for the ID token (and its role claim) to expire.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function isPrivileged() {
+      let path = /databases/$(database)/documents/users/$(request.auth.uid);
+      return signedIn()
+        && exists(path)
+        && get(path).data.status == 'approved'
+        && get(path).data.role in ['admin', 'moderator'];
+    }
+
+    match /users/{userId} {
+      allow get:  if isSelf(userId) || isPrivileged();
+      allow list: if isPrivileged();
+      allow write: if false;
+    }
+
+    // Everything else (user_private, login_challenges, admin_challenges,
+    // email_verif_sessions, rate_limits, ...) is server-only.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
