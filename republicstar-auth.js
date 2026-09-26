@@ -1,12 +1,23 @@
 /* ── Resolve base URL (works from any subfolder) ── */
-var _republicstarBase = (document.currentScript ? document.currentScript.src.replace(/[^\/]*$/, '') : '');
+var _republicstarRawBase = (document.currentScript ? document.currentScript.src.replace(/[^\/]*$/, '') : '');
+var _republicstarBase = /^[a-zA-Z0-9\/\.\_\-\%\:\?]+$/.test(_republicstarRawBase) ? _republicstarRawBase : '';
+
+function _republicstarEscapeHTML(str) {
+  if (!str) return '';
+  return str.toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 /* ── Firebase SDK (injected synchronously) ── */
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"><\/scr'+'ipt>');
 document.write('<scr'+'ipt src="https://www.gstatic.com/firebasejs/10.7.1/firebase-functions-compat.js"><\/scr'+'ipt>');
-document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><\/scr'+'ipt>');
+document.write('<scr'+'ipt src="'+_republicstarEscapeHTML(_republicstarBase)+'republicstar-firebase.js"><\/scr'+'ipt>');
 
 /* ═══════════════════════════════════════════════════
    REPUBLICSTAR AUTH  –  shared across all pages
@@ -470,14 +481,14 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
 
         + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
         + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">SESSION</div>'
-        + '<div>user: <span style="color:#7cf">' + (s ? s.user : '—') + '</span></div>'
-        + '<div>role: <span style="color:#' + (s && s.role === 'admin' ? 'f87' : s && s.role === 'moderator' ? 'fa7' : 'aaa') + '">' + (s ? s.role : '—') + '</span></div>'
+        + '<div>user: <span style="color:#7cf">' + (s ? _republicstarEscapeHTML(s.user) : '—') + '</span></div>'
+        + '<div>role: <span style="color:#' + (s && s.role === 'admin' ? 'f87' : s && s.role === 'moderator' ? 'fa7' : 'aaa') + '">' + (s ? _republicstarEscapeHTML(s.role) : '—') + '</span></div>'
         + '</div>'
 
         + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
         + '<div style="color:#c8102e;letter-spacing:0.12em;font-size:0.6rem;margin-bottom:0.3rem;">PAGE</div>'
-        + '<div style="word-break:break-all;opacity:0.75;">' + window.location.pathname + '</div>'
-        + '<div style="margin-top:0.2rem;">theme: <span style="color:#7cf">' + (document.documentElement.getAttribute('data-theme') || 'none') + '</span></div>'
+        + '<div style="word-break:break-all;opacity:0.75;">' + _republicstarEscapeHTML(window.location.pathname) + '</div>'
+        + '<div style="margin-top:0.2rem;">theme: <span style="color:#7cf">' + (document.documentElement.getAttribute('data-theme') ? _republicstarEscapeHTML(document.documentElement.getAttribute('data-theme')) : 'none') + '</span></div>'
         + '</div>'
 
         + '<div style="border-bottom:1px solid rgba(200,16,46,0.25);padding-bottom:0.5rem;">'
@@ -740,7 +751,7 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
             + 'padding:0.55rem 1.2rem;text-align:center;';
           banner.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
             + '<span><strong>Account pending approval</strong> — Access to citizen services is limited until the Civil Registry approves your account.'
-            + ' <a href="' + _republicstarBase + 'portal/settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
+            + ' <a href="' + _republicstarEscapeHTML(_republicstarBase) + 'portal/settings.html" style="color:#f5a623;font-weight:600;text-decoration:underline;">View Status</a></span>'
             + '<button id="_rsPendingDismiss" '
             + 'style="background:none;border:none;color:#ffd98c;font-size:1rem;cursor:pointer;padding:0 0.3rem;line-height:1;" '
             + 'aria-label="Dismiss">×</button>';
@@ -785,33 +796,34 @@ document.write('<scr'+'ipt src="'+_republicstarBase+'republicstar-firebase.js"><
     if (!footer) return;
     if (footer.querySelector('.footer-grid')) return;
     var b = _republicstarBase;
+    var safeB = _republicstarEscapeHTML(b);
     footer.innerHTML =
       '<div class="footer-grid">'
       + '<div class="footer-brand">'
-      +   '<img src="' + b + 'svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">'
+      +   '<img src="' + safeB + 'svgs/icone/republica/1.svg" width="78" style="display:block;" alt="United Republic of Stars — Official Emblem">'
       +   '<p>The Official Portal of the United Republic of Stars. All government information, services and legislation accessible to every citizen.</p>'
       +   '<p style="font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:0.08em;text-transform:uppercase;">&copy; 2026 United Republic of Stars. All Rights Reserved.</p>'
       + '</div>'
       + '<div class="footer-col"><h5>Government</h5><ul>'
-      +   '<li><a href="' + b + 'gov/government.html">Office of the President</a></li>'
-      +   '<li><a href="' + b + 'gov/national-assembly.html">National Assembly</a></li>'
-      +   '<li><a href="' + b + 'gov/supreme-court.html">Supreme Court</a></li>'
-      +   '<li><a href="' + b + 'gov/ministries.html">Cabinet of Ministers</a></li>'
-      +   '<li><a href="' + b + 'gov/official-gazette.html">Official Gazette</a></li>'
+      +   '<li><a href="' + safeB + 'gov/government.html">Office of the President</a></li>'
+      +   '<li><a href="' + safeB + 'gov/national-assembly.html">National Assembly</a></li>'
+      +   '<li><a href="' + safeB + 'gov/supreme-court.html">Supreme Court</a></li>'
+      +   '<li><a href="' + safeB + 'gov/ministries.html">Cabinet of Ministers</a></li>'
+      +   '<li><a href="' + safeB + 'gov/official-gazette.html">Official Gazette</a></li>'
       + '</ul></div>'
       + '<div class="footer-col"><h5>Citizen Services</h5><ul>'
-      +   '<li><a href="' + b + 'services/service-digital-id.html">National ID Portal</a></li>'
-      +   '<li><a href="' + b + 'services/service-taxes.html">Tax Authority</a></li>'
-      +   '<li><a href="' + b + 'services/service-civil-registration.html">Civil Registry</a></li>'
-      +   '<li><a href="' + b + 'services/service-health.html">Health Services</a></li>'
-      +   '<li><a href="' + b + 'services/service-education.html">Education Portal</a></li>'
+      +   '<li><a href="' + safeB + 'services/service-digital-id.html">National ID Portal</a></li>'
+      +   '<li><a href="' + safeB + 'services/service-taxes.html">Tax Authority</a></li>'
+      +   '<li><a href="' + safeB + 'services/service-civil-registration.html">Civil Registry</a></li>'
+      +   '<li><a href="' + safeB + 'services/service-health.html">Health Services</a></li>'
+      +   '<li><a href="' + safeB + 'services/service-education.html">Education Portal</a></li>'
       + '</ul></div>'
       + '<div class="footer-col"><h5>Information</h5><ul>'
-      +   '<li><a href="' + b + 'GOVERN_1.HTM">About the Republic</a></li>'
-      +   '<li><a href="' + b + 'gov/constitution.html">Constitution</a></li>'
-      +   '<li><a href="' + b + 'gov/laws-decrees.html">Laws &amp; Decrees</a></li>'
-      +   '<li><a href="' + b + 'gov/open-data.html">Open Data</a></li>'
-      +   '<li><a href="' + b + 'gov/contact.html">Contact Government</a></li>'
+      +   '<li><a href="' + safeB + 'GOVERN_1.HTM">About the Republic</a></li>'
+      +   '<li><a href="' + safeB + 'gov/constitution.html">Constitution</a></li>'
+      +   '<li><a href="' + safeB + 'gov/laws-decrees.html">Laws &amp; Decrees</a></li>'
+      +   '<li><a href="' + safeB + 'gov/open-data.html">Open Data</a></li>'
+      +   '<li><a href="' + safeB + 'gov/contact.html">Contact Government</a></li>'
       + '</ul></div>'
       + '</div>'
       + '<div class="footer-bottom">'
