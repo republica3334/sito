@@ -67,16 +67,14 @@ function verifyPasswordHash(password, stored) {
   return expected.length === actual.length && crypto.timingSafeEqual(expected, actual);
 }
 
-function verifyLegacyPassword(password, legacyValue) {
-  if (!legacyValue || typeof legacyValue !== 'string') return false;
-  try {
-    const decoded = Buffer.from(legacyValue, 'base64').toString('utf8');
-    const a = Buffer.from(decoded);
-    const b = Buffer.from(password);
-    return a.length === b.length && crypto.timingSafeEqual(a, b);
-  } catch (err) {
-    return false;
-  }
+function safeEqualHex(a, b) {
+  const x = Buffer.from(String(a || ''), 'hex');
+  const y = Buffer.from(String(b || ''), 'hex');
+  return x.length > 0 && x.length === y.length && crypto.timingSafeEqual(x, y);
+}
+
+function validChallengeId(id) {
+  return /^[a-f0-9]{48}$/.test(id);
 }
 
 function publicUser(id, data) {
@@ -103,10 +101,9 @@ function requireAuth(request) {
 
 async function requirePrivileged(request) {
   const uid = requireAuth(request);
-  if (uid === ADMIN_ID) return { role: 'admin', status: 'approved' };
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('permission-denied', 'Account not found');
-  const role = found.data.role || 'citizen';
+  const role = roleFor(uid, found.data);
   const status = found.data.status || 'pending';
   if (!['admin', 'moderator'].includes(role) || status !== 'approved') {
     throw new HttpsError('permission-denied', 'Admin or moderator role required');
@@ -135,21 +132,36 @@ async function getUserDoc(userId) {
 }
 
 async function verifyStoredPassword(userId, user, password) {
-  const privateRef = db.collection('user_private').doc(userId);
-  const privateSnap = await privateRef.get();
-  const privateData = privateSnap.exists ? privateSnap.data() : {};
+  if (typeof password !== 'string' || !password) return false;
+  const privateSnap = await db.collection('user_private').doc(userId).get();
+  return privateSnap.exists && verifyPasswordHash(password, privateSnap.data().passwordHash);
+}
 
-  if (verifyPasswordHash(password, privateData.passwordHash)) return true;
-
-  if (verifyLegacyPassword(password, user.pwd)) {
-    await db.runTransaction(async (tx) => {
-      tx.set(privateRef, { passwordHash: hashPassword(password), updatedAt: FieldValue.serverTimestamp() }, { merge: true });
-      tx.update(db.collection('users').doc(userId), { pwd: FieldValue.delete() });
-    });
-    return true;
-  }
-
-  return false;
+// Atomically checks a one-time code. The attempt is counted inside the same
+// transaction as the comparison, so parallel requests cannot exceed
+// MAX_OTP_ATTEMPTS. onSuccess(tx, session) runs inside the transaction.
+async function consumeOtp(ref, code, onSuccess) {
+  return db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (!snap.exists) return { valid: false, reason: 'expired' };
+    const session = snap.data();
+    if (Date.now() > session.expiry) {
+      tx.delete(ref);
+      return { valid: false, reason: 'expired' };
+    }
+    const attempts = (session.attempts || 0) + 1;
+    if (!safeEqualHex(sha256(code), session.hash)) {
+      if (attempts >= MAX_OTP_ATTEMPTS) {
+        tx.delete(ref);
+        return { valid: false, reason: 'too_many_attempts' };
+      }
+      tx.update(ref, { attempts });
+      return { valid: false, reason: 'invalid' };
+    }
+    tx.delete(ref);
+    if (onSuccess) onSuccess(tx, session);
+    return { valid: true, session };
+  });
 }
 
 async function issueToken(userId, user) {
@@ -305,36 +317,18 @@ exports.registerUser = onCall({ invoker: 'public' }, async (request) => {
   return { id };
 });
 
-exports.registerGuest = onCall({ invoker: 'public' }, async (request) => {
-  const ip = clientIp(request);
-  const ipKey = 'guest_rate_' + sha256(String(ip)).slice(0, 16);
-  await rateCheck(db.collection('rate_limits').doc(ipKey), 3, 60 * 60 * 1000, 'Too many guest accounts created. Please try again later.');
-
-  const suffix = crypto.randomBytes(5).toString('hex').toUpperCase();
-  const id = `GST-${suffix.slice(0, 3)}-${crypto.randomInt(100000, 1000000)}`;
-  const user = {
-    id,
-    name: `Guest ${id.slice(-6)}`,
-    email: null,
-    role: 'guest',
-    status: 'approved',
-    setup: true,
-    registered: new Date().toISOString()
-  };
-  await db.collection('users').doc(id).set(user);
-  return issueToken(id, user);
-});
-
 exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
   const ip = clientIp(request);
   const ipKey = 'login_rate_' + sha256(String(ip)).slice(0, 16);
   await rateCheck(db.collection('rate_limits').doc(ipKey), 10, 15 * 60 * 1000, 'Too many login attempts. Please try again later.');
 
-  const userId = asString(request.data.userId);
+  const userId = asString(request.data.userId).slice(0, 64);
   const password = request.data.password;
   if (!userId || typeof password !== 'string') {
     throw new HttpsError('invalid-argument', 'National ID and password required');
   }
+  const acctKey = 'login_acct_' + sha256(userId.toUpperCase()).slice(0, 16);
+  await rateCheck(db.collection('rate_limits').doc(acctKey), 10, 15 * 60 * 1000, 'Too many login attempts. Please try again later.');
 
   const found = await getUserDoc(userId);
   const user = found ? found.data : null;
@@ -372,41 +366,23 @@ exports.loginUser = onCall({ invoker: 'public' }, async (request) => {
 exports.verifyLoginOtp = onCall({ invoker: 'public' }, async (request) => {
   const challengeId = asString(request.data.challengeId);
   const code = asString(request.data.code);
-  if (!challengeId || !code) {
+  if (!validChallengeId(challengeId) || !code) {
     throw new HttpsError('invalid-argument', 'Challenge and code required');
   }
 
-  const ref = db.collection('login_challenges').doc(challengeId);
-  const snap = await ref.get();
-  if (!snap.exists) return { valid: false, reason: 'expired' };
+  const result = await consumeOtp(db.collection('login_challenges').doc(challengeId), code);
+  if (!result.valid) return { valid: false, reason: result.reason };
 
-  const session = snap.data();
-  if (Date.now() > session.expiry) {
-    await ref.delete();
-    return { valid: false, reason: 'expired' };
-  }
-
-  const attempts = (session.attempts || 0) + 1;
-  if (sha256(code) !== session.hash) {
-    if (attempts >= MAX_OTP_ATTEMPTS) {
-      await ref.delete();
-      return { valid: false, reason: 'too_many_attempts' };
-    }
-    await ref.update({ attempts });
-    return { valid: false, reason: 'invalid' };
-  }
-
-  await ref.delete();
-  const found = await getUserDoc(session.userId);
+  const found = await getUserDoc(result.session.userId);
   if (!found || !['pending', 'approved'].includes(found.data.status || '')) {
     throw new HttpsError('permission-denied', 'Account unavailable');
   }
-  return Object.assign({ valid: true }, await issueToken(session.userId, found.data));
+  return Object.assign({ valid: true }, await issueToken(result.session.userId, found.data));
 });
 
 exports.resendLoginOtp = onCall({ invoker: 'public' }, async (request) => {
   const challengeId = asString(request.data.challengeId);
-  if (!challengeId) throw new HttpsError('invalid-argument', 'challengeId required');
+  if (!validChallengeId(challengeId)) throw new HttpsError('invalid-argument', 'challengeId required');
 
   const ref = db.collection('login_challenges').doc(challengeId);
   const snap = await ref.get();
@@ -436,6 +412,9 @@ exports.completeSetup = onCall(async (request) => {
   const twofaRequested = request.data.twofa === true;
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('not-found', 'User not found');
+  if (found.data.setup === true) {
+    throw new HttpsError('failed-precondition', 'Setup already completed; use account settings');
+  }
 
   const updates = { setup: true };
   if (email) {
@@ -487,22 +466,23 @@ exports.changePassword = onCall(async (request) => {
   const ok = await verifyStoredPassword(uid, found.data, currentPassword);
   if (!ok) throw new HttpsError('permission-denied', 'Current password is incorrect');
 
-  await db.runTransaction(async (tx) => {
-    tx.set(db.collection('user_private').doc(uid), {
-      passwordHash: hashPassword(newPassword),
-      updatedAt: FieldValue.serverTimestamp()
-    }, { merge: true });
-    tx.update(db.collection('users').doc(uid), { pwd: FieldValue.delete() });
-  });
+  await db.collection('user_private').doc(uid).set({
+    passwordHash: hashPassword(newPassword),
+    updatedAt: FieldValue.serverTimestamp()
+  }, { merge: true });
   return { saved: true };
 });
 
 exports.setTwoFactor = onCall(async (request) => {
   const uid = requireAuth(request);
   if (uid === ADMIN_ID) throw new HttpsError('permission-denied', 'Admin account cannot use email 2FA');
+  await rateCheck(db.collection('rate_limits').doc('tfa_chg_' + uid), 5, 60 * 60 * 1000, 'Too many attempts. Please try again later.');
   const enabled = request.data.enabled === true;
   const found = await getUserDoc(uid);
   if (!found) throw new HttpsError('not-found', 'User not found');
+  if (!enabled && !(await verifyStoredPassword(uid, found.data, request.data.currentPassword))) {
+    throw new HttpsError('permission-denied', 'Current password is incorrect');
+  }
   if (enabled && (!found.data.email || !found.data.emailVerified)) {
     throw new HttpsError('failed-precondition', 'Verify your email before enabling 2FA');
   }
@@ -564,31 +544,10 @@ exports.verifyEmailVerif = onCall(async (request) => {
   const code = asString(request.data.code);
   if (!code) throw new HttpsError('invalid-argument', 'Code required');
 
-  const ref = db.collection('email_verif_sessions').doc(uid);
-  const snap = await ref.get();
-  if (!snap.exists) return { valid: false, reason: 'expired' };
-
-  const session = snap.data();
-  if (Date.now() > session.expiry) {
-    await ref.delete();
-    return { valid: false, reason: 'expired' };
-  }
-
-  const attempts = (session.attempts || 0) + 1;
-  if (sha256(code) !== session.hash) {
-    if (attempts >= MAX_OTP_ATTEMPTS) {
-      await ref.delete();
-      return { valid: false, reason: 'too_many_attempts' };
-    }
-    await ref.update({ attempts });
-    return { valid: false, reason: 'invalid' };
-  }
-
-  await db.runTransaction(async (tx) => {
-    tx.delete(ref);
+  const result = await consumeOtp(db.collection('email_verif_sessions').doc(uid), code, (tx) => {
     tx.update(db.collection('users').doc(uid), { emailVerified: true });
   });
-  return { valid: true };
+  return result.valid ? { valid: true } : { valid: false, reason: result.reason };
 });
 
 
@@ -630,7 +589,7 @@ exports.adminUpdateUser = onCall(async (request) => {
       throw new HttpsError('permission-denied', 'Only administrators can change roles');
     }
     const role = asString(data.role);
-    if (!['citizen', 'moderator', 'admin', 'guest'].includes(role)) {
+    if (!['citizen', 'moderator', 'admin'].includes(role)) {
       throw new HttpsError('invalid-argument', 'Invalid role');
     }
     updates.role = role;
@@ -661,26 +620,28 @@ exports.adminUpdateUser = onCall(async (request) => {
 exports.verifyAdminCode = onCall({ invoker: 'public' }, async (request) => {
   const challengeId = asString(request.data.challengeId);
   const code = asString(request.data.code).toUpperCase();
-  if (!challengeId || !code) throw new HttpsError('invalid-argument', 'Challenge and code required');
+  if (!validChallengeId(challengeId) || !code) throw new HttpsError('invalid-argument', 'Challenge and code required');
 
+  // Delete the challenge in the same transaction that reads it: every
+  // challenge allows exactly one guess, even under parallel requests.
   const ref = db.collection('admin_challenges').doc(challengeId);
-  const snap = await ref.get();
-  if (!snap.exists || Date.now() > snap.data().expiry) {
-    if (snap.exists) await ref.delete();
-    throw new HttpsError('unauthenticated', 'Challenge expired — please log in again');
-  }
+  const challenge = await db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (!snap.exists) return null;
+    tx.delete(ref);
+    const data = snap.data();
+    return Date.now() > data.expiry ? null : data;
+  });
+  if (!challenge) throw new HttpsError('unauthenticated', 'Challenge expired — please log in again');
 
   const expectedHash = process.env.ADMIN_SECRET_HASH || '';
-  if (!expectedHash || sha256(code) !== expectedHash) {
-    await ref.delete();
+  if (!expectedHash || !safeEqualHex(sha256(code), expectedHash)) {
     throw new HttpsError('unauthenticated', 'Invalid code');
   }
 
-  await ref.delete();
-  const userId = snap.data().userId;
-  const found = await getUserDoc(userId);
+  const found = await getUserDoc(challenge.userId);
   if (!found) throw new HttpsError('not-found', 'User not found');
-  return issueToken(userId, found.data);
+  return issueToken(challenge.userId, found.data);
 });
 
 exports.adminDeleteUser = onCall(async (request) => {
