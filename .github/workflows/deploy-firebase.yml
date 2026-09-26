@@ -1,10 +1,14 @@
-﻿name: Deploy Firebase
+name: Deploy Firebase
+
+# Production deploy: only from main. Test branches must NOT deploy here.
+concurrency:
+  group: firebase-production
+  cancel-in-progress: false
 
 on:
   push:
     branches:
       - main
-      - sito-test
   workflow_dispatch:
 
 permissions:
@@ -44,4 +48,4 @@ jobs:
           printf "ADMIN_SECRET_HASH=%s\n" "${{ secrets.ADMIN_SECRET_HASH }}" >> functions/.env.database-star-787e0
 
       - name: Deploy Firebase
-        run: firebase deploy --only functions,hosting --project database-star-787e0 --force
+        run: firebase deploy --only functions,hosting,firestore:rules --project database-star-787e0 --force
