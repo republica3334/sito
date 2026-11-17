@@ -38,3 +38,18 @@ npm run vendor:three
 ```
 
 poi committa il file generato. `package.json` serve solo a questo: il sito pubblicato non ha dipendenze.
+
+## Modello 3D del Behemoth 2A1
+L'ologramma del Behemoth nella pagina prodotti usa il modello vero del gioco: il placeholder **GameTank** del repo `fallenstar11/game1` (`SourceArt/GameTank`). È salvato in `public/assets/models/behemoth-2a1.holo`: solo le linee del wireframe, compresse (circa 400 KB). Se il file manca o non si carica, la pagina torna alla sagoma stilizzata.
+
+Per rigenerarlo dopo aver modificato il modello nel gioco:
+
+```sh
+# nel repo del gioco: scarica gli FBX da Git LFS
+git lfs pull --include="SourceArt/GameTank/*.fbx"
+# nel repo del sito
+npm install
+npm run holo:behemoth -- <percorso game1>/SourceArt/GameTank public/assets/models/behemoth-2a1.holo
+```
+
+Lo script monta scafo, torretta, cannone, ruote e ruote motrici con i punti di `GameTank_points.json` e genera i cingoli lungo le ruote.

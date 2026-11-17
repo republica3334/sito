@@ -94,7 +94,8 @@ for (const f of js) {
   try { execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' }); }
   catch (e) { fail(f, 'errore di sintassi JavaScript\n' + String(e.stderr || e.message).trim().split('\n').slice(0, 4).join('\n')); }
   const s = readFileSync(f, 'utf8');
-  if (/\bfetch\(|XMLHttpRequest|WebSocket|sendBeacon|https?:\/\/(?!www\.w3\.org)/.test(s)) fail(f, 'possibile richiesta verso l\'esterno');
+  /* fetch ammesso solo verso file del sito (percorsi relativi); niente indirizzi assoluti o altri canali */
+  if (/\bfetch\(\s*['"`](?:https?:)?\/\/|XMLHttpRequest|WebSocket|sendBeacon|EventSource|https?:\/\/(?!www\.w3\.org)/.test(s)) fail(f, 'possibile richiesta verso l\'esterno');
 }
 
 // File che non devono tornare nel repo

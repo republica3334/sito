@@ -366,7 +366,7 @@ function bodyFor(key, lang, file) {
     const x = t.products;
     const stats = (arr) => `<div class="px-stats">${arr.map(([v, u, l]) => `<div class="px-stat"><b>${/^\d+$/.test(v) ? `<span data-count="${v}">${v}</span>` : v}${u ? `<small>${u}</small>` : ''}</b><span class="px-lbl">${l}</span></div>`).join('')}</div>`;
     const specs = (groups) => `<div class="px-specs">${groups.map(([h, rows]) => `<div><h3>${h}</h3><dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></div>`).join('')}</div>`;
-    const stage = (model, d, idTag) => `<div class="px-stage" data-model="${model}">
+    const stage = (model, d, idTag, asset) => `<div class="px-stage" data-model="${model}"${asset ? ` data-asset="${P(asset)}"` : ''}>
         <canvas aria-hidden="true"></canvas>
         <div class="px-callouts" aria-hidden="true">${Object.entries(d.callouts).map(([k, v]) => `<span class="px-callout" data-anchor="${k}"><em>${v}</em></span>`).join('')}</div>
         <span class="px-corner tl">${idTag}</span><span class="px-corner tr">${x.live}</span>
@@ -393,7 +393,7 @@ function bodyFor(key, lang, file) {
 </section>
 <section class="px-product" id="behemoth">
   <div class="wrap px-grid">
-    ${stage('behemoth', b, 'ADK // BH-2A1')}
+    ${stage('behemoth', b, 'ADK // BH-2A1', 'assets/models/behemoth-2a1.holo')}
     <div class="px-info">
       <span class="mono eyebrow">${b.cls}</span>
       <h2>${b.name}</h2>

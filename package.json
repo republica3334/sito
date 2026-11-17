@@ -1,13 +1,16 @@
 {
   "name": "alphadek-sito",
   "private": true,
-  "description": "Sito statico ALPHADEK Instruments. Le dipendenze servono solo a rigenerare public/assets/vendor/three-intro.min.js.",
+  "description": "Sito statico ALPHADEK Instruments. Le dipendenze servono solo a rigenerare Three.js e il modello del Behemoth.",
   "scripts": {
     "check": "node scripts/check.mjs",
-    "vendor:three": "esbuild scripts/three-entry.mjs --bundle --minify --format=iife --global-name=THREE --target=es2019 --legal-comments=inline --outfile=public/assets/vendor/three-intro.min.js && node -e \"require('fs').copyFileSync('node_modules/three/LICENSE','public/assets/vendor/LICENSE-three.txt')\""
+    "vendor:three": "esbuild scripts/three-entry.mjs --bundle --minify --format=iife --global-name=THREE --target=es2019 --legal-comments=inline --outfile=public/assets/vendor/three-intro.min.js && node -e \"require('fs').copyFileSync('node_modules/three/LICENSE','public/assets/vendor/LICENSE-three.txt')\"",
+    "holo:behemoth": "node scripts/build-holo.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
-    "three": "0.187.0"
+    "three": "0.187.0",
+    "@gltf-transform/core": "^4.0.0",
+    "fbx2gltf": "^0.9.7"
   }
 }

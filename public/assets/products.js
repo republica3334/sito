@@ -134,9 +134,39 @@
   function wheel(r, w) { var c = new T.CylinderGeometry(r, r, w, 16); c.rotateX(Math.PI / 2); return c; }
   function barrel(r, len) { var c = new T.CylinderGeometry(r, r, len, 12); c.rotateZ(-Math.PI / 2); return c; }
 
-  stages.forEach(function (stage) { try { buildStage(stage); } catch (e) { stage.classList.add('px-nogl'); } });
+  /* Modello vero (file .holo: linee e triangoli quantizzati int16, vedi scripts/build-holo.mjs) */
+  var HOLO_NAMES = ['hull', 'turret', 'gun', 'wheels', 'sprockets', 'tracks', 'hull_fill', 'turret_fill', 'gun_fill'];
+  function parseHolo(buf) {
+    var dv = new DataView(buf), o = 0;
+    if (String.fromCharCode(dv.getUint8(0), dv.getUint8(1), dv.getUint8(2), dv.getUint8(3)) !== 'ADKH') throw new Error('formato');
+    o = 8; var mn = [], mx = [];
+    for (var i = 0; i < 3; i++) { mn.push(dv.getFloat32(o, true)); o += 4; }
+    for (i = 0; i < 3; i++) { mx.push(dv.getFloat32(o, true)); o += 4; }
+    var n = dv.getUint32(o, true); o += 4; var groups = [];
+    for (var g = 0; g < n; g++) {
+      var name = HOLO_NAMES[dv.getUint8(o)], kind = dv.getUint8(o + 1), count = dv.getUint32(o + 2, true); o += 6;
+      var q = new Int16Array(buf, o, count * 3), pos = new Float32Array(count * 3);
+      for (var k = 0; k < pos.length; k++) { var a = k % 3; pos[k] = mn[a] + (q[k] + 32768) / 65535 * (mx[a] - mn[a]); }
+      o += count * 6; o += (4 - o % 4) % 4;
+      groups.push({ name: name, lines: kind === 0, pos: pos });
+    }
+    return groups;
+  }
+  var REAL = {
+    /* GameTank, placeholder del Behemoth 2A1 (metri, Y in alto, X avanti) */
+    behemoth: { center: [5.1, 5.8, 0], anchors: { gun: [29.6, 7.87, 0], engine: [-16.5, 6.8, 0], tracks: [12.2, .4, -8.45] } }
+  };
 
-  function buildStage(stage) {
+  stages.forEach(function (stage) {
+    var asset = stage.getAttribute('data-asset');
+    var go = function (holo) { try { buildStage(stage, holo); } catch (e) { stage.classList.add('px-nogl'); } };
+    if (asset && window.fetch && window.DataView) {
+      fetch(asset).then(function (r) { return r.ok ? r.arrayBuffer() : Promise.reject(r.status); })
+        .then(function (b) { go(parseHolo(b)); }).catch(function () { go(null); });
+    } else go(null);
+  });
+
+  function buildStage(stage, holo) {
     var canvas = stage.querySelector('canvas');
     var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -153,7 +183,18 @@
       if (pos) { m.position.set(pos[0], pos[1], pos[2]); e.position.copy(m.position); }
       group.add(m); group.add(e);
     }
-    var info = MODELS[stage.getAttribute('data-model')](group, part);
+    var modelName = stage.getAttribute('data-model'), info, edgeBase = .78, zoom = 1;
+    var dimMat = new T.LineBasicMaterial({ color: hud, transparent: true, opacity: .4 });
+    if (holo && REAL[modelName]) {
+      holo.forEach(function (h) {
+        var geo = new T.BufferGeometry(); geo.setAttribute('position', new T.Float32BufferAttribute(h.pos, 3));
+        if (h.lines) group.add(new T.LineSegments(geo, /^(wheels|sprockets|tracks)$/.test(h.name) ? dimMat : edgeMat));
+        else group.add(new T.Mesh(geo, faceMat));
+      });
+      info = REAL[modelName];
+      faceMat.opacity = .035; edgeBase = .5; dimMat.opacity = .28; zoom = 1.12;
+      stage.classList.add('px-real');
+    } else info = MODELS[modelName](group, part);
     group.position.set(-info.center[0], 0, -info.center[2]);
 
     /* misura il modello per inquadrarlo */
@@ -233,7 +274,7 @@
       renderer.setSize(W, H, false); camera.aspect = W / H; camera.updateProjectionMatrix();
       var tanH = Math.tan(camera.fov * Math.PI / 360);
       var fitW = radius * 1.9 / (2 * tanH * camera.aspect), fitH = size.y * 2.1 / (2 * tanH);
-      dist = Math.max(fitW, fitH);
+      dist = Math.max(fitW, fitH) * zoom;
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('width', W); svg.setAttribute('height', H);
       measure();
       if (!running) draw(0);
@@ -251,7 +292,7 @@
         var arr = pg.attributes.position.array;
         for (var j = 0; j < N; j++) { arr[j * 3 + 1] += speed[j] * dt; if (arr[j * 3 + 1] > size.y * 1.6) arr[j * 3 + 1] = 0; }
         pg.attributes.position.needsUpdate = true;
-        edgeMat.opacity = .78 + Math.sin(t * 6) * .04 + (Math.random() < .01 ? -.4 : 0); /* sfarfallio da ologramma */
+        edgeMat.opacity = edgeBase + Math.sin(t * 6) * .04 + (Math.random() < .01 ? -edgeBase / 2 : 0); /* sfarfallio da ologramma */
       }
       renderer.render(scene, camera);
       group.updateMatrixWorld();
@@ -266,7 +307,8 @@
       PAD = W < 520 ? 10 : 18;
       var sides = { l: [], r: [] };
       callouts.forEach(function (c) {
-        var a = anchors[c.key]; if (!a) return;
+        var a = anchors[c.key];
+        if (!a) { c.el.classList.add('hidden'); c.path.setAttribute('visibility', 'hidden'); c.dot.setAttribute('visibility', 'hidden'); return; }
         v.copy(a).applyMatrix4(group.matrixWorld).project(camera);
         c.ax = (v.x + 1) / 2 * W; c.ay = (1 - v.y) / 2 * H; c.off = v.z > 1;
         (c.ax < W / 2 ? sides.l : sides.r).push(c);
