@@ -1,5 +1,15 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.3.0] — Novembre 2026
+
+### Aggiunto
+- Versione inglese del sito in `public/en/` (Home, Systems, Company, Contact)
+- Selettore lingua IT | EN nell'intestazione, che porta alla stessa pagina nell'altra lingua
+- `hreflang` e `og:locale` per i motori di ricerca e le anteprime dei link
+- Intro 3D in inglese ("ACQUIRING", "TARGET LOCKED", "Skip intro")
+- Pagina 404 bilingue, funzionante anche per indirizzi dentro `/en/`
+- `scripts/build-pages.mjs`: genera tutte le pagine nelle due lingue; il controllo verifica che siano allineate
+
 ## [1.2.0] — Novembre 2026
 
 ### Modificato

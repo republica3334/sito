@@ -8,33 +8,40 @@
 <meta name="theme-color" content="#070a08">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<base href="/sito/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ALPHADEK Instruments">
 <meta property="og:title" content="Pagina non trovata — ALPHADEK Instruments">
 <meta property="og:description" content="Pagina non trovata.">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<a class="skip" href="#main">Vai al contenuto</a>
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="ALPHADEK Instruments — Home">
       <img src="assets/alphadek-mark.svg" alt="" width="44" height="40">
       <span class="brand-name"><b>ALPHADEK</b><span>INSTRUMENTS</span></span>
     </a>
-    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
     <nav class="nav" id="nav" aria-label="Principale"><a href="index.html">Home</a><a href="sistemi.html">Sistemi</a><a href="azienda.html">Azienda</a><a href="contatti.html">Contatti</a></nav>
+    <div class="lang-switch" role="group" aria-label="Lingua"><a href="index.html" hreflang="it" lang="it" aria-current="true">IT</a><a href="en/index.html" hreflang="en" lang="en">EN</a></div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
   </div>
 </header>
 <main id="main">
 <section class="page-hero grid-bg">
   <div class="wrap">
-    <span class="mono eyebrow">Errore 404</span>
+    <span class="mono eyebrow">Errore 404 · Error 404</span>
     <h1>Bersaglio non trovato</h1>
     <p class="lead">La pagina che cerchi non esiste o è stata spostata.</p>
-    <div class="actions"><a class="btn" href="index.html">Torna alla home</a></div>
+    <p class="lead" lang="en"><strong>Target not found.</strong> The page you are looking for does not exist or has been moved.</p>
+    <div class="actions">
+      <a class="btn" href="index.html">Torna alla home</a>
+      <a class="btn ghost" href="en/index.html" lang="en">English home</a>
+    </div>
   </div>
 </section>
 </main>
