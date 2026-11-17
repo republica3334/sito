@@ -1,0 +1,7 @@
+# Il sito non ha dipendenze npm: Dependabot controlla solo le GitHub Actions usate dal workflow.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
