@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-site.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Civil Registration &mdash; United Republic of Stars</title>
@@ -44,7 +44,6 @@
     <a href="../gov/ministries.html">Ministries</a>
     <a href="#">Laws &amp; Decrees</a>
     <a href="#">News</a>
-    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 <main>
@@ -146,16 +145,5 @@
     </div>
   </div>
 </div>
-
-<script>
-function requireServiceLogin(){
-  if(!republicstarSession.get()){
-    localStorage.setItem('republicstar_redirect', window.location.href);
-    window.location.href = '../auth/citizen-login.html';
-  } else {
-    alert('This service is not yet activated. Check back soon.');
-  }
-}
-</script>
 </body>
 </html>
