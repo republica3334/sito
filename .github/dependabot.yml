@@ -1,7 +1,13 @@
-# Il sito non ha dipendenze npm: Dependabot controlla solo le GitHub Actions usate dal workflow.
 version: 2
 updates:
+  # GitHub Actions del workflow "Controllo sito"
   - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+  # Three.js ed esbuild: servono solo a rigenerare assets/vendor/three-intro.min.js.
+  # Dopo un aggiornamento: npm install && npm run vendor:three, poi committa il file generato.
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"

@@ -1,4 +1,4 @@
-/* ALPHADEK Instruments — 3D intro (Three.js r128, served locally).
+/* ALPHADEK Instruments — 3D intro (Three.js 0.187, pacchetto locale assets/vendor/three-intro.min.js).
    Extruded metal logo, HUD reticle and camera move; fades into the home page. */
 (function () {
   var root = document.documentElement;
@@ -42,7 +42,7 @@
   try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
   catch (e) { finish(); return; }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   overlay.insertBefore(renderer.domElement, overlay.firstChild);
 
@@ -50,8 +50,9 @@
   var pm = new THREE.PMREMGenerator(renderer);
   scene.environment = pm.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
   var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
-  var rim = new THREE.DirectionalLight(0xbfe8c0, .8); rim.position.set(8, -3, -6); scene.add(rim);
-  var key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(-9, 7, 6); scene.add(key);
+  var LIGHT = Math.PI; /* compensazione luci fisiche (Three >= r155) */
+  var rim = new THREE.DirectionalLight(0xbfe8c0, .8 * LIGHT); rim.position.set(8, -3, -6); scene.add(rim);
+  var key = new THREE.DirectionalLight(0xffffff, 1.1 * LIGHT); key.position.set(-9, 7, 6); scene.add(key);
   var glint = new THREE.PointLight(0xffffff, 0, 14, 2); scene.add(glint);
 
   var hudColor = new THREE.Color((getComputedStyle(root).getPropertyValue('--hud') || '').trim() || '#8fe388');
@@ -111,7 +112,7 @@
     var c = document.createElement('canvas'); c.width = 1024; c.height = 64; var g = c.getContext('2d');
     g.font = '48px "Share Tech Mono", ui-monospace, monospace'; g.fillStyle = '#fff'; g.textBaseline = 'alphabetic'; g.textAlign = align;
     g.fillText(txt, align === 'left' ? 4 : 1020, 48);
-    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+    var t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
     var H = size * 64 / 48, W = H * 16;
     var m = new THREE.MeshBasicMaterial({ map: t, color: hudColor, transparent: true, opacity: 0, depthWrite: false, toneMapped: false, side: THREE.DoubleSide }); hudMats.push(m);
     var geo = new THREE.PlaneGeometry(W, H); geo.scale(1, -1, 1);
@@ -156,7 +157,7 @@
     var bo = cl(c / .15); if (t > 1.7 && t < 2.3 && Math.floor((t - 1.7) / .15) % 2 === 0) bo = .2; brMat.opacity = bo * hudA;
     if (acq) { acq.opacity = (t >= .8 && t < 1.8 && Math.floor((t - .8) / .1) % 2 === 0) ? hudA : 0; lck.opacity = t >= 1.8 ? hudA : 0; rng.opacity = p(t, 1, .3) * hudA; }
     gridEl.style.opacity = (.07 * p(t, 0, 1.2) * hudA).toFixed(3);
-    var g = p(t, 3.5, 1.2); glint.intensity = g > 0 && g < 1 ? Math.sin(g * Math.PI) * 2.2 : 0; glint.position.set(lerp(-9, 9, eInOut(g)), lerp(3, -1, g), 3);
+    var g = p(t, 3.5, 1.2); glint.intensity = g > 0 && g < 1 ? Math.sin(g * Math.PI) * 2.2 * LIGHT : 0; glint.position.set(lerp(-9, 9, eInOut(g)), lerp(3, -1, g), 3);
     var a = eInOut(p(t, 0, 2.4)), b = eInOut(p(t, 2.4, 3.2));
     var yaw = (t < 2.4 ? lerp(38, 14, a) : lerp(14, -10, b)) * D2R, pitch = (t < 2.4 ? lerp(14, 6, a) : 6) * D2R;
     var r = dist * (t < 2.4 ? lerp(1.25, 1.04, a) : lerp(1.04, 1, b));
