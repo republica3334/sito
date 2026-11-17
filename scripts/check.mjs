@@ -69,6 +69,20 @@ for (const f of html) {
   if (/firebase|gstatic\.com|googleapis\.com|emailjs|\/auth\/|\/portal\//i.test(s)) fail(f, 'riferimento a Firebase, servizi esterni o al vecchio sistema account');
 }
 
+// _headers (Netlify / Cloudflare Pages): CSP allineata alle pagine + anti-framing
+const headersFile = join(ROOT, '_headers');
+if (!existsSync(headersFile)) fail(headersFile, 'manca il file _headers (intestazioni di sicurezza)');
+else {
+  const h = readFileSync(headersFile, 'utf8');
+  const hc = (h.match(/^\s+Content-Security-Policy:\s*(.+)$/m) || [])[1];
+  if (!hc) fail(headersFile, 'manca Content-Security-Policy');
+  else {
+    if (cspRef && hc.trim() !== `${cspRef}; frame-ancestors 'none'`) fail(headersFile, "la CSP non coincide con quella delle pagine + frame-ancestors 'none'");
+  }
+  if (!/^\s+X-Frame-Options:\s*DENY\s*$/m.test(h)) fail(headersFile, 'manca X-Frame-Options: DENY');
+  if (!/^\s+X-Content-Type-Options:\s*nosniff\s*$/m.test(h)) fail(headersFile, 'manca X-Content-Type-Options: nosniff');
+}
+
 // Sintassi degli script del sito
 for (const f of js) {
   try { execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' }); }
