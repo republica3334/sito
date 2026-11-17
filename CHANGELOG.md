@@ -1,5 +1,13 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.0.2] — Novembre 2026
+
+### Aggiunto
+- `scripts/check.mjs`: controllo di pagine, script, link e Content-Security-Policy
+- Workflow GitHub "Controllo sito" a ogni push e pull request (non pubblica nulla)
+- Hook `pre-push` in `.githooks/` per bloccare il push se il controllo fallisce
+- `.github/dependabot.yml`: Dependabot controlla solo le GitHub Actions (il sito non ha dipendenze npm)
+
 ## [1.0.1] — Novembre 2026
 
 ### Rimosso

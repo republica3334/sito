@@ -1,0 +1,5 @@
+#!/bin/sh
+# Blocca il push se il controllo del sito fallisce.
+# Attivazione (una volta per ogni copia del repo):  git config core.hooksPath .githooks
+echo "Controllo del sito prima del push…"
+node scripts/check.mjs || { echo "Push annullato: correggi i problemi sopra (oppure usa git push --no-verify)."; exit 1; }
