@@ -5,6 +5,15 @@ Sito statico: nessuna build per pubblicarlo, nessuna richiesta verso altri siti.
 ## Pubblicazione
 Il workflow "Pubblica su GitHub Pages" pubblica `public/` a ogni push su main, solo se il controllo passa. Va attivato una volta in Settings → Pages → Source: **GitHub Actions**. Indirizzo: https://republica3334.github.io/sito/
 
+## Lingue e pagine
+Il sito è in italiano (`public/*.html`) e in inglese (`public/en/`), con il selettore IT | EN nell'intestazione. Le pagine HTML **non si modificano a mano**: testi e struttura stanno in `scripts/build-pages.mjs`. Dopo una modifica:
+
+```sh
+node scripts/build-pages.mjs
+```
+
+poi committa le pagine generate. Il controllo su GitHub fallisce se le pagine non corrispondono al generatore.
+
 ## Sicurezza
 - **Content-Security-Policy** nel meta tag di ogni pagina: consente solo file del sito, blocca script inline, `eval` e risorse esterne. Vale su qualsiasi hosting, GitHub Pages compreso.
 - **`public/_headers`**: su Netlify e Cloudflare Pages aggiunge le stesse regole come intestazioni HTTP, più la protezione dal framing (`frame-ancestors`, `X-Frame-Options`), che nel meta tag non funziona. GitHub Pages ignora questo file: lì il sito resta incorniciabile in un iframe (rischio basso per un sito vetrina).
@@ -21,7 +30,7 @@ git config core.hooksPath .githooks
 A mano: `node scripts/check.mjs` (serve Node 18 o più recente).
 
 ## Three.js
-L'intro usa `public/assets/vendor/three-intro.min.js`: un pacchetto con solo le parti di Three.js che servono, generato da `scripts/three-entry.mjs`. Per aggiornarlo:
+L'intro e gli ologrammi della pagina prodotti (`public/assets/products.js`) usano `public/assets/vendor/three-intro.min.js`: un pacchetto con solo le parti di Three.js che servono, generato da `scripts/three-entry.mjs`. Per aggiornarlo:
 
 ```sh
 npm install
