@@ -1,5 +1,16 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.1.0] — Novembre 2026
+
+### Sicurezza
+- `_headers` per Netlify e Cloudflare Pages: CSP come intestazione HTTP, protezione dal framing (`frame-ancestors 'none'`, `X-Frame-Options: DENY`), `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`, HSTS
+- `scripts/check.mjs` verifica anche che la CSP di `_headers` resti allineata a quella delle pagine
+
+### Aggiornato
+- Three.js da r128 (2021) a 0.187: un unico pacchetto `assets/vendor/three-intro.min.js` con solo le parti usate dall'intro (597 KB contro 671 KB dei tre file precedenti)
+- Intro adattata alle nuove API (spazio colore, luci fisicamente corrette): resa visiva invariata
+- `package.json` (solo per rigenerare il pacchetto Three.js) e Dependabot anche per npm
+
 ## [1.0.2] — Novembre 2026
 
 ### Aggiunto
