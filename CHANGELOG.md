@@ -1,5 +1,11 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.3.1] — Novembre 2026
+
+### Aggiornato
+- Workflow su Node 24 (Node 20 è a fine vita)
+- `actions/upload-pages-artifact` v3 → v5 e `actions/deploy-pages` v4 → v5, aggiornate insieme
+
 ## [1.3.0] — Novembre 2026
 
 ### Aggiunto

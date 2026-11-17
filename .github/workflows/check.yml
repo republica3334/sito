@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Pagine allineate al generatore
         run: node scripts/build-pages.mjs && git diff --exit-code -- public
