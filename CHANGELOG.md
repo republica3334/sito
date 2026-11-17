@@ -9,6 +9,10 @@
 - Intro 3D in inglese ("ACQUIRING", "TARGET LOCKED", "Skip intro")
 - Pagina 404 bilingue, funzionante anche per indirizzi dentro `/en/`
 - `scripts/build-pages.mjs`: genera tutte le pagine nelle due lingue; il controllo verifica che siano allineate
+- Menu a tendina **Prodotti** con Behemoth 2A1 e Ghepard 2 (desktop e telefono)
+- Pagina prodotti (`prodotti.html`, `en/products.html`): ologrammi 3D wireframe trascinabili con etichette agganciate ai componenti, telemetria animata, barre della corazza, riga di avvio di bordo, confronto tra i due mezzi
+- Behemoth 2A1: dati del TTKX-10 Mk2. Ghepard 2 (ULBT-7): solo le caratteristiche definite, nessun numero inventato
+- Pacchetto Three.js ampliato con le forme per gli ologrammi
 
 ## [1.2.0] — Novembre 2026
 

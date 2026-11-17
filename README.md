@@ -30,7 +30,7 @@ git config core.hooksPath .githooks
 A mano: `node scripts/check.mjs` (serve Node 18 o più recente).
 
 ## Three.js
-L'intro usa `public/assets/vendor/three-intro.min.js`: un pacchetto con solo le parti di Three.js che servono, generato da `scripts/three-entry.mjs`. Per aggiornarlo:
+L'intro e gli ologrammi della pagina prodotti (`public/assets/products.js`) usano `public/assets/vendor/three-intro.min.js`: un pacchetto con solo le parti di Three.js che servono, generato da `scripts/three-entry.mjs`. Per aggiornarlo:
 
 ```sh
 npm install

@@ -14,11 +14,12 @@ const CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 's
 /* Pagine: chiave → file per lingua */
 const FILES = {
   home:    { it: 'index.html',    en: 'en/index.html' },
+  products:{ it: 'prodotti.html', en: 'en/products.html' },
   systems: { it: 'sistemi.html',  en: 'en/systems.html' },
   company: { it: 'azienda.html',  en: 'en/company.html' },
   contact: { it: 'contatti.html', en: 'en/contact.html' },
 };
-const NAV_KEYS = ['home', 'systems', 'company', 'contact'];
+const NAV_KEYS = ['home', 'products', 'systems', 'company', 'contact'];
 
 const ICON = {
   reticle: '<svg class="icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2"><circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="3"/><path d="M20 1v10M20 29v10M1 20h10M29 20h10"/></svg>',
@@ -31,7 +32,7 @@ const ICON = {
 const T = {
   it: {
     htmlLang: 'it', ogLocale: 'it_IT',
-    nav: { home: 'Home', systems: 'Sistemi', company: 'Azienda', contact: 'Contatti' },
+    nav: { home: 'Home', products: 'Prodotti', systems: 'Sistemi', company: 'Azienda', contact: 'Contatti' },
     navLabel: 'Principale', skipToContent: 'Vai al contenuto', skipIntro: 'Salta intro', menu: 'Menu',
     langLabel: 'Lingua',
     footerText: 'Strumenti di puntamento, misura e controllo per sistemi di difesa terrestri, navali e aerei.',
@@ -61,6 +62,58 @@ const T = {
       ],
       ctaEyebrow: 'Contatto', ctaH2: 'Hai un requisito da discutere?',
       ctaP: 'Raccontaci la piattaforma e l’obiettivo: ti rispondiamo con una proposta tecnica.',
+    },
+    products: {
+      title: 'Prodotti', desc: 'I mezzi ALPHADEK Instruments: Behemoth 2A1, carro superpesante, e Ghepard 2 (ULBT-7), carro ultraleggero autonomo.',
+      eyebrow: 'Prodotti', h1: 'La flotta <em>ALPHADEK</em>',
+      lead: 'Due mezzi, due modi opposti di vincere: il superpesante che regge l’urto e l’ultraleggero autonomo che non si fa trovare. Entrambi con la strumentazione ALPHADEK a bordo.',
+      boot: 'ALPHADEK instruments, welcome aboard, commander.',
+      dragHint: 'Trascina per ruotare', live: 'Ologramma · live', noGl: 'Il 3D non è disponibile su questo dispositivo',
+      armorTitle: 'Protezione (mm equivalenti)', ke: 'KE · cinetica', ce: 'CE · chimica', quoteLabel: 'Messaggio all’avvio dei sistemi',
+      behemoth: {
+        code: 'ADK-BH · 2A1', name: 'Behemoth 2A1', cls: 'Carro superpesante', tileMeta: '635 t · ETC 185 mm · APS laser',
+        lead: 'Il Behemoth 2A1 è il nostro carro superpesante: un’unità da sfondamento costruita per assorbire il colpo e restare operativa dove nessun altro mezzo può farlo. Scafo e torretta di nuova generazione, cannone ETC raffreddato e una difesa attiva a laser che intercetta le minacce prima che arrivino.',
+        stats: [['635', 't', 'Peso'], ['185', 'mm', 'Cannone ETC'], ['125', 'kW', 'Laser APS ×6'], ['670', 'km', 'Autonomia']],
+        callouts: { gun: 'Cannone ETC 185 mm', aps: 'APS laser 125 kW ×6', aa: 'Torrette AA 40 mm ×2', radar: '4 radar AESA', engine: '2× V12 · 31 CV/t', tracks: '670 km · immersione completa' },
+        specs: [
+          ['Armamento', [
+            ['Cannone principale', '185 mm ETC, raffreddato a perfluorometano'],
+            ['Autocaricatore', '12 colpi al minuto a fuoco costante'],
+            ['Munizioni', 'APFSDS-T, APFSDS, HE, HE smart a stabilizzazione alare'],
+            ['Antiaerea', '2 torrette da 40 mm con missili a doppio ruolo, aria e superficie; proiettili programmabili'],
+            ['Secondario', '2 mitragliatrici coassiali .50 BMG, 4 lanciagranate da 40 mm']]],
+          ['Difesa attiva e sensori', [
+            ['APS', '6 torrette, ciascuna con laser da 125 kW e 8 cariche fisiche ricaricabili'],
+            ['Radar', '48 radar APS e 4 radar AESA a lungo raggio'],
+            ['Contromisure', 'IRCM; firma termica ridotta con sfiato dal basso']]],
+          ['Mobilità', [
+            ['Propulsione', '2 generatori industriali V12 di produzione nazionale, 31 CV/t'],
+            ['Autonomia', '670 km'],
+            ['Terreno', 'Immersione completa con espulsione di acqua e detriti; pendenze ripide']]],
+        ],
+        armor: [['Frontale', 1400, '1400', 2800, '2800+'], ['Laterale', 1200, '900–1200', 1800, '1800'], ['Posteriore', 340, '280–340', 900, '900']],
+      },
+      ghepard: {
+        code: 'ADK-GH · 2', name: 'Ghepard 2', cls: 'ULBT-7 · Carro ultraleggero autonomo', tileMeta: 'Autonomo · nessun equipaggio',
+        lead: 'Il Ghepard 2 (ULBT-7, Ultra Light Battle Tank) ribalta la logica del Behemoth: nessun equipaggio, corazza ridotta al minimo e tutto puntato su velocità e tempo di reazione. Sopravvive non assorbendo il colpo, ma non facendosi colpire.',
+        stats: [['0', '', 'Equipaggio'], ['IA', '', 'Guida autonoma'], ['MIN', '', 'Corazza'], ['MAX', '', 'Reattività']],
+        callouts: { ai: 'IA autonoma · 0 equipaggio', hull: 'Corazza minima', tracks: 'Reazione molto rapida', gun: 'Ricognizione armata' },
+        specs: [
+          ['Profilo', [
+            ['Classe', 'ULBT-7 — Ultra Light Battle Tank'],
+            ['Equipaggio', 'Nessuno: completamente autonomo'],
+            ['Protezione', 'Minima: la sopravvivenza è affidata a velocità e reazione']]],
+          ['Impiego', [
+            ['Mobilità', 'Velocità e tempo di reazione molto elevati'],
+            ['Ruolo', 'Ricognizione armata, aggiramento rapido, interventi dove serve arrivare per primi'],
+            ['In flotta', 'Complementare al Behemoth 2A1']]],
+        ],
+        note: 'Le specifiche dettagliate sono disponibili su richiesta.',
+      },
+      vsEyebrow: 'Due filosofie', vsH2: 'Assorbire o evitare',
+      vs: [['Behemoth 2A1', 'Assorbire il colpo', 'Massa, corazza e difesa attiva a laser: resta in campo sotto il fuoco e apre la strada.'],
+           ['Ghepard 2', 'Non farsi colpire', 'Nessun equipaggio e reazione immediata: arriva prima, vede prima e se ne va prima.']],
+      ctaEyebrow: 'Presentazione riservata', ctaH2: 'Vuoi vederli da vicino?', ctaP: 'Le schede complete sono disponibili su richiesta: scrivici indicando ente e impiego previsto.',
     },
     systems: {
       title: 'Sistemi', desc: 'Le linee di prodotto di ALPHADEK Instruments: controllo del tiro, optronica, navigazione, prova e taratura.',
@@ -114,7 +167,7 @@ const T = {
 
   en: {
     htmlLang: 'en', ogLocale: 'en_GB',
-    nav: { home: 'Home', systems: 'Systems', company: 'Company', contact: 'Contact' },
+    nav: { home: 'Home', products: 'Products', systems: 'Systems', company: 'Company', contact: 'Contact' },
     navLabel: 'Main', skipToContent: 'Skip to content', skipIntro: 'Skip intro', menu: 'Menu',
     langLabel: 'Language',
     footerText: 'Targeting, measurement and control instruments for land, naval and air defence systems.',
@@ -144,6 +197,58 @@ const T = {
       ],
       ctaEyebrow: 'Contact', ctaH2: 'Have a requirement to discuss?',
       ctaP: 'Tell us about the platform and the goal: we will come back to you with a technical proposal.',
+    },
+    products: {
+      title: 'Products', desc: 'ALPHADEK Instruments vehicles: Behemoth 2A1, superheavy tank, and Ghepard 2 (ULBT-7), autonomous ultra-light tank.',
+      eyebrow: 'Products', h1: 'The <em>ALPHADEK</em> fleet',
+      lead: 'Two vehicles, two opposite ways to win: the superheavy that takes the hit and the autonomous ultra-light that is never where you expect it. Both with ALPHADEK instrumentation on board.',
+      boot: 'ALPHADEK instruments, welcome aboard, commander.',
+      dragHint: 'Drag to rotate', live: 'Hologram · live', noGl: '3D is not available on this device',
+      armorTitle: 'Protection (mm equivalent)', ke: 'KE · kinetic', ce: 'CE · chemical', quoteLabel: 'Message at system start-up',
+      behemoth: {
+        code: 'ADK-BH · 2A1', name: 'Behemoth 2A1', cls: 'Superheavy tank', tileMeta: '635 t · 185 mm ETC · laser APS',
+        lead: 'The Behemoth 2A1 is our superheavy tank: a breakthrough unit built to take the hit and stay in the fight where no other vehicle can. A new-generation hull and turret, a cooled ETC gun and a laser active protection system that intercepts threats before they arrive.',
+        stats: [['635', 't', 'Weight'], ['185', 'mm', 'ETC gun'], ['125', 'kW', 'Laser APS ×6'], ['670', 'km', 'Range']],
+        callouts: { gun: '185 mm ETC gun', aps: '125 kW laser APS ×6', aa: '40 mm AA turrets ×2', radar: '4 AESA radars', engine: '2× V12 · 31 hp/t', tracks: '670 km · full submersion' },
+        specs: [
+          ['Armament', [
+            ['Main gun', '185 mm ETC, perfluoromethane-cooled'],
+            ['Autoloader', '12 rounds per minute, sustained fire'],
+            ['Ammunition', 'APFSDS-T, APFSDS, HE, fin-stabilised smart HE'],
+            ['Air defence', '2 × 40 mm turrets with dual-role air and surface missiles; programmable rounds'],
+            ['Secondary', '2 × .50 BMG coaxial machine guns, 4 × 40 mm grenade launchers']]],
+          ['Active protection and sensors', [
+            ['APS', '6 turrets, each with a 125 kW laser and 8 reloadable hard-kill charges'],
+            ['Radar', '48 APS radars and 4 long-range AESA radars'],
+            ['Countermeasures', 'IRCM; reduced thermal signature with bottom venting']]],
+          ['Mobility', [
+            ['Propulsion', '2 domestically built industrial V12 generators, 31 hp/t'],
+            ['Range', '670 km'],
+            ['Terrain', 'Full submersion with water and debris purge mode; steep gradients']]],
+        ],
+        armor: [['Front', 1400, '1400', 2800, '2800+'], ['Side', 1200, '900–1200', 1800, '1800'], ['Rear', 340, '280–340', 900, '900']],
+      },
+      ghepard: {
+        code: 'ADK-GH · 2', name: 'Ghepard 2', cls: 'ULBT-7 · Autonomous ultra-light tank', tileMeta: 'Autonomous · no crew',
+        lead: 'The Ghepard 2 (ULBT-7, Ultra Light Battle Tank) turns the Behemoth’s logic upside down: no crew, armour kept to a minimum and everything focused on speed and reaction time. It survives not by taking the hit, but by not getting hit.',
+        stats: [['0', '', 'Crew'], ['AI', '', 'Autonomous'], ['MIN', '', 'Armour'], ['MAX', '', 'Reactivity']],
+        callouts: { ai: 'Autonomous AI · 0 crew', hull: 'Minimal armour', tracks: 'Very fast reaction', gun: 'Armed reconnaissance' },
+        specs: [
+          ['Profile', [
+            ['Class', 'ULBT-7 — Ultra Light Battle Tank'],
+            ['Crew', 'None: fully autonomous'],
+            ['Protection', 'Minimal: survival relies on speed and reaction']]],
+          ['Employment', [
+            ['Mobility', 'Very high speed and reaction time'],
+            ['Role', 'Armed reconnaissance, fast flanking, missions where arriving first matters'],
+            ['In the fleet', 'Complements the Behemoth 2A1']]],
+        ],
+        note: 'Detailed specifications are available on request.',
+      },
+      vsEyebrow: 'Two philosophies', vsH2: 'Absorb or avoid',
+      vs: [['Behemoth 2A1', 'Take the hit', 'Mass, armour and laser active protection: it stays in the fight under fire and opens the way.'],
+           ['Ghepard 2', 'Don’t get hit', 'No crew and instant reaction: it gets there first, sees first and leaves first.']],
+      ctaEyebrow: 'Private presentation', ctaH2: 'Want a closer look?', ctaP: 'Full datasheets are available on request: write to us stating your organisation and intended use.',
     },
     systems: {
       title: 'Systems', desc: 'ALPHADEK Instruments product lines: fire control, optronics, navigation, test and calibration.',
@@ -257,6 +362,81 @@ function bodyFor(key, lang, file) {
   </div>
 </section>`;
   }
+  if (key === 'products') {
+    const x = t.products;
+    const stats = (arr) => `<div class="px-stats">${arr.map(([v, u, l]) => `<div class="px-stat"><b>${/^\d+$/.test(v) ? `<span data-count="${v}">${v}</span>` : v}${u ? `<small>${u}</small>` : ''}</b><span class="px-lbl">${l}</span></div>`).join('')}</div>`;
+    const specs = (groups) => `<div class="px-specs">${groups.map(([h, rows]) => `<div><h3>${h}</h3><dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></div>`).join('')}</div>`;
+    const stage = (model, d, idTag) => `<div class="px-stage" data-model="${model}">
+        <canvas aria-hidden="true"></canvas>
+        <div class="px-callouts" aria-hidden="true">${Object.entries(d.callouts).map(([k, v]) => `<span class="px-callout" data-anchor="${k}"><em>${v}</em></span>`).join('')}</div>
+        <span class="px-corner tl">${idTag}</span><span class="px-corner tr">${x.live}</span>
+        <span class="px-corner bl">${x.dragHint}</span><span class="px-corner br" data-az>AZ 000°</span>
+        <div class="px-fallback"><div><img src="${P('assets/alphadek-mark.svg')}" alt="" width="120" height="110"><p>${x.noGl}</p></div></div>
+      </div>`;
+    const armor = (rows) => `<div class="px-armor"><h3>${x.armorTitle}</h3>${rows.map(([l, ke, keTxt, ce, ceTxt]) => `<div class="px-arow"><span>${l}</span>
+        <div class="px-track"><b class="px-fill" data-v="${ke}" data-max="2800"></b><i>${keTxt}</i></div>
+        <div class="px-track"><b class="px-fill ce" data-v="${ce}" data-max="2800"></b><i>${ceTxt}</i></div></div>`).join('')}
+        <div class="px-legend"><span>${x.ke}</span><span class="ce">${x.ce}</span></div></div>`;
+    const b = x.behemoth, g = x.ghepard;
+    return `<section class="px-hero">
+  <div class="px-radar" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="mono eyebrow">${x.eyebrow}</span>
+    <h1>${x.h1}</h1>
+    <p class="lead">${x.lead}</p>
+    <p class="px-boot mono" data-type="${x.boot}">${x.boot}</p>
+    <div class="px-pick">
+      <a class="px-tile" href="#behemoth"><span class="code">${b.code}</span><b>${b.name}</b><small>${b.cls}</small><small>${b.tileMeta}</small></a>
+      <a class="px-tile" href="#ghepard"><span class="code">${g.code}</span><b>${g.name}</b><small>${g.cls}</small><small>${g.tileMeta}</small></a>
+    </div>
+  </div>
+</section>
+<section class="px-product" id="behemoth">
+  <div class="wrap px-grid">
+    ${stage('behemoth', b, 'ADK // BH-2A1')}
+    <div class="px-info">
+      <span class="mono eyebrow">${b.cls}</span>
+      <h2>${b.name}</h2>
+      <p class="lead">${b.lead}</p>
+      ${stats(b.stats)}
+      ${specs(b.specs)}
+      ${armor(b.armor)}
+      <p class="px-quote">${x.quoteLabel}: “${x.boot}”</p>
+    </div>
+  </div>
+</section>
+<section class="px-product alt" id="ghepard">
+  <div class="wrap px-grid">
+    ${stage('ghepard', g, 'ADK // GH-2 · ULBT-7')}
+    <div class="px-info">
+      <span class="mono eyebrow">${g.cls}</span>
+      <h2>${g.name}</h2>
+      <p class="lead">${g.lead}</p>
+      ${stats(g.stats)}
+      ${specs(g.specs)}
+      <p class="notice">${g.note} <a href="${L('contact')}">${t.nav.contact}</a></p>
+    </div>
+  </div>
+</section>
+<section class="px-compare grid-bg">
+  <div class="wrap">
+    <div class="section-head"><div><span class="mono eyebrow">${x.vsEyebrow}</span><h2>${x.vsH2}</h2></div></div>
+    <div class="px-vs">
+      <div><span class="code">${x.vs[0][0]}</span><h3>${x.vs[0][1]}</h3><p>${x.vs[0][2]}</p></div>
+      <b>VS</b>
+      <div><span class="code">${x.vs[1][0]}</span><h3>${x.vs[1][1]}</h3><p>${x.vs[1][2]}</p></div>
+    </div>
+  </div>
+</section>
+<section class="cta grid-bg">
+  <div class="wrap">
+    <span class="mono eyebrow">${x.ctaEyebrow}</span>
+    <h2>${x.ctaH2}</h2>
+    <p>${x.ctaP}</p>
+    <div class="actions"><a class="btn" href="${L('contact')}">${t.home.ctaContact}</a></div>
+  </div>
+</section>`;
+  }
   if (key === 'systems') {
     const s = t.systems;
     const items = s.list.map(([c, short, title, d, fs]) => `<article class="system" id="${c.toLowerCase()}">
@@ -325,10 +505,17 @@ function bodyFor(key, lang, file) {
   throw new Error('pagina sconosciuta ' + key);
 }
 
-function page({ key, lang, file, title, desc, body, intro = false, base = null }) {
+function page({ key, lang, file, title, desc, body, intro = false, base = null, scripts = [] }) {
   const t = T[lang], P = (f) => base ? f : rel(file, f), L = (k) => P(FILES[k][lang]);
   const fullTitle = key === 'home' ? title : `${title} — ALPHADEK Instruments`;
-  const nav = NAV_KEYS.map((k) => `<a href="${L(k)}"${k === key ? ' aria-current="page"' : ''}>${t.nav[k]}</a>`).join('');
+  const nav = NAV_KEYS.map((k) => {
+    const cur = k === key ? ' aria-current="page"' : '';
+    if (k !== 'products') return `<a href="${L(k)}"${cur}>${t.nav[k]}</a>`;
+    const pr = t.products;
+    return `<div class="nav-drop"><a class="nav-drop-btn" href="${L(k)}"${cur}>${t.nav[k]}</a><div class="nav-menu">` +
+      `<a href="${L(k)}#behemoth"><b>${pr.behemoth.name}</b><span>${pr.behemoth.cls}</span></a>` +
+      `<a href="${L(k)}#ghepard"><b>${pr.ghepard.name}</b><span>${pr.ghepard.cls}</span></a></div></div>`;
+  }).join('');
   /* selettore lingua: porta alla stessa pagina nell'altra lingua */
   const other = lang === 'it' ? 'en' : 'it';
   const switchTo = (lg) => FILES[key] ? P(FILES[key][lg]) : P(FILES.home[lg]);
@@ -407,7 +594,7 @@ ${body}
     </div>
   </div>
 </footer>
-<script src="${P('assets/site.js')}"></script>${introJs}
+<script src="${P('assets/site.js')}"></script>${introJs}${scripts.map((f) => `\n<script src="${P(f)}"></script>`).join('')}
 </body>
 </html>
 `;
@@ -418,7 +605,8 @@ const out = [];
 for (const lang of ['it', 'en']) {
   for (const key of NAV_KEYS) {
     const file = FILES[key][lang], d = T[lang][key];
-    const html = page({ key, lang, file, title: d.title, desc: d.desc, body: bodyFor(key, lang, file), intro: key === 'home' });
+    const html = page({ key, lang, file, title: d.title, desc: d.desc, body: bodyFor(key, lang, file), intro: key === 'home',
+      scripts: key === 'products' ? ['assets/vendor/three-intro.min.js', 'assets/products.js'] : [] });
     mkdirSync(dirname(join(PUBLIC, file)), { recursive: true });
     writeFileSync(join(PUBLIC, file), html);
     out.push(file);
