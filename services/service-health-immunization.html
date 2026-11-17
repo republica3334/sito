@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../republicstar-auth.js"></script>
+<script src="../republicstar-site.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 
 <div class="utility-bar">
   <div class="utility-links"><a href="#">Accessibility</a><a href="#">Language</a><a href="#">Emergency: 112</a></div>
-  <div class="utility-links"><a href="services.html">All Services</a><a href="../auth/citizen-login.html">Citizen Login</a></div>
+  <div class="utility-links"><a href="services.html">All Services</a></div>
 </div>
 
 <header>
@@ -32,7 +32,6 @@
     <a href="services.html" style="background:var(--black);color:var(--white);">Services</a>
     <a href="../gov/ministries.html">Ministries</a>
     <a href="../gov/laws-decrees.html">Laws &amp; Decrees</a>
-    <a href="../auth/citizen-login.html" class="nav-cta">Citizen Login</a>
   </nav>
 </header>
 <main>
@@ -62,7 +61,7 @@
 <label for="purpose">Purpose</label><select id="purpose" name="purpose"><option>Travel</option><option>School Enrolment</option><option>Employment</option><option>Personal Record</option><option>Other</option></select>
 <label for="delivery_method">Delivery Method</label><select id="delivery_method" name="delivery_method"><option>Secure Email PDF</option><option>Postal Certified Copy</option></select>
       <div style="background:#fff8f8;border-left:3px solid var(--red);padding:0.8rem 1rem;margin-top:1.5rem;font-family:var(--font-body);font-size:0.76rem;color:#666;">
-        This portal is for demonstration purposes. Submissions are not processed. Log in with your Citizen Account to submit a real application.
+        This portal is for demonstration purposes. Submissions are not processed. Online submission will open soon.
       </div>
       <button type="submit" class="submit-btn">Submit Application →</button>
     </form>
@@ -113,9 +112,8 @@
 function handleSubmit(e) {
   e.preventDefault();
   var btn = e.target.querySelector('.submit-btn');
-  btn.textContent = 'Redirecting to login...';
+  btn.textContent = 'Demo only — nothing was sent';
   btn.disabled = true;
-  setTimeout(function(){ window.location.href = '../auth/citizen-login.html'; }, 1000);
 }
 </script>
 
