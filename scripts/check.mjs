@@ -7,9 +7,10 @@ import { join, dirname, normalize, relative } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = join(REPO, 'public'); /* cartella pubblicata */
 const errors = [];
-const fail = (file, msg) => errors.push(`${relative(ROOT, file) || file}: ${msg}`);
+const fail = (file, msg) => errors.push(`${relative(REPO, file) || file}: ${msg}`);
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -19,6 +20,7 @@ function walk(dir, out = []) {
   }
   return out;
 }
+if (!existsSync(ROOT)) { console.error('✗ manca la cartella public/'); process.exit(1); }
 const files = walk(ROOT);
 const html = files.filter(f => f.endsWith('.html'));
 const js = files.filter(f => f.endsWith('.js') && !f.includes(`${'assets'}/vendor/`));
@@ -92,8 +94,8 @@ for (const f of js) {
 }
 
 // File che non devono tornare nel repo
-for (const p of ['firebase.json', '.firebaserc', 'functions', 'firestore.rules', 'auth', 'portal']) {
-  if (existsSync(join(ROOT, p))) fail(join(ROOT, p), 'non deve esistere (rimosso con il sistema account/Firebase)');
+for (const p of ['firebase.json', '.firebaserc', 'functions', 'firestore.rules', 'auth', 'portal', 'public/node_modules', 'public/package.json']) {
+  if (existsSync(join(REPO, p))) fail(join(REPO, p), 'non deve esistere (Firebase e account rimossi; dipendenze fuori da public/)');
 }
 
 if (errors.length) {
