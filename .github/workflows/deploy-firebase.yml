@@ -1,10 +1,15 @@
-﻿name: Deploy Firebase
+name: Deploy Firebase
+
+# Production deploy: only from main. Test branches must NOT deploy here.
+# Static site: only Firebase Hosting is deployed (no functions, no database).
+concurrency:
+  group: firebase-production
+  cancel-in-progress: false
 
 on:
   push:
     branches:
       - main
-      - sito-test
   workflow_dispatch:
 
 permissions:
@@ -21,27 +26,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
-          cache-dependency-path: functions/package-lock.json
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
-
-      - name: Install function dependencies
-        run: npm ci --prefix functions
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Write Functions environment
-        run: |
-          printf "EMAILJS_SERVICE_ID=%s\n" "${{ secrets.EMAILJS_SERVICE_ID }}" > functions/.env.database-star-787e0
-          printf "EMAILJS_TEMPLATE_ID=%s\n" "${{ secrets.EMAILJS_TEMPLATE_ID }}" >> functions/.env.database-star-787e0
-          printf "EMAILJS_PUBLIC_KEY=%s\n" "${{ secrets.EMAILJS_PUBLIC_KEY }}" >> functions/.env.database-star-787e0
-          printf "EMAILJS_PRIVATE_KEY=%s\n" "${{ secrets.EMAILJS_PRIVATE_KEY }}" >> functions/.env.database-star-787e0
-          printf "ADMIN_SECRET_HASH=%s\n" "${{ secrets.ADMIN_SECRET_HASH }}" >> functions/.env.database-star-787e0
-
-      - name: Deploy Firebase
-        run: firebase deploy --only functions,hosting --project database-star-787e0 --force
+      - name: Deploy Firebase Hosting
+        run: firebase deploy --only hosting --project database-star-787e0 --force
