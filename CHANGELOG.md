@@ -1,5 +1,13 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.0.1] — Novembre 2026
+
+### Rimosso
+- Firebase: `firebase.json`, `.firebaserc` e il workflow di pubblicazione automatica. Il sito non dipende più da nessun servizio esterno e può essere pubblicato su qualsiasi hosting statico.
+
+### Modificato
+- La Content-Security-Policy ora è dentro ogni pagina (meta tag) invece che nelle intestazioni di Firebase.
+
 ## [1.0.0] — Novembre 2026
 
 Il sito diventa il sito aziendale di ALPHADEK Instruments. Il vecchio portale della United Republic of Stars resta solo nella cronologia git.
