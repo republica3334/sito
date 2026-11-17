@@ -1,44 +1,62 @@
 {
-  "functions": {
-    "source": "functions"
-  },
   "hosting": {
     "public": ".",
     "ignore": [
-      "functions/**",
       "firebase.json",
-      "firestore.rules",
       ".firebaserc",
       "node_modules/**",
       ".claude/**",
       ".github/**",
       "*.local*",
       "*.md",
-      "*.json.backup",
-      "auth/emailjs-otp-template.html"
+      "*.json.backup"
     ],
     "headers": [
       {
         "source": "**",
         "headers": [
-          { "key": "X-Frame-Options",        "value": "DENY" },
-          { "key": "X-Content-Type-Options",  "value": "nosniff" },
-          { "key": "X-XSS-Protection",        "value": "1; mode=block" },
-          { "key": "Referrer-Policy",          "value": "strict-origin-when-cross-origin" },
-          { "key": "Permissions-Policy",       "value": "camera=(), microphone=(), geolocation=()" }
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+          }
         ]
       },
       {
         "source": "**/*.@(html|js|css)",
         "headers": [
-          { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-          { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, must-revalidate"
+          }
         ]
       },
       {
         "source": "**/*.@(png|jpg|jpeg|webp|svg|ico|woff|woff2|ttf|otf)",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
         ]
       }
     ]
