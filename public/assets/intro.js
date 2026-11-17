@@ -181,8 +181,9 @@
     new Promise(function (r) { setTimeout(r, 1200); })
   ]);
   fontReady.then(function () {
-    acq = label('ACQUISIZIONE', 34, 105, -62, 'left');
-    lck = label('BERSAGLIO AGGANCIATO', 34, 105, -62, 'left');
+    var EN = (root.lang || '').slice(0, 2) === 'en';
+    acq = label(EN ? 'ACQUIRING' : 'ACQUISIZIONE', 34, 105, -62, 'left');
+    lck = label(EN ? 'TARGET LOCKED' : 'BERSAGLIO AGGANCIATO', 34, 105, -62, 'left');
     rng = label('ADK-01', 28, 1154, 955, 'right');
     if (!finished && !window.__adkManual) play();
   });

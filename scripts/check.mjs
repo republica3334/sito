@@ -54,16 +54,20 @@ for (const f of html) {
   if (/\son[a-z]+="/i.test(s)) fail(f, 'gestore di eventi inline (onclick, onload…) non consentito');
 
   // Risorse caricate dalla pagina: solo file del sito (i normali link <a> verso altri siti sono ammessi)
-  for (const [, tag, url] of s.matchAll(/<(script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\s(?:src|href|data)="((?:https?:)?\/\/[^"]*)"/gi)) {
+  for (const [whole, tag, url] of s.matchAll(/<(script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\s(?:src|href|data)="((?:https?:)?\/\/[^"]*)"[^>]*>/gi)) {
+    if (tag.toLowerCase() === 'link' && /\brel="(alternate|canonical)"/.test(whole)) continue; /* indirizzi, non risorse caricate */
     fail(f, `risorsa esterna caricata da <${tag}>: ${url}`);
   }
 
-  // Riferimenti locali: i file devono esistere
-  for (const [, , url] of s.matchAll(/\s(href|src)="([^"]*)"/g)) {
+  // Riferimenti locali: i file devono esistere.
+  // Con <base href="/sito/"> (pagina 404) i percorsi relativi partono dalla cartella public/.
+  const hasBase = /<base\s+href="[^"]+">/.test(s);
+  const sNoBase = s.replace(/<base\s+href="[^"]+">/g, '');
+  for (const [, , url] of sNoBase.matchAll(/\s(href|src)="([^"]*)"/g)) {
     if (url === '' || /^(mailto:|tel:|#|data:|(https?:)?\/\/)/.test(url)) continue;
     const clean = decodeURIComponent(url.split(/[?#]/)[0]);
     if (!clean) continue;
-    const target = clean.startsWith('/') ? join(ROOT, clean) : normalize(join(dirname(f), clean));
+    const target = clean.startsWith('/') ? join(ROOT, clean) : normalize(join(hasBase ? ROOT : dirname(f), clean));
     if (!existsSync(target)) fail(f, `collegamento rotto: ${url}`);
   }
 
