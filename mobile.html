@@ -7,7 +7,7 @@
     window.location.replace('GOVERN_1.HTM');
   }
 </script>
-<script src="republicstar-auth.js"></script>
+<script src="republicstar-site.js"></script>
   <meta charset="UTF-8" />
   <meta name="description" content="The Official Mobile Portal of the United Republic of Stars &mdash; government services at your fingertips.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -810,7 +810,6 @@
       <span>Official Portal</span>
     </div>
   </a>
-  <a href="auth/citizen-login.html" class="nav-cta">Login</a>
 </header>
 <main>
 <!-- HERO -->
@@ -819,10 +818,6 @@
   <h1 class="hero-title">United<br><em>Republic</em><br>of Stars</h1>
   <p class="hero-desc">Access citizen services, legislation, government news and official documents.</p>
   <div class="hero-actions">
-    <a href="auth/register.html" class="btn btn-primary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      Become a Citizen
-    </a>
     <a href="services/services.html" class="btn btn-outline">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
       Browse Services
@@ -1079,12 +1074,10 @@
     <p>The Official Portal of the United Republic of Stars. Government information and services for every citizen.</p>
   </div>
   <div class="footer-links">
-    <a href="auth/register.html">Register</a>
     <a href="services/services.html">All Services</a>
     <a href="gov/constitution.html">Constitution</a>
     <a href="gov/contact.html">Contact</a>
     <a href="gov/open-data.html">Open Data</a>
-    <a href="auth/citizen-login.html">Citizen Login</a>
   </div>
   <div class="footer-bottom">
     <span>- 2026 United Republic of Stars &mdash; All Rights Reserved</span>
@@ -1102,9 +1095,8 @@
 </div>
 
 <script>
-  // Nav dropdown: replace the login link with profile widget if logged in
+  // Cookie banner
   document.addEventListener('DOMContentLoaded', function(){
-    republicstarUpdateNav();
     republicstarCookieBanner();
     // No hamburger on mobile.html &mdash; layout is already mobile-native
   });

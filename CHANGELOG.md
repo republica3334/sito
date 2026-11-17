@@ -1,5 +1,20 @@
 # Changelog — United Republic of Stars
 
+## [Static Site] — November 2026
+
+The portal is now a fully static site: no accounts, no database, no outbound requests besides Google Fonts and the embedded YouTube video.
+
+### Removed
+- Citizen accounts: login, registration, OTP/2FA, account setup, suspension page, settings
+- Admin and moderator panels, admin secret code and meltdown sequence (`auth/`, `portal/`, `media/alarm.mp3`, `media/audio2.mp3`)
+- Firebase Auth, Firestore and Cloud Functions (`functions/`, `firestore.rules`, `republicstar-firebase.js`) and the EmailJS integration
+- All "Citizen Login" / "Register" links; demo service forms no longer redirect to login
+
+### Changed
+- `republicstar-auth.js` replaced by `republicstar-site.js` (theme, cookie banner, mobile menu, footer only); it also clears session data left in the browser by the old account system
+- Deploy workflow publishes Firebase Hosting only
+- Added a Content-Security-Policy header that blocks requests to any other site; removed the obsolete `X-XSS-Protection` header
+
 ## [Major Update] — June 2026
 
 ### Auth & Login
@@ -31,38 +46,6 @@
 ### Media
 - Added `media/alarm.mp3` to repository
 
----
-
-## Security Audit — June 2026
-
-Findings from automated scan, verified manually.
-
-### Confirmed & Noted
-
-**[True] Client-side session trust (Medium risk)**
-Sessions stored in localStorage (`republicstar-auth.js` line 22/64). `requireAdmin` trusts `role` from localStorage for UI/redirect decisions. Actual admin mutations (approve, delete, suspend) route through Firebase callable functions server-side — so localStorage forgery only bypasses UI guards, not real data operations. Still: move role checks fully server-side via Firebase custom claims when scaling.
-
-**[True] OTP functions allow account enumeration (High risk)**
-`loginUser` / `sendOtp` callable functions return distinct error codes for missing users, disabled 2FA, etc. An attacker can probe which user IDs exist. Mitigation: return generic errors and add per-IP rate limiting in Cloud Functions.
-
-**[True] No `package-lock.json` in `functions/`**
-Dependency versions are loose ranges. Function deployments are not reproducible. Fix: run `npm install` and commit the lockfile.
-
-### Verified False
-
-**[False] Passwords stored as base64**
-No `btoa`/`atob` calls anywhere in the codebase. Registration and login send the password to `registerUser`/`loginUser` Cloud Functions — hashing is server-side.
-
-**[True → Removed] Firestore security rules in repo**
-`firestore.rules` was tracked in git and has been removed. Security rules should not be in source control.
-
-**[False] Direct Firestore writes from browser for admin ops**
-`republicstar-firebase.js` routes all mutations through callable functions: `updateUser` → `adminUpdateUser`, `deleteUser` → `adminDeleteUser`. `saveUser` explicitly returns `Promise.reject('Direct user writes are disabled')`. No direct `db.collection().set/update/delete` calls for admin actions.
-
-### Partially Mitigated
-
-**[Partial] XSS in admin/mod HTML rendering**
-User IDs are interpolated into `onclick` attributes via string concatenation, but the `jsString()` helper (admin.html line 214) escapes backslashes and single quotes before insertion. Not full HTML encoding — a specially crafted ID with angle brackets could still break out of the attribute context. Risk is low since user IDs are generated server-side and not user-controlled strings.
 ---
 
 ## Weekly Changelog - 2026-06-16 to 2026-06-23
