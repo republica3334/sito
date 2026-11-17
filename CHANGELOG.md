@@ -1,5 +1,14 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.2.0] — Novembre 2026
+
+### Modificato
+- Il sito è ora nella cartella `public/`: si pubblica solo quella (niente `package.json`, script o `node_modules` online)
+- `scripts/check.mjs` e `npm run vendor:three` adeguati alla nuova cartella
+
+### Aggiunto
+- Workflow "Pubblica su GitHub Pages": controllo del sito e pubblicazione di `public/` a ogni push su main
+
 ## [1.1.0] — Novembre 2026
 
 ### Sicurezza
