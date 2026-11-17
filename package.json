@@ -7,7 +7,7 @@
     "vendor:three": "esbuild scripts/three-entry.mjs --bundle --minify --format=iife --global-name=THREE --target=es2019 --legal-comments=inline --outfile=assets/vendor/three-intro.min.js && node -e \"require('fs').copyFileSync('node_modules/three/LICENSE','assets/vendor/LICENSE-three.txt')\""
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.2",
     "three": "0.187.0"
   }
 }
