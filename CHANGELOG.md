@@ -1,10 +1,20 @@
 # Changelog — ALPHADEK Instruments
 
-## [1.3.1] — Novembre 2026
+## [1.4.1] — Novembre 2026
 
 ### Aggiornato
 - Workflow su Node 24 (Node 20 è a fine vita)
 - `actions/upload-pages-artifact` v3 → v5 e `actions/deploy-pages` v4 → v5, aggiornate insieme
+
+## [1.4.0] — Novembre 2026
+
+### Aggiunto
+- Ologramma del Behemoth 2A1 con il modello vero del gioco (placeholder GameTank): scafo, torretta, cannone, 32 ruote su 4 file, ruote motrici e 520 maglie di cingolo
+- `public/assets/models/behemoth-2a1.holo` (410 KB) e `npm run holo:behemoth` per rigenerarlo dagli FBX del gioco
+- Etichette agganciate solo a componenti certi del modello (cannone, cingoli, parte posteriore dello scafo); se il modello non si carica torna la sagoma stilizzata
+
+### Modificato
+- `check.mjs`: `fetch` consentito solo verso file del sito
 
 ## [1.3.0] — Novembre 2026
 
