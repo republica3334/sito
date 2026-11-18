@@ -22,13 +22,13 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Pagine allineate al generatore
         run: node scripts/build-pages.mjs && git diff --exit-code -- public
       - name: Controllo del sito
         run: node scripts/check.mjs
       - name: Prepara la cartella da pubblicare
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -45,4 +45,4 @@ jobs:
     steps:
       - name: Pubblica
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

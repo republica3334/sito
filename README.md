@@ -27,7 +27,7 @@ Per farlo partire anche sul tuo computer prima di ogni `git push`, una volta sol
 git config core.hooksPath .githooks
 ```
 
-A mano: `node scripts/check.mjs` (serve Node 18 o più recente).
+A mano: `node scripts/check.mjs` (serve Node 18 o più recente; i workflow usano Node 24).
 
 ## Three.js
 L'intro e gli ologrammi della pagina prodotti (`public/assets/products.js`) usano `public/assets/vendor/three-intro.min.js`: un pacchetto con solo le parti di Three.js che servono, generato da `scripts/three-entry.mjs`. Per aggiornarlo:
