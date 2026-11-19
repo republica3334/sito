@@ -64,9 +64,9 @@ const T = {
       ctaP: 'Raccontaci la piattaforma e l’obiettivo: ti rispondiamo con una proposta tecnica.',
     },
     products: {
-      title: 'Prodotti', desc: 'I mezzi ALPHADEK Instruments: Behemoth 2A1, carro superpesante, e Ghepard 2 (ULBT-7), carro ultraleggero autonomo.',
+      title: 'Prodotti', desc: 'I mezzi ALPHADEK Instruments: Behemoth 2A1, carro superpesante, Ghepard 2 (ULBT-7), carro ultraleggero autonomo, e Spearhead 3, carro armato da battaglia principale di sesta generazione.',
       eyebrow: 'Prodotti', h1: 'La flotta <em>ALPHADEK</em>',
-      lead: 'Due mezzi, due modi opposti di vincere: il superpesante che regge l’urto e l’ultraleggero autonomo che non si fa trovare. Entrambi con la strumentazione ALPHADEK a bordo.',
+      lead: 'Tre carri e una famiglia di mezzi in sviluppo: il superpesante che regge l’urto, l’ultraleggero autonomo che non si fa trovare e il carro da battaglia principale di sesta generazione. Tutti con la strumentazione ALPHADEK a bordo.',
       boot: 'ALPHADEK instruments, welcome aboard, commander.',
       dragHint: 'Trascina per ruotare', live: 'Ologramma · live', noGl: 'Il 3D non è disponibile su questo dispositivo',
       armorTitle: 'Protezione (mm equivalenti)', ke: 'KE · cinetica', ce: 'CE · chimica', quoteLabel: 'Messaggio all’avvio dei sistemi',
@@ -110,6 +110,22 @@ const T = {
         ],
         note: 'Le specifiche dettagliate sono disponibili su richiesta.',
       },
+      spearhead: {
+        code: 'ADK-SH · 3', name: 'Spearhead 3', cls: 'Carro armato da battaglia principale', tileMeta: '6ª generazione · convenzionale',
+        lead: 'Lo Spearhead 3 è il carro armato da battaglia principale (MBT) convenzionale di sesta generazione di ALPHADEK Instruments: il carro di linea della flotta, accanto al superpesante Behemoth 2A1 e all’ultraleggero autonomo Ghepard 2.',
+        stats: [['6ª', '', 'Generazione'], ['MBT', '', 'Classe'], ['CONV', '', 'Configurazione']],
+        callouts: { gun: 'Armamento principale', gen: '6ª generazione', hull: 'MBT convenzionale' },
+        specs: [
+          ['Profilo', [
+            ['Classe', 'Carro armato da battaglia principale (MBT)'],
+            ['Generazione', 'Sesta'],
+            ['Configurazione', 'Convenzionale'],
+            ['In flotta', 'Carro di linea, accanto al Behemoth 2A1 e al Ghepard 2']]],
+        ],
+        note: 'Le specifiche tecniche non sono ancora pubbliche: disponibili su richiesta.',
+      },
+      pipeEyebrow: 'In sviluppo', pipeH2: 'Prossimi mezzi', pipeName: 'Nome da definire', pipeTxt: 'Scheda in arrivo', pipeBadge: 'In sviluppo',
+      pipeline: [['IFV', 'Veicolo da combattimento della fanteria'], ['SPG', 'Artiglieria semovente'], ['APC', 'Trasporto truppe corazzato'], ['LOG', 'Camion logistico'], ['ARV', 'Veicolo da recupero']],
       vsEyebrow: 'Due filosofie', vsH2: 'Assorbire o evitare',
       vs: [['Behemoth 2A1', 'Assorbire il colpo', 'Massa, corazza e difesa attiva a laser: resta in campo sotto il fuoco e apre la strada.'],
            ['Ghepard 2', 'Non farsi colpire', 'Nessun equipaggio e reazione immediata: arriva prima, vede prima e se ne va prima.']],
@@ -199,9 +215,9 @@ const T = {
       ctaP: 'Tell us about the platform and the goal: we will come back to you with a technical proposal.',
     },
     products: {
-      title: 'Products', desc: 'ALPHADEK Instruments vehicles: Behemoth 2A1, superheavy tank, and Ghepard 2 (ULBT-7), autonomous ultra-light tank.',
+      title: 'Products', desc: 'ALPHADEK Instruments vehicles: Behemoth 2A1, superheavy tank, Ghepard 2 (ULBT-7), autonomous ultra-light tank, and Spearhead 3, sixth-generation main battle tank.',
       eyebrow: 'Products', h1: 'The <em>ALPHADEK</em> fleet',
-      lead: 'Two vehicles, two opposite ways to win: the superheavy that takes the hit and the autonomous ultra-light that is never where you expect it. Both with ALPHADEK instrumentation on board.',
+      lead: 'Three tanks and a family of vehicles in development: the superheavy that takes the hit, the autonomous ultra-light that is never where you expect it and the sixth-generation main battle tank. All with ALPHADEK instrumentation on board.',
       boot: 'ALPHADEK instruments, welcome aboard, commander.',
       dragHint: 'Drag to rotate', live: 'Hologram · live', noGl: '3D is not available on this device',
       armorTitle: 'Protection (mm equivalent)', ke: 'KE · kinetic', ce: 'CE · chemical', quoteLabel: 'Message at system start-up',
@@ -245,6 +261,22 @@ const T = {
         ],
         note: 'Detailed specifications are available on request.',
       },
+      spearhead: {
+        code: 'ADK-SH · 3', name: 'Spearhead 3', cls: 'Main battle tank', tileMeta: '6th generation · conventional',
+        lead: 'The Spearhead 3 is ALPHADEK Instruments’ sixth-generation conventional main battle tank (MBT): the fleet’s line tank, alongside the superheavy Behemoth 2A1 and the autonomous ultra-light Ghepard 2.',
+        stats: [['6th', '', 'Generation'], ['MBT', '', 'Class'], ['CONV', '', 'Layout']],
+        callouts: { gun: 'Main armament', gen: '6th generation', hull: 'Conventional MBT' },
+        specs: [
+          ['Profile', [
+            ['Class', 'Main battle tank (MBT)'],
+            ['Generation', 'Sixth'],
+            ['Layout', 'Conventional'],
+            ['In the fleet', 'Line tank, alongside the Behemoth 2A1 and the Ghepard 2']]],
+        ],
+        note: 'Technical specifications are not public yet: available on request.',
+      },
+      pipeEyebrow: 'In development', pipeH2: 'Upcoming vehicles', pipeName: 'Name to be announced', pipeTxt: 'Datasheet coming soon', pipeBadge: 'In development',
+      pipeline: [['IFV', 'Infantry fighting vehicle'], ['SPG', 'Self-propelled artillery'], ['APC', 'Armoured personnel carrier'], ['LOG', 'Logistics truck'], ['ARV', 'Recovery vehicle']],
       vsEyebrow: 'Two philosophies', vsH2: 'Absorb or avoid',
       vs: [['Behemoth 2A1', 'Take the hit', 'Mass, armour and laser active protection: it stays in the fight under fire and opens the way.'],
            ['Ghepard 2', 'Don’t get hit', 'No crew and instant reaction: it gets there first, sees first and leaves first.']],
@@ -377,7 +409,7 @@ function bodyFor(key, lang, file) {
         <div class="px-track"><b class="px-fill" data-v="${ke}" data-max="2800"></b><i>${keTxt}</i></div>
         <div class="px-track"><b class="px-fill ce" data-v="${ce}" data-max="2800"></b><i>${ceTxt}</i></div></div>`).join('')}
         <div class="px-legend"><span>${x.ke}</span><span class="ce">${x.ce}</span></div></div>`;
-    const b = x.behemoth, g = x.ghepard;
+    const b = x.behemoth, g = x.ghepard, sh = x.spearhead;
     return `<section class="px-hero">
   <div class="px-radar" aria-hidden="true"></div>
   <div class="wrap">
@@ -388,7 +420,9 @@ function bodyFor(key, lang, file) {
     <div class="px-pick">
       <a class="px-tile" href="#behemoth"><span class="code">${b.code}</span><b>${b.name}</b><small>${b.cls}</small><small>${b.tileMeta}</small></a>
       <a class="px-tile" href="#ghepard"><span class="code">${g.code}</span><b>${g.name}</b><small>${g.cls}</small><small>${g.tileMeta}</small></a>
+      <a class="px-tile" href="#spearhead"><span class="code">${sh.code}</span><b>${sh.name}</b><small>${sh.cls}</small><small>${sh.tileMeta}</small></a>
     </div>
+    <a class="px-more mono" href="#pipeline">+ ${x.pipeline.length} · ${x.pipeEyebrow}</a>
   </div>
 </section>
 <section class="px-product" id="behemoth">
@@ -416,6 +450,25 @@ function bodyFor(key, lang, file) {
       ${specs(g.specs)}
       <p class="notice">${g.note} <a href="${L('contact')}">${t.nav.contact}</a></p>
     </div>
+  </div>
+</section>
+<section class="px-product" id="spearhead">
+  <div class="wrap px-grid">
+    ${stage('spearhead', sh, 'ADK // SH-3 · MBT')}
+    <div class="px-info">
+      <span class="mono eyebrow">${sh.cls}</span>
+      <h2>${sh.name}</h2>
+      <p class="lead">${sh.lead}</p>
+      ${stats(sh.stats)}
+      ${specs(sh.specs)}
+      <p class="notice">${sh.note} <a href="${L('contact')}">${t.nav.contact}</a></p>
+    </div>
+  </div>
+</section>
+<section class="section alt" id="pipeline">
+  <div class="wrap">
+    <div class="section-head"><div><span class="mono eyebrow">${x.pipeEyebrow}</span><h2>${x.pipeH2}</h2></div></div>
+    <div class="px-soon">${x.pipeline.map(([c, n]) => `<div class="px-soon-card"><span class="code">ADK-${c} · —</span><b>${n}</b><small>${x.pipeName}</small><em>${x.pipeBadge}</em><p>${x.pipeTxt}</p></div>`).join('')}</div>
   </div>
 </section>
 <section class="px-compare grid-bg">
@@ -514,7 +567,9 @@ function page({ key, lang, file, title, desc, body, intro = false, base = null, 
     const pr = t.products;
     return `<div class="nav-drop"><a class="nav-drop-btn" href="${L(k)}"${cur}>${t.nav[k]}</a><div class="nav-menu">` +
       `<a href="${L(k)}#behemoth"><b>${pr.behemoth.name}</b><span>${pr.behemoth.cls}</span></a>` +
-      `<a href="${L(k)}#ghepard"><b>${pr.ghepard.name}</b><span>${pr.ghepard.cls}</span></a></div></div>`;
+      `<a href="${L(k)}#ghepard"><b>${pr.ghepard.name}</b><span>${pr.ghepard.cls}</span></a>` +
+      `<a href="${L(k)}#spearhead"><b>${pr.spearhead.name}</b><span>${pr.spearhead.cls}</span></a>` +
+      `<a class="nav-soon" href="${L(k)}#pipeline"><b>${pr.pipeEyebrow}</b><span>${pr.pipeline.map((p) => p[0]).join(' · ')}</span></a></div></div>`;
   }).join('');
   /* selettore lingua: porta alla stessa pagina nell'altra lingua */
   const other = lang === 'it' ? 'en' : 'it';
