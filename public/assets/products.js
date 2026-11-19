@@ -120,6 +120,32 @@
         center: [.55, .9, 0],
         anchors: { ai: [-1.2, 2.3, 0], hull: [1.4, 1.15, 1.1], tracks: [-.6, .35, 1.65], gun: [4.4, 1.35, 0] }
       };
+    },
+    spearhead: function (g, part) {
+      /* MBT convenzionale: scafo con piastra frontale inclinata */
+      part(side([[-4.2, .55], [-4.2, 1.75], [2.6, 1.85], [4.3, 1.15], [4.3, .8], [3.6, .3], [-3.8, .3]], 3.4));
+      [-1.95, 1.95].forEach(function (z) {
+        part(new T.BoxGeometry(8.2, 1.05, .7), [0, .7, z]);
+        for (var i = 0; i < 7; i++) part(wheel(.38, .4), [-3.3 + i * 1.1, .5, z * 1.13]);
+        part(wheel(.45, .4), [3.95, .95, z * 1.13]); part(wheel(.45, .4), [-4.05, .95, z * 1.13]);
+        /* gonne laterali */
+        part(new T.BoxGeometry(7.4, .55, .06), [.1, 1.3, z * 1.28]);
+      });
+      /* torretta a cuneo */
+      part(side([[-2.6, 0], [-2.6, .95], [.9, 1.05], [2.4, .55], [2.4, 0]], 3.1), [-.5, 1.85, 0]);
+      /* cannone principale con manicotto termico e mantelletto */
+      part(new T.BoxGeometry(.7, .75, 1.1), [2.05, 2.35, 0]);
+      part(barrel(.16, 6.4), [5.4, 2.4, 0]);
+      part(barrel(.21, 1.6), [3.4, 2.4, 0]);
+      /* stazione d'arma remota e visori */
+      part(new T.BoxGeometry(.6, .35, .5), [-.9, 3.05, .7]);
+      part(barrel(.04, 1), [-.2, 3.1, .7]);
+      part(new T.BoxGeometry(.4, .4, .4), [.4, 3.1, -.85]);
+      part(new T.BoxGeometry(.4, .25, .4), [-1.6, 3.0, -.6]);
+      return {
+        center: [.8, 1.5, 0],
+        anchors: { gun: [8.5, 2.4, 0], gen: [.4, 3.3, -.85], hull: [3.4, 1.5, 1.7] }
+      };
     }
   };
 

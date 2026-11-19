@@ -1,5 +1,15 @@
 # Changelog — ALPHADEK Instruments
 
+## [1.5.0] — Novembre 2026
+
+### Aggiunto
+- **Spearhead 3**, carro armato da battaglia principale convenzionale di sesta generazione: scheda nella pagina prodotti (IT/EN), ologramma 3D stilizzato, voce nel menu Prodotti. Solo i dati definiti: nessun numero inventato
+- Sezione **In sviluppo** con 5 segnaposto: veicolo da combattimento della fanteria (IFV), artiglieria semovente, trasporto truppe corazzato (APC), camion logistico, veicolo da recupero
+- Menu Prodotti: voce "In sviluppo" che porta alla nuova sezione
+
+### Modificato
+- Riquadri della pagina prodotti su tre colonne; griglia dei dati adattata al numero di valori
+
 ## [1.4.1] — Novembre 2026
 
 ### Aggiornato
